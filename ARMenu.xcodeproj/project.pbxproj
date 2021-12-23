@@ -12,6 +12,22 @@
 		B26FD1512774CCD100E75FFC /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1502774CCD100E75FFC /* Experience.rcproject */; };
 		B26FD1532774CCD300E75FFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1522774CCD300E75FFC /* Assets.xcassets */; };
 		B26FD1562774CCD300E75FFC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1552774CCD300E75FFC /* Preview Assets.xcassets */; };
+		B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD15E2774CDF900E75FFC /* AboutUs.swift */; };
+		B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */; };
+		B26FD1632774CE9F00E75FFC /* addFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1622774CE9F00E75FFC /* addFood.swift */; };
+		B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1642774CECC00E75FFC /* changePassword.swift */; };
+		B26FD1672774CEF700E75FFC /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1662774CEF700E75FFC /* ImagePicker.swift */; };
+		B26FD1692774CF1F00E75FFC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1682774CF1F00E75FFC /* Login.swift */; };
+		B26FD16F2774CF8F00E75FFC /* MenuDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */; };
+		B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1702774CFB000E75FFC /* MenuList.swift */; };
+		B26FD1732774CFCC00E75FFC /* MenuRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1722774CFCC00E75FFC /* MenuRow.swift */; };
+		B26FD1752774CFFB00E75FFC /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1742774CFFB00E75FFC /* ModelData.swift */; };
+		B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1762774D01800E75FFC /* NutritionFacts.swift */; };
+		B26FD1792774D02F00E75FFC /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1782774D02F00E75FFC /* Product.swift */; };
+		B26FD17B2774D04600E75FFC /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17A2774D04600E75FFC /* Profile.swift */; };
+		B26FD17D2774D09700E75FFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17C2774D09700E75FFC /* User.swift */; };
+		B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17E2774D0D300E75FFC /* MainView.swift */; };
+		B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +37,23 @@
 		B26FD1502774CCD100E75FFC /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
 		B26FD1522774CCD300E75FFC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B26FD1552774CCD300E75FFC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B26FD15E2774CDF900E75FFC /* AboutUs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUs.swift; sourceTree = "<group>"; };
+		B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		B26FD1622774CE9F00E75FFC /* addFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addFood.swift; sourceTree = "<group>"; };
+		B26FD1642774CECC00E75FFC /* changePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changePassword.swift; sourceTree = "<group>"; };
+		B26FD1662774CEF700E75FFC /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		B26FD1682774CF1F00E75FFC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetail.swift; sourceTree = "<group>"; };
+		B26FD1702774CFB000E75FFC /* MenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuList.swift; sourceTree = "<group>"; };
+		B26FD1722774CFCC00E75FFC /* MenuRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRow.swift; sourceTree = "<group>"; };
+		B26FD1742774CFFB00E75FFC /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
+		B26FD1762774D01800E75FFC /* NutritionFacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionFacts.swift; sourceTree = "<group>"; };
+		B26FD1782774D02F00E75FFC /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
+		B26FD17A2774D04600E75FFC /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		B26FD17C2774D09700E75FFC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B26FD17E2774D0D300E75FFC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuphoriaScript-Regular.ttf"; sourceTree = "<group>"; };
+		B26FD1842774D19B00E75FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +86,15 @@
 		B26FD14B2774CCD100E75FFC /* ARMenu */ = {
 			isa = PBXGroup;
 			children = (
+				B26FD1842774D19B00E75FFC /* Info.plist */,
 				B26FD14C2774CCD100E75FFC /* AppDelegate.swift */,
-				B26FD14E2774CCD100E75FFC /* ContentView.swift */,
+				B26FD1812774D18800E75FFC /* Euphoria_Script */,
+				B26FD1802774D11600E75FFC /* Views */,
+				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
+				B26FD1742774CFFB00E75FFC /* ModelData.swift */,
+				B26FD1762774D01800E75FFC /* NutritionFacts.swift */,
+				B26FD1782774D02F00E75FFC /* Product.swift */,
+				B26FD17C2774D09700E75FFC /* User.swift */,
 				B26FD1502774CCD100E75FFC /* Experience.rcproject */,
 				B26FD1522774CCD300E75FFC /* Assets.xcassets */,
 				B26FD1542774CCD300E75FFC /* Preview Content */,
@@ -68,6 +108,32 @@
 				B26FD1552774CCD300E75FFC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B26FD1802774D11600E75FFC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD14E2774CCD100E75FFC /* ContentView.swift */,
+				B26FD15E2774CDF900E75FFC /* AboutUs.swift */,
+				B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */,
+				B26FD1622774CE9F00E75FFC /* addFood.swift */,
+				B26FD1642774CECC00E75FFC /* changePassword.swift */,
+				B26FD1682774CF1F00E75FFC /* Login.swift */,
+				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
+				B26FD1702774CFB000E75FFC /* MenuList.swift */,
+				B26FD1722774CFCC00E75FFC /* MenuRow.swift */,
+				B26FD17E2774D0D300E75FFC /* MainView.swift */,
+				B26FD17A2774D04600E75FFC /* Profile.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B26FD1812774D18800E75FFC /* Euphoria_Script */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */,
+			);
+			path = Euphoria_Script;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,6 +196,7 @@
 			files = (
 				B26FD1562774CCD300E75FFC /* Preview Assets.xcassets in Resources */,
 				B26FD1532774CCD300E75FFC /* Assets.xcassets in Resources */,
+				B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,9 +207,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B26FD17B2774D04600E75FFC /* Profile.swift in Sources */,
+				B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */,
+				B26FD16F2774CF8F00E75FFC /* MenuDetail.swift in Sources */,
 				B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */,
 				B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */,
+				B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */,
+				B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */,
+				B26FD1732774CFCC00E75FFC /* MenuRow.swift in Sources */,
 				B26FD1512774CCD100E75FFC /* Experience.rcproject in Sources */,
+				B26FD1672774CEF700E75FFC /* ImagePicker.swift in Sources */,
+				B26FD1792774D02F00E75FFC /* Product.swift in Sources */,
+				B26FD1692774CF1F00E75FFC /* Login.swift in Sources */,
+				B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */,
+				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
+				B26FD17D2774D09700E75FFC /* User.swift in Sources */,
+				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
+				B26FD1632774CE9F00E75FFC /* addFood.swift in Sources */,
+				B26FD1752774CFFB00E75FFC /* ModelData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +358,7 @@
 				DEVELOPMENT_TEAM = J2GM3L467Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ARMenu/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -307,6 +390,7 @@
 				DEVELOPMENT_TEAM = J2GM3L467Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ARMenu/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
