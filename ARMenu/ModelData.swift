@@ -31,5 +31,10 @@ struct ModelData{
     var users: [User] = [User(username: "imHoernken", password: "imHoernken", role: .Admin), User(role: .Customer)]
     
     var categories:[String] = ["Alles", "Kuchen", "Eis", "Getränk","Waffel"]
+    
+//    var allergens: [Allergen] = [Allergen(name: "Gluten"), Allergen(name:"Krebstiere"), Allergen(name: "Fisch"), Allergen(name: "Ei")]
+//    var additives: [Additive] = [Additive(name: "Farbstoffe"), Additive(name: "Emulgatoren"), Additive(name: "Konservierungsmittel"), Additive(name: "Süßungsmittel")]
+    
+    
 }
 
