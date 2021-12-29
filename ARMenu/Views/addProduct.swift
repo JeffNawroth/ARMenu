@@ -24,7 +24,7 @@ struct addProduct: View {
         var fat: Double!
         var carbs: Double!
         var protein: Double!
-
+        
     }
     
     struct ProductDummy{
@@ -37,12 +37,16 @@ struct addProduct: View {
         var isVegan: Bool = false
         var isFairtade: Bool = false
         var isBio: Bool = false
+        var allergens: [Allergen] = [Allergen]()
+        var additives: [Additive] = [Additive]()
+        
     }
     
     
     
     @State var productDummy = ProductDummy()
     @State var nutritionFactsDummy = NutritionFactsDummy()
+    
     
     var body: some View {
         
@@ -70,7 +74,7 @@ struct addProduct: View {
                                     showingImagePicker = true
                                 }
                         }
-                           
+                        
                         
                         Button {
                             showingImagePicker = true
@@ -94,8 +98,8 @@ struct addProduct: View {
                         Text("Name")
                         TextField("Name", text: $productDummy.name)
                             .multilineTextAlignment(.trailing)
-
-
+                        
+                        
                     }
                     HStack{
                         Text("Preis")
@@ -153,6 +157,32 @@ struct addProduct: View {
                     }
                     
                 }
+                
+                Section(header: Text("Allergene")){
+                    
+                    ForEach(productDummy.allergens){
+                        Text($0.name)
+                    }
+                    
+                    
+                    Button("Allergen hinzufügen"){
+                        productDummy.allergens.append(Allergen(name: "Eier"))
+                        productDummy.allergens.append(Allergen(name: "Nutella"))
+                        
+                    }
+                }
+                
+                Section(header: Text("Zusatzstoffe")){
+                    ForEach(productDummy.additives){
+                        Text($0.name)
+                    }
+                    Button("Zusatzstoff hinzufügen"){
+                        productDummy.additives.append(Additive(name: "Süßstoff"))
+                        
+                    }
+                }
+                
+                
             }
             .navigationBarTitle(Text("neues Produkt"), displayMode: .inline)
             .onChange(of: inputImage) { _ in loadImage() }
@@ -174,7 +204,7 @@ struct addProduct: View {
                         
                     }
                     .disabled(disableForm)
-
+                    
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {

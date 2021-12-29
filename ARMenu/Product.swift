@@ -20,6 +20,8 @@ struct Product: Identifiable{
     
     var isBio: Bool
     var isFairtrade: Bool
+//    var allergens: [Allergen]
+//    var additives: [Additive]
 //    var servingSize
     
 }

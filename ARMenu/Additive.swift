@@ -7,6 +7,7 @@
 
 import Foundation
 
-struct Additive{
+struct Additive: Identifiable{
+    let id = UUID()
     var name: String
 }
