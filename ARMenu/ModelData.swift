@@ -32,8 +32,8 @@ struct ModelData{
     
     var categories:[String] = ["Alles", "Kuchen", "Eis", "Getränk","Waffel"]
     
-//    var allergens: [Allergen] = [Allergen(name: "Gluten"), Allergen(name:"Krebstiere"), Allergen(name: "Fisch"), Allergen(name: "Ei")]
-//    var additives: [Additive] = [Additive(name: "Farbstoffe"), Additive(name: "Emulgatoren"), Additive(name: "Konservierungsmittel"), Additive(name: "Süßungsmittel")]
+    var allergens: [Allergen] = [Allergen(name: "Gluten"), Allergen(name:"Krebstiere"), Allergen(name: "Fisch"), Allergen(name: "Ei")]
+    var additives: [Additive] = [Additive(name: "Farbstoffe"), Additive(name: "Emulgatoren"), Additive(name: "Konservierungsmittel"), Additive(name: "Süßungsmittel")]
     
     
 }
