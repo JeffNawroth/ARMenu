@@ -14,23 +14,26 @@ struct addProduct: View {
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     
+    var disableForm: Bool {
+        productDummy.name.isEmpty || productDummy.price == nil || productDummy.description.isEmpty || productDummy.image == nil || productDummy.category.isEmpty || nutritionFactsDummy.calories == nil || nutritionFactsDummy.fat == nil || nutritionFactsDummy.carbs == nil || nutritionFactsDummy.protein == nil
+    }
+    
     
     struct NutritionFactsDummy{
-        var calories: Int?
-        var fat: Double?
-        var carbs: Double?
-        var protein: Double?
+        var calories: Int!
+        var fat: Double!
+        var carbs: Double!
+        var protein: Double!
 
     }
     
     struct ProductDummy{
-        var imagaName: String = ""
         var name: String = ""
         var category: String = ""
-        var price: Double?
+        var price: Double!
         var description: String = ""
-        var image: Image?
-        var nutritionFacts: NutritionFacts?
+        var image: Image!
+        var nutritionFacts: NutritionFacts!
         var isVegan: Bool = false
         var isFairtade: Bool = false
         var isBio: Bool = false
@@ -48,11 +51,14 @@ struct addProduct: View {
                 Section{
                     VStack{
                         if productDummy.image != nil{
-                            productDummy.image?
+                            productDummy.image
                                 .resizable()
                                 .scaledToFit()
                                 .cornerRadius(10)
                                 .shadow(radius: 3)
+                                .onTapGesture {
+                                    showingImagePicker = true
+                                }
                             
                         }else{
                             
@@ -60,7 +66,11 @@ struct addProduct: View {
                                 .resizable()
                                 .scaledToFit()
                                 .foregroundColor(.gray)
+                                .onTapGesture {
+                                    showingImagePicker = true
+                                }
                         }
+                           
                         
                         Button {
                             showingImagePicker = true
@@ -155,7 +165,7 @@ struct addProduct: View {
                         showingSheet = false
                         
                         
-                        let product: Product = Product(name: productDummy.name, category: productDummy.category, price: productDummy.price!, description: productDummy.description, image: productDummy.image!, isVegan: productDummy.isVegan, nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories!, fat: nutritionFactsDummy.fat!, carbs: nutritionFactsDummy.carbs!, protein: nutritionFactsDummy.protein!), isBio: productDummy.isFairtade, isFairtrade: productDummy.isBio)
+                        let product: Product = Product(name: productDummy.name, category: productDummy.category, price: productDummy.price, description: productDummy.description, image: productDummy.image, isVegan: productDummy.isVegan, nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein), isBio: productDummy.isFairtade, isFairtrade: productDummy.isBio)
                         
                         modelData.products.append(product)
                         
@@ -163,6 +173,8 @@ struct addProduct: View {
                         Text("Fertig")
                         
                     }
+                    .disabled(disableForm)
+
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
