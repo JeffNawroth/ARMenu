@@ -55,7 +55,7 @@ struct MenuList: View {
                     }
 
                     .sheet(isPresented: $showingSheet) {
-                        addFood(modelData: $modelData,showingSheet: $showingSheet)
+                        addProduct(modelData: $modelData,showingSheet: $showingSheet)
                     }
                 }
             }

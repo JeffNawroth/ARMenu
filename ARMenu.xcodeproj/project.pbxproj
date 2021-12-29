@@ -14,7 +14,7 @@
 		B26FD1562774CCD300E75FFC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1552774CCD300E75FFC /* Preview Assets.xcassets */; };
 		B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD15E2774CDF900E75FFC /* AboutUs.swift */; };
 		B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */; };
-		B26FD1632774CE9F00E75FFC /* addFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1622774CE9F00E75FFC /* addFood.swift */; };
+		B26FD1632774CE9F00E75FFC /* addProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1622774CE9F00E75FFC /* addProduct.swift */; };
 		B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1642774CECC00E75FFC /* changePassword.swift */; };
 		B26FD1672774CEF700E75FFC /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1662774CEF700E75FFC /* ImagePicker.swift */; };
 		B26FD1692774CF1F00E75FFC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1682774CF1F00E75FFC /* Login.swift */; };
@@ -39,7 +39,7 @@
 		B26FD1552774CCD300E75FFC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B26FD15E2774CDF900E75FFC /* AboutUs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUs.swift; sourceTree = "<group>"; };
 		B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
-		B26FD1622774CE9F00E75FFC /* addFood.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addFood.swift; sourceTree = "<group>"; };
+		B26FD1622774CE9F00E75FFC /* addProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addProduct.swift; sourceTree = "<group>"; };
 		B26FD1642774CECC00E75FFC /* changePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changePassword.swift; sourceTree = "<group>"; };
 		B26FD1662774CEF700E75FFC /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		B26FD1682774CF1F00E75FFC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 				B26FD14E2774CCD100E75FFC /* ContentView.swift */,
 				B26FD15E2774CDF900E75FFC /* AboutUs.swift */,
 				B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */,
-				B26FD1622774CE9F00E75FFC /* addFood.swift */,
+				B26FD1622774CE9F00E75FFC /* addProduct.swift */,
 				B26FD1642774CECC00E75FFC /* changePassword.swift */,
 				B26FD1682774CF1F00E75FFC /* Login.swift */,
 				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
@@ -223,7 +223,7 @@
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
 				B26FD17D2774D09700E75FFC /* User.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
-				B26FD1632774CE9F00E75FFC /* addFood.swift in Sources */,
+				B26FD1632774CE9F00E75FFC /* addProduct.swift in Sources */,
 				B26FD1752774CFFB00E75FFC /* ModelData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
