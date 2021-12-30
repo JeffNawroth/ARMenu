@@ -30,6 +30,7 @@
 		B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */; };
 		B2FC34A9277CD87E004092F6 /* Allergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34A8277CD87E004092F6 /* Allergen.swift */; };
 		B2FC34AB277CD8B0004092F6 /* Additive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34AA277CD8B0004092F6 /* Additive.swift */; };
+		B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34AE277E2409004092F6 /* SelectAllergens.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		B26FD1842774D19B00E75FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B2FC34A8277CD87E004092F6 /* Allergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Allergen.swift; sourceTree = "<group>"; };
 		B2FC34AA277CD8B0004092F6 /* Additive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Additive.swift; sourceTree = "<group>"; };
+		B2FC34AE277E2409004092F6 /* SelectAllergens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAllergens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				B26FD15E2774CDF900E75FFC /* AboutUs.swift */,
 				B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */,
 				B26FD1622774CE9F00E75FFC /* addProduct.swift */,
+				B2FC34AE277E2409004092F6 /* SelectAllergens.swift */,
 				B26FD1642774CECC00E75FFC /* changePassword.swift */,
 				B26FD1682774CF1F00E75FFC /* Login.swift */,
 				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
@@ -231,6 +234,7 @@
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
 				B26FD17D2774D09700E75FFC /* User.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
+				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,
 				B26FD1632774CE9F00E75FFC /* addProduct.swift in Sources */,
 				B26FD1752774CFFB00E75FFC /* ModelData.swift in Sources */,
 			);

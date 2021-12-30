@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Allergen: Identifiable{
+struct Allergen: Identifiable, Hashable{
     let id = UUID()
     var name: String
 }

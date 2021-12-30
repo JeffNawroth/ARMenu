@@ -39,13 +39,13 @@ struct addProduct: View {
         var isBio: Bool = false
         var allergens: [Allergen] = [Allergen]()
         var additives: [Additive] = [Additive]()
-        
     }
     
     
     
     @State var productDummy = ProductDummy()
     @State var nutritionFactsDummy = NutritionFactsDummy()
+
     
     
     var body: some View {
@@ -164,19 +164,22 @@ struct addProduct: View {
                         Text($0.name)
                     }
                     
-                    
-                    Button("Allergen hinzufügen"){
-                        productDummy.allergens.append(Allergen(name: "Eier"))
-                        productDummy.allergens.append(Allergen(name: "Nutella"))
+                    NavigationLink{
                         
+                        SelectAllergens()
+                    } label:{
+                       Text("Allergene hinzufügen")
+                            .foregroundColor(.blue)
                     }
+
+                   
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
                     ForEach(productDummy.additives){
                         Text($0.name)
                     }
-                    Button("Zusatzstoff hinzufügen"){
+                    Button("Zusatzstoffe hinzufügen"){
                         productDummy.additives.append(Additive(name: "Süßstoff"))
                         
                     }
