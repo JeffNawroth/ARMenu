@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct ModelData{
-  var products: [Product] =  [
+class ModelData: ObservableObject{
+ @Published var products: [Product] =  [
         Product(image: Image("kaesekuchen"), name: "Käsekuchen", category: "Kuchen", price: 3.50, description: "Suscipit inceptos est felis purus aenean aliquet adipiscing diam venenatis, augue nibh duis neque aliquam tellus condimentum sagittis vivamus.",  isVegan: true,isBio: true, isFairtrade: true, nutritionFacts: NutritionFacts(calories: 573, fat: 23.2, carbs: 44.9, protein: 3.4)),
         
         Product(image: Image("spaghettieis"),name: "Spaghettieis", category: "Eis", price: 6.20, description: "Suscipit inceptos est felis purus aenean aliquet adipiscing diam venenatis, augue nibh duis neque aliquam tellus condimentum sagittis vivamus.", isVegan: true, isBio: false, isFairtrade: false, nutritionFacts: NutritionFacts(calories: 573, fat: 23.2, carbs: 44.9, protein: 3.4)),

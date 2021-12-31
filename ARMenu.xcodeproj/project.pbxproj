@@ -96,13 +96,7 @@
 				B26FD14C2774CCD100E75FFC /* AppDelegate.swift */,
 				B26FD1812774D18800E75FFC /* Euphoria_Script */,
 				B26FD1802774D11600E75FFC /* Views */,
-				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
-				B26FD1742774CFFB00E75FFC /* ModelData.swift */,
-				B2FC34A8277CD87E004092F6 /* Allergen.swift */,
-				B2FC34AA277CD8B0004092F6 /* Additive.swift */,
-				B26FD1762774D01800E75FFC /* NutritionFacts.swift */,
-				B26FD1782774D02F00E75FFC /* Product.swift */,
-				B26FD17C2774D09700E75FFC /* User.swift */,
+				B2FC34B5277F51D3004092F6 /* Models */,
 				B26FD1502774CCD100E75FFC /* Experience.rcproject */,
 				B26FD1522774CCD300E75FFC /* Assets.xcassets */,
 				B26FD1542774CCD300E75FFC /* Preview Content */,
@@ -121,18 +115,8 @@
 		B26FD1802774D11600E75FFC /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B26FD14E2774CCD100E75FFC /* ContentView.swift */,
-				B26FD15E2774CDF900E75FFC /* AboutUs.swift */,
-				B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */,
-				B26FD1622774CE9F00E75FFC /* addProduct.swift */,
-				B2FC34AE277E2409004092F6 /* SelectAllergens.swift */,
-				B26FD1642774CECC00E75FFC /* changePassword.swift */,
-				B26FD1682774CF1F00E75FFC /* Login.swift */,
-				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
-				B26FD1702774CFB000E75FFC /* MenuList.swift */,
-				B26FD1722774CFCC00E75FFC /* MenuRow.swift */,
-				B26FD17E2774D0D300E75FFC /* MainView.swift */,
-				B26FD17A2774D04600E75FFC /* Profile.swift */,
+				B2FC34B2277F5175004092F6 /* Login */,
+				B2FC34B3277F5187004092F6 /* Main Menu */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -143,6 +127,70 @@
 				B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */,
 			);
 			path = Euphoria_Script;
+			sourceTree = "<group>";
+		};
+		B2FC34B0277F513A004092F6 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD1702774CFB000E75FFC /* MenuList.swift */,
+				B26FD1622774CE9F00E75FFC /* addProduct.swift */,
+				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
+				B2FC34AE277E2409004092F6 /* SelectAllergens.swift */,
+				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
+				B26FD1722774CFCC00E75FFC /* MenuRow.swift */,
+				B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		B2FC34B1277F5147004092F6 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD17A2774D04600E75FFC /* Profile.swift */,
+				B26FD1642774CECC00E75FFC /* changePassword.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		B2FC34B2277F5175004092F6 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD14E2774CCD100E75FFC /* ContentView.swift */,
+				B26FD1682774CF1F00E75FFC /* Login.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		B2FC34B3277F5187004092F6 /* Main Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD17E2774D0D300E75FFC /* MainView.swift */,
+				B2FC34B4277F51C1004092F6 /* Info */,
+				B2FC34B0277F513A004092F6 /* Menu */,
+				B2FC34B1277F5147004092F6 /* Profile */,
+			);
+			path = "Main Menu";
+			sourceTree = "<group>";
+		};
+		B2FC34B4277F51C1004092F6 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD15E2774CDF900E75FFC /* AboutUs.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		B2FC34B5277F51D3004092F6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD1742774CFFB00E75FFC /* ModelData.swift */,
+				B2FC34A8277CD87E004092F6 /* Allergen.swift */,
+				B2FC34AA277CD8B0004092F6 /* Additive.swift */,
+				B26FD1762774D01800E75FFC /* NutritionFacts.swift */,
+				B26FD1782774D02F00E75FFC /* Product.swift */,
+				B26FD17C2774D09700E75FFC /* User.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

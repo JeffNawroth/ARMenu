@@ -10,11 +10,11 @@ import RealityKit
 
 struct ContentView : View {
     
-    var modelData: ModelData = ModelData()
     @State var signInSucces = false
+    
     var body: some View {
         if signInSucces{
-            MainView(modelData: modelData)
+            MainView()
             
         }else{
             Login(signInSucces: $signInSucces)
@@ -25,7 +25,7 @@ struct ContentView : View {
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView(modelData:ModelData())
+        ContentView()
     }
 }
 #endif
