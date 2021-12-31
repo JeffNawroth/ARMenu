@@ -11,8 +11,7 @@ struct addProduct: View {
     
     var dummyCategories:[String] = ["Alles", "Kuchen", "Eis", "Getränk","Waffel"]
 
-    
-    @Binding var modelData: ModelData
+    @EnvironmentObject var modelData: ModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -243,6 +242,6 @@ struct addProduct: View {
 
 struct addFood_Previews: PreviewProvider {
     static var previews: some View {
-        addProduct(modelData: .constant(ModelData()), showingSheet: .constant(true))
+        addProduct(showingSheet: .constant(true))
     }
 }

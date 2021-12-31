@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuList: View {
     var dummyCategories:[String] = ["Alles", "Kuchen", "Eis", "Getränk","Waffel"]
 
-    @State var modelData: ModelData
+    @EnvironmentObject var modelData: ModelData
     @State private var showCategoryOnly: String = "Alles"
     @State private var selectedTab: String = "Liste"
     @State private var showingSheet = false
@@ -57,7 +57,7 @@ struct MenuList: View {
                     }
 
                     .sheet(isPresented: $showingSheet) {
-                        addProduct(modelData: $modelData,showingSheet: $showingSheet)
+                        addProduct(showingSheet: $showingSheet)
                     }
                 }
             }
@@ -67,7 +67,8 @@ struct MenuList: View {
 
 struct MenuList_Previews: PreviewProvider {
     static var previews: some View {
-        MenuList(modelData: ModelData())
+        MenuList()
+            .environmentObject(ModelData())
     }
 }
 

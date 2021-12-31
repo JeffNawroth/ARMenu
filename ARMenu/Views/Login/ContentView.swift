@@ -15,6 +15,7 @@ struct ContentView : View {
     var body: some View {
         if signInSucces{
             MainView()
+                .environmentObject(ModelData())
             
         }else{
             Login(signInSucces: $signInSucces)
@@ -26,6 +27,7 @@ struct ContentView : View {
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(ModelData())
     }
 }
 #endif

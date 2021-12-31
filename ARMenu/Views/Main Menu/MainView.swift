@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    var modelData: ModelData = ModelData()
+    @EnvironmentObject var modelData: ModelData
 
     var body: some View {
         TabView {
@@ -19,7 +19,7 @@ struct MainView: View {
                 }
 
             
-            MenuList(modelData: modelData)
+            MenuList()
                 .tabItem {
                     Label("Menü", systemImage: "list.dash")
                 }
@@ -40,7 +40,8 @@ struct MainView: View {
 
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(modelData: ModelData())
+        MainView()
+            .environmentObject(ModelData())
     }
 }
 
