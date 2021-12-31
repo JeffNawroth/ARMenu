@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+
 struct SelectAllergens: View {
 
-    
-    private var allergens: [Allergen] = ModelData().allergens
-    @State private var multiSelection = Set<Allergen>()
+    @Binding var productAllergens: [Allergen]
+    var allergens: [Allergen] = ModelData().allergens
+    @State var multiSelection = Set<Allergen>()
 
     
 
@@ -25,11 +26,10 @@ struct SelectAllergens: View {
                 .environment(\.editMode, Binding.constant(EditMode.active))
     }
     
-   
 }
 
 struct SelectAllergens_Previews: PreviewProvider {
     static var previews: some View {
-        SelectAllergens()
+        SelectAllergens(productAllergens: .constant(ModelData().allergens))
     }
 }

@@ -165,8 +165,7 @@ struct addProduct: View {
                     }
                     
                     NavigationLink{
-                        
-                        SelectAllergens()
+                        SelectAllergens(productAllergens: $productDummy.allergens)
                     } label:{
                        Text("Allergene hinzufügen")
                             .foregroundColor(.blue)
