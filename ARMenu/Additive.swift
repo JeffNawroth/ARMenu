@@ -10,4 +10,9 @@ import Foundation
 struct Additive: Identifiable{
     let id = UUID()
     var name: String
+    
+    
+    static var dummyAdditives: [Additive] = [Additive(name: "Farbstoffe"), Additive(name: "Emulgatoren"), Additive(name: "Konservierungsmittel"), Additive(name: "Süßungsmittel")]
+
+    
 }

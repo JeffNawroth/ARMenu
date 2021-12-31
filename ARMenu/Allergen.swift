@@ -10,4 +10,6 @@ import Foundation
 struct Allergen: Identifiable, Hashable{
     let id = UUID()
     var name: String
+    
+    static var dummyAllergens: [Allergen] = [Allergen(name: "Gluten"), Allergen(name:"Krebstiere"), Allergen(name: "Fisch"), Allergen(name: "Ei")]
 }

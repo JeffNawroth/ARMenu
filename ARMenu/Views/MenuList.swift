@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MenuList: View {
+    var dummyCategories:[String] = ["Alles", "Kuchen", "Eis", "Getränk","Waffel"]
+
     @State var modelData: ModelData
     @State private var showCategoryOnly: String = "Alles"
     @State private var selectedTab: String = "Liste"
@@ -25,7 +27,7 @@ struct MenuList: View {
             Form{
                 Section{
                     Picker("Kategorie", selection: $showCategoryOnly) {
-                        ForEach(modelData.categories, id: \.self){
+                        ForEach(dummyCategories, id: \.self){
                             Text($0)
                         }
                     }

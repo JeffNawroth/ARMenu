@@ -12,8 +12,7 @@ struct Login: View {
     @State var password: String = "imHoernken"
     @Binding var signInSucces: Bool
     
-    var user: User = ModelData().users[0]
-    
+    var dummyUser = User.dummyUser
     
     var body: some View {
         NavigationView{
@@ -33,7 +32,7 @@ struct Login: View {
                         
                     
                         Button("Anmelden"){
-                            if(username == user.username && password == user.password){
+                            if(username == dummyUser.username && password == dummyUser.password){
                                 signInSucces = true
 
                             }

@@ -14,7 +14,7 @@ struct changePassword: View {
     @Binding var showingSheet: Bool
     
     
-    var loggedInUser = ModelData().users[0]
+    var loggedInUser = User.dummyUser
     var disableForm: Bool {
         oldPassword.isEmpty || newPassword.isEmpty || newPassword2.isEmpty || oldPassword != loggedInUser.password
     }

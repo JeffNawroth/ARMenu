@@ -9,6 +9,9 @@ import SwiftUI
 
 struct addProduct: View {
     
+    var dummyCategories:[String] = ["Alles", "Kuchen", "Eis", "Getränk","Waffel"]
+
+    
     @Binding var modelData: ModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
@@ -28,15 +31,18 @@ struct addProduct: View {
     }
     
     struct ProductDummy{
+        var image: Image!
+
         var name: String = ""
         var category: String = ""
         var price: Double!
         var description: String = ""
-        var image: Image!
-        var nutritionFacts: NutritionFacts!
+        
         var isVegan: Bool = false
-        var isFairtade: Bool = false
         var isBio: Bool = false
+        var isFairtrade: Bool = false
+        
+        var nutritionFacts: NutritionFacts!
         var allergens: [Allergen] = [Allergen]()
         var additives: [Additive] = [Additive]()
     }
@@ -90,7 +96,7 @@ struct addProduct: View {
                 
                 Section{
                     Picker("Kategorie", selection: $productDummy.category) {
-                        ForEach(modelData.categories, id: \.self){
+                        ForEach(dummyCategories, id: \.self){
                             Text($0)
                         }
                     }
@@ -121,7 +127,7 @@ struct addProduct: View {
                     Toggle(isOn: $productDummy.isBio) {
                         Text("Bio")
                     }
-                    Toggle(isOn: $productDummy.isFairtade) {
+                    Toggle(isOn: $productDummy.isFairtrade) {
                         Text("Fairtrade")
                     }
                 }
@@ -165,7 +171,7 @@ struct addProduct: View {
                     }
                     
                     NavigationLink{
-                        SelectAllergens(productAllergens: $productDummy.allergens)
+                        SelectAllergens()
                     } label:{
                        Text("Allergene hinzufügen")
                             .foregroundColor(.blue)
@@ -197,7 +203,16 @@ struct addProduct: View {
                         showingSheet = false
                         
                         
-                        let product: Product = Product(name: productDummy.name, category: productDummy.category, price: productDummy.price, description: productDummy.description, image: productDummy.image, isVegan: productDummy.isVegan, nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein), isBio: productDummy.isFairtade, isFairtrade: productDummy.isBio)
+                        let product: Product =
+                        Product(image: productDummy.image,
+                                name: productDummy.name,
+                                category: productDummy.category,
+                                price: productDummy.price,
+                                description: productDummy.description,
+                                isVegan: productDummy.isVegan,
+                                isBio: productDummy.isBio,
+                                isFairtrade: productDummy.isFairtrade,
+                                nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein))
                         
                         modelData.products.append(product)
                         

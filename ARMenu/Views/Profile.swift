@@ -10,7 +10,7 @@ import SwiftUI
 struct Profile: View {
     @State var showingSheet = false
     @State var oldPassword = ""
-    var loggedInUser: User = ModelData().users[0]
+    var loggedInUser: User = User.dummyUser
     var body: some View {
         NavigationView{
             Form{

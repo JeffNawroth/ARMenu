@@ -9,13 +9,9 @@ import SwiftUI
 
 
 struct SelectAllergens: View {
-
-    @Binding var productAllergens: [Allergen]
-    var allergens: [Allergen] = ModelData().allergens
-    @State var multiSelection = Set<Allergen>()
-
     
-
+    @State var multiSelection = Set<Allergen>()
+    var allergens = Allergen.dummyAllergens
 
     var body: some View {
             List(allergens,id: \.self, selection: $multiSelection){ allergen in
@@ -30,6 +26,6 @@ struct SelectAllergens: View {
 
 struct SelectAllergens_Previews: PreviewProvider {
     static var previews: some View {
-        SelectAllergens(productAllergens: .constant(ModelData().allergens))
+        SelectAllergens()
     }
 }
