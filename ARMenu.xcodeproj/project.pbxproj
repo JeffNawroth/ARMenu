@@ -28,6 +28,7 @@
 		B26FD17D2774D09700E75FFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17C2774D09700E75FFC /* User.swift */; };
 		B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17E2774D0D300E75FFC /* MainView.swift */; };
 		B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */; };
+		B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A2F162278028A4001451B8 /* SelectAdditives.swift */; };
 		B2FC34A9277CD87E004092F6 /* Allergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34A8277CD87E004092F6 /* Allergen.swift */; };
 		B2FC34AB277CD8B0004092F6 /* Additive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34AA277CD8B0004092F6 /* Additive.swift */; };
 		B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34AE277E2409004092F6 /* SelectAllergens.swift */; };
@@ -57,6 +58,7 @@
 		B26FD17E2774D0D300E75FFC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuphoriaScript-Regular.ttf"; sourceTree = "<group>"; };
 		B26FD1842774D19B00E75FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B2A2F162278028A4001451B8 /* SelectAdditives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdditives.swift; sourceTree = "<group>"; };
 		B2FC34A8277CD87E004092F6 /* Allergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Allergen.swift; sourceTree = "<group>"; };
 		B2FC34AA277CD8B0004092F6 /* Additive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Additive.swift; sourceTree = "<group>"; };
 		B2FC34AE277E2409004092F6 /* SelectAllergens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAllergens.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				B26FD1702774CFB000E75FFC /* MenuList.swift */,
 				B26FD1622774CE9F00E75FFC /* addProduct.swift */,
 				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
+				B2A2F162278028A4001451B8 /* SelectAdditives.swift */,
 				B2FC34AE277E2409004092F6 /* SelectAllergens.swift */,
 				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
 				B26FD1722774CFCC00E75FFC /* MenuRow.swift */,
@@ -273,6 +276,7 @@
 				B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */,
 				B2FC34AB277CD8B0004092F6 /* Additive.swift in Sources */,
 				B26FD1732774CFCC00E75FFC /* MenuRow.swift in Sources */,
+				B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */,
 				B26FD1512774CCD100E75FFC /* Experience.rcproject in Sources */,
 				B26FD1672774CEF700E75FFC /* ImagePicker.swift in Sources */,
 				B26FD1792774D02F00E75FFC /* Product.swift in Sources */,

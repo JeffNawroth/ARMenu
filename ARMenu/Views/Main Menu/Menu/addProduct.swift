@@ -42,8 +42,8 @@ struct addProduct: View {
         var isFairtrade: Bool = false
         
         var nutritionFacts: NutritionFacts!
-        var allergens: [Allergen] = [Allergen]()
-        var additives: [Additive] = [Additive]()
+        var allergens: Set<Allergen> = Set<Allergen>()
+        var additives: Set<Additive> = Set<Additive>()
     }
     
     
@@ -165,12 +165,12 @@ struct addProduct: View {
                 
                 Section(header: Text("Allergene")){
                     
-                    ForEach(productDummy.allergens){
-                        Text($0.name)
+                    ForEach(Array(productDummy.allergens)){ allergen in
+                            Text(allergen.name)
                     }
                     
                     NavigationLink{
-                        SelectAllergens()
+                        SelectAllergens(selectedAllergens: $productDummy.allergens)
                     } label:{
                        Text("Allergene hinzufügen")
                             .foregroundColor(.blue)
@@ -180,12 +180,15 @@ struct addProduct: View {
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
-                    ForEach(productDummy.additives){
+                    ForEach(Array(productDummy.additives)){
                         Text($0.name)
                     }
-                    Button("Zusatzstoffe hinzufügen"){
-                        productDummy.additives.append(Additive(name: "Süßstoff"))
-                        
+                    
+                    NavigationLink{
+                        SelectAdditives(selectedAdditives: $productDummy.additives)
+                    } label:{
+                       Text("Zusatzstoffe hinzufügen")
+                            .foregroundColor(.blue)
                     }
                 }
                 
@@ -212,8 +215,8 @@ struct addProduct: View {
                                 isBio: productDummy.isBio,
                                 isFairtrade: productDummy.isFairtrade,
                                 nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein),
-                                allergens: productDummy.allergens,
-                                additives: productDummy.additives
+                                allergens: Array(productDummy.allergens),
+                                additives: Array(productDummy.additives)
                                 
                         )
                         
