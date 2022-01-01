@@ -11,16 +11,15 @@ struct SelectAdditives: View {
     @Binding var selectedAdditives: Set<Additive>
     var additives: [Additive] = Additive.dummyAdditives
     var body: some View {
-       
         
-            List(additives, id:\.self, selection: $selectedAdditives){ additive in
-                Text(additive.name)
-            }
-            .navigationTitle("Zusatzstoffe")
-            .navigationBarTitleDisplayMode(.inline)
-            .environment(\.editMode, Binding.constant(EditMode.active))
+        List(additives, id:\.self, selection: $selectedAdditives){
+                Text($0.name)
         }
+        .navigationTitle("Zusatzstoffe")
+        .navigationBarTitleDisplayMode(.inline)
+        .environment(\.editMode, Binding.constant(EditMode.active))
     }
+}
 
 struct SelectAdditives_Previews: PreviewProvider {
     static var previews: some View {

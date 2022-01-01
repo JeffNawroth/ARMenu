@@ -13,8 +13,8 @@ struct SelectAllergens: View {
     var allergens: [Allergen] = Allergen.dummyAllergens
     
     var body: some View {
-        List(allergens, id:\.self, selection: $selectedAllergens){ allergen in
-            Text(allergen.name)
+        List(allergens, id:\.self, selection: $selectedAllergens){
+            Text($0.name)
         }
         .navigationTitle("Allergene")
         .navigationBarTitleDisplayMode(.inline)

@@ -165,8 +165,8 @@ struct addProduct: View {
                 
                 Section(header: Text("Allergene")){
                     
-                    ForEach(Array(productDummy.allergens)){ allergen in
-                            Text(allergen.name)
+                    ForEach(Array(productDummy.allergens)){
+                            Text($0.name)
                     }
                     
                     NavigationLink{
