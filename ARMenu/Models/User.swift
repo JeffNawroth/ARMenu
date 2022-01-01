@@ -11,15 +11,15 @@ struct User:Identifiable{
     var id = UUID()
     var username: String?
     var password: String?
-   /* var role: UserRole
+   var role: UserRole
     
     enum UserRole{
         case Admin
         case Customer
-    }*/
+    }
     
     
-   static var dummyUser = User(username: "imHoernken", password: "imHoernken")
+    static var dummyUser = User(username: "imHoernken", password: "imHoernken", role: .Customer)
 
     
 }

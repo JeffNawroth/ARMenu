@@ -15,6 +15,8 @@ struct MenuList: View {
     @State private var selectedTab: String = "Liste"
     @State private var showingSheet = false
     
+    var loggedInUser: User = User.dummyUser
+    
     var filteredMenuList: [Product] {
         modelData.products.filter{ food in
             (showCategoryOnly == "Alles" || showCategoryOnly == food.category)
@@ -47,18 +49,23 @@ struct MenuList: View {
             .navigationTitle("Speisekarte")
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
-                    EditButton()
+                    if loggedInUser.role == .Admin{
+                        EditButton()
+                    }
                 }
                 ToolbarItem(placement: .navigationBarTrailing){
-                    Button {
-                        showingSheet = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                    if loggedInUser.role == .Admin{
+                        Button {
+                            showingSheet = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
 
-                    .sheet(isPresented: $showingSheet) {
-                        addProduct(showingSheet: $showingSheet)
+                        .sheet(isPresented: $showingSheet) {
+                            addProduct(showingSheet: $showingSheet)
+                        }
                     }
+                    
                 }
             }
         }

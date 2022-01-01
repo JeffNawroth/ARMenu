@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var modelData: ModelData
+    var loggedInUser: User = User.dummyUser
 
     var body: some View {
         TabView {
@@ -25,14 +26,12 @@ struct MainView: View {
                 }
 
 
-            Profile()
-                .tabItem {
-                    Label("Profil", systemImage: "person.fill")
-                }
-              
-
-            
-            
+            if loggedInUser.role == .Admin{
+                Profile()
+                    .tabItem {
+                        Label("Profil", systemImage: "person.fill")
+                    }
+            }    
         }
         .accentColor(Color(red: 120/255, green: 172/255, blue: 149/255))
     }
