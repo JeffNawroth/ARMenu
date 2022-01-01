@@ -144,12 +144,20 @@ struct MenuDetail: View {
                         VStack{
                             Text("Allergene")
                                 .fontWeight(.semibold)
+                            ForEach(product.allergens){allergen in
+                                Text(allergen.name)
+                            }
                         }
+                        Spacer()
+                        Divider()
                         Spacer()
                         VStack{
                             Text("Zusatzstoffe")
                                 .fontWeight(.semibold)
+                            ForEach(product.additives){additive in
+                                Text(additive.name)
                         }
+                    }
                         Spacer()
                     }
                 } label: {

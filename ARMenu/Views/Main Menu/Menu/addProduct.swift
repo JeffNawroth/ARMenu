@@ -211,7 +211,11 @@ struct addProduct: View {
                                 isVegan: productDummy.isVegan,
                                 isBio: productDummy.isBio,
                                 isFairtrade: productDummy.isFairtrade,
-                                nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein))
+                                nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein),
+                                allergens: productDummy.allergens,
+                                additives: productDummy.additives
+                                
+                        )
                         
                         modelData.products.append(product)
                         

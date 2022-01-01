@@ -22,11 +22,10 @@ struct Product: Identifiable{
     var isFairtrade: Bool
     
     var nutritionFacts: NutritionFacts
-
+    var allergens: [Allergen]
+    var additives: [Additive]
     
     
-//    var allergens: [Allergen]
-//    var additives: [Additive]
 //    var servingSize
     
 }
