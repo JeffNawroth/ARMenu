@@ -22,7 +22,7 @@ struct MainView: View {
             
             MenuList()
                 .tabItem {
-                    Label("Menü", systemImage: "list.dash")
+                    Label("Speisekarte", systemImage: "list.dash")
                 }
 
 

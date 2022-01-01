@@ -19,7 +19,7 @@ struct User:Identifiable{
     }
     
     
-    static var dummyUser = User(username: "imHoernken", password: "imHoernken", role: .Customer)
+    static var dummyUser = User(username: "imHoernken", password: "imHoernken", role: .Admin)
 
     
 }
