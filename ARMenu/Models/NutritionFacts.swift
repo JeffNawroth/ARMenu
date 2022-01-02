@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct NutritionFacts{
+struct NutritionFacts, Identifiable{
+    var id: String
     var calories: Int
     var fat: Double
     var carbs: Double

@@ -11,11 +11,11 @@ struct MenuRow: View {
     var product: Product
     var body: some View {
         HStack {
-            product.image
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100)
-                .cornerRadius(8)
+//            product.image
+//                .resizable()
+//                .scaledToFit()
+//                .frame(width: 100)
+//                .cornerRadius(8)
             
             VStack(alignment: .leading, spacing: 5){
                 

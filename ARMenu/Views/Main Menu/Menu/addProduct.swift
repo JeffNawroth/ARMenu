@@ -205,22 +205,22 @@ struct addProduct: View {
                         showingSheet = false
                         
                         
-                        let product: Product =
-                        Product(image: productDummy.image,
-                                name: productDummy.name,
-                                category: productDummy.category,
-                                price: productDummy.price,
-                                description: productDummy.description,
-                                isVegan: productDummy.isVegan,
-                                isBio: productDummy.isBio,
-                                isFairtrade: productDummy.isFairtrade,
-                                nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein),
-                                allergens: Array(productDummy.allergens),
-                                additives: Array(productDummy.additives)
-                                
-                        )
-                        
-                        modelData.products.append(product)
+//                        let product: Product =
+//                        Product(image: productDummy.image,
+//                                name: productDummy.name,
+//                                category: productDummy.category,
+//                                price: productDummy.price,
+//                                description: productDummy.description,
+//                                isVegan: productDummy.isVegan,
+//                                isBio: productDummy.isBio,
+//                                isFairtrade: productDummy.isFairtrade,
+//                                nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein),
+//                                allergens: Array(productDummy.allergens),
+//                                additives: Array(productDummy.additives)
+//
+//                        )
+//                        
+//                        modelData.products.append(product)
                         
                     } label: {
                         Text("Fertig")

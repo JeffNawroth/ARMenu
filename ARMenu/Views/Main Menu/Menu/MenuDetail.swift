@@ -17,12 +17,12 @@ struct MenuDetail: View {
     var body: some View {
         ZStack {
             ScrollView{
-                product.image
-                    .resizable()
-                    .scaledToFit()
-                    .cornerRadius(10)
-                    .shadow(radius: 3)
-                    .padding()
+//                product.image
+//                    .resizable()
+//                    .scaledToFit()
+//                    .cornerRadius(10)
+//                    .shadow(radius: 3)
+//                    .padding()
                 
                 VStack(alignment: .leading){
                     
@@ -103,66 +103,66 @@ struct MenuDetail: View {
                 }
                 .padding()
                 
-                    DisclosureGroup(isExpanded: $nutritionsExpanded) {
-                        HStack{
-                           Spacer()
-                            Text("pro 100 g")
-                                .fontWeight(.semibold)
-
-                        }
-                        
-                            HStack{
-                                Text("Brennwert")
-                                Spacer()
-                                Text(String(product.nutritionFacts.calories) + " kcal")
-
-                            }
-
-                            HStack{
-                                Text("Fett")
-                                Spacer()
-                                Text(String(product.nutritionFacts.fat) + " g")
-                            }
-                            HStack{
-                                Text("Kohlenhydrate")
-                                Spacer()
-                                Text(String(product.nutritionFacts.carbs) + " g")
-                            }
-                            HStack{
-                                Text("Protein")
-                                Spacer()
-                                Text(String(product.nutritionFacts.protein) + " g")
-                            }
-                           
-                    } label: {
-                        Text("Nährwerte")
-                    }.padding(.horizontal)
-                
-                DisclosureGroup(isExpanded: $allergensExpanded) {
-                    HStack{
-                        Spacer()
-                        VStack{
-                            Text("Allergene")
-                                .fontWeight(.semibold)
-                            ForEach(product.allergens){allergen in
-                                Text(allergen.name)
-                            }
-                        }
-                        Spacer()
-                        Divider()
-                        Spacer()
-                        VStack{
-                            Text("Zusatzstoffe")
-                                .fontWeight(.semibold)
-                            ForEach(product.additives){additive in
-                                Text(additive.name)
-                        }
-                    }
-                        Spacer()
-                    }
-                } label: {
-                    Text("Allergene & Zusatzstoffe")
-                }.padding(.horizontal)
+//                    DisclosureGroup(isExpanded: $nutritionsExpanded) {
+//                        HStack{
+//                           Spacer()
+//                            Text("pro 100 g")
+//                                .fontWeight(.semibold)
+//
+//                        }
+//                        
+//                            HStack{
+//                                Text("Brennwert")
+//                                Spacer()
+//                                Text(String(product.nutritionFacts.calories) + " kcal")
+//
+//                            }
+//
+//                            HStack{
+//                                Text("Fett")
+//                                Spacer()
+//                                Text(String(product.nutritionFacts.fat) + " g")
+//                            }
+//                            HStack{
+//                                Text("Kohlenhydrate")
+//                                Spacer()
+//                                Text(String(product.nutritionFacts.carbs) + " g")
+//                            }
+//                            HStack{
+//                                Text("Protein")
+//                                Spacer()
+//                                Text(String(product.nutritionFacts.protein) + " g")
+//                            }
+//                           
+//                    } label: {
+//                        Text("Nährwerte")
+//                    }.padding(.horizontal)
+//                
+//                DisclosureGroup(isExpanded: $allergensExpanded) {
+//                    HStack{
+//                        Spacer()
+//                        VStack{
+//                            Text("Allergene")
+//                                .fontWeight(.semibold)
+//                            ForEach(product.allergens){allergen in
+//                                Text(allergen.name)
+//                            }
+//                        }
+//                        Spacer()
+//                        Divider()
+//                        Spacer()
+//                        VStack{
+//                            Text("Zusatzstoffe")
+//                                .fontWeight(.semibold)
+//                            ForEach(product.additives){additive in
+//                                Text(additive.name)
+//                        }
+//                    }
+//                        Spacer()
+//                    }
+//                } label: {
+//                    Text("Allergene & Zusatzstoffe")
+//                }.padding(.horizontal)
 
                
 
