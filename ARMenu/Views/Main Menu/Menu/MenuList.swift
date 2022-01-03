@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct MenuList: View {
-    var dummyCategories:[String] = ["Alles", "Kuchen", "Eis", "Getränk","Waffel"]
 
     @EnvironmentObject var modelData: ModelData
-    @State private var showCategoryOnly: String = "Alles"
-    @State private var selectedTab: String = "Liste"
+    @State private var selectedCategory = 0
     @State private var showingSheet = false
-    
     var loggedInUser: User = User.dummyUser
     
     var filteredMenuList: [Product] {
-        modelData.products.filter{ food in
-            (showCategoryOnly == "Alles" || showCategoryOnly == food.category)
+        modelData.products.filter{ product in
+            (modelData.categories[selectedCategory].name == "Alles" || modelData.categories[selectedCategory].name == product.category.name)
         }
     }
     
@@ -28,19 +25,19 @@ struct MenuList: View {
         NavigationView{
             Form{
                 Section{
-                    Picker("Kategorie", selection: $showCategoryOnly) {
-                        ForEach(dummyCategories, id: \.self){
-                            Text($0)
+                    Picker("Kategorie", selection: $selectedCategory) {
+                        ForEach(0..<modelData.categories.count){
+                            Text(modelData.categories[$0].name)
                         }
                     }
                 }
                 Section{
                     List{
-                        ForEach(filteredMenuList){ food in
+                        ForEach(filteredMenuList){ product in
                             NavigationLink{
-                                MenuDetail(product: food)
+                                MenuDetail(product: product)
                             } label:{
-                                MenuRow(product: food)
+                                MenuRow(product: product)
                             }
                         } .onDelete{ (indexSet) in modelData.products.remove(atOffsets: indexSet)}
                     }

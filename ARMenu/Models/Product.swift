@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct Product: Identifiable{
-    let id = UUID()
+    var id: String = UUID().uuidString
     var image: Image
 
     var name: String
-    var category: String
+    var category: Category
     var price: Double
     var description: String
         

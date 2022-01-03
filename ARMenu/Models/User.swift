@@ -8,10 +8,10 @@
 import Foundation
 
 struct User:Identifiable{
-    var id = UUID()
+    var id:String = UUID().uuidString
     var username: String?
     var password: String?
-   var role: UserRole
+    var role: UserRole
     
     enum UserRole{
         case Admin
@@ -20,7 +20,7 @@ struct User:Identifiable{
     
     
     static var dummyUser = User(username: "imHoernken", password: "imHoernken", role: .Admin)
-
+    
     
 }
 

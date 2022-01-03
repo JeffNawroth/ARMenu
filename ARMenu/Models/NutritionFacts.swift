@@ -8,6 +8,7 @@
 import Foundation
 
 struct NutritionFacts{
+    var id: String = UUID().uuidString
     var calories: Int
     var fat: Double
     var carbs: Double
