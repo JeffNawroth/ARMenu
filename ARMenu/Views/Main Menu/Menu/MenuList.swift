@@ -8,15 +8,25 @@
 import SwiftUI
 
 struct MenuList: View {
-
+    
     @EnvironmentObject var modelData: ModelData
     @State private var selectedCategory = 0
     @State private var showingSheet = false
+    @State private var searchText = ""
+    
     var loggedInUser: User = User.dummyUser
     
     var filteredMenuList: [Product] {
         modelData.products.filter{ product in
             (modelData.categories[selectedCategory].name == "Alles" || modelData.categories[selectedCategory].name == product.category.name)
+        }
+    }
+    
+    var searchResults: [Product] {
+        if searchText.isEmpty {
+            return filteredMenuList
+        } else {
+            return filteredMenuList.filter { $0.name.contains(searchText) }
         }
     }
     
@@ -33,14 +43,15 @@ struct MenuList: View {
                 }
                 Section{
                     List{
-                        ForEach(filteredMenuList){ product in
+                        ForEach(searchResults){ product in
                             NavigationLink{
                                 MenuDetail(product: product)
                             } label:{
                                 MenuRow(product: product)
                             }
                         } .onDelete{ (indexSet) in modelData.products.remove(atOffsets: indexSet)}
-                    }
+                    } .searchable(text: $searchText)
+                    
                 }
             }
             .navigationTitle("Speisekarte")
@@ -57,7 +68,7 @@ struct MenuList: View {
                         } label: {
                             Image(systemName: "plus")
                         }
-
+                        
                         .sheet(isPresented: $showingSheet) {
                             addProduct(showingSheet: $showingSheet)
                         }
