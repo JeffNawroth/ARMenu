@@ -49,13 +49,14 @@ struct MenuList: View {
                                     OfferDetail(offer: offer)
                                 } label:{
                                     OfferColumn(offer: offer)
+                                    
                                 }
                             }
                         }
                     }
-                    .listRowInsets(EdgeInsets())
+                .listRowInsets(EdgeInsets())
                 }.listRowBackground(Color.clear)
-                
+                   
                 Section(header: Text("Produkte")){
                     List{
                         ForEach(searchResults){ product in
@@ -66,6 +67,7 @@ struct MenuList: View {
                             }
                         } .onDelete{ (indexSet) in modelData.products.remove(atOffsets: indexSet)}
                     }
+                    
                 }
                 
             }
