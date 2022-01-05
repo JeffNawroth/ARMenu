@@ -42,9 +42,13 @@ struct OfferDetail: View {
                         } label: {
                             VStack{
                                 MenuRow(product: product)
+                                    .foregroundColor(Color.primary)
+
                                 Divider()
                             }
                             Image(systemName: "chevron.right")
+                                .font(.system(size: 14))
+                                .foregroundColor(Color.gray)
                         }
                     }
             }.padding(.horizontal)
@@ -61,5 +65,6 @@ struct OfferDetail: View {
 struct OfferDetail_Previews: PreviewProvider {
     static var previews: some View {
         OfferDetail(offer: ModelData().offers[0])
+            .preferredColorScheme(.light)
     }
 }
