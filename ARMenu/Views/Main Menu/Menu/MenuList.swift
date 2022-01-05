@@ -41,7 +41,22 @@ struct MenuList: View {
                         }
                     }
                 }
-                Section{
+                Section(header: Text("Angebote")){
+                    ScrollView(.horizontal){
+                        HStack{
+                            ForEach(modelData.offers){ offer in
+                                NavigationLink{
+                                    OfferDetail(offer: offer)
+                                } label:{
+                                    OfferColumn(offer: offer)
+                                }
+                            }
+                        }
+                    }
+                    .listRowInsets(EdgeInsets())
+                }.listRowBackground(Color.clear)
+                
+                Section(header: Text("Produkte")){
                     List{
                         ForEach(searchResults){ product in
                             NavigationLink{
@@ -50,11 +65,12 @@ struct MenuList: View {
                                 MenuRow(product: product)
                             }
                         } .onDelete{ (indexSet) in modelData.products.remove(atOffsets: indexSet)}
-                    } .searchable(text: $searchText)
-                    
+                    }
                 }
+                
             }
             .navigationTitle("Speisekarte")
+            .searchable(text: $searchText)
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
                     if loggedInUser.role == .Admin{
