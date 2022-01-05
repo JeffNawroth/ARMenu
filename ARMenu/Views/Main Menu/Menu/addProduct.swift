@@ -9,15 +9,21 @@ import SwiftUI
 
 struct addProduct: View {
     
-    var dummyCategories:[String] = ["Alles", "Kuchen", "Eis", "Getränk","Waffel"]
-
     @EnvironmentObject var modelData: ModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     
     var disableForm: Bool {
-        productDummy.name.isEmpty || productDummy.price == nil || productDummy.description.isEmpty || productDummy.image == nil || productDummy.category.isEmpty || nutritionFactsDummy.calories == nil || nutritionFactsDummy.fat == nil || nutritionFactsDummy.carbs == nil || nutritionFactsDummy.protein == nil
+        productDummy.image == nil ||
+        productDummy.name.isEmpty ||
+        productDummy.category.name.isEmpty ||
+        productDummy.price == nil ||
+        productDummy.description.isEmpty ||
+        nutritionFactsDummy.calories == nil ||
+        nutritionFactsDummy.fat == nil ||
+        nutritionFactsDummy.carbs == nil ||
+        nutritionFactsDummy.protein == nil
     }
     
     
@@ -33,7 +39,7 @@ struct addProduct: View {
         var image: Image!
 
         var name: String = ""
-        var category: String = ""
+        var category: Category = Category(name: "")
         var price: Double!
         var description: String = ""
         
@@ -95,8 +101,8 @@ struct addProduct: View {
                 
                 Section{
                     Picker("Kategorie", selection: $productDummy.category) {
-                        ForEach(dummyCategories, id: \.self){
-                            Text($0)
+                        ForEach(modelData.categories, id: \.self){
+                            Text($0.name)
                         }
                     }
                     HStack{
