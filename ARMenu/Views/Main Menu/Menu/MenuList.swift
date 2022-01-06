@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MenuList: View {
-
+    
     @EnvironmentObject var modelData: ModelData
     @State private var selectedCategory = 0
     @State private var showingSheet = false
+    @State private var searchText = ""
+    
     var loggedInUser: User = User.dummyUser
     
     var filteredMenuList: [Product]
@@ -20,6 +22,14 @@ struct MenuList: View {
 //            (modelData.categories[selectedCategory].name == "Alles" || modelData.categories[selectedCategory].name == product.category.name)
 //        }
 //    }
+    
+    var searchResults: [Product] {
+        if searchText.isEmpty {
+            return filteredMenuList
+        } else {
+            return filteredMenuList.filter { $0.name.contains(searchText) }
+        }
+    }
     
     
     var body: some View {
@@ -32,9 +42,25 @@ struct MenuList: View {
                         }
                     }
                 }
-                Section{
+                Section(header: Text("Angebote")){
+                    ScrollView(.horizontal){
+                        HStack{
+                            ForEach(modelData.offers){ offer in
+                                NavigationLink{
+                                    OfferDetail(offer: offer)
+                                } label:{
+                                    OfferColumn(offer: offer)
+                                    
+                                }
+                            }
+                        }
+                    }
+                .listRowInsets(EdgeInsets())
+                }.listRowBackground(Color.clear)
+                   
+                Section(header: Text("Produkte")){
                     List{
-                        ForEach(filteredMenuList){ product in
+                        ForEach(searchResults){ product in
                             NavigationLink{
                                 MenuDetail(product: product)
                             } label:{
@@ -42,9 +68,12 @@ struct MenuList: View {
                             }
                         } .onDelete{ (indexSet) in modelData.products.remove(atOffsets: indexSet)}
                     }
+                    
                 }
+                
             }
             .navigationTitle("Speisekarte")
+            .searchable(text: $searchText)
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
                     if loggedInUser.role == .Admin{
@@ -58,7 +87,7 @@ struct MenuList: View {
                         } label: {
                             Image(systemName: "plus")
                         }
-
+                        
                         .sheet(isPresented: $showingSheet) {
                             addProduct(showingSheet: $showingSheet)
                         }

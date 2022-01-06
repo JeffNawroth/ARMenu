@@ -256,5 +256,6 @@ struct addProduct: View {
 struct addFood_Previews: PreviewProvider {
     static var previews: some View {
         addProduct(showingSheet: .constant(true))
+            .environmentObject(ModelData())
     }
 }
