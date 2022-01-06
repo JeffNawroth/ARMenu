@@ -35,9 +35,9 @@ struct MenuRow: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
-                    Text(product.category.name)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
+//                    Text(product.category.name)
+//                        .fontWeight(.semibold)
+//                        .foregroundColor(.secondary)
                 }
                 
                 if product.isVegan||product.isBio||product.isFairtrade{

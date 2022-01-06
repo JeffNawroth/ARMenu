@@ -14,11 +14,12 @@ struct MenuList: View {
     @State private var showingSheet = false
     var loggedInUser: User = User.dummyUser
     
-    var filteredMenuList: [Product] {
-        modelData.products.filter{ product in
-            (modelData.categories[selectedCategory].name == "Alles" || modelData.categories[selectedCategory].name == product.category.name)
-        }
-    }
+    var filteredMenuList: [Product]
+//    {
+//        modelData.products.filter{ product in
+//            (modelData.categories[selectedCategory].name == "Alles" || modelData.categories[selectedCategory].name == product.category.name)
+//        }
+//    }
     
     
     var body: some View {
@@ -69,10 +70,10 @@ struct MenuList: View {
     }
 }
 
-struct MenuList_Previews: PreviewProvider {
-    static var previews: some View {
-        MenuList()
-            .environmentObject(ModelData())
-    }
-}
+//struct MenuList_Previews: PreviewProvider {
+//    static var previews: some View {
+////        MenuList()
+////            .environmentObject(ModelData())
+//    }
+//}
 

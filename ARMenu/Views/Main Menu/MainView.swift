@@ -20,10 +20,10 @@ struct MainView: View {
                 }
 
             
-            MenuList()
-                .tabItem {
-                    Label("Speisekarte", systemImage: "list.dash")
-                }
+//            MenuList()
+//                .tabItem {
+//                    Label("Speisekarte", systemImage: "list.dash")
+//                }
 
 
             if loggedInUser.role == .Admin{
