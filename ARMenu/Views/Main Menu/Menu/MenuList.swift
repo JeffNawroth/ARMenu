@@ -11,8 +11,10 @@ struct MenuList: View {
     
     @EnvironmentObject var modelData: ModelData
     @State private var selectedCategory = 0
-    @State private var showingSheet = false
+    @State private var showingProductSheet = false
+    @State private var showingOfferSheet = false
     @State private var searchText = ""
+    @State private var showsConfirmation = false
     
     var loggedInUser: User = User.dummyUser
     
@@ -82,13 +84,25 @@ struct MenuList: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     if loggedInUser.role == .Admin{
                         Button {
-                            showingSheet = true
+                            showsConfirmation = true
                         } label: {
                             Image(systemName: "plus")
                         }
+                        .confirmationDialog("Was möchten sie tun?", isPresented: $showsConfirmation) {
+                            Button("Angebot erstellen"){
+                                showingOfferSheet = true
+                            }
+                            Button("Produkt erstellen"){
+                                 showingProductSheet = true
+
+                            }
+                        }
                         
-                        .sheet(isPresented: $showingSheet) {
-                            addProduct(showingSheet: $showingSheet)
+                        .sheet(isPresented: $showingProductSheet) {
+                            addProduct(showingSheet: $showingProductSheet)
+                        }
+                        .sheet(isPresented: $showingOfferSheet) {
+                            AddOffer(showingSheet: $showingOfferSheet)
                         }
                     }
                     
