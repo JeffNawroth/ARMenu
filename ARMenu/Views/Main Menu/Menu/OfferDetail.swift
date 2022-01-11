@@ -43,6 +43,7 @@ struct OfferDetail: View {
                             VStack{
                                 MenuRow(product: product)
                                     .foregroundColor(Color.primary)
+                                    
 
                                 Divider()
                             }
@@ -52,10 +53,7 @@ struct OfferDetail: View {
                         }
                     }
             }.padding(.horizontal)
-           
-           
-                
-                .navigationBarTitle(Text(offer.title), displayMode: .inline)
+            .navigationBarTitle(Text(offer.title), displayMode: .inline)
         }
         
         

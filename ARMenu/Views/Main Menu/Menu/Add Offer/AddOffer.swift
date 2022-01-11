@@ -14,18 +14,23 @@ struct AddOffer: View {
     @State private var inputImage: UIImage?
     
     var disableForm: Bool{
-        offerDummy.image==nil||offerDummy.title.isEmpty||offerDummy.description.isEmpty||offerDummy.products.isEmpty
+        offerDummy.image==nil||offerDummy.title.isEmpty||offerDummy.description.isEmpty||selectedProducts.isEmpty
     }
     
     struct OfferDummy{
         var image: Image!
         var title: String = ""
         var description: String = ""
-      var products: [Product] = []
+        var products: [Product] = []
     }
     
     @State var offerDummy = OfferDummy()
     
+    var selectedProducts: [Product] {
+        return productsDummy.filter { $0.isSelected }
+    }
+    
+    @State var productsDummy = ModelData().products
     
     var body: some View {
         NavigationView{
@@ -76,18 +81,24 @@ struct AddOffer: View {
                 
                 Section(header: Text("Produkte")){
                     
-//                    ForEach(Array(offerDummy.products)){
-//                            Text($0.name)
-//                    }
                     
                     NavigationLink{
-//                        SelectAllergens(selectedAllergens: $productDummy.allergens)
+                        SelectProducts(productsDummy: $productsDummy)
                     } label:{
                        Text("Produkte hinzufügen")
                             .foregroundColor(.blue)
                     }
+                    
+                    ForEach(productsDummy){ product in
+                        if product.isSelected{
+                            NavigationLink {
+                                MenuDetail(product: product)
+                            } label: {
+                                MenuRow(product: product)
+                            }
 
-                   
+                        }
+                    }
                 }
             }
             .navigationBarTitle(Text("neues Angebot"), displayMode: .inline)
@@ -99,10 +110,11 @@ struct AddOffer: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button("Fertig"){
                         showingSheet = false
-                        
-                        let offer = Offer(image: offerDummy.image, title: offerDummy.title, description: offerDummy.description, products: [])
+ 
+                        let offer = Offer(image: offerDummy.image, title: offerDummy.title, description: offerDummy.description, products: selectedProducts)
                         
                         modelData.offers.append(offer)
+                        
                     }
                     .disabled(disableForm)
                 }

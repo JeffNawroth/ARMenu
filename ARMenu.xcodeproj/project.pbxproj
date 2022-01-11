@@ -35,6 +35,8 @@
 		B26FD17D2774D09700E75FFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17C2774D09700E75FFC /* User.swift */; };
 		B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17E2774D0D300E75FFC /* MainView.swift */; };
 		B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */; };
+		B28EF5D1278CBBF500F5C944 /* SelectProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D0278CBBF500F5C944 /* SelectProducts.swift */; };
+		B28EF5D3278DDEA800F5C944 /* SelectProductsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D2278DDEA800F5C944 /* SelectProductsRow.swift */; };
 		B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A2F162278028A4001451B8 /* SelectAdditives.swift */; };
 		B2C438BC2780DC1900B8F96F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C438BB2780DC1900B8F96F /* Category.swift */; };
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
@@ -76,6 +78,8 @@
 		B26FD17E2774D0D300E75FFC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuphoriaScript-Regular.ttf"; sourceTree = "<group>"; };
 		B26FD1842774D19B00E75FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B28EF5D0278CBBF500F5C944 /* SelectProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProducts.swift; sourceTree = "<group>"; };
+		B28EF5D2278DDEA800F5C944 /* SelectProductsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProductsRow.swift; sourceTree = "<group>"; };
 		B2A2F162278028A4001451B8 /* SelectAdditives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdditives.swift; sourceTree = "<group>"; };
 		B2C438BB2780DC1900B8F96F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
@@ -167,16 +171,34 @@
 			path = Euphoria_Script;
 			sourceTree = "<group>";
 		};
-		B2FC34B0277F513A004092F6 /* Menu */ = {
+		B28EF5D4278DF65100F5C944 /* Add Product */ = {
 			isa = PBXGroup;
 			children = (
-				B26FD1702774CFB000E75FFC /* MenuList.swift */,
-				B228E992278CAA0F00792F7E /* AddOffer.swift */,
-				B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */,
 				B26FD1622774CE9F00E75FFC /* addProduct.swift */,
 				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
 				B2A2F162278028A4001451B8 /* SelectAdditives.swift */,
 				B2FC34AE277E2409004092F6 /* SelectAllergens.swift */,
+			);
+			path = "Add Product";
+			sourceTree = "<group>";
+		};
+		B28EF5D5278DF66C00F5C944 /* Add Offer */ = {
+			isa = PBXGroup;
+			children = (
+				B228E992278CAA0F00792F7E /* AddOffer.swift */,
+				B28EF5D0278CBBF500F5C944 /* SelectProducts.swift */,
+				B28EF5D2278DDEA800F5C944 /* SelectProductsRow.swift */,
+			);
+			path = "Add Offer";
+			sourceTree = "<group>";
+		};
+		B2FC34B0277F513A004092F6 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B26FD1702774CFB000E75FFC /* MenuList.swift */,
+				B28EF5D5278DF66C00F5C944 /* Add Offer */,
+				B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */,
+				B28EF5D4278DF65100F5C944 /* Add Product */,
 				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
 				B2D39D112784CB17009B5D25 /* OfferDetail.swift */,
 				B26FD1722774CFCC00E75FFC /* MenuRow.swift */,
@@ -318,9 +340,11 @@
 				B26FD17B2774D04600E75FFC /* Profile.swift in Sources */,
 				B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */,
 				B26FD16F2774CF8F00E75FFC /* MenuDetail.swift in Sources */,
+				B28EF5D3278DDEA800F5C944 /* SelectProductsRow.swift in Sources */,
 				B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */,
 				B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */,
 				B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */,
+				B28EF5D1278CBBF500F5C944 /* SelectProducts.swift in Sources */,
 				B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */,
 				B2FC34AB277CD8B0004092F6 /* Additive.swift in Sources */,
 				B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */,

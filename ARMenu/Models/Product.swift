@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct Product: Identifiable{
+    
     var id: String = UUID().uuidString
     var image: Image
 
@@ -24,6 +25,9 @@ struct Product: Identifiable{
     var nutritionFacts: NutritionFacts
     var allergens: [Allergen]
     var additives: [Additive]
+    
+    var isSelected: Bool
+
     
     
 //    var servingSize
