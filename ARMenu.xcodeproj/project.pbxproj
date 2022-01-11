@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B228E982278B47E800792F7E /* kaesekuchen.reality in Resources */ = {isa = PBXBuildFile; fileRef = B228E97C278B47E500792F7E /* kaesekuchen.reality */; };
-		B228E983278B47E800792F7E /* eisbecher.reality in Resources */ = {isa = PBXBuildFile; fileRef = B228E97D278B47E600792F7E /* eisbecher.reality */; };
-		B228E984278B47E800792F7E /* apfelstreusel.reality in Resources */ = {isa = PBXBuildFile; fileRef = B228E97E278B47E700792F7E /* apfelstreusel.reality */; };
-		B228E985278B47E800792F7E /* spaghettieis.reality in Resources */ = {isa = PBXBuildFile; fileRef = B228E97F278B47E700792F7E /* spaghettieis.reality */; };
-		B228E986278B47E800792F7E /* waffel.reality in Resources */ = {isa = PBXBuildFile; fileRef = B228E980278B47E800792F7E /* waffel.reality */; };
-		B228E987278B47E800792F7E /* eiscafe.reality in Resources */ = {isa = PBXBuildFile; fileRef = B228E981278B47E800792F7E /* eiscafe.reality */; };
 		B228E993278CAA0F00792F7E /* AddOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B228E992278CAA0F00792F7E /* AddOffer.swift */; };
 		B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14C2774CCD100E75FFC /* AppDelegate.swift */; };
 		B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14E2774CCD100E75FFC /* ContentView.swift */; };
@@ -48,12 +42,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B228E97C278B47E500792F7E /* kaesekuchen.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = kaesekuchen.reality; sourceTree = "<group>"; };
-		B228E97D278B47E600792F7E /* eisbecher.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = eisbecher.reality; sourceTree = "<group>"; };
-		B228E97E278B47E700792F7E /* apfelstreusel.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = apfelstreusel.reality; sourceTree = "<group>"; };
-		B228E97F278B47E700792F7E /* spaghettieis.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = spaghettieis.reality; sourceTree = "<group>"; };
-		B228E980278B47E800792F7E /* waffel.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = waffel.reality; sourceTree = "<group>"; };
-		B228E981278B47E800792F7E /* eiscafe.reality */ = {isa = PBXFileReference; lastKnownFileType = file; path = eiscafe.reality; sourceTree = "<group>"; };
 		B228E992278CAA0F00792F7E /* AddOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOffer.swift; sourceTree = "<group>"; };
 		B26FD1492774CCD100E75FFC /* ARMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26FD14C2774CCD100E75FFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -101,19 +89,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B228E96B2789FFE300792F7E /* 3D Models */ = {
-			isa = PBXGroup;
-			children = (
-				B228E97E278B47E700792F7E /* apfelstreusel.reality */,
-				B228E97D278B47E600792F7E /* eisbecher.reality */,
-				B228E981278B47E800792F7E /* eiscafe.reality */,
-				B228E97C278B47E500792F7E /* kaesekuchen.reality */,
-				B228E97F278B47E700792F7E /* spaghettieis.reality */,
-				B228E980278B47E800792F7E /* waffel.reality */,
-			);
-			path = "3D Models";
-			sourceTree = "<group>";
-		};
 		B26FD1402774CCD100E75FFC = {
 			isa = PBXGroup;
 			children = (
@@ -135,7 +110,6 @@
 			children = (
 				B26FD1842774D19B00E75FFC /* Info.plist */,
 				B26FD14C2774CCD100E75FFC /* AppDelegate.swift */,
-				B228E96B2789FFE300792F7E /* 3D Models */,
 				B26FD1812774D18800E75FFC /* Euphoria_Script */,
 				B26FD1802774D11600E75FFC /* Views */,
 				B2FC34B5277F51D3004092F6 /* Models */,
@@ -317,14 +291,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B228E985278B47E800792F7E /* spaghettieis.reality in Resources */,
 				B26FD1562774CCD300E75FFC /* Preview Assets.xcassets in Resources */,
 				B26FD1532774CCD300E75FFC /* Assets.xcassets in Resources */,
-				B228E986278B47E800792F7E /* waffel.reality in Resources */,
-				B228E984278B47E800792F7E /* apfelstreusel.reality in Resources */,
-				B228E982278B47E800792F7E /* kaesekuchen.reality in Resources */,
-				B228E983278B47E800792F7E /* eisbecher.reality in Resources */,
-				B228E987278B47E800792F7E /* eiscafe.reality in Resources */,
 				B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
