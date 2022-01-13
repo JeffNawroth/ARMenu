@@ -171,9 +171,9 @@ struct addProduct: View {
                 
                 Section(header: Text("Allergene")){
                     
-                    ForEach(Array(productDummy.allergens)){
-                            Text($0.name)
-                    }
+//                    ForEach(Array(productDummy.allergens)){
+//                            Text($0.name)
+//                    }
                     
                     NavigationLink{
                         SelectAllergens(selectedAllergens: $productDummy.allergens)
@@ -186,9 +186,9 @@ struct addProduct: View {
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
-                    ForEach(Array(productDummy.additives)){
-                        Text($0.name)
-                    }
+//                    ForEach(Array(productDummy.additives)){
+//                        Text($0.name)
+//                    }
                     
                     NavigationLink{
                         SelectAdditives(selectedAdditives: $productDummy.additives)

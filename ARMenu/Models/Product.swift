@@ -7,13 +7,16 @@
 //Kommentar
 
 import SwiftUI
+import FirebaseFirestoreSwift
 
-struct Product: Identifiable{
-    var id: String = UUID().uuidString
+
+struct Product: Identifiable, Codable{
+
+    @DocumentID var id: String?
     var image: String
 
     var name: String
-//    var category: Category
+    var category: String
     var price: Double
     var description: String
         
@@ -21,9 +24,9 @@ struct Product: Identifiable{
     var isBio: Bool
     var isFairtrade: Bool
     
-//    var nutritionFacts: NutritionFacts
-//    var allergens: [Allergen]
-//    var additives: [Additive]
+    var nutritionFacts: NutritionFacts
+    var allergens: [String]
+    var additives: [String]
     
     
 //    var servingSize

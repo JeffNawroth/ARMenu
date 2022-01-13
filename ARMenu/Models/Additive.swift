@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Additive: Identifiable, Hashable{
-    var id: String = UUID().uuidString
+struct Additive: Codable, Hashable{
+//    var id: String = UUID().uuidString
     var name: String
     
     

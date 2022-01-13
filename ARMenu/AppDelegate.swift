@@ -9,6 +9,7 @@ import UIKit
 import SwiftUI
 import Firebase
 
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -21,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
 //        let contentView = ContentView()
 //        let contentView = ProductsListView()
-        let contentView = ProductView()
+        let contentView = ProductViewMain()
+        
 
         // Use a UIHostingController as window root view controller.
         let window = UIWindow(frame: UIScreen.main.bounds)

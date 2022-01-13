@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Category: Identifiable, Hashable{
+
+struct Category: Identifiable, Hashable, Codable{
     var id:String = UUID().uuidString
     var name: String
         

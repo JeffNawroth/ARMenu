@@ -24,33 +24,17 @@ struct ProductsListView: View {
                 VStack(){
                     
                     Text(products.name)
-//                    Text(products.category)
+//                    ForEach(products.allergens){
+//                        Text($0.name)
+//                    }
                     Text("\(products.price, specifier: "%.2f")")
                     Text(products.description)
                     Text(String(products.isVegan))
-//                    Text(String(products.nutritionFacts.calories))
+
                     Text(String(products.isBio))
                     Text(String(products.isFairtrade))
                     
-                    //Update Data
-//                    Button(action:{
-//                        //Delete Product
-//                        viewModel.updateData(productToUpdate: products)
-//                    },
-//                           label: {
-//                                Image(systemName: "pencil")
-//                    })
-//                        .buttonStyle(BorderlessButtonStyle())
-//
-//                    //Delete Button
-//                    Button(action:{
-//                        //Delete Product
-//                        viewModel.deleteData(productToDelete: products)
-//                    },
-//                           label: {
-//                                Image(systemName: "minus.circle")
-//                    })
-//                        .buttonStyle(BorderlessButtonStyle())
+                    
 //
                 }
             }
@@ -60,28 +44,11 @@ struct ProductsListView: View {
         TextField("category", text: $category)
             .textFieldStyle(RoundedBorderTextFieldStyle())
         
-            //Add Button
-//        Button(action: {
-//
-//            // call addData()
-//            viewModel.addData(name: name, category: category, price: 0, description: "", isVegan: true, isBio: false, isFairtrade: true)
-//
-//            //clear the TextFields
-//           name = ""
-//           category = ""
-//
-//        }, label:{
-//                Text("add Product")
-//        })
-//        }
-//
-//            .onAppear(){
-////                self.viewModel.fetchData()
-//                self.viewModel.getData()
             }
         
         
     }
+    
     struct ProductsListView_Preview: PreviewProvider{
         static var previews: some View{
             ProductsListView()
