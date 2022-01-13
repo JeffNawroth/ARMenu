@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A5347729278F6EA8003773B3 /* ProductsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5347728278F6EA8003773B3 /* ProductsViewModel.swift */; };
 		A56482E927874E590046A827 /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56482E427874E590046A827 /* ProductView.swift */; };
-		A56482EA27874E590046A827 /* ProductListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56482E527874E590046A827 /* ProductListView.swift */; };
 		A56482F727874EEF0046A827 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = A56482F627874EEF0046A827 /* SDWebImageSwiftUI */; };
 		A56482F92787553D0046A827 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A56482F82787553D0046A827 /* GoogleService-Info.plist */; };
 		A58B90002790ABA4008B6037 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A58B8FFF2790ABA4008B6037 /* FirebaseFirestore */; };
@@ -49,7 +48,6 @@
 /* Begin PBXFileReference section */
 		A5347728278F6EA8003773B3 /* ProductsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsViewModel.swift; sourceTree = "<group>"; };
 		A56482E427874E590046A827 /* ProductView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
-		A56482E527874E590046A827 /* ProductListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductListView.swift; sourceTree = "<group>"; };
 		A56482F82787553D0046A827 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A58B90032790B92D008B6037 /* ProductViewMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductViewMain.swift; sourceTree = "<group>"; };
 		B26FD1492774CCD100E75FFC /* ARMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,7 +101,6 @@
 			isa = PBXGroup;
 			children = (
 				A56482E427874E590046A827 /* ProductView.swift */,
-				A56482E527874E590046A827 /* ProductListView.swift */,
 				A5347728278F6EA8003773B3 /* ProductsViewModel.swift */,
 				A58B90032790B92D008B6037 /* ProductViewMain.swift */,
 			);
@@ -341,7 +338,6 @@
 				B26FD1692774CF1F00E75FFC /* Login.swift in Sources */,
 				B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */,
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
-				A56482EA27874E590046A827 /* ProductListView.swift in Sources */,
 				B26FD17D2774D09700E75FFC /* User.swift in Sources */,
 				A58B90042790B92D008B6037 /* ProductViewMain.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
