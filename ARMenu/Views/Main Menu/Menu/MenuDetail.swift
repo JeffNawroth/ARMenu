@@ -64,7 +64,7 @@ struct MenuDetail: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
-                    Text(product.category.name)
+                    Text(product.category)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                 }
@@ -146,7 +146,7 @@ struct MenuDetail: View {
                         Text("Allergene")
                             .fontWeight(.semibold)
 
-                            ForEach(product.allergens){allergen in
+                        ForEach(product.allergens, id:\.self){allergen in
                                 Text(allergen.name)
                             }
                     }
@@ -155,7 +155,7 @@ struct MenuDetail: View {
                         Text("Zusatzstoffe")
                             .fontWeight(.semibold)
 
-                        ForEach(product.additives){additive in
+                        ForEach(product.additives, id:\.self){additive in
                             Text(additive.name)
                         }
                     }

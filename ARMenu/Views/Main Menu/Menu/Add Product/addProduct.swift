@@ -17,7 +17,7 @@ struct AddProduct: View {
     var disableForm: Bool {
         productDummy.image == nil ||
         productDummy.name.isEmpty ||
-        productDummy.category.name.isEmpty ||
+        productDummy.category.isEmpty ||
         productDummy.price == nil ||
         productDummy.description.isEmpty ||
         nutritionFactsDummy.calories == nil ||
@@ -39,7 +39,7 @@ struct AddProduct: View {
         var image: Image!
 
         var name: String = ""
-        var category: Category = Category(name: "")
+        var category: String = ""
         var price: Double!
         var description: String = ""
         
@@ -102,7 +102,7 @@ struct AddProduct: View {
                 Section{
                     Picker("Kategorie", selection: $productDummy.category) {
                         ForEach(modelData.categories, id: \.self){
-                            Text($0.name)
+                            Text($0)
                         }
                     }
                     HStack{
@@ -171,7 +171,7 @@ struct AddProduct: View {
                 
                 Section(header: Text("Allergene")){
                     
-                    ForEach(Array(productDummy.allergens)){
+                    ForEach(Array(productDummy.allergens), id:\.self){
                             Text($0.name)
                     }
                     
@@ -186,7 +186,7 @@ struct AddProduct: View {
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
-                    ForEach(Array(productDummy.additives)){
+                    ForEach(Array(productDummy.additives),id:\.self){
                         Text($0.name)
                     }
                     

@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuList: View {
     
     @EnvironmentObject var modelData: ModelData
-    @State private var selectedCategory = 0
+    @State private var selectedCategory = "Alles"
     @State private var showingProductSheet = false
     @State private var showingOfferSheet = false
     @State private var searchText = ""
@@ -20,7 +20,7 @@ struct MenuList: View {
     
     var filteredMenuList: [Product] {
         modelData.products.filter{ product in
-            (modelData.categories[selectedCategory].name == "Alles" || modelData.categories[selectedCategory].name == product.category.name)
+            (selectedCategory == "Alles" || selectedCategory == product.category)
         }
     }
     
@@ -38,8 +38,8 @@ struct MenuList: View {
             Form{
                 Section{
                     Picker("Kategorie", selection: $selectedCategory) {
-                        ForEach(0..<modelData.categories.count){
-                            Text(modelData.categories[$0].name)
+                        ForEach(modelData.categories, id:\.self){ category in
+                            Text(category)
                         }
                     }
                 }

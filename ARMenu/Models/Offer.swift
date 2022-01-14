@@ -14,5 +14,5 @@ struct Offer: Identifiable{
     var title: String
     var description: String
     var products: [Product]
-    
+
 }

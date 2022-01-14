@@ -35,7 +35,7 @@ struct MenuRow: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
-                    Text(product.category.name)
+                    Text(product.category)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                 }

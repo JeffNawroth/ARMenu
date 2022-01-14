@@ -12,9 +12,8 @@ struct Product: Identifiable{
     
     var id: String = UUID().uuidString
     var image: Image
-
     var name: String
-    var category: Category
+    var category: String
     var price: Double
     var description: String
         
