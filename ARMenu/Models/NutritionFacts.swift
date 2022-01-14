@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct NutritionFacts: Identifiable{
-    var id: String = UUID().uuidString
+struct NutritionFacts{
     var calories: Int
     var fat: Double
     var carbs: Double

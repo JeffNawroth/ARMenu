@@ -147,7 +147,7 @@ struct MenuDetail: View {
                             .fontWeight(.semibold)
 
                         ForEach(product.allergens, id:\.self){allergen in
-                                Text(allergen.name)
+                            Text(allergen)
                             }
                     }
                     Spacer()
@@ -156,10 +156,9 @@ struct MenuDetail: View {
                             .fontWeight(.semibold)
 
                         ForEach(product.additives, id:\.self){additive in
-                            Text(additive.name)
+                            Text(additive)
                         }
                     }
-                    Spacer()
                 }
             } label: {
                 Text("Allergene & Zusatzstoffe ")

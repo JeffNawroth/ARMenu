@@ -32,12 +32,9 @@
 		B28EF5D1278CBBF500F5C944 /* SelectProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D0278CBBF500F5C944 /* SelectProductList.swift */; };
 		B28EF5D3278DDEA800F5C944 /* SelectProductRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D2278DDEA800F5C944 /* SelectProductRow.swift */; };
 		B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A2F162278028A4001451B8 /* SelectAdditives.swift */; };
-		B2C438BC2780DC1900B8F96F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C438BB2780DC1900B8F96F /* Category.swift */; };
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
 		B2D39D102784C34F009B5D25 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0F2784C34F009B5D25 /* Offer.swift */; };
 		B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D112784CB17009B5D25 /* OfferDetail.swift */; };
-		B2FC34A9277CD87E004092F6 /* Allergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34A8277CD87E004092F6 /* Allergen.swift */; };
-		B2FC34AB277CD8B0004092F6 /* Additive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34AA277CD8B0004092F6 /* Additive.swift */; };
 		B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34AE277E2409004092F6 /* SelectAllergens.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,12 +66,9 @@
 		B28EF5D0278CBBF500F5C944 /* SelectProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProductList.swift; sourceTree = "<group>"; };
 		B28EF5D2278DDEA800F5C944 /* SelectProductRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProductRow.swift; sourceTree = "<group>"; };
 		B2A2F162278028A4001451B8 /* SelectAdditives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdditives.swift; sourceTree = "<group>"; };
-		B2C438BB2780DC1900B8F96F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
 		B2D39D0F2784C34F009B5D25 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		B2D39D112784CB17009B5D25 /* OfferDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetail.swift; sourceTree = "<group>"; };
-		B2FC34A8277CD87E004092F6 /* Allergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Allergen.swift; sourceTree = "<group>"; };
-		B2FC34AA277CD8B0004092F6 /* Additive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Additive.swift; sourceTree = "<group>"; };
 		B2FC34AE277E2409004092F6 /* SelectAllergens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAllergens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,11 +215,8 @@
 		B2FC34B5277F51D3004092F6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B2C438BB2780DC1900B8F96F /* Category.swift */,
 				B2D39D0F2784C34F009B5D25 /* Offer.swift */,
 				B26FD1742774CFFB00E75FFC /* ModelData.swift */,
-				B2FC34A8277CD87E004092F6 /* Allergen.swift */,
-				B2FC34AA277CD8B0004092F6 /* Additive.swift */,
 				B26FD1762774D01800E75FFC /* NutritionFacts.swift */,
 				B26FD1782774D02F00E75FFC /* Product.swift */,
 				B26FD17C2774D09700E75FFC /* User.swift */,
@@ -314,7 +305,6 @@
 				B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */,
 				B28EF5D1278CBBF500F5C944 /* SelectProductList.swift in Sources */,
 				B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */,
-				B2FC34AB277CD8B0004092F6 /* Additive.swift in Sources */,
 				B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */,
 				B26FD1732774CFCC00E75FFC /* MenuRow.swift in Sources */,
 				B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */,
@@ -323,8 +313,6 @@
 				B228E993278CAA0F00792F7E /* AddOffer.swift in Sources */,
 				B26FD1792774D02F00E75FFC /* Product.swift in Sources */,
 				B2D39D102784C34F009B5D25 /* Offer.swift in Sources */,
-				B2FC34A9277CD87E004092F6 /* Allergen.swift in Sources */,
-				B2C438BC2780DC1900B8F96F /* Category.swift in Sources */,
 				B26FD1692774CF1F00E75FFC /* Login.swift in Sources */,
 				B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */,
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,

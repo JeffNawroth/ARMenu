@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SelectAdditives: View {
-    @Binding var selectedAdditives: Set<Additive>
-    var additives: [Additive] = Additive.dummyAdditives
+    @Binding var selectedAdditives: Set<String>
+    var additives: [String] = Product.dummyAdditives
     var body: some View {
         
         List(additives, id:\.self, selection: $selectedAdditives){
-                Text($0.name)
+                Text($0)
         }
         .navigationTitle("Zusatzstoffe")
         .navigationBarTitleDisplayMode(.inline)
@@ -23,6 +23,6 @@ struct SelectAdditives: View {
 
 struct SelectAdditives_Previews: PreviewProvider {
     static var previews: some View {
-        SelectAdditives(selectedAdditives: .constant(Set([Additive(name: "Süßstoff")])))
+        SelectAdditives(selectedAdditives: .constant(["Text"]))
     }
 }

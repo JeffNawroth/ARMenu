@@ -9,13 +9,16 @@ import SwiftUI
 
 
 struct SelectAllergens: View {
-    @Binding var selectedAllergens: Set<Allergen>
-    var allergens: [Allergen] = Allergen.dummyAllergens
+    @Binding var selectedAllergens: Set<String>
+    var allergens: [String] = Product.dummyAllergens
+    
     
     var body: some View {
-        List(allergens, id:\.self, selection: $selectedAllergens){
-            Text($0.name)
+            List(allergens, id:\.self, selection: $selectedAllergens){ allergen in
+                Text(allergen)
         }
+            
+      
         .navigationTitle("Allergene")
         .navigationBarTitleDisplayMode(.inline)
         .environment(\.editMode, Binding.constant(EditMode.active))
@@ -25,6 +28,6 @@ struct SelectAllergens: View {
     
 struct SelectAllergens_Previews: PreviewProvider {
         static var previews: some View {
-            SelectAllergens(selectedAllergens: .constant(Set([Allergen(name: "Ei")])))
+            SelectAllergens(selectedAllergens: .constant(["Test"]))
         }
     }

@@ -38,7 +38,7 @@ struct MenuList: View {
             Form{
                 Section{
                     Picker("Kategorie", selection: $selectedCategory) {
-                        ForEach(modelData.categories, id:\.self){ category in
+                        ForEach(Product.categories, id:\.self){ category in
                             Text(category)
                         }
                     }
