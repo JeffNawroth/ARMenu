@@ -83,7 +83,7 @@ struct AddOffer: View {
                     
                     
                     NavigationLink{
-                        SelectProducts(productsDummy: $productsDummy)
+                        SelectProductList(productsDummy: $productsDummy)
                     } label:{
                        Text("Produkte hinzufügen")
                             .foregroundColor(.blue)

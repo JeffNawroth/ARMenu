@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct addProduct: View {
+struct AddProduct: View {
     
     @EnvironmentObject var modelData: ModelData
     @Binding var showingSheet: Bool
@@ -255,7 +255,7 @@ struct addProduct: View {
 
 struct addFood_Previews: PreviewProvider {
     static var previews: some View {
-        addProduct(showingSheet: .constant(true))
+        AddProduct(showingSheet: .constant(true))
             .environmentObject(ModelData())
     }
 }

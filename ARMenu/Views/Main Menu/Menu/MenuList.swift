@@ -71,7 +71,6 @@ struct MenuList: View {
                     }
                     
                 }
-                
             }
             .navigationTitle("Speisekarte")
             .searchable(text: $searchText)
@@ -94,12 +93,14 @@ struct MenuList: View {
                             }
                             Button("Produkt erstellen"){
                                  showingProductSheet = true
-
                             }
+                            
+                            Button("Abbrechen", role:.cancel) {}
+                            
                         }
                         
                         .sheet(isPresented: $showingProductSheet) {
-                            addProduct(showingSheet: $showingProductSheet)
+                            AddProduct(showingSheet: $showingProductSheet)
                         }
                         .sheet(isPresented: $showingOfferSheet) {
                             AddOffer(showingSheet: $showingOfferSheet)

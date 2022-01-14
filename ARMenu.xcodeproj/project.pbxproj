@@ -15,7 +15,7 @@
 		B26FD1562774CCD300E75FFC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1552774CCD300E75FFC /* Preview Assets.xcassets */; };
 		B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD15E2774CDF900E75FFC /* AboutUs.swift */; };
 		B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */; };
-		B26FD1632774CE9F00E75FFC /* addProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1622774CE9F00E75FFC /* addProduct.swift */; };
+		B26FD1632774CE9F00E75FFC /* AddProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1622774CE9F00E75FFC /* AddProduct.swift */; };
 		B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1642774CECC00E75FFC /* changePassword.swift */; };
 		B26FD1672774CEF700E75FFC /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1662774CEF700E75FFC /* ImagePicker.swift */; };
 		B26FD1692774CF1F00E75FFC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1682774CF1F00E75FFC /* Login.swift */; };
@@ -29,8 +29,8 @@
 		B26FD17D2774D09700E75FFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17C2774D09700E75FFC /* User.swift */; };
 		B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17E2774D0D300E75FFC /* MainView.swift */; };
 		B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */; };
-		B28EF5D1278CBBF500F5C944 /* SelectProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D0278CBBF500F5C944 /* SelectProducts.swift */; };
-		B28EF5D3278DDEA800F5C944 /* SelectProductsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D2278DDEA800F5C944 /* SelectProductsRow.swift */; };
+		B28EF5D1278CBBF500F5C944 /* SelectProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D0278CBBF500F5C944 /* SelectProductList.swift */; };
+		B28EF5D3278DDEA800F5C944 /* SelectProductRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D2278DDEA800F5C944 /* SelectProductRow.swift */; };
 		B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A2F162278028A4001451B8 /* SelectAdditives.swift */; };
 		B2C438BC2780DC1900B8F96F /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C438BB2780DC1900B8F96F /* Category.swift */; };
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
@@ -51,7 +51,7 @@
 		B26FD1552774CCD300E75FFC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B26FD15E2774CDF900E75FFC /* AboutUs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUs.swift; sourceTree = "<group>"; };
 		B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
-		B26FD1622774CE9F00E75FFC /* addProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addProduct.swift; sourceTree = "<group>"; };
+		B26FD1622774CE9F00E75FFC /* AddProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProduct.swift; sourceTree = "<group>"; };
 		B26FD1642774CECC00E75FFC /* changePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changePassword.swift; sourceTree = "<group>"; };
 		B26FD1662774CEF700E75FFC /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		B26FD1682774CF1F00E75FFC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -66,8 +66,8 @@
 		B26FD17E2774D0D300E75FFC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuphoriaScript-Regular.ttf"; sourceTree = "<group>"; };
 		B26FD1842774D19B00E75FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		B28EF5D0278CBBF500F5C944 /* SelectProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProducts.swift; sourceTree = "<group>"; };
-		B28EF5D2278DDEA800F5C944 /* SelectProductsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProductsRow.swift; sourceTree = "<group>"; };
+		B28EF5D0278CBBF500F5C944 /* SelectProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProductList.swift; sourceTree = "<group>"; };
+		B28EF5D2278DDEA800F5C944 /* SelectProductRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProductRow.swift; sourceTree = "<group>"; };
 		B2A2F162278028A4001451B8 /* SelectAdditives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdditives.swift; sourceTree = "<group>"; };
 		B2C438BB2780DC1900B8F96F /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 		B28EF5D4278DF65100F5C944 /* Add Product */ = {
 			isa = PBXGroup;
 			children = (
-				B26FD1622774CE9F00E75FFC /* addProduct.swift */,
+				B26FD1622774CE9F00E75FFC /* AddProduct.swift */,
 				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
 				B2A2F162278028A4001451B8 /* SelectAdditives.swift */,
 				B2FC34AE277E2409004092F6 /* SelectAllergens.swift */,
@@ -160,8 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				B228E992278CAA0F00792F7E /* AddOffer.swift */,
-				B28EF5D0278CBBF500F5C944 /* SelectProducts.swift */,
-				B28EF5D2278DDEA800F5C944 /* SelectProductsRow.swift */,
+				B28EF5D0278CBBF500F5C944 /* SelectProductList.swift */,
+				B28EF5D2278DDEA800F5C944 /* SelectProductRow.swift */,
 			);
 			path = "Add Offer";
 			sourceTree = "<group>";
@@ -308,11 +308,11 @@
 				B26FD17B2774D04600E75FFC /* Profile.swift in Sources */,
 				B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */,
 				B26FD16F2774CF8F00E75FFC /* MenuDetail.swift in Sources */,
-				B28EF5D3278DDEA800F5C944 /* SelectProductsRow.swift in Sources */,
+				B28EF5D3278DDEA800F5C944 /* SelectProductRow.swift in Sources */,
 				B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */,
 				B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */,
 				B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */,
-				B28EF5D1278CBBF500F5C944 /* SelectProducts.swift in Sources */,
+				B28EF5D1278CBBF500F5C944 /* SelectProductList.swift in Sources */,
 				B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */,
 				B2FC34AB277CD8B0004092F6 /* Additive.swift in Sources */,
 				B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */,
@@ -331,7 +331,7 @@
 				B26FD17D2774D09700E75FFC /* User.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
 				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,
-				B26FD1632774CE9F00E75FFC /* addProduct.swift in Sources */,
+				B26FD1632774CE9F00E75FFC /* AddProduct.swift in Sources */,
 				B26FD1752774CFFB00E75FFC /* ModelData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,7 +479,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jeffnawroth.ARMenu;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jeffnawroth.AR-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -511,7 +511,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jeffnawroth.ARMenu;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jeffnawroth.AR-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

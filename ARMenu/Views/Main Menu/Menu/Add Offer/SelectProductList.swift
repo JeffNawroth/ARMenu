@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SelectProducts: View {
+struct SelectProductList: View {
     @EnvironmentObject var modelData: ModelData
     
     @Binding var productsDummy: [Product]
@@ -22,11 +22,13 @@ struct SelectProducts: View {
                         
                     }
                 } label: {
-                    SelectProductsRow(product: product)
+                    SelectProductRow(product: product)
                 }
                 
             }
+            
         }
+        .padding(.top)
         .navigationBarTitle("Produkte", displayMode: .inline)
         .listStyle(.plain)
     }
@@ -34,7 +36,7 @@ struct SelectProducts: View {
 
 struct SelectProducts_Previews: PreviewProvider {
     static var previews: some View {
-        SelectProducts(productsDummy: .constant(ModelData().products))
+        SelectProductList(productsDummy: .constant(ModelData().products))
             .environmentObject(ModelData())
     }
 }
