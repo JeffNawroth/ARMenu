@@ -8,21 +8,25 @@
 import SwiftUI
 
 struct SelectAdditives: View {
-    @Binding var selectedAdditives: Set<String>
+    @Binding var selections: [String]
     var additives: [String] = Product.dummyAdditives
     var body: some View {
-        
-        List(additives, id:\.self, selection: $selectedAdditives){
-                Text($0)
+        List{
+            ForEach(additives, id:\.self){ additive in
+                MultipleSelectionPicker(title: additive, isSelected: selections.contains(additive)){
+                    if selections.contains(additive){
+                        selections.removeAll(where: {$0 == additive})
+                    }else{
+                        selections.append(additive)
+                    }
+                }
+            }
         }
-        .navigationTitle("Zusatzstoffe")
-        .navigationBarTitleDisplayMode(.inline)
-        .environment(\.editMode, Binding.constant(EditMode.active))
     }
 }
 
 struct SelectAdditives_Previews: PreviewProvider {
     static var previews: some View {
-        SelectAdditives(selectedAdditives: .constant(["Text"]))
+        SelectAdditives(selections: .constant(Product.dummyAdditives))
     }
 }

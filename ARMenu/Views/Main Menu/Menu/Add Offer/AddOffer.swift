@@ -14,7 +14,7 @@ struct AddOffer: View {
     @State private var inputImage: UIImage?
     
     var disableForm: Bool{
-        offerDummy.image==nil||offerDummy.title.isEmpty||offerDummy.description.isEmpty||selectedProducts.isEmpty
+        offerDummy.image==nil||offerDummy.title.isEmpty||offerDummy.description.isEmpty||offerDummy.products.isEmpty
     }
     
     struct OfferDummy{
@@ -26,11 +26,11 @@ struct AddOffer: View {
     
     @State var offerDummy = OfferDummy()
     
-    var selectedProducts: [Product] {
-        return productsDummy.filter { $0.isSelected }
-    }
+//    var selectedProducts: [Product] {
+//        return productsDummy.filter { $0.isSelected }
+//    }
     
-    @State var productsDummy = ModelData().products
+//    @State var productsDummy = ModelData().products
     
     var body: some View {
         NavigationView{
@@ -83,21 +83,18 @@ struct AddOffer: View {
                     
                     
                     NavigationLink{
-                        SelectProductList(productsDummy: $productsDummy)
+                  SelectProducts(selections: $offerDummy.products)
                     } label:{
                        Text("Produkte hinzufügen")
                             .foregroundColor(.blue)
                     }
                     
-                    ForEach(productsDummy){ product in
-                        if product.isSelected{
+                    ForEach(offerDummy.products){ product in
                             NavigationLink {
                                 MenuDetail(product: product)
                             } label: {
                                 MenuRow(product: product)
                             }
-
-                        }
                     }
                 }
             }
@@ -111,7 +108,7 @@ struct AddOffer: View {
                     Button("Fertig"){
                         showingSheet = false
  
-                        let offer = Offer(image: offerDummy.image, title: offerDummy.title, description: offerDummy.description, products: selectedProducts)
+                        let offer = Offer(image: offerDummy.image, title: offerDummy.title, description: offerDummy.description, products: offerDummy.products)
                         
                         modelData.offers.append(offer)
                         

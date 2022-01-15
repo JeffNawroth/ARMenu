@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B228E993278CAA0F00792F7E /* AddOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B228E992278CAA0F00792F7E /* AddOffer.swift */; };
+		B234486227934003000AD206 /* MultipleSelectionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B234486127934003000AD206 /* MultipleSelectionPicker.swift */; };
+		B23448642793464E000AD206 /* MultipleProductPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23448632793464E000AD206 /* MultipleProductPicker.swift */; };
+		B23448662793489A000AD206 /* SelectProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23448652793489A000AD206 /* SelectProducts.swift */; };
 		B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14C2774CCD100E75FFC /* AppDelegate.swift */; };
 		B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14E2774CCD100E75FFC /* ContentView.swift */; };
 		B26FD1512774CCD100E75FFC /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1502774CCD100E75FFC /* Experience.rcproject */; };
@@ -29,8 +32,6 @@
 		B26FD17D2774D09700E75FFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17C2774D09700E75FFC /* User.swift */; };
 		B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17E2774D0D300E75FFC /* MainView.swift */; };
 		B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */; };
-		B28EF5D1278CBBF500F5C944 /* SelectProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D0278CBBF500F5C944 /* SelectProductList.swift */; };
-		B28EF5D3278DDEA800F5C944 /* SelectProductRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B28EF5D2278DDEA800F5C944 /* SelectProductRow.swift */; };
 		B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A2F162278028A4001451B8 /* SelectAdditives.swift */; };
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
 		B2D39D102784C34F009B5D25 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0F2784C34F009B5D25 /* Offer.swift */; };
@@ -40,6 +41,9 @@
 
 /* Begin PBXFileReference section */
 		B228E992278CAA0F00792F7E /* AddOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOffer.swift; sourceTree = "<group>"; };
+		B234486127934003000AD206 /* MultipleSelectionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionPicker.swift; sourceTree = "<group>"; };
+		B23448632793464E000AD206 /* MultipleProductPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleProductPicker.swift; sourceTree = "<group>"; };
+		B23448652793489A000AD206 /* SelectProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProducts.swift; sourceTree = "<group>"; };
 		B26FD1492774CCD100E75FFC /* ARMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26FD14C2774CCD100E75FFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B26FD14E2774CCD100E75FFC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -63,8 +67,6 @@
 		B26FD17E2774D0D300E75FFC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuphoriaScript-Regular.ttf"; sourceTree = "<group>"; };
 		B26FD1842774D19B00E75FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		B28EF5D0278CBBF500F5C944 /* SelectProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProductList.swift; sourceTree = "<group>"; };
-		B28EF5D2278DDEA800F5C944 /* SelectProductRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProductRow.swift; sourceTree = "<group>"; };
 		B2A2F162278028A4001451B8 /* SelectAdditives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdditives.swift; sourceTree = "<group>"; };
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
 		B2D39D0F2784C34F009B5D25 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
 				B2A2F162278028A4001451B8 /* SelectAdditives.swift */,
 				B2FC34AE277E2409004092F6 /* SelectAllergens.swift */,
+				B234486127934003000AD206 /* MultipleSelectionPicker.swift */,
 			);
 			path = "Add Product";
 			sourceTree = "<group>";
@@ -154,8 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				B228E992278CAA0F00792F7E /* AddOffer.swift */,
-				B28EF5D0278CBBF500F5C944 /* SelectProductList.swift */,
-				B28EF5D2278DDEA800F5C944 /* SelectProductRow.swift */,
+				B23448632793464E000AD206 /* MultipleProductPicker.swift */,
+				B23448652793489A000AD206 /* SelectProducts.swift */,
 			);
 			path = "Add Offer";
 			sourceTree = "<group>";
@@ -296,14 +299,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */,
+				B23448642793464E000AD206 /* MultipleProductPicker.swift in Sources */,
 				B26FD17B2774D04600E75FFC /* Profile.swift in Sources */,
 				B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */,
 				B26FD16F2774CF8F00E75FFC /* MenuDetail.swift in Sources */,
-				B28EF5D3278DDEA800F5C944 /* SelectProductRow.swift in Sources */,
 				B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */,
 				B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */,
 				B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */,
-				B28EF5D1278CBBF500F5C944 /* SelectProductList.swift in Sources */,
 				B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */,
 				B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */,
 				B26FD1732774CFCC00E75FFC /* MenuRow.swift in Sources */,
@@ -314,7 +316,9 @@
 				B26FD1792774D02F00E75FFC /* Product.swift in Sources */,
 				B2D39D102784C34F009B5D25 /* Offer.swift in Sources */,
 				B26FD1692774CF1F00E75FFC /* Login.swift in Sources */,
+				B234486227934003000AD206 /* MultipleSelectionPicker.swift in Sources */,
 				B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */,
+				B23448662793489A000AD206 /* SelectProducts.swift in Sources */,
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
 				B26FD17D2774D09700E75FFC /* User.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,

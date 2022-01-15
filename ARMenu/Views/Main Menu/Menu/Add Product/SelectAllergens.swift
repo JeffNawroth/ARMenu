@@ -9,25 +9,28 @@ import SwiftUI
 
 
 struct SelectAllergens: View {
-    @Binding var selectedAllergens: Set<String>
+    
     var allergens: [String] = Product.dummyAllergens
-    
-    
-    var body: some View {
-            List(allergens, id:\.self, selection: $selectedAllergens){ allergen in
-                Text(allergen)
+    @Binding var selections: [String]
+    var body: some View{
+        List{
+            ForEach(allergens, id:\.self){ allergen in
+                MultipleSelectionPicker(title: allergen, isSelected: selections.contains(allergen)){
+                    if selections.contains(allergen){
+                        selections.removeAll(where: {$0 == allergen})
+                    }else{
+                        selections.append(allergen)
+                    }
+                }
+            }
         }
-            
-      
-        .navigationTitle("Allergene")
-        .navigationBarTitleDisplayMode(.inline)
-        .environment(\.editMode, Binding.constant(EditMode.active))
+        
+    }
+    
+}
+
+struct SelectAllergens_Previews: PreviewProvider {
+    static var previews: some View {
+        SelectAllergens(selections: .constant(Product.dummyAllergens))
     }
 }
-        
-    
-struct SelectAllergens_Previews: PreviewProvider {
-        static var previews: some View {
-            SelectAllergens(selectedAllergens: .constant(["Test"]))
-        }
-    }

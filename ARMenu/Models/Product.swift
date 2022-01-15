@@ -21,12 +21,12 @@ struct Product: Identifiable{
     var isBio: Bool
     var isFairtrade: Bool
     
+    
     var nutritionFacts: NutritionFacts
     var allergens: [String]
     var additives: [String]
     
-    var isSelected: Bool
-
+    
     static var dummyAdditives: [String] = ["Farbstoffe","Emulgatoren", "Konservierungsmittel","Süßungsmittel"]
     static var dummyAllergens: [String] = ["Gluten", "Krebstiere", "Fisch", "Ei"]
     static var categories: [String] = ["Alles","Kuchen","Eis","Getränke","Waffeln"]
@@ -34,3 +34,5 @@ struct Product: Identifiable{
 //    var servingSize
     
 }
+
+
