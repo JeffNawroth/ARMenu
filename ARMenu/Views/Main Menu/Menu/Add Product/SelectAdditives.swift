@@ -10,9 +10,18 @@ import SwiftUI
 struct SelectAdditives: View {
     @Binding var selections: [String]
     var additives: [String] = Product.dummyAdditives
+    @State private var searchText = ""
+
+    var searchResults: [String] {
+            if searchText.isEmpty {
+                return additives
+            } else {
+                return additives.filter { $0.contains(searchText) }
+            }
+        }
     var body: some View {
         List{
-            ForEach(additives, id:\.self){ additive in
+            ForEach(searchResults, id:\.self){ additive in
                 MultipleSelectionPicker(title: additive, isSelected: selections.contains(additive)){
                     if selections.contains(additive){
                         selections.removeAll(where: {$0 == additive})
@@ -22,6 +31,9 @@ struct SelectAdditives: View {
                 }
             }
         }
+        .searchable(text: $searchText)
+        .navigationBarTitle("Zusatzstoffe", displayMode: .inline)
+
     }
 }
 

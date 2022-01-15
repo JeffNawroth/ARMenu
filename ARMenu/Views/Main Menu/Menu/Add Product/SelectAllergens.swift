@@ -12,9 +12,18 @@ struct SelectAllergens: View {
     
     var allergens: [String] = Product.dummyAllergens
     @Binding var selections: [String]
+    @State private var searchText = ""
+
+    var searchResults: [String] {
+            if searchText.isEmpty {
+                return allergens
+            } else {
+                return allergens.filter { $0.contains(searchText) }
+            }
+        }
     var body: some View{
         List{
-            ForEach(allergens, id:\.self){ allergen in
+            ForEach(searchResults, id:\.self){ allergen in
                 MultipleSelectionPicker(title: allergen, isSelected: selections.contains(allergen)){
                     if selections.contains(allergen){
                         selections.removeAll(where: {$0 == allergen})
@@ -24,6 +33,9 @@ struct SelectAllergens: View {
                 }
             }
         }
+        .searchable(text: $searchText)
+        .navigationBarTitle("Allergene", displayMode: .inline)
+        
         
     }
     
