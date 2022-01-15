@@ -48,8 +48,8 @@ struct AddProduct: View {
         var isFairtrade: Bool = false
         
         var nutritionFacts: NutritionFacts!
-        var allergens = Set<String>()
-        var additives = Set<String>()
+        var allergens: [String] = []
+        var additives: [String] = []
     }
     
     
@@ -170,12 +170,12 @@ struct AddProduct: View {
                 
                 Section(header: Text("Allergene")){
                     
-                    ForEach(Array(productDummy.allergens), id:\.self){
+                    ForEach(productDummy.allergens, id:\.self){
                             Text($0)
                     }
                     
                     NavigationLink{
-                        SelectAllergens(selectedAllergens:$productDummy.allergens)
+                        SelectAllergens(selections: $productDummy.allergens)
                     } label:{
                        Text("Allergene hinzufügen")
                             .foregroundColor(.blue)
@@ -185,12 +185,12 @@ struct AddProduct: View {
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
-                    ForEach(Array(productDummy.additives),id:\.self){
+                    ForEach(productDummy.additives,id:\.self){
                         Text($0)
                     }
                     
                     NavigationLink{
-                        SelectAdditives(selectedAdditives: $productDummy.additives)
+                        SelectAdditives(selections: $productDummy.additives)
                     } label:{
                        Text("Zusatzstoffe hinzufügen")
                             .foregroundColor(.blue)
@@ -220,9 +220,8 @@ struct AddProduct: View {
                                 isBio: productDummy.isBio,
                                 isFairtrade: productDummy.isFairtrade,
                                 nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein),
-                                allergens:Array(productDummy.allergens),
-                                additives: Array(productDummy.additives),
-                                isSelected: false
+                                allergens:productDummy.allergens,
+                                additives: productDummy.additives
                         )
                         
                         modelData.products.append(product)
