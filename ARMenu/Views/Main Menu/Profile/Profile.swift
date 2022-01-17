@@ -32,6 +32,19 @@ struct Profile: View {
                         changePassword(showingSheet: $showingSheet )
                     }
                 }
+                
+                Section{
+                    Button {
+//                        showingSheet = true
+                        //TODO: create sheet for QR-Code
+                    } label: {
+                        Text("QR-Code verwalten")
+                    }
+
+                    .sheet(isPresented: $showingSheet) {
+                        changePassword(showingSheet: $showingSheet )
+                    }
+                }
              
                 HStack{
                     Spacer()

@@ -34,7 +34,7 @@ class ModelData: ObservableObject{
     
    
     @Published var offers: [Offer] = [
-        Offer(image: Image("winterspecials"), title: "HÖRNKEN'S •WINTER• SPECIALS", description: "fefefef.", products: [product1,product2,product3]),
+        Offer(image: Image("winterspecials"), title: "HÖRNKEN'S •WINTER• SPECIALS", description: "Suscipit inceptos est felis purus aenean aliquet adipiscing diam venenatis, augue nibh duis neque aliquam tellus condimentum sagittis vivamus.", products: [product1,product2,product3]),
         Offer(image: Image("monatswaffel"), title: "MONATS WAFFEL!", description: "Suscipit inceptos est felis purus aenean aliquet adipiscing diam venenatis, augue nibh duis neque aliquam tellus condimentum sagittis vivamus.", products: [product1,product2,product3]),
         Offer(image: Image("winterspecials"), title: "HÖRNKEN'S •WINTER• SPECIALS", description: "Suscipit inceptos est felis purus aenean aliquet adipiscing diam venenatis, augue nibh duis neque aliquam tellus condimentum sagittis vivamus.", products: [product1,product2,product3]),
         Offer(image: Image("monatswaffel"), title: "MONATS WAFFEL!", description: "Suscipit inceptos est felis purus aenean aliquet adipiscing diam venenatis, augue nibh duis neque aliquam tellus condimentum sagittis vivamus.", products: [product1,product2,product3])

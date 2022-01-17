@@ -44,7 +44,7 @@ struct MenuList: View {
                     }
                 }
                 Section(header: Text("Angebote")){
-                    ScrollView(.horizontal){
+                    ScrollView(.horizontal, showsIndicators: false){
                         HStack{
                             ForEach(modelData.offers){ offer in
                                 NavigationLink{

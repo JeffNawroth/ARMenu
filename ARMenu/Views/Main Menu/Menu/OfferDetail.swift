@@ -20,49 +20,46 @@ struct OfferDetail: View {
                 .padding()
             
             VStack(alignment: .leading){
-                Text(offer.title)
-                    .font(.title)
-                    .padding(.bottom)
+                
+                    Text(offer.title)
+                        .font(.title)
+                        .padding(.bottom)
+                    
+                    Text(offer.description)
+                        .foregroundColor(.secondary)
+                        .padding(.bottom)
 
-                Text(offer.description)
-                    .foregroundColor(.secondary)
-            }
-            .padding()
-            Divider()
-
-     Spacer()
+                
+             
             
-            VStack(alignment: .leading){
                 Text("Produkte")
                     .font(.headline)
                 
                 ForEach(offer.products){ product in
-                        NavigationLink {
-                            MenuDetail(product: product)
-                        } label: {
-                            VStack{
-                                MenuRow(product: product)
-                                    .foregroundColor(Color.primary)
-                                    
-
-                                Divider()
-                            }
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 14))
-                                .foregroundColor(Color.gray)
+                    NavigationLink {
+                        MenuDetail(product: product)
+                    } label: {
+                        VStack{
+                            MenuRow(product: product)
+                                .foregroundColor(Color.primary)
+                            
+                            Divider()
                         }
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 14))
+                            .foregroundColor(Color.gray)
                     }
-            }.padding(.horizontal)
-            .navigationBarTitle(Text(offer.title), displayMode: .inline)
+                }
+            }
+            .padding(.horizontal)
         }
-        
-        
+        .navigationTitle(Text(offer.title))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct OfferDetail_Previews: PreviewProvider {
     static var previews: some View {
-        OfferDetail(offer: ModelData().offers[0])
-            .preferredColorScheme(.light)
+        OfferDetail(offer: ModelData().offers[1])
     }
 }
