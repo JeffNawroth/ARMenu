@@ -26,11 +26,6 @@ struct AddOffer: View {
     
     @State var offerDummy = OfferDummy()
     
-//    var selectedProducts: [Product] {
-//        return productsDummy.filter { $0.isSelected }
-//    }
-    
-//    @State var productsDummy = ModelData().products
     
     var body: some View {
         NavigationView{

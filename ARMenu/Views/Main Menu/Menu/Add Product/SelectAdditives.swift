@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct SelectAdditives: View {
-    @Binding var selections: [String]
+    
     var additives: [String] = Product.dummyAdditives
+
+    @Binding var selections: [String]
     @State private var searchText = ""
 
     var searchResults: [String] {

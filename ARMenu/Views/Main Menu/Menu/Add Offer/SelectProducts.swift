@@ -19,7 +19,7 @@ struct SelectProducts: View {
             return modeldata.products.filter { $0.name.contains(searchText) }
         }
     }
-
+    
     var body: some View {
         List{
             ForEach(searchResults){ product in
@@ -34,9 +34,11 @@ struct SelectProducts: View {
                 }
             }
         }.searchable(text: $searchText)
-            .navigationBarTitle("Produkte", displayMode: .inline)
-
-
+            .navigationTitle("Produkte")
+            .navigationBarTitleDisplayMode(.inline)
+            .listStyle(.plain)
+        
+        
     }
 }
 

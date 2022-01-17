@@ -20,34 +20,26 @@ struct AddProduct: View {
         productDummy.category.isEmpty ||
         productDummy.price == nil ||
         productDummy.description.isEmpty ||
-        nutritionFactsDummy.calories == nil ||
-        nutritionFactsDummy.fat == nil ||
-        nutritionFactsDummy.carbs == nil ||
-        nutritionFactsDummy.protein == nil
-    }
-    
-    
-    struct NutritionFactsDummy{
-        var calories: Int!
-        var fat: Double!
-        var carbs: Double!
-        var protein: Double!
-        
+        productDummy.calories == nil ||
+        productDummy.fat == nil ||
+        productDummy.carbs == nil ||
+        productDummy.protein == nil
     }
     
     struct ProductDummy{
         var image: Image!
-
         var name: String = ""
         var category: String = ""
         var price: Double!
         var description: String = ""
-        
         var isVegan: Bool = false
         var isBio: Bool = false
         var isFairtrade: Bool = false
-        
         var nutritionFacts: NutritionFacts!
+        var calories: Int!
+        var fat: Double!
+        var carbs: Double!
+        var protein: Double!
         var allergens: [String] = []
         var additives: [String] = []
     }
@@ -55,8 +47,7 @@ struct AddProduct: View {
     
     
     @State var productDummy = ProductDummy()
-    @State var nutritionFactsDummy = NutritionFactsDummy()
-
+    
     
     var body: some View {
         
@@ -139,14 +130,14 @@ struct AddProduct: View {
                 Section(header: Text("Nährwerte")){
                     HStack{
                         Text("Kalorien")
-                        TextField("0", value: $nutritionFactsDummy.calories, format: .number)
+                        TextField("0", value: $productDummy.calories, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                         
                     }
                     HStack{
                         Text("Fett")
-                        TextField("0", value: $nutritionFactsDummy.fat, format: .number)
+                        TextField("0", value: $productDummy.fat, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                         
@@ -154,14 +145,14 @@ struct AddProduct: View {
                     }
                     HStack{
                         Text("Kohlenhydrate")
-                        TextField("0", value: $nutritionFactsDummy.carbs, format: .number)
+                        TextField("0", value: $productDummy.carbs, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                     }
                     
                     HStack{
                         Text("Protein")
-                        TextField("0", value: $nutritionFactsDummy.protein, format: .number)
+                        TextField("0", value: $productDummy.protein, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                     }
@@ -171,17 +162,17 @@ struct AddProduct: View {
                 Section(header: Text("Allergene")){
                     
                     ForEach(productDummy.allergens, id:\.self){
-                            Text($0)
+                        Text($0)
                     }
                     
                     NavigationLink{
                         SelectAllergens(selections: $productDummy.allergens)
                     } label:{
-                       Text("Allergene hinzufügen")
+                        Text("Allergene hinzufügen")
                             .foregroundColor(.blue)
                     }
-
-                   
+                    
+                    
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
@@ -192,7 +183,7 @@ struct AddProduct: View {
                     NavigationLink{
                         SelectAdditives(selections: $productDummy.additives)
                     } label:{
-                       Text("Zusatzstoffe hinzufügen")
+                        Text("Zusatzstoffe hinzufügen")
                             .foregroundColor(.blue)
                     }
                 }
@@ -219,7 +210,7 @@ struct AddProduct: View {
                                 isVegan: productDummy.isVegan,
                                 isBio: productDummy.isBio,
                                 isFairtrade: productDummy.isFairtrade,
-                                nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein),
+                                nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
                                 allergens:productDummy.allergens,
                                 additives: productDummy.additives
                         )
