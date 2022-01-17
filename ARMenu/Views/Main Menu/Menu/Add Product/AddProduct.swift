@@ -35,7 +35,6 @@ struct AddProduct: View {
         var isVegan: Bool = false
         var isBio: Bool = false
         var isFairtrade: Bool = false
-        var nutritionFacts: NutritionFacts!
         var calories: Int!
         var fat: Double!
         var carbs: Double!
@@ -43,9 +42,7 @@ struct AddProduct: View {
         var allergens: [String] = []
         var additives: [String] = []
     }
-    
-    
-    
+
     @State var productDummy = ProductDummy()
     
     
