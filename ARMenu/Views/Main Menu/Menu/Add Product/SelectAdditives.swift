@@ -13,6 +13,8 @@ struct SelectAdditives: View {
 
     @Binding var selections: [String]
     @State private var searchText = ""
+    @State var showingSheet = false
+
 
     var searchResults: [String] {
             if searchText.isEmpty {
@@ -31,6 +33,20 @@ struct SelectAdditives: View {
                         selections.append(additive)
                     }
                 }
+            }
+        }
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingSheet = true
+
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .sheet(isPresented: $showingSheet) {
+                    AddDeclarations(navigationName: "Zusatzstoff", showingSheet: $showingSheet)
+                }
+
             }
         }
         .searchable(text: $searchText)

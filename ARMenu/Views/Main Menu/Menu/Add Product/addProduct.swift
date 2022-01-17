@@ -190,7 +190,8 @@ struct AddProduct: View {
                 
                 
             }
-            .navigationBarTitle(Text("neues Produkt"), displayMode: .inline)
+            .navigationTitle("neues Produkt")
+            .navigationBarTitleDisplayMode(.inline)
             .onChange(of: inputImage) { _ in loadImage() }
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)

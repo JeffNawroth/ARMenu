@@ -13,6 +13,7 @@ struct SelectAllergens: View {
     var allergens: [String] = Product.dummyAllergens
     @Binding var selections: [String]
     @State private var searchText = ""
+    @State var showingSheet = false
 
     var searchResults: [String] {
             if searchText.isEmpty {
@@ -33,6 +34,22 @@ struct SelectAllergens: View {
                 }
             }
         }
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingSheet = true
+
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .sheet(isPresented: $showingSheet) {
+                    //AddProduct(showingSheet: $showingSheet)
+                    AddDeclarations(navigationName: "Allergen", showingSheet: $showingSheet)
+                }
+
+            }
+        }
+       
         .searchable(text: $searchText)
         .navigationBarTitle("Allergene", displayMode: .inline)
         
