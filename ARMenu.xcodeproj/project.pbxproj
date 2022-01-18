@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B224E00E279714410022A054 /* Topping.swift in Sources */ = {isa = PBXBuildFile; fileRef = B224E00D279714410022A054 /* Topping.swift */; };
 		B228E993278CAA0F00792F7E /* AddOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B228E992278CAA0F00792F7E /* AddOffer.swift */; };
 		B234486227934003000AD206 /* MultipleSelectionPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B234486127934003000AD206 /* MultipleSelectionPicker.swift */; };
 		B23448642793464E000AD206 /* MultipleProductPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23448632793464E000AD206 /* MultipleProductPicker.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B224E00D279714410022A054 /* Topping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topping.swift; sourceTree = "<group>"; };
 		B228E992278CAA0F00792F7E /* AddOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddOffer.swift; sourceTree = "<group>"; };
 		B234486127934003000AD206 /* MultipleSelectionPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionPicker.swift; sourceTree = "<group>"; };
 		B23448632793464E000AD206 /* MultipleProductPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleProductPicker.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				B26FD1742774CFFB00E75FFC /* ModelData.swift */,
 				B26FD1762774D01800E75FFC /* NutritionFacts.swift */,
 				B26FD1782774D02F00E75FFC /* Product.swift */,
+				B224E00D279714410022A054 /* Topping.swift */,
 				B26FD17C2774D09700E75FFC /* User.swift */,
 			);
 			path = Models;
@@ -324,6 +327,7 @@
 				B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */,
 				B23448662793489A000AD206 /* SelectProducts.swift in Sources */,
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
+				B224E00E279714410022A054 /* Topping.swift in Sources */,
 				B26FD17D2774D09700E75FFC /* User.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
 				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,
