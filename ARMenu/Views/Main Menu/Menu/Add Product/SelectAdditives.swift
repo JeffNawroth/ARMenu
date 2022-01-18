@@ -49,7 +49,7 @@ struct SelectAdditives: View {
 
             }
         }
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Zusatzstoffe")
         .navigationBarTitleDisplayMode(.inline)
         .listStyle(.plain)

@@ -11,6 +11,7 @@ struct SelectToppings: View {
     var toppings: [Topping] = Product.dummyToppings
     @Binding var selections: [Topping]
     @State private var searchText = ""
+    @State private var showingSheet = false
     
     var searchResults: [Topping] {
         if searchText.isEmpty {
@@ -33,7 +34,24 @@ struct SelectToppings: View {
                     }
                 }
             }
-        }.searchable(text: $searchText)
+           
+        }
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingSheet = true
+
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .sheet(isPresented: $showingSheet) {
+                    //AddProduct(showingSheet: $showingSheet)
+                    AddTopping(showingSheet: $showingSheet)
+                }
+
+            }
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Toppings")
         .navigationBarTitleDisplayMode(.inline)
         .listStyle(.plain)

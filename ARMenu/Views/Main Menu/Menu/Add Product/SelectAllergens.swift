@@ -49,8 +49,7 @@ struct SelectAllergens: View {
 
             }
         }
-       
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Allergene")
         .navigationBarTitleDisplayMode(.inline)
         .listStyle(.plain)
