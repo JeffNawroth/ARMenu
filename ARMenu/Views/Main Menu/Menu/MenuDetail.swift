@@ -14,8 +14,8 @@ struct MenuDetail: View {
     @State private var nutritionsExpanded = false
     @State private var allergensExpanded = false
     @State private var toppingsExpanded = false
-
-
+    
+    
     
     var body: some View {
         ScrollView{
@@ -107,21 +107,19 @@ struct MenuDetail: View {
             
             VStack{
                 
-                if product.toppings != nil{
-                    DisclosureGroup(isExpanded: $toppingsExpanded) {
-                        ForEach(product.toppings!, id: \.self){topping in
-                            HStack{
-                                Text(topping.name)
-                                Spacer()
-                                Text("+\(topping.price, specifier: "%.2f")")
-                            }
-                            
+                DisclosureGroup(isExpanded: $toppingsExpanded) {
+                    ForEach(product.toppings, id: \.self){topping in
+                        HStack{
+                            Text(topping.name)
+                            Spacer()
+                            Text("+\(topping.price, specifier: "%.2f")")
                         }
-                    } label: {
-                        Text("Toppings")
+                        
                     }
+                } label: {
+                    Text("Toppings")
                 }
- 
+                
                 DisclosureGroup(isExpanded: $nutritionsExpanded) {
                     HStack{
                         Spacer()
@@ -160,20 +158,20 @@ struct MenuDetail: View {
                 DisclosureGroup(isExpanded: $allergensExpanded) {
                     
                     HStack(alignment: .top){
-
+                        
                         VStack(alignment: .leading){
                             Text("Allergene")
                                 .fontWeight(.semibold)
-
+                            
                             ForEach(product.allergens, id:\.self){allergen in
                                 Text(allergen)
-                                }
+                            }
                         }
                         Spacer()
                         VStack(alignment: .leading){
                             Text("Zusatzstoffe")
                                 .fontWeight(.semibold)
-
+                            
                             ForEach(product.additives, id:\.self){additive in
                                 Text(additive)
                             }
@@ -184,7 +182,7 @@ struct MenuDetail: View {
                 }
                 
             }.padding(.horizontal)
-    
+            
         }
         .navigationTitle(product.name)
         .navigationBarTitleDisplayMode(.inline)

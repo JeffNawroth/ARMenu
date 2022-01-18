@@ -41,6 +41,7 @@ struct AddProduct: View {
         var protein: Double!
         var allergens: [String] = []
         var additives: [String] = []
+        var toppings: [Topping] = []
     }
 
     @State var productDummy = ProductDummy()
@@ -156,6 +157,18 @@ struct AddProduct: View {
                     
                 }
                 
+                Section(header: Text("Toppings")){
+                        ForEach(productDummy.toppings,id:\.self){
+                            Text($0.name)
+                        }
+                    NavigationLink{
+                        SelectToppings(selections: $productDummy.toppings)
+                    } label:{
+                        Text("Toppings hinzufügen")
+                            .foregroundColor(.blue)
+                    }
+                }
+                
                 Section(header: Text("Allergene")){
                     
                     ForEach(productDummy.allergens, id:\.self){
@@ -185,6 +198,8 @@ struct AddProduct: View {
                     }
                 }
                 
+               
+                
                 
             }
             .navigationTitle("neues Produkt")
@@ -210,7 +225,8 @@ struct AddProduct: View {
                                 isFairtrade: productDummy.isFairtrade,
                                 nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
                                 allergens:productDummy.allergens,
-                                additives: productDummy.additives
+                                additives: productDummy.additives,
+                                toppings: productDummy.toppings
                         )
                         
                         modelData.products.append(product)
