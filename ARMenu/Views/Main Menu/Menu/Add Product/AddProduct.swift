@@ -9,11 +9,12 @@ import SwiftUI
 
 struct AddProduct: View {
     
+    
     @EnvironmentObject var modelData: ModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
-    
+    @FocusState private var isFocused: Bool
     var disableForm: Bool {
         productDummy.image == nil ||
         productDummy.name.isEmpty ||
@@ -43,7 +44,7 @@ struct AddProduct: View {
         var additives: [String] = []
         var toppings: [Topping] = []
     }
-
+    
     @State var productDummy = ProductDummy()
     
     
@@ -97,6 +98,8 @@ struct AddProduct: View {
                         Text("Name")
                         TextField("Name", text: $productDummy.name)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                         
                         
                     }
@@ -105,12 +108,16 @@ struct AddProduct: View {
                         TextField("0", value: $productDummy.price, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                     }
                     
                 }
                 
                 Section(header: Text("Beschreibung")){
                     TextEditor(text: $productDummy.description)
+                        .focused($isFocused)
+
                 }
                 
                 Section(header: Text("Zertifikate")){
@@ -131,6 +138,8 @@ struct AddProduct: View {
                         TextField("0", value: $productDummy.calories, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                         
                     }
                     HStack{
@@ -138,6 +147,8 @@ struct AddProduct: View {
                         TextField("0", value: $productDummy.fat, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                         
                         
                     }
@@ -146,6 +157,8 @@ struct AddProduct: View {
                         TextField("0", value: $productDummy.carbs, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                     }
                     
                     HStack{
@@ -153,28 +166,31 @@ struct AddProduct: View {
                         TextField("0", value: $productDummy.protein, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                     }
                     
                 }
                 
                 Section(header: Text("Toppings")){
-                        ForEach(productDummy.toppings,id:\.self){
-                            Text($0.name)
-                        }
                     NavigationLink{
                         SelectToppings(selections: $productDummy.toppings)
                     } label:{
                         Text("Toppings hinzufügen")
                             .foregroundColor(.blue)
                     }
+                    
+                    ForEach(productDummy.toppings,id:\.self){ topping in
+                        HStack{
+                            Text(topping.name)
+                            Spacer()
+                            Text("+ \(topping.price, specifier: "%.2f")")
+                        }
+                    }
+                    
                 }
                 
                 Section(header: Text("Allergene")){
-                    
-                    ForEach(productDummy.allergens, id:\.self){
-                        Text($0)
-                    }
-                    
                     NavigationLink{
                         SelectAllergens(selections: $productDummy.allergens)
                     } label:{
@@ -182,13 +198,12 @@ struct AddProduct: View {
                             .foregroundColor(.blue)
                     }
                     
-                    
+                    ForEach(productDummy.allergens, id:\.self){
+                        Text($0)
+                    }
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
-                    ForEach(productDummy.additives,id:\.self){
-                        Text($0)
-                    }
                     
                     NavigationLink{
                         SelectAdditives(selections: $productDummy.additives)
@@ -196,9 +211,13 @@ struct AddProduct: View {
                         Text("Zusatzstoffe hinzufügen")
                             .foregroundColor(.blue)
                     }
+                    
+                    ForEach(productDummy.additives,id:\.self){
+                        Text($0)
+                    }
+                    
+                    
                 }
-                
-               
                 
                 
             }
@@ -245,6 +264,17 @@ struct AddProduct: View {
                         Text("Abbrechen")
                     }
                     
+                }
+                
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    
+                    Button {
+                        isFocused = false
+
+                    } label: {
+                        Image(systemName:"keyboard.chevron.compact.down")
+                    }
                 }
             }
             

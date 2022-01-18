@@ -18,7 +18,7 @@ struct MultipleToppingPicker: View {
             HStack {
                 Text(topping.name)
                 Spacer()
-                Text("+\(topping.price, specifier: "%.2f")")
+                Text("+ \(topping.price, specifier: "%.2f")")
                 if self.isSelected {
                     Image(systemName: "checkmark")
                 }
