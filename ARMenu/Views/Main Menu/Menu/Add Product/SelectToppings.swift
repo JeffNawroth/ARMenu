@@ -10,9 +10,19 @@ import SwiftUI
 struct SelectToppings: View {
     var toppings: [Topping] = Product.dummyToppings
     @Binding var selections: [Topping]
+    @State private var searchText = ""
+    
+    var searchResults: [Topping] {
+        if searchText.isEmpty {
+            return toppings
+        } else {
+            return toppings.filter { $0.name.contains(searchText) }
+        }
+    }
+
     var body: some View {
         List{
-            ForEach(toppings, id: \.self){ topping in
+            ForEach(searchResults, id: \.self){ topping in
                 MultipleToppingPicker(topping: topping, isSelected: selections.contains{
                     $0.name == topping.name
                 }){
@@ -23,10 +33,10 @@ struct SelectToppings: View {
                     }
                 }
             }
-        }/*.searchable(text: $searchText)*/
-            .navigationTitle("Toppings")
-            .navigationBarTitleDisplayMode(.inline)
-            .listStyle(.plain)
+        }.searchable(text: $searchText)
+        .navigationTitle("Toppings")
+        .navigationBarTitleDisplayMode(.inline)
+        .listStyle(.plain)
     }
 }
 
