@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Topping: Hashable{
+
+struct Topping: Hashable, Codable{
     var name: String
     var price: Double
 }
