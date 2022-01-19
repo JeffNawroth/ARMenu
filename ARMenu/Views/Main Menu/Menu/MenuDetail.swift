@@ -13,7 +13,9 @@ struct MenuDetail: View {
     @State private var showingARPreview = false
     @State private var nutritionsExpanded = false
     @State private var allergensExpanded = false
-
+    @State private var toppingsExpanded = false
+    
+    
     
     var body: some View {
         ScrollView{
@@ -103,69 +105,83 @@ struct MenuDetail: View {
             }
             .padding()
             
-            DisclosureGroup(isExpanded: $nutritionsExpanded) {
-                HStack{
-                    Spacer()
-                    Text("pro 100 g")
-                        .fontWeight(.semibold)
-                    
-                }
+            VStack{
                 
-                HStack{
-                    Text("Brennwert")
-                    Spacer()
-                    Text(String(product.nutritionFacts.calories) + " kcal")
-                    
-                }
-                
-                HStack{
-                    Text("Fett")
-                    Spacer()
-                    Text(String(product.nutritionFacts.fat) + " g")
-                }
-                HStack{
-                    Text("Kohlenhydrate")
-                    Spacer()
-                    Text(String(product.nutritionFacts.carbs) + " g")
-                }
-                HStack{
-                    Text("Protein")
-                    Spacer()
-                    Text(String(product.nutritionFacts.protein) + " g")
-                }
-                
-            } label: {
-                Text("Nährwerte")
-            }.padding(.horizontal)
-            
-            DisclosureGroup(isExpanded: $allergensExpanded) {
-                
-                HStack(alignment: .top){
-
-                    VStack(alignment: .leading){
-                        Text("Allergene")
-                            .fontWeight(.semibold)
-
-                        ForEach(product.allergens, id:\.self){allergen in
-                            Text(allergen)
-                            }
+                DisclosureGroup(isExpanded: $toppingsExpanded) {
+                    ForEach(product.toppings, id: \.self){topping in
+                        HStack{
+                            Text(topping.name)
+                            Spacer()
+                            Text("+ \(topping.price, specifier: "%.2f")")
+                        }
+                        
                     }
-                    Spacer()
-                    VStack(alignment: .leading){
-                        Text("Zusatzstoffe")
+                } label: {
+                    Text("Toppings")
+                }
+                
+                DisclosureGroup(isExpanded: $nutritionsExpanded) {
+                    HStack{
+                        Spacer()
+                        Text("pro 100 g")
                             .fontWeight(.semibold)
-
-                        ForEach(product.additives, id:\.self){additive in
-                            Text(additive)
+                        
+                    }
+                    
+                    HStack{
+                        Text("Brennwert")
+                        Spacer()
+                        Text(String(product.nutritionFacts.calories) + " kcal")
+                        
+                    }
+                    
+                    HStack{
+                        Text("Fett")
+                        Spacer()
+                        Text(String(product.nutritionFacts.fat) + " g")
+                    }
+                    HStack{
+                        Text("Kohlenhydrate")
+                        Spacer()
+                        Text(String(product.nutritionFacts.carbs) + " g")
+                    }
+                    HStack{
+                        Text("Protein")
+                        Spacer()
+                        Text(String(product.nutritionFacts.protein) + " g")
+                    }
+                    
+                } label: {
+                    Text("Nährwerte")
+                }
+                
+                DisclosureGroup(isExpanded: $allergensExpanded) {
+                    
+                    HStack(alignment: .top){
+                        
+                        VStack(alignment: .leading){
+                            Text("Allergene")
+                                .fontWeight(.semibold)
+                            
+                            ForEach(product.allergens, id:\.self){allergen in
+                                Text(allergen)
+                            }
+                        }
+                        Spacer()
+                        VStack(alignment: .leading){
+                            Text("Zusatzstoffe")
+                                .fontWeight(.semibold)
+                            
+                            ForEach(product.additives, id:\.self){additive in
+                                Text(additive)
+                            }
                         }
                     }
+                } label: {
+                    Text("Allergene & Zusatzstoffe ")
                 }
-            } label: {
-                Text("Allergene & Zusatzstoffe ")
+                
             }.padding(.horizontal)
-            
-            
-            
             
         }
         .navigationTitle(product.name)

@@ -33,7 +33,8 @@ struct SelectProducts: View {
                     }
                 }
             }
-        }.searchable(text: $searchText)
+        }
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
             .navigationTitle("Produkte")
             .navigationBarTitleDisplayMode(.inline)
             .listStyle(.plain)
