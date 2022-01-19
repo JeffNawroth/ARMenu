@@ -1,21 +1,18 @@
 //
-//  AddAllergen.swift
+//  AddAdditive.swift
 //  ARMenu
 //
-//  Created by Jeff Nawroth on 17.01.22.
+//  Created by Jeff Nawroth on 19.01.22.
 //
 
 import SwiftUI
 
-struct AddDeclarations: View {
-    @State var name: String = ""
-    var navigationName: String
-    var isAllergen: Bool{
-        navigationName == "Allergen"
-    }
+struct AddAdditive: View {
+    @EnvironmentObject var productModelData: ProductModelData
+    @State var additive:Additive = Additive(name: "")
     
     var disableForm: Bool {
-        name.isEmpty
+        additive.name.isEmpty
     }
     
     @Binding var showingSheet: Bool
@@ -24,9 +21,9 @@ struct AddDeclarations: View {
         NavigationView {
             Form{
                 HStack{
-                    Text(navigationName)
+                    Text("Additive")
                         .padding(.trailing)
-                    TextField("Name", text: $name)
+                    TextField("Name", text: $additive.name)
                 }
             
             }
@@ -34,11 +31,7 @@ struct AddDeclarations: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Fertig"){
                         showingSheet = false
-                        if navigationName == "Allergen"{
-                            //TODO: Add Allergen to Database
-                        }else{
-                            //TODO: Add Additive to Database
-                        }
+                        productModelData.addAdditive(additiveToAdd: additive)
                     }
                     .disabled(disableForm)
 
@@ -51,14 +44,14 @@ struct AddDeclarations: View {
 
                 }
             }
-            .navigationTitle(isAllergen ? "neues Allergen": "neuer Zusatzstoff")
+            .navigationTitle("neues Additive")
         .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
-struct AddDeclarations_Previews: PreviewProvider {
+struct AddAdditive_Previews: PreviewProvider {
     static var previews: some View {
-        AddDeclarations(navigationName: "Allergen", showingSheet: .constant(true))
+        AddAdditive(showingSheet: .constant(true))
     }
 }

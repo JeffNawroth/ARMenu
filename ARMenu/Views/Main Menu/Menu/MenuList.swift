@@ -9,28 +9,29 @@ import SwiftUI
 
 struct MenuList: View {
     
-    @EnvironmentObject var modelData: ModelData
-    @State private var selectedCategory = "Alles"
+    @EnvironmentObject var productModelData: ProductModelData
     @State private var showingProductSheet = false
     @State private var showingOfferSheet = false
     @State private var searchText = ""
     @State private var showsConfirmation = false
+    @State private var selectedCategory = Category(name: "Alles")
+    
     
     var loggedInUser: User = User.dummyUser
     
-    var filteredMenuList: [Product] {
-        modelData.products.filter{ product in
-            (selectedCategory == "Alles" || selectedCategory == product.category)
-        }
-    }
-    
-    var searchResults: [Product] {
-        if searchText.isEmpty {
-            return filteredMenuList
-        } else {
-            return filteredMenuList.filter { $0.name.contains(searchText) }
-        }
-    }
+    //    var filteredMenuList: [Product] {
+    //        productModelData.products.filter{ product in
+    //            (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
+    //        }
+    //    }
+    //
+    //    var searchResults: [Product] {
+    //        if searchText.isEmpty {
+    //            return filteredMenuList
+    //        } else {
+    //            return filteredMenuList.filter { $0.name.contains(searchText) }
+    //        }
+    //    }
     
     
     var body: some View {
@@ -38,15 +39,15 @@ struct MenuList: View {
             Form{
                 Section{
                     Picker("Kategorie", selection: $selectedCategory) {
-                        ForEach(Product.categories, id:\.self){ category in
-                            Text(category)
+                        ForEach(productModelData.categories, id: \.self) {
+                            Text($0.name)
                         }
                     }
                 }
                 Section(header: Text("Angebote")){
                     ScrollView(.horizontal, showsIndicators: false){
                         HStack{
-                            ForEach(modelData.offers){ offer in
+                            ForEach(productModelData.offers){ offer in
                                 NavigationLink{
                                     OfferDetail(offer: offer)
                                 } label:{
@@ -56,18 +57,20 @@ struct MenuList: View {
                             }
                         }
                     }
-                .listRowInsets(EdgeInsets())
+                    .listRowInsets(EdgeInsets())
                 }.listRowBackground(Color.clear)
-                   
+                
                 Section(header: Text("Produkte")){
                     List{
-                        ForEach(searchResults){ product in
+                        ForEach(productModelData.products){ product in
                             NavigationLink{
                                 MenuDetail(product: product)
                             } label:{
                                 MenuRow(product: product)
                             }
-                        } .onDelete{ (indexSet) in modelData.products.remove(atOffsets: indexSet)}
+                        } .onDelete{ (indexSet) in productModelData.products.remove(atOffsets: indexSet)}
+                        //TODO: Produkt übergeben
+                        //productModelData.deleteProduct(productToDelete: <#T##Product#>)
                     }
                     
                 }
@@ -92,7 +95,7 @@ struct MenuList: View {
                                 showingOfferSheet = true
                             }
                             Button("Produkt erstellen"){
-                                 showingProductSheet = true
+                                showingProductSheet = true
                             }
                             
                             Button("Abbrechen", role:.cancel) {}
@@ -110,13 +113,18 @@ struct MenuList: View {
                 }
             }
         }
+        .onAppear{
+            productModelData.fetchProductsData()
+            productModelData.fetchOffersData()
+            productModelData.fetchCategoriesData()
+        }
     }
 }
 
 struct MenuList_Previews: PreviewProvider {
     static var previews: some View {
         MenuList()
-            .environmentObject(ModelData())
+            .environmentObject(ProductModelData())
     }
 }
 

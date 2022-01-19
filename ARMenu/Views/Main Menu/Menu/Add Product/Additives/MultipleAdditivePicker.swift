@@ -1,5 +1,5 @@
 //
-//  MultipleProductPicker.swift
+//  MultipleSelectionRow.swift
 //  ARMenu
 //
 //  Created by Jeff Nawroth on 15.01.22.
@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-struct MultipleProductPicker: View {
-    var product: Product
+struct MultipleAdditivePicker: View {
+    var additive: Additive
     var isSelected: Bool
     var action: () -> Void
     
     var body: some View {
         Button(action: self.action) {
             HStack {
-               MenuRow(product: product)
-                if self.isSelected {
+                Text(additive.name)
+                if isSelected {
                     Spacer()
                     Image(systemName: "checkmark")
                 }
@@ -25,10 +25,9 @@ struct MultipleProductPicker: View {
     }
 }
 
-struct MultipleProductPicker_Previews: PreviewProvider {
+struct MultipleSelectionRow_Previews: PreviewProvider {
     static var previews: some View {
-        MultipleProductPicker(product: Product.dummyProducts[0], isSelected: true){
-            
+        MultipleAdditivePicker(additive: Additive.dummyAdditives[0], isSelected: true) {
         }
     }
 }

@@ -14,7 +14,7 @@ struct Product: Identifiable, Codable{
     @DocumentID var id: String?
     var image: String
     var name: String
-    var category: String
+    var category: Category
     var price: Double
     var description: String
         
@@ -24,17 +24,17 @@ struct Product: Identifiable, Codable{
     
     
     var nutritionFacts: NutritionFacts
-    var allergens: [String]
-    var additives: [String]
+    var allergens: [Allergen]
+    var additives: [Additive]
     
     var toppings: [Topping]
     
     
-    static var dummyAdditives: [String] = ["Farbstoffe","Emulgatoren", "Konservierungsmittel","Süßungsmittel"]
-    static var dummyAllergens: [String] = ["Gluten", "Krebstiere", "Fisch", "Ei"]
     static var categories: [String] = ["Alles","Kuchen","Eis","Getränke","Waffeln"]
+    
+    static var dummyProducts = [Product(image:"https://firebasestorage.googleapis.com/v0/b/armenu-12bfd.appspot.com/o/kaesekuchen.jpg?alt=media&token=bdb779a8-c191-441b-a14f-9af92cf4568d", name: "Käsekuchen", category: Category(name: "Kuchen"), price: 3.50, description: "Suscipit inceptos est felis purus aenean aliquet adipiscing diam venenatis, augue nibh duis neque aliquam tellus condimentum sagittis vivamus.",  isVegan: true,isBio: true, isFairtrade: true, nutritionFacts: NutritionFacts(calories: 573, fat: 23.2, carbs: 44.9, protein: 3.4),allergens: Allergen.dummyAllergens, additives: Additive.dummyAdditives, toppings: Topping.dummyToppings)]
 
-    static var dummyToppings: [Topping] = [Topping(name: "Sahne", price: 1.00), Topping(name: "heiße Kirschen", price: 1.50), Topping(name: "heiße Pflaumen", price: 1.50), Topping(name: "Schokosauce", price: 0.90), Topping(name: "Karamellsauce", price: 0.90), Topping(name: "Eis", price: 1.20), Topping(name: "Erdbeerhimbeersauce", price: 1.20),Topping(name: "Eishörnken extra", price: 0.30),Topping(name: "Krokant", price: 0.90),Topping(name: "Karamellisierte Nüsse", price: 1.50),Topping(name: "Knuspriger Streusel", price: 0.90), Topping(name: "Schokostreusel", price: 0.90)]
+   
 //    var servingSize
     
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MenuDetail: View {
     
@@ -19,7 +20,7 @@ struct MenuDetail: View {
     
     var body: some View {
         ScrollView{
-            product.image
+            AnimatedImage(url: URL(string: product.image))
                 .resizable()
                 .scaledToFit()
                 .cornerRadius(10)
@@ -66,7 +67,7 @@ struct MenuDetail: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
-                    Text(product.category)
+                    Text(product.category.name)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                 }
@@ -163,8 +164,8 @@ struct MenuDetail: View {
                             Text("Allergene")
                                 .fontWeight(.semibold)
                             
-                            ForEach(product.allergens, id:\.self){allergen in
-                                Text(allergen)
+                            ForEach(product.allergens, id:\.self){
+                                Text($0.name)
                             }
                         }
                         Spacer()
@@ -172,8 +173,8 @@ struct MenuDetail: View {
                             Text("Zusatzstoffe")
                                 .fontWeight(.semibold)
                             
-                            ForEach(product.additives, id:\.self){additive in
-                                Text(additive)
+                            ForEach(product.additives, id:\.self){
+                                Text($0.name)
                             }
                         }
                     }
@@ -192,7 +193,7 @@ struct MenuDetail: View {
 
 struct MenuDetail_Previews: PreviewProvider {
     static var previews: some View {
-        MenuDetail(product: ModelData().products[0])
+        MenuDetail(product: Product.dummyProducts[0])
     }
 }
 

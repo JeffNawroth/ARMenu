@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct OfferDetail: View {
     var offer: Offer
     var body: some View {
         
         ScrollView{
-            offer.image
+            AnimatedImage(url: URL(string: offer.image))
                 .resizable()
                 .scaledToFit()
                 .cornerRadius(10)
@@ -60,6 +61,6 @@ struct OfferDetail: View {
 
 struct OfferDetail_Previews: PreviewProvider {
     static var previews: some View {
-        OfferDetail(offer: ModelData().offers[1])
+        OfferDetail(offer: Offer.dummyOffer)
     }
 }

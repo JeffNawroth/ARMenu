@@ -29,7 +29,7 @@ struct MultipleToppingPicker: View {
 
 struct MultipleToppingPicker_Previews: PreviewProvider {
     static var previews: some View {
-        MultipleToppingPicker(topping: Product.dummyToppings[0], isSelected: true) {
+        MultipleToppingPicker(topping: Topping.dummyToppings[0], isSelected: true) {
             
         }
     }

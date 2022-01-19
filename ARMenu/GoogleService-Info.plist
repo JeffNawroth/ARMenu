@@ -13,21 +13,21 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.jeffnawroth.ARMenu</string>
+	<string>com.jeffnawroth.AR-Menu</string>
 	<key>PROJECT_ID</key>
 	<string>armenu-12bfd</string>
 	<key>STORAGE_BUCKET</key>
 	<string>armenu-12bfd.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1020857612960:ios:ce783336c49d37d33a27c5</string>
 </dict>

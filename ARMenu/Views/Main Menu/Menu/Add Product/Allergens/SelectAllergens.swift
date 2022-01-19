@@ -10,22 +10,22 @@ import SwiftUI
 
 struct SelectAllergens: View {
     
-    var allergens: [String] = Product.dummyAllergens
-    @Binding var selections: [String]
+    @EnvironmentObject var productModelData: ProductModelData
+    @Binding var selections: [Allergen]
     @State private var searchText = ""
     @State var showingSheet = false
 
-    var searchResults: [String] {
+    var searchResults: [Allergen] {
             if searchText.isEmpty {
-                return allergens
+                return productModelData.allergens
             } else {
-                return allergens.filter { $0.contains(searchText) }
+                return productModelData.allergens.filter { $0.name.contains(searchText) }
             }
         }
     var body: some View{
         List{
             ForEach(searchResults, id:\.self){ allergen in
-                MultipleSelectionPicker(title: allergen, isSelected: selections.contains(allergen)){
+                MultipleAllergenPicker(allergen: allergen, isSelected: selections.contains(allergen)){
                     if selections.contains(allergen){
                         selections.removeAll(where: {$0 == allergen})
                     }else{
@@ -44,10 +44,13 @@ struct SelectAllergens: View {
                 }
                 .sheet(isPresented: $showingSheet) {
                     //AddProduct(showingSheet: $showingSheet)
-                    AddDeclarations(navigationName: "Allergen", showingSheet: $showingSheet)
+                    AddAllergen(showingSheet: $showingSheet)
                 }
 
             }
+        }
+        .onAppear{
+            productModelData.fetchAllergensData()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Allergene")
@@ -61,6 +64,6 @@ struct SelectAllergens: View {
 
 struct SelectAllergens_Previews: PreviewProvider {
     static var previews: some View {
-        SelectAllergens(selections: .constant(Product.dummyAllergens))
+        SelectAllergens(selections: .constant(Allergen.dummyAllergens))
     }
 }

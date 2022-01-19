@@ -9,24 +9,23 @@ import SwiftUI
 
 struct SelectAdditives: View {
     
-    var additives: [String] = Product.dummyAdditives
-
-    @Binding var selections: [String]
+    @EnvironmentObject var productModelData: ProductModelData
+    @Binding var selections: [Additive]
     @State private var searchText = ""
     @State var showingSheet = false
 
 
-    var searchResults: [String] {
+    var searchResults: [Additive] {
             if searchText.isEmpty {
-                return additives
+                return productModelData.additives
             } else {
-                return additives.filter { $0.contains(searchText) }
+                return productModelData.additives.filter { $0.name.contains(searchText) }
             }
         }
     var body: some View {
         List{
             ForEach(searchResults, id:\.self){ additive in
-                MultipleSelectionPicker(title: additive, isSelected: selections.contains(additive)){
+                MultipleAdditivePicker(additive: additive, isSelected: selections.contains(additive)){
                     if selections.contains(additive){
                         selections.removeAll(where: {$0 == additive})
                     }else{
@@ -44,10 +43,13 @@ struct SelectAdditives: View {
                     Image(systemName: "plus")
                 }
                 .sheet(isPresented: $showingSheet) {
-                    AddDeclarations(navigationName: "Zusatzstoff", showingSheet: $showingSheet)
+                    AddAdditive(showingSheet: $showingSheet)
                 }
 
             }
+        }
+        .onAppear{
+            productModelData.fetchAdditivesData()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Zusatzstoffe")
@@ -59,6 +61,6 @@ struct SelectAdditives: View {
 
 struct SelectAdditives_Previews: PreviewProvider {
     static var previews: some View {
-        SelectAdditives(selections: .constant(Product.dummyAdditives))
+        SelectAdditives(selections: .constant(Additive.dummyAdditives))
     }
 }

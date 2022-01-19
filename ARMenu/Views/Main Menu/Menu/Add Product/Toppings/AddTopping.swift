@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AddTopping: View {
-    @State var name: String = ""
-    @State var price: Double = 0
+    
+    @EnvironmentObject var productModelData: ProductModelData
     
     struct ToppingDummy{
         var name: String = ""
@@ -20,7 +20,7 @@ struct AddTopping: View {
 
     @Binding var showingSheet: Bool
    private var disableForm: Bool{
-        name.isEmpty
+       toppingDummy.name.isEmpty
     }
     var body: some View {
         NavigationView {
@@ -43,7 +43,9 @@ struct AddTopping: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Fertig"){
                         showingSheet = false
+                        let topping: Topping = Topping(name: toppingDummy.name, price: toppingDummy.price)
                         //TODO: Add new Topping to Database
+                        productModelData.addTopping(toppingToAdd: topping)
                     }
                     .disabled(disableForm)
 

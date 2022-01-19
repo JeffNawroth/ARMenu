@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct SelectProducts: View {
-    @EnvironmentObject var modeldata: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     @Binding var selections: [Product]
     @State private var searchText = ""
     
     var searchResults: [Product] {
         if searchText.isEmpty {
-            return modeldata.products
+            return productModelData.products
         } else {
-            return modeldata.products.filter { $0.name.contains(searchText) }
+            return productModelData.products.filter { $0.name.contains(searchText) }
         }
     }
     
@@ -45,7 +45,7 @@ struct SelectProducts: View {
 
 struct SelectProducts_Previews: PreviewProvider {
     static var previews: some View {
-        SelectProducts(selections: .constant(ModelData().products))
-            .environmentObject(ModelData())
+        SelectProducts(selections: .constant(ProductModelData().products))
+            .environmentObject(ProductModelData())
     }
 }

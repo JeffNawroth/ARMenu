@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddOffer: View {
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     @State private var showingImagePicker = false
     @Binding var showingSheet: Bool
     @State private var inputImage: UIImage?
@@ -103,9 +103,10 @@ struct AddOffer: View {
                     Button("Fertig"){
                         showingSheet = false
  
-                        let offer = Offer(image: offerDummy.image, title: offerDummy.title, description: offerDummy.description, products: offerDummy.products)
+                        let offer = Offer(image: "", title: offerDummy.title, description: offerDummy.description, products: offerDummy.products)
                         
-                        modelData.offers.append(offer)
+                        productModelData.addOffer(offerToAdd: offer)
+                        
                         
                     }
                     .disabled(disableForm)
@@ -127,6 +128,6 @@ struct AddOffer: View {
     struct AddOffer_Previews: PreviewProvider {
         static var previews: some View {
             AddOffer(showingSheet: .constant(true))
-                .environmentObject(ModelData())
+                .environmentObject(ProductModelData())
         }
     }

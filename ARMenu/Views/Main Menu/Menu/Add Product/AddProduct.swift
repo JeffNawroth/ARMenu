@@ -10,7 +10,7 @@ import SwiftUI
 struct AddProduct: View {
     
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -18,7 +18,7 @@ struct AddProduct: View {
     var disableForm: Bool {
         productDummy.image == nil ||
         productDummy.name.isEmpty ||
-        productDummy.category.isEmpty ||
+        productDummy.category.name.isEmpty ||
         productDummy.price == nil ||
         productDummy.description.isEmpty ||
         productDummy.calories == nil ||
@@ -28,9 +28,9 @@ struct AddProduct: View {
     }
     
     struct ProductDummy{
-        var image: Image!
+        var image: UIImage!
         var name: String = ""
-        var category: String = ""
+        var category: Category = Category(name:"")
         var price: Double!
         var description: String = ""
         var isVegan: Bool = false
@@ -40,8 +40,8 @@ struct AddProduct: View {
         var fat: Double!
         var carbs: Double!
         var protein: Double!
-        var allergens: [String] = []
-        var additives: [String] = []
+        var allergens: [Allergen] = []
+        var additives: [Additive] = []
         var toppings: [Topping] = []
     }
     
@@ -55,7 +55,7 @@ struct AddProduct: View {
                 Section{
                     VStack{
                         if productDummy.image != nil{
-                            productDummy.image
+                            Image(uiImage: productDummy.image)
                                 .resizable()
                                 .scaledToFit()
                                 .cornerRadius(10)
@@ -90,8 +90,8 @@ struct AddProduct: View {
                 
                 Section{
                     Picker("Kategorie", selection: $productDummy.category) {
-                        ForEach(Product.categories, id: \.self){
-                            Text($0)
+                        ForEach(productModelData.categories){
+                            Text($0.name)
                         }
                     }
                     HStack{
@@ -199,7 +199,7 @@ struct AddProduct: View {
                     }
                     
                     ForEach(productDummy.allergens, id:\.self){
-                        Text($0)
+                        Text($0.name)
                     }
                 }
                 
@@ -213,7 +213,7 @@ struct AddProduct: View {
                     }
                     
                     ForEach(productDummy.additives,id:\.self){
-                        Text($0)
+                        Text($0.name)
                     }
                     
                     
@@ -227,6 +227,9 @@ struct AddProduct: View {
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
             }
+            .onAppear{
+                productModelData.fetchCategoriesData()
+            }
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -234,7 +237,7 @@ struct AddProduct: View {
                         
                         
                         let product: Product =
-                        Product(image: productDummy.image,
+                        Product(image: "",
                                 name: productDummy.name,
                                 category: productDummy.category,
                                 price: productDummy.price,
@@ -248,7 +251,7 @@ struct AddProduct: View {
                                 toppings: productDummy.toppings
                         )
                         
-                        modelData.products.append(product)
+                        productModelData.addProduct(productToAdd: product, imageToAdd: productDummy.image)
                         
                     } label: {
                         Text("Fertig")
@@ -282,13 +285,13 @@ struct AddProduct: View {
     }
     func loadImage() {
         guard let inputImage = inputImage else { return }
-        productDummy.image = Image(uiImage: inputImage)
+        productDummy.image = inputImage
     }
 }
 
 struct addFood_Previews: PreviewProvider {
     static var previews: some View {
         AddProduct(showingSheet: .constant(true))
-            .environmentObject(ModelData())
+            .environmentObject(ProductModelData())
     }
 }

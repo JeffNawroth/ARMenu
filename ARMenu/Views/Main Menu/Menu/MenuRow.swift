@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MenuRow: View {
     var product: Product
     var body: some View {
         HStack {
-            product.image
+            AnimatedImage(url: URL(string: product.image))
                 .resizable()
                 .scaledToFit()
                 .frame(width: 100)
@@ -35,7 +36,7 @@ struct MenuRow: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
-                    Text(product.category)
+                    Text(product.category.name)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                 }
@@ -77,6 +78,6 @@ struct MenuRow: View {
 
 struct MenuListRow_Previews: PreviewProvider {
     static var previews: some View {
-        MenuRow(product: ModelData().products[0])
+        MenuRow(product: Product.dummyProducts[0])
     }
 }
