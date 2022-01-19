@@ -49,7 +49,7 @@ struct MenuList: View {
                                 NavigationLink{
                                     OfferDetail(offer: offer)
                                 } label:{
-                                    OfferColumn(offer: offer)
+//                                    OfferColumn(offer: offer)
                                     
                                 }
                             }

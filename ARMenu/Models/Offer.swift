@@ -7,10 +7,12 @@
 
 import Foundation
 import SwiftUI
+import FirebaseFirestoreSwift
 
-struct Offer: Identifiable{
-    var id: String = UUID().uuidString
-    var image: Image
+struct Offer: Identifiable, Codable{
+    
+    @DocumentID var id: String?
+    var image: String
     var title: String
     var description: String
     var products: [Product]

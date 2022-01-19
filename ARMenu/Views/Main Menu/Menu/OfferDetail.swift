@@ -12,12 +12,12 @@ struct OfferDetail: View {
     var body: some View {
         
         ScrollView{
-            offer.image
-                .resizable()
-                .scaledToFit()
-                .cornerRadius(10)
-                .shadow(radius: 3)
-                .padding()
+//            offer.image
+//                .resizable()
+//                .scaledToFit()
+//                .cornerRadius(10)
+//                .shadow(radius: 3)
+//                .padding()
             
             VStack(alignment: .leading){
                 Text(offer.title)
