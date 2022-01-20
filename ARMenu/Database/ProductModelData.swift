@@ -23,7 +23,7 @@ class ProductModelData: ObservableObject{
     
     
     func fetchProductsData() {
-        db.collection("ImHörnken").document("Menu").collection("Products").addSnapshotListener { (querySnapshot, error) in
+        db.collection("ImHörnken").document("Menu").collection("Products").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
@@ -39,7 +39,7 @@ class ProductModelData: ObservableObject{
     }
     
     func fetchToppingsData() {
-        db.collection("ImHörnken").document("Menu").collection("Toppings").addSnapshotListener { (querySnapshot, error) in
+        db.collection("ImHörnken").document("Menu").collection("Toppings").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
@@ -55,7 +55,7 @@ class ProductModelData: ObservableObject{
     }
     
     func fetchAllergensData() {
-        db.collection("ImHörnken").document("Menu").collection("Allergens").addSnapshotListener { (querySnapshot, error) in
+        db.collection("ImHörnken").document("Menu").collection("Allergens").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
@@ -71,7 +71,7 @@ class ProductModelData: ObservableObject{
     }
     
     func fetchAdditivesData() {
-        db.collection("ImHörnken").document("Menu").collection("Additives").addSnapshotListener { (querySnapshot, error) in
+        db.collection("ImHörnken").document("Menu").collection("Additives").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
@@ -87,7 +87,7 @@ class ProductModelData: ObservableObject{
     }
     
     func fetchCategoriesData() {
-        db.collection("ImHörnken").document("Menu").collection("Categories").addSnapshotListener { (querySnapshot, error) in
+        db.collection("ImHörnken").document("Menu").collection("Categories").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
