@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     var loggedInUser: User = User.dummyUser
 
     var body: some View {
@@ -20,10 +20,11 @@ struct MainView: View {
                 }
 
             
-//            MenuList()
-//                .tabItem {
-//                    Label("Speisekarte", systemImage: "list.dash")
-//                }
+            MenuList()
+                .tabItem {
+                    Label("Speisekarte", systemImage: "list.dash")
+                }
+               
 
 
             if loggedInUser.role == .Admin{
@@ -33,6 +34,7 @@ struct MainView: View {
                     }
             }    
         }
+
         //.accentColor(Color(red: 120/255, green: 172/255, blue: 149/255))
     }
 }
@@ -40,7 +42,7 @@ struct MainView: View {
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
-            .environmentObject(ModelData())
+            .environmentObject(ProductModelData())
     }
 }
 

@@ -2,17 +2,16 @@
 //  Additive.swift
 //  ARMenu
 //
-//  Created by Jeff Nawroth on 29.12.21.
+//  Created by Jeff Nawroth on 19.01.22.
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
-struct Additive: Codable, Hashable{
-//    var id: String = UUID().uuidString
+struct Additive: Identifiable, Codable, Hashable{
+    @DocumentID var id: String?
     var name: String
     
-    
-    static var dummyAdditives: [Additive] = [Additive(name: "Farbstoffe"), Additive(name: "Emulgatoren"), Additive(name: "Konservierungsmittel"), Additive(name: "Süßungsmittel")]
+    static var dummyAdditives: [Additive] = [Additive(name:"Farbstoffe"),Additive(name:"Emulgatoren"),Additive(name:"Konservierungsmittel"),Additive(name:"Süßungsmittel")]
 
-    
 }

@@ -7,13 +7,11 @@
 
 import Foundation
 
-struct NutritionFacts:  Codable{
-//    var id: String = UUID().uuidString
+struct NutritionFacts: Codable{
     var calories: Int
     var fat: Double
     var carbs: Double
     var protein: Double
-    
 }
 
 

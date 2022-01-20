@@ -7,56 +7,45 @@
 
 import SwiftUI
 
-struct addProduct: View {
+struct AddProduct: View {
     
-    @EnvironmentObject var modelData: ModelData
+    
+    @EnvironmentObject var productModelData: ProductModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
-    
+    @FocusState private var isFocused: Bool
     var disableForm: Bool {
         productDummy.image == nil ||
         productDummy.name.isEmpty ||
         productDummy.category.name.isEmpty ||
         productDummy.price == nil ||
         productDummy.description.isEmpty ||
-        nutritionFactsDummy.calories == nil ||
-        nutritionFactsDummy.fat == nil ||
-        nutritionFactsDummy.carbs == nil ||
-        nutritionFactsDummy.protein == nil
+        productDummy.calories == nil ||
+        productDummy.fat == nil ||
+        productDummy.carbs == nil ||
+        productDummy.protein == nil
     }
     
-    
-    struct NutritionFactsDummy{
+    struct ProductDummy{
+        var image: UIImage!
+        var name: String = ""
+        var category: Category = Category(name:"")
+        var price: Double!
+        var description: String = ""
+        var isVegan: Bool = false
+        var isBio: Bool = false
+        var isFairtrade: Bool = false
         var calories: Int!
         var fat: Double!
         var carbs: Double!
         var protein: Double!
-        
+        var allergens: [Allergen] = []
+        var additives: [Additive] = []
+        var toppings: [Topping] = []
     }
-    
-    struct ProductDummy{
-        var image: Image!
-
-        var name: String = ""
-        var category: Category = Category(name: "")
-        var price: Double!
-        var description: String = ""
-        
-        var isVegan: Bool = false
-        var isBio: Bool = false
-        var isFairtrade: Bool = false
-        
-        var nutritionFacts: NutritionFacts!
-        var allergens: Set<Allergen> = Set<Allergen>()
-        var additives: Set<Additive> = Set<Additive>()
-    }
-    
-    
     
     @State var productDummy = ProductDummy()
-    @State var nutritionFactsDummy = NutritionFactsDummy()
-
     
     
     var body: some View {
@@ -66,7 +55,7 @@ struct addProduct: View {
                 Section{
                     VStack{
                         if productDummy.image != nil{
-                            productDummy.image
+                            Image(uiImage: productDummy.image)
                                 .resizable()
                                 .scaledToFit()
                                 .cornerRadius(10)
@@ -101,7 +90,7 @@ struct addProduct: View {
                 
                 Section{
                     Picker("Kategorie", selection: $productDummy.category) {
-                        ForEach(modelData.categories, id: \.self){
+                        ForEach(productModelData.categories, id: \.self){
                             Text($0.name)
                         }
                     }
@@ -109,6 +98,8 @@ struct addProduct: View {
                         Text("Name")
                         TextField("Name", text: $productDummy.name)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                         
                         
                     }
@@ -117,12 +108,16 @@ struct addProduct: View {
                         TextField("0", value: $productDummy.price, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                     }
                     
                 }
                 
                 Section(header: Text("Beschreibung")){
                     TextEditor(text: $productDummy.description)
+                        .focused($isFocused)
+
                 }
                 
                 Section(header: Text("Zertifikate")){
@@ -140,70 +135,100 @@ struct addProduct: View {
                 Section(header: Text("Nährwerte")){
                     HStack{
                         Text("Kalorien")
-                        TextField("0", value: $nutritionFactsDummy.calories, format: .number)
+                        TextField("0", value: $productDummy.calories, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                         
                     }
                     HStack{
                         Text("Fett")
-                        TextField("0", value: $nutritionFactsDummy.fat, format: .number)
+                        TextField("0", value: $productDummy.fat, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                         
                         
                     }
                     HStack{
                         Text("Kohlenhydrate")
-                        TextField("0", value: $nutritionFactsDummy.carbs, format: .number)
+                        TextField("0", value: $productDummy.carbs, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                     }
                     
                     HStack{
                         Text("Protein")
-                        TextField("0", value: $nutritionFactsDummy.protein, format: .number)
+                        TextField("0", value: $productDummy.protein, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
+                    }
+                    
+                }
+                
+                Section(header: Text("Toppings")){
+                    NavigationLink{
+                        SelectToppings(selections: $productDummy.toppings)
+                    } label:{
+                        Text("Toppings hinzufügen")
+                            .foregroundColor(.blue)
+                    }
+                    
+                    ForEach(productDummy.toppings,id:\.self){ topping in
+                        HStack{
+                            Text(topping.name)
+                            Spacer()
+                            Text("+ \(topping.price, specifier: "%.2f")")
+                        }
                     }
                     
                 }
                 
                 Section(header: Text("Allergene")){
-                    
-//                    ForEach(Array(productDummy.allergens)){
-//                            Text($0.name)
-//                    }
-                    
                     NavigationLink{
-                        SelectAllergens(selectedAllergens: $productDummy.allergens)
+                        SelectAllergens(selections: $productDummy.allergens)
                     } label:{
-                       Text("Allergene hinzufügen")
+                        Text("Allergene hinzufügen")
                             .foregroundColor(.blue)
                     }
-
-                   
+                    
+                    ForEach(productDummy.allergens, id:\.self){
+                        Text($0.name)
+                    }
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
-//                    ForEach(Array(productDummy.additives)){
-//                        Text($0.name)
-//                    }
                     
                     NavigationLink{
-                        SelectAdditives(selectedAdditives: $productDummy.additives)
+                        SelectAdditives(selections: $productDummy.additives)
                     } label:{
-                       Text("Zusatzstoffe hinzufügen")
+                        Text("Zusatzstoffe hinzufügen")
                             .foregroundColor(.blue)
                     }
+                    
+                    ForEach(productDummy.additives,id:\.self){
+                        Text($0.name)
+                    }
+                    
+                    
                 }
                 
                 
             }
-            .navigationBarTitle(Text("neues Produkt"), displayMode: .inline)
+            .navigationTitle("neues Produkt")
+            .navigationBarTitleDisplayMode(.inline)
             .onChange(of: inputImage) { _ in loadImage() }
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
+            }
+            .onAppear{
+                productModelData.fetchCategoriesData()
             }
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -211,22 +236,22 @@ struct addProduct: View {
                         showingSheet = false
                         
                         
-//                        let product: Product =
-//                        Product(image: productDummy.image,
-//                                name: productDummy.name,
-//                                category: productDummy.category,
-//                                price: productDummy.price,
-//                                description: productDummy.description,
-//                                isVegan: productDummy.isVegan,
-//                                isBio: productDummy.isBio,
-//                                isFairtrade: productDummy.isFairtrade,
-//                                nutritionFacts: NutritionFacts(calories: nutritionFactsDummy.calories, fat: nutritionFactsDummy.fat, carbs: nutritionFactsDummy.carbs, protein: nutritionFactsDummy.protein),
-//                                allergens: Array(productDummy.allergens),
-//                                additives: Array(productDummy.additives)
-//
-//                        )
-//                        
-//                        modelData.products.append(product)
+                        let product: Product =
+                        Product(image: "",
+                                name: productDummy.name,
+                                category: productDummy.category,
+                                price: productDummy.price,
+                                description: productDummy.description,
+                                isVegan: productDummy.isVegan,
+                                isBio: productDummy.isBio,
+                                isFairtrade: productDummy.isFairtrade,
+                                nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
+                                allergens:productDummy.allergens,
+                                additives: productDummy.additives,
+                                toppings: productDummy.toppings
+                        )
+                        
+                        productModelData.addProductController(productToAdd: product, imageToAdd: productDummy.image)
                         
                     } label: {
                         Text("Fertig")
@@ -243,19 +268,30 @@ struct addProduct: View {
                     }
                     
                 }
+                
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    
+                    Button {
+                        isFocused = false
+
+                    } label: {
+                        Image(systemName:"keyboard.chevron.compact.down")
+                    }
+                }
             }
             
         }
     }
     func loadImage() {
         guard let inputImage = inputImage else { return }
-        productDummy.image = Image(uiImage: inputImage)
+        productDummy.image = inputImage
     }
 }
 
 struct addFood_Previews: PreviewProvider {
     static var previews: some View {
-        addProduct(showingSheet: .constant(true))
-            .environmentObject(ModelData())
+        AddProduct(showingSheet: .constant(true))
+            .environmentObject(ProductModelData())
     }
 }

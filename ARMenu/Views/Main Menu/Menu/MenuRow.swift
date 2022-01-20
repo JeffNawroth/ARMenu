@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MenuRow: View {
     var product: Product
     var body: some View {
         HStack {
-//            product.image
-//                .resizable()
-//                .scaledToFit()
-//                .frame(width: 100)
-//                .cornerRadius(8)
+            AnimatedImage(url: URL(string: product.image))
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100)
+                .cornerRadius(8)
             
             VStack(alignment: .leading, spacing: 5){
                 
@@ -35,9 +36,9 @@ struct MenuRow: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
-//                    Text(product.category.name)
-//                        .fontWeight(.semibold)
-//                        .foregroundColor(.secondary)
+                    Text(product.category.name)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
                 }
                 
                 if product.isVegan||product.isBio||product.isFairtrade{
@@ -77,6 +78,6 @@ struct MenuRow: View {
 
 struct MenuListRow_Previews: PreviewProvider {
     static var previews: some View {
-        MenuRow(product: ModelData().products[0])
+        MenuRow(product: Product.dummyProducts[0])
     }
 }

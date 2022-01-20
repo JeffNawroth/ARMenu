@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MenuDetail: View {
     
@@ -13,16 +14,18 @@ struct MenuDetail: View {
     @State private var showingARPreview = false
     @State private var nutritionsExpanded = false
     @State private var allergensExpanded = false
-
+    @State private var toppingsExpanded = false
+    
+    
     
     var body: some View {
         ScrollView{
-//            product.image
-//                .resizable()
-//                .scaledToFit()
-//                .cornerRadius(10)
-//                .shadow(radius: 3)
-//                .padding()
+            AnimatedImage(url: URL(string: product.image))
+                .resizable()
+                .scaledToFit()
+                .cornerRadius(10)
+                .shadow(radius: 3)
+                .padding()
             
             VStack(alignment: .leading){
                 
@@ -64,9 +67,9 @@ struct MenuDetail: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
-//                    Text(product.category.name)
-//                        .fontWeight(.semibold)
-//                        .foregroundColor(.secondary)
+                    Text(product.category.name)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
                 }
                 
                 Divider()
@@ -103,70 +106,83 @@ struct MenuDetail: View {
             }
             .padding()
             
-//            DisclosureGroup(isExpanded: $nutritionsExpanded) {
-//                HStack{
-//                    Spacer()
-//                    Text("pro 100 g")
-//                        .fontWeight(.semibold)
-//                    
-//                }
-//                
-//                HStack{
-//                    Text("Brennwert")
-//                    Spacer()
-//                    Text(String(product.nutritionFacts.calories) + " kcal")
-//                    
-//                }
-//                
-//                HStack{
-//                    Text("Fett")
-//                    Spacer()
-//                    Text(String(product.nutritionFacts.fat) + " g")
-//                }
-//                HStack{
-//                    Text("Kohlenhydrate")
-//                    Spacer()
-//                    Text(String(product.nutritionFacts.carbs) + " g")
-//                }
-//                HStack{
-//                    Text("Protein")
-//                    Spacer()
-//                    Text(String(product.nutritionFacts.protein) + " g")
-//                }
-//                
-//            } label: {
-//                Text("Nährwerte")
-//            }.padding(.horizontal)
-//            
-//            DisclosureGroup(isExpanded: $allergensExpanded) {
-//                
-//                HStack(alignment: .top){
-//
-//                    VStack(alignment: .leading){
-//                        Text("Allergene")
-//                            .fontWeight(.semibold)
-//
-//                            ForEach(product.allergens){allergen in
-//                                Text(allergen.name)
-//                            }
-//                    }
-//                    Spacer()
-//                    VStack(alignment: .leading){
-//                        Text("Zusatzstoffe")
-//                            .fontWeight(.semibold)
-//
-//                        ForEach(product.additives){additive in
-//                            Text(additive.name)
-//                        }
-//                    }
-//                    Spacer()
-//                }
-//            } label: {
-//                Text("Allergene & Zusatzstoffe ")
-//            }.padding(.horizontal)
-//            
-            
-            
+            VStack{
+                
+                DisclosureGroup(isExpanded: $toppingsExpanded) {
+                    ForEach(product.toppings, id: \.self){topping in
+                        HStack{
+                            Text(topping.name)
+                            Spacer()
+                            Text("+ \(topping.price, specifier: "%.2f")")
+                        }
+                        
+                    }
+                } label: {
+                    Text("Toppings")
+                }
+                
+                DisclosureGroup(isExpanded: $nutritionsExpanded) {
+                    HStack{
+                        Spacer()
+                        Text("pro 100 g")
+                            .fontWeight(.semibold)
+                        
+                    }
+                    
+                    HStack{
+                        Text("Brennwert")
+                        Spacer()
+                        Text(String(product.nutritionFacts.calories) + " kcal")
+                        
+                    }
+                    
+                    HStack{
+                        Text("Fett")
+                        Spacer()
+                        Text(String(product.nutritionFacts.fat) + " g")
+                    }
+                    HStack{
+                        Text("Kohlenhydrate")
+                        Spacer()
+                        Text(String(product.nutritionFacts.carbs) + " g")
+                    }
+                    HStack{
+                        Text("Protein")
+                        Spacer()
+                        Text(String(product.nutritionFacts.protein) + " g")
+                    }
+                    
+                } label: {
+                    Text("Nährwerte")
+                }
+                
+                DisclosureGroup(isExpanded: $allergensExpanded) {
+                    
+                    HStack(alignment: .top){
+                        
+                        VStack(alignment: .leading){
+                            Text("Allergene")
+                                .fontWeight(.semibold)
+                            
+                            ForEach(product.allergens, id:\.self){
+                                Text($0.name)
+                            }
+                        }
+                        Spacer()
+                        VStack(alignment: .leading){
+                            Text("Zusatzstoffe")
+                                .fontWeight(.semibold)
+                            
+                            ForEach(product.additives, id:\.self){
+                                Text($0.name)
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Allergene & Zusatzstoffe ")
+                }
+                
+            }.padding(.horizontal)
             
         }
         .navigationTitle(product.name)
@@ -177,7 +193,7 @@ struct MenuDetail: View {
 
 struct MenuDetail_Previews: PreviewProvider {
     static var previews: some View {
-        MenuDetail(product: ModelData().products[0])
+        MenuDetail(product: Product.dummyProducts[0])
     }
 }
 

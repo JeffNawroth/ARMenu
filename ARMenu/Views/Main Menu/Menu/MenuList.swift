@@ -9,27 +9,29 @@ import SwiftUI
 
 struct MenuList: View {
     
-    @EnvironmentObject var modelData: ModelData
-    @State private var selectedCategory = 0
-    @State private var showingSheet = false
+    @EnvironmentObject var productModelData: ProductModelData
+    @State private var showingProductSheet = false
+    @State private var showingOfferSheet = false
     @State private var searchText = ""
+    @State private var showsConfirmation = false
+    @State private var selectedCategory = Category(name: "Alles")
+    
     
     var loggedInUser: User = User.dummyUser
     
-    var filteredMenuList: [Product]
-//    {
-//        modelData.products.filter{ product in
-//            (modelData.categories[selectedCategory].name == "Alles" || modelData.categories[selectedCategory].name == product.category.name)
-//        }
-//    }
-    
-    var searchResults: [Product] {
-        if searchText.isEmpty {
-            return filteredMenuList
-        } else {
-            return filteredMenuList.filter { $0.name.contains(searchText) }
+        var filteredMenuList: [Product] {
+            productModelData.products.filter{ product in
+                (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
+            }
         }
-    }
+    
+        var searchResults: [Product] {
+            if searchText.isEmpty {
+                return filteredMenuList
+            } else {
+                return filteredMenuList.filter { $0.name.contains(searchText) }
+            }
+        }
     
     
     var body: some View {
@@ -37,27 +39,28 @@ struct MenuList: View {
             Form{
                 Section{
                     Picker("Kategorie", selection: $selectedCategory) {
-                        ForEach(0..<modelData.categories.count){
-                            Text(modelData.categories[$0].name)
+                        Text("Alles").tag(Category(name: "Alles"))
+                        ForEach(productModelData.categories, id: \.self) {
+                            Text($0.name)
                         }
                     }
                 }
                 Section(header: Text("Angebote")){
-                    ScrollView(.horizontal){
+                    ScrollView(.horizontal, showsIndicators: false){
                         HStack{
-                            ForEach(modelData.offers){ offer in
+                            ForEach(productModelData.offers){ offer in
                                 NavigationLink{
                                     OfferDetail(offer: offer)
                                 } label:{
-//                                    OfferColumn(offer: offer)
+                                    OfferColumn(offer: offer)
                                     
                                 }
                             }
                         }
                     }
-                .listRowInsets(EdgeInsets())
+                    .listRowInsets(EdgeInsets())
                 }.listRowBackground(Color.clear)
-                   
+                
                 Section(header: Text("Produkte")){
                     List{
                         ForEach(searchResults){ product in
@@ -66,11 +69,12 @@ struct MenuList: View {
                             } label:{
                                 MenuRow(product: product)
                             }
-                        } .onDelete{ (indexSet) in modelData.products.remove(atOffsets: indexSet)}
+                        } .onDelete{ (indexSet) in productModelData.products.remove(atOffsets: indexSet)}
+                        //TODO: Produkt übergeben
+                        //productModelData.deleteProduct(productToDelete: <#T##Product#>)
                     }
                     
                 }
-                
             }
             .navigationTitle("Speisekarte")
             .searchable(text: $searchText)
@@ -83,26 +87,45 @@ struct MenuList: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     if loggedInUser.role == .Admin{
                         Button {
-                            showingSheet = true
+                            showsConfirmation = true
                         } label: {
                             Image(systemName: "plus")
                         }
+                        .confirmationDialog("Was möchten sie tun?", isPresented: $showsConfirmation) {
+                            Button("Angebot erstellen"){
+                                showingOfferSheet = true
+                            }
+                            Button("Produkt erstellen"){
+                                showingProductSheet = true
+                            }
+                            
+                            Button("Abbrechen", role:.cancel) {}
+                            
+                        }
                         
-                        .sheet(isPresented: $showingSheet) {
-                            addProduct(showingSheet: $showingSheet)
+                        .sheet(isPresented: $showingProductSheet) {
+                            AddProduct(showingSheet: $showingProductSheet)
+                        }
+                        .sheet(isPresented: $showingOfferSheet) {
+                            AddOffer(showingSheet: $showingOfferSheet)
                         }
                     }
                     
                 }
             }
         }
+        .onAppear{
+            productModelData.fetchProductsData()
+            productModelData.fetchOffersData()
+            productModelData.fetchCategoriesData()
+        }
     }
 }
 
-//struct MenuList_Previews: PreviewProvider {
-//    static var previews: some View {
-////        MenuList()
-////            .environmentObject(ModelData())
-//    }
-//}
+struct MenuList_Previews: PreviewProvider {
+    static var previews: some View {
+        MenuList()
+            .environmentObject(ProductModelData())
+    }
+}
 
