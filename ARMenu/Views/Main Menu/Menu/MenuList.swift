@@ -69,7 +69,12 @@ struct MenuList: View {
                             } label:{
                                 MenuRow(product: product)
                             }
-                        } .onDelete{ (indexSet) in productModelData.products.remove(atOffsets: indexSet)}
+                        }.onDelete{(indexSet) in
+                            for index in indexSet{
+                                let productToDelete = productModelData.products[index]
+                                productModelData.deleteProduct(productToDelete: productToDelete)
+                            }
+                        }
                         //TODO: Produkt übergeben
                         //productModelData.deleteProduct(productToDelete: <#T##Product#>)
                     }
