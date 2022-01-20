@@ -119,7 +119,6 @@ struct MenuList: View {
         }
         .onAppear{
             productModelData.fetchProductsData()
-            
             productModelData.fetchOffersData()
             productModelData.fetchCategoriesData()
         }
