@@ -75,8 +75,6 @@ struct MenuList: View {
                                 productModelData.deleteProduct(productToDelete: productToDelete)
                             }
                         }
-                        //TODO: Produkt übergeben
-                        //productModelData.deleteProduct(productToDelete: <#T##Product#>)
                     }
                     
                 }
@@ -121,6 +119,7 @@ struct MenuList: View {
         }
         .onAppear{
             productModelData.fetchProductsData()
+            
             productModelData.fetchOffersData()
             productModelData.fetchCategoriesData()
         }
