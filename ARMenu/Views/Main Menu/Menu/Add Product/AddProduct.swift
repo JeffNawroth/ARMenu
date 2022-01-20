@@ -90,7 +90,7 @@ struct AddProduct: View {
                 
                 Section{
                     Picker("Kategorie", selection: $productDummy.category) {
-                        ForEach(productModelData.categories){
+                        ForEach(productModelData.categories, id: \.self){
                             Text($0.name)
                         }
                     }

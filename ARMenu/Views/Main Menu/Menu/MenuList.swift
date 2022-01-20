@@ -19,19 +19,19 @@ struct MenuList: View {
     
     var loggedInUser: User = User.dummyUser
     
-    //    var filteredMenuList: [Product] {
-    //        productModelData.products.filter{ product in
-    //            (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
-    //        }
-    //    }
-    //
-    //    var searchResults: [Product] {
-    //        if searchText.isEmpty {
-    //            return filteredMenuList
-    //        } else {
-    //            return filteredMenuList.filter { $0.name.contains(searchText) }
-    //        }
-    //    }
+        var filteredMenuList: [Product] {
+            productModelData.products.filter{ product in
+                (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
+            }
+        }
+    
+        var searchResults: [Product] {
+            if searchText.isEmpty {
+                return filteredMenuList
+            } else {
+                return filteredMenuList.filter { $0.name.contains(searchText) }
+            }
+        }
     
     
     var body: some View {
@@ -39,6 +39,7 @@ struct MenuList: View {
             Form{
                 Section{
                     Picker("Kategorie", selection: $selectedCategory) {
+                        Text("Alles").tag(Category(name: "Alles"))
                         ForEach(productModelData.categories, id: \.self) {
                             Text($0.name)
                         }
@@ -62,7 +63,7 @@ struct MenuList: View {
                 
                 Section(header: Text("Produkte")){
                     List{
-                        ForEach(productModelData.products){ product in
+                        ForEach(searchResults){ product in
                             NavigationLink{
                                 MenuDetail(product: product)
                             } label:{
