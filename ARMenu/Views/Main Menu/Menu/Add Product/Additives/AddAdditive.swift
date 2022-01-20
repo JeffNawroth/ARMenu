@@ -21,7 +21,7 @@ struct AddAdditive: View {
         NavigationView {
             Form{
                 HStack{
-                    Text("Additive")
+                    Text("Zusatzstoff")
                         .padding(.trailing)
                     TextField("Name", text: $additive.name)
                 }
@@ -44,7 +44,7 @@ struct AddAdditive: View {
 
                 }
             }
-            .navigationTitle("neues Additive")
+            .navigationTitle("neuer Zusatzstoff")
         .navigationBarTitleDisplayMode(.inline)
         }
     }
