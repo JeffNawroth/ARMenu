@@ -17,8 +17,6 @@ class ProductModelData: ObservableObject{
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
     @Published var errorMessage: String?
-    @Published var inputImage: UIImage?
-    var imageURL = URL(string: "")
     
     var db = Firestore.firestore()
     let storage = Storage.storage()
@@ -104,20 +102,12 @@ class ProductModelData: ObservableObject{
         }
     }
     
-    func addProduct(productToAdd: Product, imageToAdd: UIImage) {
-        uploadImage(image: imageToAdd, imageName: productToAdd.name)
-        //        let path = getImagePath(imageName: productToAdd.name).absoluteString
-        let product = Product(image: "https://upload.wikimedia.org/wikipedia/commons/0/09/Dummy_flag.png", name: productToAdd.name, category: productToAdd.category, price: productToAdd.price, description: productToAdd.description, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
-        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
-        do {
-            let newDocReference = try collectionRef.addDocument(from: product)
-            print("Product stored with new document reference: \(newDocReference)")
+    func addProductController(productToAdd: Product, imageToAdd: UIImage)    {
+        uploadImage(image: imageToAdd, productToAdd: productToAdd)
         }
-        catch {
-            print(error)
-            print("Error")
-        }
-    }
+        
+    
+    
     
     func deleteProduct(productToDelete: Product){
         //Get a reference to the database
@@ -212,17 +202,19 @@ class ProductModelData: ObservableObject{
         }
     }
     
-    func uploadImage(image:UIImage, imageName: String){
+    func uploadImage(image:UIImage, productToAdd:Product) {
         if let imageData = image.jpegData(compressionQuality: 1){
             let storage = Storage.storage()
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-            storage.reference().child(imageName).putData(imageData, metadata: metadata){
+            storage.reference().child(productToAdd.name).putData(imageData, metadata: metadata){
                 (_, err) in
                 if let err = err {
                     print("an error has occurred - \(err.localizedDescription)")
                 } else {
                     print("image uploaded successfully")
+                    self.getImagePath(productToAdd: productToAdd)
+                    
                 }
             }
         } else {
@@ -230,22 +222,38 @@ class ProductModelData: ObservableObject{
         }
     }
     
-    func getImagePath(imageName: String){
-        let storageRef = Storage.storage().reference(withPath: imageName)
-        print(imageName)
-        storageRef.downloadURL { (url, error) in
-            if error != nil {
-                print((error?.localizedDescription)!)
+    
+    func getImagePath(productToAdd: Product){
+        print("Ich war hier")
+        let storageRef = Storage.storage().reference(withPath: productToAdd.name)
+        
+        storageRef.downloadURL(completion: { [self] url, error in
+            guard let url = url, error == nil else {
                 print("Fehler")
                 return
             }
-            self.imageURL = url!
-            print(self.imageURL ?? "URL fehler")
-            
-            
+            let imageURL = url.absoluteString
+            addProduct(productToAdd: productToAdd, imagePath: imageURL)
         }
+        )
         
     }
+    
+    func addProduct(productToAdd: Product, imagePath: String){
+        
+        let product = Product(image: imagePath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
+        do {
+            let newDocReference = try collectionRef.addDocument(from: product)
+            print("Product stored with new document reference: \(newDocReference)")
+        }
+        catch {
+            print(error)
+            print("Error")
+        }
+    }
+    
+    
     
     
     func addAllergen(allergenToAdd: Allergen) {

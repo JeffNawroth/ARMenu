@@ -251,7 +251,7 @@ struct AddProduct: View {
                                 toppings: productDummy.toppings
                         )
                         
-                        productModelData.addProduct(productToAdd: product, imageToAdd: productDummy.image)
+                        productModelData.addProductController(productToAdd: product, imageToAdd: productDummy.image)
                         
                     } label: {
                         Text("Fertig")
