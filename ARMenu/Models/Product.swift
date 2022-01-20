@@ -16,7 +16,7 @@ struct Product: Identifiable, Codable{
     var image: String
 
     var name: String
-    var category: String
+//    var category: String
     var price: Double
     var description: String
         
@@ -25,8 +25,8 @@ struct Product: Identifiable, Codable{
     var isFairtrade: Bool
     
     var nutritionFacts: NutritionFacts
-    var allergens: [String]
-    var additives: [String]
+//    var allergens: [String]
+//    var additives: [String]
     
     
 //    var servingSize

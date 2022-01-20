@@ -17,9 +17,17 @@ struct ProductView : View{
     var body: some View{
         
         VStack{
+            
+                AnimatedImage(url: URL(string: product.image))
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100)
+                                .cornerRadius(8)
+            
             VStack{
+        
             Text(product.name)
-            Text(product.category)
+//            Text(product.category)
             Text(String(product.price))
             Text(product.description)
             }
@@ -34,15 +42,16 @@ struct ProductView : View{
             Text(String(product.nutritionFacts.protein))
             Text(String(product.nutritionFacts.carbs))
             }
-            VStack{
-                ForEach(product.allergens, id: \.self){ allergen in
-                    Text(allergen)
-                }
-                ForEach(product.additives, id: \.self){ additive in
-                    Text(additive)
-                }
-                
-            }
+            
+//            VStack{
+//                ForEach(product.allergens, id: \.self){ allergen in
+//                    Text(allergen)
+//                }
+//                ForEach(product.additives, id: \.self){ additive in
+//                    Text(additive)
+//                }
+//
+//            }
             
             
         }
