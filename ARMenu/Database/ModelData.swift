@@ -140,7 +140,6 @@ class ModelData: ObservableObject{
             }
             
             self.additives = documents.compactMap { queryDocumentSnapshot -> Additive? in
-                print("Zusatzstoffe erfolgreich geladen!")
                 return try? queryDocumentSnapshot.data(as: Additive.self)
                 
             }
@@ -195,7 +194,6 @@ class ModelData: ObservableObject{
             }
             
             self.allergens = documents.compactMap { queryDocumentSnapshot -> Allergen? in
-                print("Allergene erfolgreich geladen!")
                 return try? queryDocumentSnapshot.data(as: Allergen.self)
                 
             }
@@ -251,7 +249,6 @@ class ModelData: ObservableObject{
             }
             
             self.categories = documents.compactMap { queryDocumentSnapshot -> Category? in
-                print("Kategorien wurden erfolgreich geladen!")
                 return try? queryDocumentSnapshot.data(as: Category.self)
                 
             }
@@ -307,7 +304,6 @@ class ModelData: ObservableObject{
             }
             
             self.offers = documents.compactMap { queryDocumentSnapshot -> Offer? in
-                print("Angebote wurden erfolgreich geladen!")
                 return try? queryDocumentSnapshot.data(as: Offer.self)
                 
             }
@@ -363,7 +359,6 @@ class ModelData: ObservableObject{
             }
             
             self.toppings = documents.compactMap { queryDocumentSnapshot -> Topping? in
-                print("Toppings erfolgreich geladen!")
                 return try? queryDocumentSnapshot.data(as: Topping.self)
                 
             }
