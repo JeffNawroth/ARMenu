@@ -32,6 +32,11 @@ struct SelectAdditives: View {
                         selections.append(additive)
                     }
                 }
+            }.onDelete{(indexSet) in
+                for index in indexSet{
+                    let additiveToDelete = productModelData.additives[index]
+                    productModelData.deleteAdditive(additiveToDelete: additiveToDelete)
+                }
             }
         }
         .toolbar{
@@ -47,6 +52,10 @@ struct SelectAdditives: View {
                 }
 
             }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
+            }
+            
         }
         .onAppear{
             modelData.fetchAdditivesData()
@@ -60,7 +69,9 @@ struct SelectAdditives: View {
 }
 
 struct SelectAdditives_Previews: PreviewProvider {
+    
     static var previews: some View {
         SelectAdditives(selections: .constant(Additive.dummyAdditives))
+            .environmentObject(ProductModelData())
     }
 }

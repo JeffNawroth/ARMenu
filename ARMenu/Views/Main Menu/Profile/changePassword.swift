@@ -14,9 +14,8 @@ struct changePassword: View {
     @Binding var showingSheet: Bool
     
     
-    var loggedInUser = User.dummyUser
     var disableForm: Bool {
-        oldPassword.isEmpty || newPassword.isEmpty || newPassword2.isEmpty || oldPassword != loggedInUser.password
+        oldPassword.isEmpty || newPassword.isEmpty || newPassword2.isEmpty || oldPassword != "imHoernken" || newPassword != newPassword2
     }
     
     var body: some View {
@@ -42,7 +41,6 @@ struct changePassword: View {
                     
                     SecureField("Passwort wiederholen", text: $newPassword2)
                 }
-                
             }
             .navigationBarTitle(Text("Passwort ändern"), displayMode: .inline)
             .toolbar{

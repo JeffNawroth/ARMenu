@@ -129,5 +129,6 @@ struct AddOffer: View {
         static var previews: some View {
             AddOffer(showingSheet: .constant(true))
                 .environmentObject(ModelData())
+
         }
     }

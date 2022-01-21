@@ -34,6 +34,12 @@ struct SelectToppings: View {
                     }
                 }
             }
+            .onDelete{(indexSet) in
+                for index in indexSet{
+                    let toppingToDelete = productModelData.toppings[index]
+                    productModelData.deleteTopping(toppingToDelete: toppingToDelete)
+                }
+            }
            
         }
         .toolbar{
@@ -49,6 +55,9 @@ struct SelectToppings: View {
                     AddTopping(showingSheet: $showingSheet)
                 }
 
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
             }
         }
         .onAppear{

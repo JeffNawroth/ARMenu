@@ -10,12 +10,11 @@ import SwiftUI
 struct Profile: View {
     @State var showingSheet = false
     @State var oldPassword = ""
-    var loggedInUser: User = User.dummyUser
     var body: some View {
         NavigationView{
             Form{
                 Section(header: Text("Benutzername")){
-                    Text(loggedInUser.username!)
+                    Text("imHoernken")
                         .foregroundColor(.gray)
                 }
                
