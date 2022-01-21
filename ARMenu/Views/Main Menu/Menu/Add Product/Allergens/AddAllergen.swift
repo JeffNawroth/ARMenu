@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddAllergen: View {
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @State var allergen:Allergen = Allergen(name: "")
     
     var disableForm: Bool {

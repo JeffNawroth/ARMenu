@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddTopping: View {
     
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     
     struct ToppingDummy{
         var name: String = ""

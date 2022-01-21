@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuList: View {
     
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @State private var showingProductSheet = false
     @State private var showingOfferSheet = false
     @State private var searchText = ""
@@ -122,7 +122,7 @@ struct MenuList: View {
 struct MenuList_Previews: PreviewProvider {
     static var previews: some View {
         MenuList()
-            .environmentObject(ProductModelData())
+            .environmentObject(ModelData())
     }
 }
 

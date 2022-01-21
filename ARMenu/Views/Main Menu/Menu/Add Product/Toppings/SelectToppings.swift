@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SelectToppings: View {
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @Binding var selections: [Topping]
     @State private var searchText = ""
     @State private var showingSheet = false

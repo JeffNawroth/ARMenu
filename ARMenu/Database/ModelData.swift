@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseStorage
 
-class ProductModelData: ObservableObject{
+class ModelData: ObservableObject{
     @Published var offers = [Offer]()
     @Published var products = [Product]()
     @Published var allergens = [Allergen]()

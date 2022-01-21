@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddOffer: View {
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @State private var showingImagePicker = false
     @Binding var showingSheet: Bool
     @State private var inputImage: UIImage?

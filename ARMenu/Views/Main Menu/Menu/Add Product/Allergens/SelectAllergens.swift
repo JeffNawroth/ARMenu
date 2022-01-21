@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SelectAllergens: View {
     
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @Binding var selections: [Allergen]
     @State private var searchText = ""
     @State var showingSheet = false
@@ -73,6 +73,6 @@ struct SelectAllergens: View {
 struct SelectAllergens_Previews: PreviewProvider {
     static var previews: some View {
         SelectAllergens(selections: .constant(Allergen.dummyAllergens))
-            .environmentObject(ProductModelData())
+            .environmentObject(ModelData())
     }
 }

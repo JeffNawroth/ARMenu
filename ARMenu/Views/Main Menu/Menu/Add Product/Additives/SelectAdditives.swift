@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectAdditives: View {
     
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @Binding var selections: [Additive]
     @State private var searchText = ""
     @State var showingSheet = false
@@ -72,6 +72,6 @@ struct SelectAdditives_Previews: PreviewProvider {
     
     static var previews: some View {
         SelectAdditives(selections: .constant(Additive.dummyAdditives))
-            .environmentObject(ProductModelData())
+            .environmentObject(ModelData())
     }
 }

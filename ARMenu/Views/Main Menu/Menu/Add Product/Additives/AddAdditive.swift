@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddAdditive: View {
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @State var additive:Additive = Additive(name: "")
     
     var disableForm: Bool {

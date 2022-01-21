@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SelectProducts: View {
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @Binding var selections: [Product]
     @State private var searchText = ""
     
@@ -45,7 +45,7 @@ struct SelectProducts: View {
 
 struct SelectProducts_Previews: PreviewProvider {
     static var previews: some View {
-        SelectProducts(selections: .constant(ProductModelData().products))
-            .environmentObject(ProductModelData())
+        SelectProducts(selections: .constant(ModelData().products))
+            .environmentObject(ModelData())
     }
 }

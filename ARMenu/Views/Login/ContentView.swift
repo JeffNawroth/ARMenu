@@ -15,7 +15,7 @@ struct ContentView : View {
     var body: some View {
         if signInSucces{
             MainView()
-                .environmentObject(ProductModelData())
+                .environmentObject(ModelData())
                 
             
         }else{

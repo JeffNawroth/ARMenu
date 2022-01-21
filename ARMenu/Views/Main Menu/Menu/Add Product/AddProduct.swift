@@ -10,7 +10,7 @@ import SwiftUI
 struct AddProduct: View {
     
     
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var productModelData: ModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -292,6 +292,6 @@ struct AddProduct: View {
 struct addFood_Previews: PreviewProvider {
     static var previews: some View {
         AddProduct(showingSheet: .constant(true))
-            .environmentObject(ProductModelData())
+            .environmentObject(ModelData())
     }
 }
