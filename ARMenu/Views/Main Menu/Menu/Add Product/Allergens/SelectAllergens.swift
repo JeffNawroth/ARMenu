@@ -10,16 +10,16 @@ import SwiftUI
 
 struct SelectAllergens: View {
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     @Binding var selections: [Allergen]
     @State private var searchText = ""
     @State var showingSheet = false
 
     var searchResults: [Allergen] {
             if searchText.isEmpty {
-                return modelData.allergens
+                return productModelData.allergens
             } else {
-                return modelData.allergens.filter { $0.name.contains(searchText) }
+                return productModelData.allergens.filter { $0.name.contains(searchText) }
             }
         }
     var body: some View{
@@ -58,7 +58,7 @@ struct SelectAllergens: View {
             }
         }
         .onAppear{
-            modelData.fetchAllergensData()
+            productModelData.fetchAllergensData()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Allergene")

@@ -10,7 +10,7 @@ import SwiftUI
 struct AddProduct: View {
     
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -90,7 +90,7 @@ struct AddProduct: View {
                 
                 Section{
                     Picker("Kategorie", selection: $productDummy.category) {
-                        ForEach(modelData.categories, id: \.self){
+                        ForEach(productModelData.categories, id: \.self){
                             Text($0.name)
                         }
                     }
@@ -228,7 +228,7 @@ struct AddProduct: View {
                 ImagePicker(image: $inputImage)
             }
             .onAppear{
-                modelData.fetchCategoriesData()
+                productModelData.fetchCategoriesData()
             }
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -251,7 +251,7 @@ struct AddProduct: View {
                                 toppings: productDummy.toppings
                         )
                         
-                        modelData.addProductController(productToAdd: product, imageToAdd: productDummy.image)
+                        productModelData.addProductController(productToAdd: product, imageToAdd: productDummy.image)
                         
                     } label: {
                         Text("Fertig")
@@ -292,6 +292,6 @@ struct AddProduct: View {
 struct addFood_Previews: PreviewProvider {
     static var previews: some View {
         AddProduct(showingSheet: .constant(true))
-            .environmentObject(ModelData())
+            .environmentObject(ProductModelData())
     }
 }

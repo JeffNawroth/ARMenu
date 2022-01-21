@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
+
     var body: some View {
         TabView {
             
@@ -38,7 +39,7 @@ struct MainView: View {
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
-            .environmentObject(ModelData())
+            .environmentObject(ProductModelData())
     }
 }
 

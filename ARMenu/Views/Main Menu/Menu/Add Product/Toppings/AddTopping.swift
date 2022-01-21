@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddTopping: View {
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     
     struct ToppingDummy{
         var name: String = ""
@@ -45,7 +45,7 @@ struct AddTopping: View {
                         showingSheet = false
                         let topping: Topping = Topping(name: toppingDummy.name, price: toppingDummy.price)
                         //TODO: Add new Topping to Database
-                        modelData.addTopping(toppingToAdd: topping)
+                        productModelData.addTopping(toppingToAdd: topping)
                     }
                     .disabled(disableForm)
 
