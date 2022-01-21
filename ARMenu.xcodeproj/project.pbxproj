@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A5BA850E279884B90011C06A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A5BA850C279884B90011C06A /* GoogleService-Info.plist */; };
-		A5BA850F279884B90011C06A /* ProductModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BA850D279884B90011C06A /* ProductModelData.swift */; };
+		A5BA850F279884B90011C06A /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BA850D279884B90011C06A /* ModelData.swift */; };
 		A5BA8514279885720011C06A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A5BA8513279885720011C06A /* FirebaseFirestore */; };
 		A5BA8516279885720011C06A /* FirebaseFirestoreSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = A5BA8515279885720011C06A /* FirebaseFirestoreSwift-Beta */; };
 		A5BA8518279885720011C06A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A5BA8517279885720011C06A /* FirebaseStorage */; };
@@ -35,7 +35,6 @@
 		B26FD16F2774CF8F00E75FFC /* MenuDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */; };
 		B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1702774CFB000E75FFC /* MenuList.swift */; };
 		B26FD1732774CFCC00E75FFC /* MenuRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1722774CFCC00E75FFC /* MenuRow.swift */; };
-		B26FD1752774CFFB00E75FFC /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1742774CFFB00E75FFC /* ModelData.swift */; };
 		B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1762774D01800E75FFC /* NutritionFacts.swift */; };
 		B26FD1792774D02F00E75FFC /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1782774D02F00E75FFC /* Product.swift */; };
 		B26FD17B2774D04600E75FFC /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17A2774D04600E75FFC /* Profile.swift */; };
@@ -57,7 +56,7 @@
 
 /* Begin PBXFileReference section */
 		A5BA850C279884B90011C06A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A5BA850D279884B90011C06A /* ProductModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductModelData.swift; sourceTree = "<group>"; };
+		A5BA850D279884B90011C06A /* ModelData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		B224E00D279714410022A054 /* Topping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Topping.swift; sourceTree = "<group>"; };
 		B224E00F27971E710022A054 /* SelectToppings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectToppings.swift; sourceTree = "<group>"; };
 		B224E0112797205F0022A054 /* MultipleToppingPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleToppingPicker.swift; sourceTree = "<group>"; };
@@ -81,7 +80,6 @@
 		B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDetail.swift; sourceTree = "<group>"; };
 		B26FD1702774CFB000E75FFC /* MenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuList.swift; sourceTree = "<group>"; };
 		B26FD1722774CFCC00E75FFC /* MenuRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRow.swift; sourceTree = "<group>"; };
-		B26FD1742774CFFB00E75FFC /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		B26FD1762774D01800E75FFC /* NutritionFacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionFacts.swift; sourceTree = "<group>"; };
 		B26FD1782774D02F00E75FFC /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		B26FD17A2774D04600E75FFC /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -120,7 +118,7 @@
 		A5BA8511279884FB0011C06A /* Database */ = {
 			isa = PBXGroup;
 			children = (
-				A5BA850D279884B90011C06A /* ProductModelData.swift */,
+				A5BA850D279884B90011C06A /* ModelData.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -291,7 +289,6 @@
 			isa = PBXGroup;
 			children = (
 				B2D39D0F2784C34F009B5D25 /* Offer.swift */,
-				B26FD1742774CFFB00E75FFC /* ModelData.swift */,
 				B26FD1762774D01800E75FFC /* NutritionFacts.swift */,
 				B27ADA852798A77F0000A750 /* Allergen.swift */,
 				B26FD1782774D02F00E75FFC /* Product.swift */,
@@ -387,7 +384,7 @@
 			files = (
 				B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */,
 				B23448642793464E000AD206 /* MultipleProductPicker.swift in Sources */,
-				A5BA850F279884B90011C06A /* ProductModelData.swift in Sources */,
+				A5BA850F279884B90011C06A /* ModelData.swift in Sources */,
 				B26FD17B2774D04600E75FFC /* Profile.swift in Sources */,
 				B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */,
 				B26FD16F2774CF8F00E75FFC /* MenuDetail.swift in Sources */,
@@ -419,7 +416,6 @@
 				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,
 				B27ADA8C2798AECC0000A750 /* Category.swift in Sources */,
 				B26FD1632774CE9F00E75FFC /* AddProduct.swift in Sources */,
-				B26FD1752774CFFB00E75FFC /* ModelData.swift in Sources */,
 				B27ADA882798A9340000A750 /* MultipleAllergenPicker.swift in Sources */,
 				B27ADA8E2798BDE60000A750 /* AddAllergen.swift in Sources */,
 			);
@@ -552,7 +548,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ARMenu/Preview Content\"";
-				DEVELOPMENT_TEAM = J2GM3L467Q;
+				DEVELOPMENT_TEAM = 797K9386VY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ARMenu/Info.plist;
@@ -584,7 +580,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ARMenu/Preview Content\"";
-				DEVELOPMENT_TEAM = J2GM3L467Q;
+				DEVELOPMENT_TEAM = 797K9386VY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ARMenu/Info.plist;
