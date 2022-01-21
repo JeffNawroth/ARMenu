@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddAllergen: View {
-    @EnvironmentObject var productModelData: ProductModelData
+    @EnvironmentObject var modelData: ModelData
     @State var allergen:Allergen = Allergen(name: "")
     
     var disableForm: Bool {
@@ -31,7 +31,7 @@ struct AddAllergen: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Fertig"){
                         showingSheet = false
-                            productModelData.addAllergen(allergenToAdd: allergen)
+                            modelData.addAllergen(allergenToAdd: allergen)
                     }
                     .disabled(disableForm)
 
