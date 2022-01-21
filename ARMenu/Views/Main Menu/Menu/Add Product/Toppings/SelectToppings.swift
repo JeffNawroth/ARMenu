@@ -36,8 +36,8 @@ struct SelectToppings: View {
             }
             .onDelete{(indexSet) in
                 for index in indexSet{
-                    let toppingToDelete = productModelData.toppings[index]
-                    productModelData.deleteTopping(toppingToDelete: toppingToDelete)
+                    let toppingToDelete = modelData.toppings[index]
+                    modelData.deleteTopping(toppingToDelete: toppingToDelete)
                 }
             }
            

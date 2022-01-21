@@ -34,8 +34,8 @@ struct SelectAllergens: View {
                 }
             }.onDelete{(indexSet) in
                 for index in indexSet{
-                    let allergenToDelete = productModelData.allergens[index]
-                    productModelData.deleteAllergen(allergenToDelete: allergenToDelete)
+                    let allergenToDelete = modelData.allergens[index]
+                    modelData.deleteAllergen(allergenToDelete: allergenToDelete)
                 }
             }
         }
@@ -73,6 +73,6 @@ struct SelectAllergens: View {
 struct SelectAllergens_Previews: PreviewProvider {
     static var previews: some View {
         SelectAllergens(selections: .constant(Allergen.dummyAllergens))
-            .environmentObject(ProductModelData())
+            .environmentObject(ModelData())
     }
 }
