@@ -65,5 +65,6 @@ struct SelectAllergens: View {
 struct SelectAllergens_Previews: PreviewProvider {
     static var previews: some View {
         SelectAllergens(selections: .constant(Allergen.dummyAllergens))
+            .environmentObject(ProductModelData())
     }
 }

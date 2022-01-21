@@ -60,7 +60,9 @@ struct SelectAdditives: View {
 }
 
 struct SelectAdditives_Previews: PreviewProvider {
+    
     static var previews: some View {
         SelectAdditives(selections: .constant(Additive.dummyAdditives))
+            .environmentObject(ProductModelData())
     }
 }

@@ -128,6 +128,5 @@ struct AddOffer: View {
     struct AddOffer_Previews: PreviewProvider {
         static var previews: some View {
             AddOffer(showingSheet: .constant(true))
-                .environmentObject(ProductModelData())
         }
     }
