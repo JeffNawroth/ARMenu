@@ -18,6 +18,7 @@ class ModelData: ObservableObject{
     @Published var toppings = [Topping]()
     @Published var errorMessage: String?
     
+    //Test
     var db = Firestore.firestore()
 
     //MARK: Product
