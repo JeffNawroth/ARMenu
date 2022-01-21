@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddAdditive: View {
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     @State var additive:Additive = Additive(name: "")
     
     var disableForm: Bool {
@@ -31,7 +31,7 @@ struct AddAdditive: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Fertig"){
                         showingSheet = false
-                        modelData.addAdditive(additiveToAdd: additive)
+                        productModelData.addAdditive(additiveToAdd: additive)
                     }
                     .disabled(disableForm)
 

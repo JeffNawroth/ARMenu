@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MenuList: View {
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     @State private var showingProductSheet = false
     @State private var showingOfferSheet = false
     @State private var searchText = ""
@@ -18,7 +18,7 @@ struct MenuList: View {
     
         
         var filteredMenuList: [Product] {
-            modelData.products.filter{ product in
+            productModelData.products.filter{ product in
                 (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
             }
         }
@@ -38,7 +38,7 @@ struct MenuList: View {
                 Section{
                     Picker("Kategorie", selection: $selectedCategory) {
                         Text("Alles").tag(Category(name: "Alles"))
-                        ForEach(modelData.categories, id: \.self) {
+                        ForEach(productModelData.categories, id: \.self) {
                             Text($0.name)
                         }
                     }
@@ -46,7 +46,7 @@ struct MenuList: View {
                 Section(header: Text("Angebote")){
                     ScrollView(.horizontal, showsIndicators: false){
                         HStack{
-                            ForEach(modelData.offers){ offer in
+                            ForEach(productModelData.offers){ offer in
                                 NavigationLink{
                                     OfferDetail(offer: offer)
                                 } label:{
@@ -69,8 +69,8 @@ struct MenuList: View {
                             }
                         }.onDelete{(indexSet) in
                             for index in indexSet{
-                                let productToDelete = modelData.products[index]
-                                modelData.deleteProduct(productToDelete: productToDelete)
+                                let productToDelete = productModelData.products[index]
+                                productModelData.deleteProduct(productToDelete: productToDelete)
                             }
                         }
                     }
@@ -112,9 +112,9 @@ struct MenuList: View {
             }
         }
         .onAppear{
-            modelData.fetchProductsData()
-            modelData.fetchOffersData()
-            modelData.fetchCategoriesData()
+            productModelData.fetchProductsData()
+            productModelData.fetchOffersData()
+            productModelData.fetchCategoriesData()
         }
     }
 }
@@ -122,7 +122,7 @@ struct MenuList: View {
 struct MenuList_Previews: PreviewProvider {
     static var previews: some View {
         MenuList()
-            .environmentObject(ModelData())
+            .environmentObject(ProductModelData())
     }
 }
 

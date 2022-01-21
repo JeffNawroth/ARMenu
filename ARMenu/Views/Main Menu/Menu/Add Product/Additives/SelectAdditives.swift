@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectAdditives: View {
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var productModelData: ProductModelData
     @Binding var selections: [Additive]
     @State private var searchText = ""
     @State var showingSheet = false
@@ -17,9 +17,9 @@ struct SelectAdditives: View {
 
     var searchResults: [Additive] {
             if searchText.isEmpty {
-                return modelData.additives
+                return productModelData.additives
             } else {
-                return modelData.additives.filter { $0.name.contains(searchText) }
+                return productModelData.additives.filter { $0.name.contains(searchText) }
             }
         }
     var body: some View {
@@ -58,7 +58,7 @@ struct SelectAdditives: View {
             
         }
         .onAppear{
-            modelData.fetchAdditivesData()
+            productModelData.fetchAdditivesData()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Zusatzstoffe")
