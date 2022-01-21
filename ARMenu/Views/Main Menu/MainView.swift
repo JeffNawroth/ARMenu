@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @EnvironmentObject var productModelData: ModelData
+    @EnvironmentObject var modelData: ModelData
 
     var body: some View {
         TabView {

@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct SelectToppings: View {
-    @EnvironmentObject var productModelData: ModelData
+    @EnvironmentObject var modelData: ModelData
     @Binding var selections: [Topping]
     @State private var searchText = ""
     @State private var showingSheet = false
     
     var searchResults: [Topping] {
         if searchText.isEmpty {
-            return productModelData.toppings
+            return modelData.toppings
         } else {
-            return productModelData.toppings.filter { $0.name.contains(searchText) }
+            return modelData.toppings.filter { $0.name.contains(searchText) }
         }
     }
 
@@ -36,8 +36,8 @@ struct SelectToppings: View {
             }
             .onDelete{(indexSet) in
                 for index in indexSet{
-                    let toppingToDelete = productModelData.toppings[index]
-                    productModelData.deleteTopping(toppingToDelete: toppingToDelete)
+                    let toppingToDelete = modelData.toppings[index]
+                    modelData.deleteTopping(toppingToDelete: toppingToDelete)
                 }
             }
            
@@ -61,7 +61,7 @@ struct SelectToppings: View {
             }
         }
         .onAppear{
-            productModelData.fetchToppingsData()
+            modelData.fetchToppingsData()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Toppings")

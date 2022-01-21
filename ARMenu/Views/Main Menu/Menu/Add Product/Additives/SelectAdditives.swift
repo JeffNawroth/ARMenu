@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectAdditives: View {
     
-    @EnvironmentObject var productModelData: ModelData
+    @EnvironmentObject var modelData: ModelData
     @Binding var selections: [Additive]
     @State private var searchText = ""
     @State var showingSheet = false
@@ -17,9 +17,9 @@ struct SelectAdditives: View {
 
     var searchResults: [Additive] {
             if searchText.isEmpty {
-                return productModelData.additives
+                return modelData.additives
             } else {
-                return productModelData.additives.filter { $0.name.contains(searchText) }
+                return modelData.additives.filter { $0.name.contains(searchText) }
             }
         }
     var body: some View {
@@ -34,8 +34,8 @@ struct SelectAdditives: View {
                 }
             }.onDelete{(indexSet) in
                 for index in indexSet{
-                    let additiveToDelete = productModelData.additives[index]
-                    productModelData.deleteAdditive(additiveToDelete: additiveToDelete)
+                    let additiveToDelete = modelData.additives[index]
+                    modelData.deleteAdditive(additiveToDelete: additiveToDelete)
                 }
             }
         }
@@ -58,7 +58,7 @@ struct SelectAdditives: View {
             
         }
         .onAppear{
-            productModelData.fetchAdditivesData()
+            modelData.fetchAdditivesData()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Zusatzstoffe")

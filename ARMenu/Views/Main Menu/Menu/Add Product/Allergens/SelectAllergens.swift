@@ -10,16 +10,16 @@ import SwiftUI
 
 struct SelectAllergens: View {
     
-    @EnvironmentObject var productModelData: ModelData
+    @EnvironmentObject var modelData: ModelData
     @Binding var selections: [Allergen]
     @State private var searchText = ""
     @State var showingSheet = false
 
     var searchResults: [Allergen] {
             if searchText.isEmpty {
-                return productModelData.allergens
+                return modelData.allergens
             } else {
-                return productModelData.allergens.filter { $0.name.contains(searchText) }
+                return modelData.allergens.filter { $0.name.contains(searchText) }
             }
         }
     var body: some View{
@@ -34,8 +34,8 @@ struct SelectAllergens: View {
                 }
             }.onDelete{(indexSet) in
                 for index in indexSet{
-                    let allergenToDelete = productModelData.allergens[index]
-                    productModelData.deleteAllergen(allergenToDelete: allergenToDelete)
+                    let allergenToDelete = modelData.allergens[index]
+                    modelData.deleteAllergen(allergenToDelete: allergenToDelete)
                 }
             }
         }
@@ -58,7 +58,7 @@ struct SelectAllergens: View {
             }
         }
         .onAppear{
-            productModelData.fetchAllergensData()
+            modelData.fetchAllergensData()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Allergene")
