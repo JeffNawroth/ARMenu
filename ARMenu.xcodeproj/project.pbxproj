@@ -39,7 +39,6 @@
 		B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1762774D01800E75FFC /* NutritionFacts.swift */; };
 		B26FD1792774D02F00E75FFC /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1782774D02F00E75FFC /* Product.swift */; };
 		B26FD17B2774D04600E75FFC /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17A2774D04600E75FFC /* Profile.swift */; };
-		B26FD17D2774D09700E75FFC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17C2774D09700E75FFC /* User.swift */; };
 		B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD17E2774D0D300E75FFC /* MainView.swift */; };
 		B26FD1832774D18800E75FFC /* EuphoriaScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */; };
 		B27ADA862798A77F0000A750 /* Allergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27ADA852798A77F0000A750 /* Allergen.swift */; };
@@ -86,7 +85,6 @@
 		B26FD1762774D01800E75FFC /* NutritionFacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionFacts.swift; sourceTree = "<group>"; };
 		B26FD1782774D02F00E75FFC /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		B26FD17A2774D04600E75FFC /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		B26FD17C2774D09700E75FFC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		B26FD17E2774D0D300E75FFC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B26FD1822774D18800E75FFC /* EuphoriaScript-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EuphoriaScript-Regular.ttf"; sourceTree = "<group>"; };
 		B26FD1842774D19B00E75FFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -300,7 +298,6 @@
 				B27ADA8B2798AECC0000A750 /* Category.swift */,
 				B27ADA892798AB5B0000A750 /* Additive.swift */,
 				B224E00D279714410022A054 /* Topping.swift */,
-				B26FD17C2774D09700E75FFC /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -417,7 +414,6 @@
 				B23448662793489A000AD206 /* SelectProducts.swift in Sources */,
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
 				B224E00E279714410022A054 /* Topping.swift in Sources */,
-				B26FD17D2774D09700E75FFC /* User.swift in Sources */,
 				B224E01027971E710022A054 /* SelectToppings.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
 				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,

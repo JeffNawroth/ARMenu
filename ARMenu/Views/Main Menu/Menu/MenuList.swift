@@ -16,9 +16,7 @@ struct MenuList: View {
     @State private var showsConfirmation = false
     @State private var selectedCategory = Category(name: "Alles")
     
-    
-    var loggedInUser: User = User.dummyUser
-    
+        
         var filteredMenuList: [Product] {
             productModelData.products.filter{ product in
                 (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
@@ -83,12 +81,10 @@ struct MenuList: View {
             .searchable(text: $searchText)
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
-                    if loggedInUser.role == .Admin{
                         EditButton()
-                    }
+                    
                 }
                 ToolbarItem(placement: .navigationBarTrailing){
-                    if loggedInUser.role == .Admin{
                         Button {
                             showsConfirmation = true
                         } label: {
@@ -112,8 +108,6 @@ struct MenuList: View {
                         .sheet(isPresented: $showingOfferSheet) {
                             AddOffer(showingSheet: $showingOfferSheet)
                         }
-                    }
-                    
                 }
             }
         }
