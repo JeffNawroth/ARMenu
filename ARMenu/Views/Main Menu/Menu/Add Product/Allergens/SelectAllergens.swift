@@ -32,6 +32,11 @@ struct SelectAllergens: View {
                         selections.append(allergen)
                     }
                 }
+            }.onDelete{(indexSet) in
+                for index in indexSet{
+                    let allergenToDelete = productModelData.allergens[index]
+                    productModelData.deleteAllergen(allergenToDelete: allergenToDelete)
+                }
             }
         }
         .toolbar{
@@ -47,6 +52,9 @@ struct SelectAllergens: View {
                     AddAllergen(showingSheet: $showingSheet)
                 }
 
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
             }
         }
         .onAppear{
