@@ -30,7 +30,6 @@ class ModelData: ObservableObject{
             }
             
             self.products = documents.compactMap { queryDocumentSnapshot -> Product? in
-                print("Produkte wurden erfolgreich geladen!")
                 return try? queryDocumentSnapshot.data(as: Product.self)
             }
             
