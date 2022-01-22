@@ -38,7 +38,7 @@ class ModelData: ObservableObject{
     
     func addProduct(productToAdd: Product, imagePath: String){
         
-        let product = Product(image: imagePath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+        let product = Product(image: imagePath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
@@ -116,18 +116,18 @@ class ModelData: ObservableObject{
         
     }
     
-//    func updateData(productToUpdate: Product){
-//        //Set the data to update
-//        db.collection("ImHörnken").document("Menu").collection("Products").document(productToUpdate.id ?? "").setData(["name":"Updated: \(productToUpdate.name)"] , merge: true) { error in
-//
-//            //Check for Errors
-//            if error == nil{
-//
-//                //Get the new data
-//                self.fetchProductsData()
-//            }
-//        }
-//    }
+    func updateData(productToUpdate: Product, isVisible: Bool){
+        //Set the data to update
+        db.collection("ImHörnken").document("Menu").collection("Products").document(productToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
+
+            //Check for Errors
+            if error == nil{
+
+                //Get the new data
+                self.fetchProductsData()
+            }
+        }
+    }
     
     //MARK: Additive
     

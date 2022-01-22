@@ -64,9 +64,12 @@ struct MenuList: View {
                         ForEach(searchResults){ product in
                             NavigationLink{
                                 MenuDetail(product: product)
+                                    .opacity(product.isVisible ? 1: 0.25)
                             } label:{
                                 MenuRow(product: product)
+                                    .opacity(product.isVisible ? 1: 0.25)
                             }
+                            
                         }.onDelete{(indexSet) in
                             for index in indexSet{
                                 let productToDelete = modelData.products[index]

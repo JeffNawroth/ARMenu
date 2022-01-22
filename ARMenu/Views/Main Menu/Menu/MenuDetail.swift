@@ -9,15 +9,11 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct MenuDetail: View {
-    
     var product: Product
     @State private var showingARPreview = false
     @State private var nutritionsExpanded = false
     @State private var allergensExpanded = false
     @State private var toppingsExpanded = false
-    
-    
-    
     var body: some View {
         ScrollView{
             AnimatedImage(url: URL(string: product.image))
@@ -187,6 +183,12 @@ struct MenuDetail: View {
         }
         .navigationTitle(product.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                VisibilityButton(isSet: product.isVisible, product: product)
+
+            }
+        }
     }
     
 }

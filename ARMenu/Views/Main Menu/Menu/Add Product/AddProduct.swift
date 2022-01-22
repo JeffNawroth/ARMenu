@@ -244,8 +244,7 @@ struct AddProduct: View {
                                 description: productDummy.description,
                                 isVegan: productDummy.isVegan,
                                 isBio: productDummy.isBio,
-                                isFairtrade: productDummy.isFairtrade,
-                                nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
+                                isFairtrade: productDummy.isFairtrade, isVisible: true, nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
                                 allergens:productDummy.allergens,
                                 additives: productDummy.additives,
                                 toppings: productDummy.toppings
