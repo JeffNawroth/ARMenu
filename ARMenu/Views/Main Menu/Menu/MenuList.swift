@@ -16,20 +16,20 @@ struct MenuList: View {
     @State private var showsConfirmation = false
     @State private var selectedCategory = Category(name: "Alles")
     
-        
-        var filteredMenuList: [Product] {
-            modelData.products.filter{ product in
-                (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
-            }
-        }
     
-        var searchResults: [Product] {
-            if searchText.isEmpty {
-                return filteredMenuList
-            } else {
-                return filteredMenuList.filter { $0.name.contains(searchText) }
-            }
+    var filteredMenuList: [Product] {
+        modelData.products.filter{ product in
+            (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
         }
+    }
+    
+    var searchResults: [Product] {
+        if searchText.isEmpty {
+            return filteredMenuList
+        } else {
+            return filteredMenuList.filter { $0.name.contains(searchText) || $0.category.name.contains(searchText)}
+        }
+    }
     
     
     var body: some View {
@@ -81,33 +81,33 @@ struct MenuList: View {
             .searchable(text: $searchText)
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
-                        EditButton()
+                    EditButton()
                     
                 }
                 ToolbarItem(placement: .navigationBarTrailing){
-                        Button {
-                            showsConfirmation = true
-                        } label: {
-                            Image(systemName: "plus")
+                    Button {
+                        showsConfirmation = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .confirmationDialog("Was möchten sie tun?", isPresented: $showsConfirmation) {
+                        Button("Angebot erstellen"){
+                            showingOfferSheet = true
                         }
-                        .confirmationDialog("Was möchten sie tun?", isPresented: $showsConfirmation) {
-                            Button("Angebot erstellen"){
-                                showingOfferSheet = true
-                            }
-                            Button("Produkt erstellen"){
-                                showingProductSheet = true
-                            }
-                            
-                            Button("Abbrechen", role:.cancel) {}
-                            
+                        Button("Produkt erstellen"){
+                            showingProductSheet = true
                         }
                         
-                        .sheet(isPresented: $showingProductSheet) {
-                            AddProduct(showingSheet: $showingProductSheet)
-                        }
-                        .sheet(isPresented: $showingOfferSheet) {
-                            AddOffer(showingSheet: $showingOfferSheet)
-                        }
+                        Button("Abbrechen", role:.cancel) {}
+                        
+                    }
+                    
+                    .sheet(isPresented: $showingProductSheet) {
+                        AddProduct(showingSheet: $showingProductSheet)
+                    }
+                    .sheet(isPresented: $showingOfferSheet) {
+                        AddOffer(showingSheet: $showingOfferSheet)
+                    }
                 }
             }
         }
