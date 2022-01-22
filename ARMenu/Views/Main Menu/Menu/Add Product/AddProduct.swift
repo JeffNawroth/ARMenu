@@ -36,6 +36,7 @@ struct AddProduct: View {
         var isVegan: Bool = false
         var isBio: Bool = false
         var isFairtrade: Bool = false
+        var isVisible = false
         var calories: Int!
         var fat: Double!
         var carbs: Double!
@@ -43,6 +44,7 @@ struct AddProduct: View {
         var allergens: [Allergen] = []
         var additives: [Additive] = []
         var toppings: [Topping] = []
+        
     }
     
     @State var productDummy = ProductDummy()
@@ -87,6 +89,10 @@ struct AddProduct: View {
                     }
                     
                 }.listRowBackground(Color.clear)
+                
+                Section{
+                    Toggle("Veröffentlichen", isOn: $productDummy.isVisible)
+                }
                 
                 Section{
                     Picker("Kategorie", selection: $productDummy.category) {
@@ -244,7 +250,7 @@ struct AddProduct: View {
                                 description: productDummy.description,
                                 isVegan: productDummy.isVegan,
                                 isBio: productDummy.isBio,
-                                isFairtrade: productDummy.isFairtrade, isVisible: true, nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
+                                isFairtrade: productDummy.isFairtrade, isVisible: productDummy.isVisible, nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
                                 allergens:productDummy.allergens,
                                 additives: productDummy.additives,
                                 toppings: productDummy.toppings
