@@ -18,7 +18,7 @@ struct AddOffer: View {
     }
     
     struct OfferDummy{
-        var image: Image!
+        var image: UIImage!
         var title: String = ""
         var description: String = ""
         var products: [Product] = []
@@ -33,7 +33,7 @@ struct AddOffer: View {
                 Section{
                     VStack{
                         if(offerDummy.image != nil){
-                            offerDummy.image
+                            Image(uiImage: offerDummy.image)
                                 .resizable()
                                 .scaledToFit()
                                 .cornerRadius(10)
@@ -105,7 +105,7 @@ struct AddOffer: View {
  
                         let offer = Offer(image: "", title: offerDummy.title, description: offerDummy.description, products: offerDummy.products)
                         
-                        modelData.addOffer(offerToAdd: offer)
+                        modelData.addOfferController(offerToAdd: offer, imageToAdd: offerDummy.image)
                         
                         
                     }
@@ -122,7 +122,7 @@ struct AddOffer: View {
     }
     func loadImage() {
         guard let inputImage = inputImage else { return }
-        offerDummy.image = Image(uiImage: inputImage)
+        offerDummy.image = inputImage
     }
 }
     struct AddOffer_Previews: PreviewProvider {

@@ -50,7 +50,7 @@ class ModelData: ObservableObject{
     }
     
     func addProductController(productToAdd: Product, imageToAdd: UIImage)    {
-        uploadImage(image: imageToAdd, productToAdd: productToAdd)
+        uploadImageProduct(image: imageToAdd, productToAdd: productToAdd)
         }
         
     func deleteProduct(productToDelete: Product){
@@ -88,7 +88,7 @@ class ModelData: ObservableObject{
     
     //Image zum Produkt hinzufügen
     
-    func uploadImage(image:UIImage, productToAdd:Product) {
+    func uploadImageProduct(image:UIImage, productToAdd:Product) {
         if let imageData = image.jpegData(compressionQuality: 1){
             let storage = Storage.storage()
             let metadata = StorageMetadata()
@@ -99,7 +99,7 @@ class ModelData: ObservableObject{
                     print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
                 } else {
                     print("Bild wurde erfolgreich hochgeladen!")
-                    self.getImagePath(productToAdd: productToAdd)
+                    self.getImagePathProduct(productToAdd: productToAdd)
                     
                 }
             }
@@ -108,7 +108,7 @@ class ModelData: ObservableObject{
         }
     }
     
-    func getImagePath(productToAdd: Product){
+    func getImagePathProduct(productToAdd: Product){
         let storageRef = Storage.storage().reference(withPath: productToAdd.name)
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
@@ -317,11 +317,17 @@ class ModelData: ObservableObject{
         }
     }
     
-    func addOffer(offerToAdd: Offer) {
+    func addOfferController(offerToAdd: Offer, imageToAdd: UIImage)    {
+        uploadImageOffer(image: imageToAdd, offerToAdd: offerToAdd)
+        }
+    
+    func addOffer(offerToAdd: Offer, imagePath: String){
+        
+        let offer = Offer(image: imagePath, title: offerToAdd.title, description: offerToAdd.description, products: offerToAdd.products)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Offers")
         do {
-            let newDocReference = try collectionRef.addDocument(from: offerToAdd)
-            print("Angebot wurde erfolgreich mit folgender Referenz hinzugefügt: \(newDocReference)")
+            let newDocReference = try collectionRef.addDocument(from: offer)
+            print("Angebot hinzugefügt mit folgender Referenz: \(newDocReference)")
         }
         catch {
             print(error)
@@ -352,6 +358,49 @@ class ModelData: ObservableObject{
                 print("Error: Angebot konnte nicht gelöscht werden!")
             }
         }
+        let storage = Storage.storage()
+        storage.reference().child(offerToDelete.title).delete { error in
+            if error != nil {
+              print("Error: Bild konnte nicht gelöscht werden!")
+            } else {
+              print("Bild wurde erfolgreich gelöscht!")
+            }
+          }
+        
+    }
+    
+    func uploadImageOffer(image: UIImage, offerToAdd: Offer) {
+        if let imageData = image.jpegData(compressionQuality: 1){
+            let storage = Storage.storage()
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            storage.reference().child(offerToAdd.title).putData(imageData, metadata: metadata){
+                (_, err) in
+                if let err = err {
+                    print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
+                } else {
+                    print("Bild wurde erfolgreich hochgeladen!")
+                    self.getImagePathOffer(offerToAdd: offerToAdd)
+                    
+                }
+            }
+        } else {
+            print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
+        }
+    }
+    
+    func getImagePathOffer(offerToAdd: Offer){
+        let storageRef = Storage.storage().reference(withPath: offerToAdd.title)
+        storageRef.downloadURL(completion: { [self] url, error in
+            guard let url = url, error == nil else {
+                print("Error: Bildpfad konnte nicht ermittelt werden!")
+                return
+            }
+            let imageURL = url.absoluteString
+            print("Bildpfad wurde erfolgreich ermittelt!")
+            addOffer(offerToAdd: offerToAdd, imagePath: imageURL)
+        }
+        )
         
     }
     
