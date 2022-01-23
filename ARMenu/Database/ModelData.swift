@@ -16,7 +16,6 @@ class ModelData: ObservableObject{
     @Published var additives = [Additive]()
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
-    @Published var errorMessage: String?
     
     var db = Firestore.firestore()
 
@@ -76,6 +75,14 @@ class ModelData: ObservableObject{
                 print("Error: Produkt konnte nicht gelöscht werden!")
             }
         }
+        let storage = Storage.storage()
+        storage.reference().child(productToDelete.name).delete { error in
+            if error != nil {
+              print("Error: Bild konnte nicht gelöscht werden!")
+            } else {
+              print("Bild wurde erfolgreich gelöscht!")
+            }
+          }
         
     }
     

@@ -69,7 +69,6 @@ struct MenuList: View {
                                 MenuRow(product: product)
                                     .opacity(product.isVisible ? 1: 0.25)
                             }
-                            
                         }.onDelete{(indexSet) in
                             for index in indexSet{
                                 let productToDelete = modelData.products[index]
