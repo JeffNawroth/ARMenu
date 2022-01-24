@@ -49,8 +49,11 @@ struct MenuList: View {
                             ForEach(modelData.offers){ offer in
                                 NavigationLink{
                                     OfferDetail(offer: offer)
+                                        .opacity(offer.isVisible ? 1: 0.25)
+
                                 } label:{
                                     OfferColumn(offer: offer)
+                                        .opacity(offer.isVisible ? 1: 0.25)
                                     
                                 }
                             }

@@ -56,6 +56,12 @@ struct OfferDetail: View {
         }
         .navigationTitle(Text(offer.title))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                OfferVisibilityButton(isSet: offer.isVisible, offer: offer)
+
+            }
+        }
     }
 }
 

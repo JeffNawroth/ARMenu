@@ -123,15 +123,18 @@ class ModelData: ObservableObject{
         
     }
     
-    func updateData(productToUpdate: Product, isVisible: Bool){
+    func updateProduct(productToUpdate: Product, isVisible: Bool){
         //Set the data to update
         db.collection("ImHörnken").document("Menu").collection("Products").document(productToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
 
             //Check for Errors
             if error == nil{
-
+                print("Produkt wurde aktualsiert!")
                 //Get the new data
                 self.fetchProductsData()
+            }
+            else{
+                print("Error: Produkt konnte nicht aktualisiert werden!")
             }
         }
     }
@@ -323,7 +326,7 @@ class ModelData: ObservableObject{
     
     func addOffer(offerToAdd: Offer, imagePath: String){
         
-        let offer = Offer(image: imagePath, title: offerToAdd.title, description: offerToAdd.description, products: offerToAdd.products)
+        let offer = Offer(image: imagePath, title: offerToAdd.title, description: offerToAdd.description, products: offerToAdd.products, isVisible: offerToAdd.isVisible)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Offers")
         do {
             let newDocReference = try collectionRef.addDocument(from: offer)
@@ -402,6 +405,22 @@ class ModelData: ObservableObject{
         }
         )
         
+    }
+    
+    func updateOffer(offerToUpdate: Offer, isVisible: Bool){
+        //Set the data to update
+        db.collection("ImHörnken").document("Menu").collection("Offers").document(offerToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
+
+            //Check for Errors
+            if error == nil{
+                print("Angebot wurde aktualsiert!")
+                //Get the new data
+                self.fetchOffersData()
+            }
+            else{
+                print("Error: Angebot konnte nicht aktualisiert werden!")
+            }
+        }
     }
     
     //MARK: Topping

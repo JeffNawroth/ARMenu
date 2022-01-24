@@ -185,7 +185,7 @@ struct MenuDetail: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
-                VisibilityButton(isSet: product.isVisible, product: product)
+                ProductVisibilityButton(isSet: product.isVisible, product: product)
 
             }
         }
