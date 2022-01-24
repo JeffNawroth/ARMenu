@@ -11,12 +11,21 @@ struct OfferVisibilityButton: View {
     @EnvironmentObject var modelData: ModelData
     @State var isSet: Bool
     @State var offer: Offer
+    @State var showsConfirmation: Bool = false
     var body: some View {
         Button {
-            isSet.toggle()
-            modelData.updateOffer(offerToUpdate: offer, isVisible: isSet)
+            showsConfirmation.toggle()
         } label: {
             Image(systemName: isSet ? "eye.slash" : "eye")
+        }
+        .confirmationDialog(isSet ? "Dieses Angebot vor allen Kunden geheim halten?" : "Dieses Angebot für alle Kunden veröffentlichen?", isPresented: $showsConfirmation, titleVisibility: .visible) {
+            
+            Button(isSet ? "Geheim halten": "Veröffentlichen"){
+                isSet.toggle()
+                modelData.updateOffer(offerToUpdate: offer, isVisible: isSet)
+            }
+            Button("Abbrechen", role:.cancel) {}
+            
         }
     }
 }

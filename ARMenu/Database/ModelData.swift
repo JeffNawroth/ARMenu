@@ -129,7 +129,7 @@ class ModelData: ObservableObject{
 
             //Check for Errors
             if error == nil{
-                print("Produkt wurde aktualsiert!")
+                print("Produkt wurde aktualisiert!")
                 //Get the new data
                 self.fetchProductsData()
             }
@@ -413,7 +413,7 @@ class ModelData: ObservableObject{
 
             //Check for Errors
             if error == nil{
-                print("Angebot wurde aktualsiert!")
+                print("Angebot wurde aktualisiert!")
                 //Get the new data
                 self.fetchOffersData()
             }

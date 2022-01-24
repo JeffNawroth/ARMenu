@@ -186,7 +186,6 @@ struct MenuDetail: View {
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
                 ProductVisibilityButton(isSet: product.isVisible, product: product)
-
             }
         }
     }

@@ -9,7 +9,11 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct OfferDetail: View {
+  //  @EnvironmentObject var modelData: ModelData
+  //  @State var showsConfirmation: Bool = false
+    //@State var isSet: Bool
     var offer: Offer
+
     var body: some View {
         
         ScrollView{
@@ -59,7 +63,6 @@ struct OfferDetail: View {
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
                 OfferVisibilityButton(isSet: offer.isVisible, offer: offer)
-
             }
         }
     }
