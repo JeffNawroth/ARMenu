@@ -58,7 +58,7 @@ struct SelectAdditives: View {
             
         }
         .onAppear{
-            modelData.fetchAdditivesData()
+           modelData.fetchAdditivesData()
         }
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
         .navigationTitle("Zusatzstoffe")

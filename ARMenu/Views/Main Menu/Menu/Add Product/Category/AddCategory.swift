@@ -11,7 +11,7 @@ struct AddCategory: View {
     
     @EnvironmentObject var modelData: ModelData
     @State var category:Category = Category(name: "")
-    @Binding var showingCategorySheet: Bool
+    @Binding var showingSheet: Bool
     var disableForm: Bool {
         category.name.isEmpty
     }
@@ -29,7 +29,7 @@ struct AddCategory: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Fertig"){
-                        showingCategorySheet = false
+                        showingSheet = false
                         modelData.addCategory(categoryToAdd: category)
                     }
                     .disabled(disableForm)
@@ -37,7 +37,7 @@ struct AddCategory: View {
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Abbrechen"){
-                      showingCategorySheet = false
+                      showingSheet = false
                         
                     }
 
@@ -51,6 +51,6 @@ struct AddCategory: View {
 
 struct AddCategory_Previews: PreviewProvider {
     static var previews: some View {
-        AddCategory(showingCategorySheet: .constant(true))
+        AddCategory(showingSheet: .constant(true))
     }
 }

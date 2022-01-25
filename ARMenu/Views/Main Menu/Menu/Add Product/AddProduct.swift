@@ -97,7 +97,6 @@ struct AddProduct: View {
                 Section{
                     NavigationLink {
                         SelectCategory(selectedCategory: $productDummy.category)
-
                     } label: {
                         HStack{
                             Text("Kategorie")

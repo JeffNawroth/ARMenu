@@ -11,20 +11,44 @@ struct SelectCategory: View {
     @EnvironmentObject var modelData: ModelData
     @Binding var selectedCategory: Category
     @Environment(\.presentationMode) var presentationMode
-
+    @State var showingSheet = false
+    
+    
     
     var body: some View {
         List{
             ForEach(modelData.categories){ category in
                 CategoryPicker(category: category, isSelected: selectedCategory == category) {
-                        selectedCategory = category
+                    selectedCategory = category
                     presentationMode.wrappedValue.dismiss()
                 }
             }
+            .onDelete{(indexSet) in
+                for index in indexSet{
+                    let categoryToDelete = modelData.categories[index]
+                    modelData.deleteCategory(categoryToDelete: categoryToDelete)
+                }
             }
-            .navigationTitle("Kategorie")
-            .navigationBarTitleDisplayMode(.inline)
-            .listStyle(.plain)
+        }
+        .navigationTitle("Kategorie")
+        .navigationBarTitleDisplayMode(.inline)
+        .listStyle(.plain)
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingSheet = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .sheet(isPresented: $showingSheet){
+                    AddCategory(showingSheet: $showingSheet)
+                }
+                
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                EditButton()
+            }
+        }
     }
 }
 
