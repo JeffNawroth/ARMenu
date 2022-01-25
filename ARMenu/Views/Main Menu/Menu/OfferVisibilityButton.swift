@@ -33,6 +33,5 @@ struct OfferVisibilityButton: View {
 struct OfferVisibilityButton_Previews: PreviewProvider {
     static var previews: some View {
         OfferVisibilityButton(isSet: true, offer: Offer.dummyOffer)
-            .environmentObject(ModelData())
     }
 }

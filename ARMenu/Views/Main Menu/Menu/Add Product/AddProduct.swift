@@ -95,17 +95,25 @@ struct AddProduct: View {
                 }
                 
                 Section{
-                    Picker("Kategorie", selection: $productDummy.category) {
-                        ForEach(modelData.categories, id: \.self){
-                            Text($0.name)
+                    NavigationLink {
+                        SelectCategory(selectedCategory: $productDummy.category)
+
+                    } label: {
+                        HStack{
+                            Text("Kategorie")
+                            Spacer()
+                            Text(productDummy.category.name)
+                                .foregroundColor(.gray)
                         }
                     }
+
+                    
                     HStack{
                         Text("Name")
                         TextField("Name", text: $productDummy.name)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                         
                         
                     }
@@ -115,7 +123,7 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                     }
                     
                 }
@@ -123,7 +131,7 @@ struct AddProduct: View {
                 Section(header: Text("Beschreibung")){
                     TextEditor(text: $productDummy.description)
                         .focused($isFocused)
-
+                    
                 }
                 
                 Section(header: Text("Zertifikate")){
@@ -145,7 +153,7 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                         
                     }
                     HStack{
@@ -154,7 +162,7 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                         
                         
                     }
@@ -164,7 +172,7 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                     }
                     
                     HStack{
@@ -173,7 +181,7 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                     }
                     
                 }
@@ -279,7 +287,7 @@ struct AddProduct: View {
                     
                     Button {
                         isFocused = false
-
+                        
                     } label: {
                         Image(systemName:"keyboard.chevron.compact.down")
                     }
