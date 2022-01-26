@@ -1,21 +1,20 @@
 //
-//  CategoryPicker.swift
+//  UnitPicker.swift
 //  ARMenu
 //
-//  Created by Jeff Nawroth on 25.01.22.
+//  Created by Jeff Nawroth on 26.01.22.
 //
 
 import SwiftUI
 
-struct CategoryPicker: View {
-    var category: Category
+struct UnitPicker: View {
+    var unit: Unit
     var isSelected: Bool
     var action: () -> Void
-    
     var body: some View {
         Button(action: self.action) {
             HStack {
-                Text(category.name)
+                Text(unit.name)
                 if isSelected {
                     Spacer()
                     Image(systemName: "checkmark")
@@ -25,9 +24,9 @@ struct CategoryPicker: View {
     }
 }
 
-struct CategoryPicker_Previews: PreviewProvider {
+struct UnitPicker_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryPicker(category: Category(name:"Test"), isSelected: true) {
+        UnitPicker(unit: Unit.dummyUnits[0], isSelected: true){
             
         }
     }

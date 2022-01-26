@@ -24,11 +24,41 @@ struct MenuDetail: View {
                 .padding()
             
             VStack(alignment: .leading){
+
+                HStack{
+                    VStack(alignment: .leading){
+                        Text(product.category.name)
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                        
+                        HStack{
+                            Text(product.name)
+                                .font(.title)
+                            
+                            Spacer()
+                            
+                            Text("\(product.price, specifier: "%.2f")")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                            Text("•")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                            
+                            Text("\(product.servingSize.size)" + product.servingSize.unit.name)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                            
+                            
+                        }
+                       
+                    }
+                   
+                }
+                
+                Spacer()
                 
                 HStack{
-                    Text(product.name)
-                        .font(.title)
-                    
                     if product.isVegan{
                         Image("vegan")
                             .resizable()
@@ -50,23 +80,9 @@ struct MenuDetail: View {
                             .scaledToFit()
                             .frame(width: 30)
                     }
-                    
                 }
                 
-                Spacer()
                 
-                HStack{
-                    Text("\(product.price, specifier: "%.2f")")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
-                    Text("•")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
-                    
-                    Text(product.category.name)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
-                }
                 
                 Divider()
                 

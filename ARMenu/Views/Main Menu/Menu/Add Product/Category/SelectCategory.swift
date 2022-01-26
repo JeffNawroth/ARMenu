@@ -19,7 +19,9 @@ struct SelectCategory: View {
         List{
             ForEach(modelData.categories){ category in
                 CategoryPicker(category: category, isSelected: selectedCategory == category) {
-                    selectedCategory = category
+                    if selectedCategory != category{
+                        selectedCategory = category
+                    }
                     presentationMode.wrappedValue.dismiss()
                 }
             }

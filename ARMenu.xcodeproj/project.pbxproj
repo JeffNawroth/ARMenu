@@ -23,6 +23,8 @@
 		B234486227934003000AD206 /* MultipleAdditivePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B234486127934003000AD206 /* MultipleAdditivePicker.swift */; };
 		B23448642793464E000AD206 /* MultipleProductPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23448632793464E000AD206 /* MultipleProductPicker.swift */; };
 		B23448662793489A000AD206 /* SelectProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23448652793489A000AD206 /* SelectProducts.swift */; };
+		B249CD4727A1BDD800A025C1 /* SelectUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249CD4627A1BDD800A025C1 /* SelectUnit.swift */; };
+		B249CD4A27A1C0D200A025C1 /* UnitPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249CD4927A1C0D200A025C1 /* UnitPicker.swift */; };
 		B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14C2774CCD100E75FFC /* AppDelegate.swift */; };
 		B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14E2774CCD100E75FFC /* ContentView.swift */; };
 		B26FD1512774CCD100E75FFC /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1502774CCD100E75FFC /* Experience.rcproject */; };
@@ -74,6 +76,8 @@
 		B234486127934003000AD206 /* MultipleAdditivePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleAdditivePicker.swift; sourceTree = "<group>"; };
 		B23448632793464E000AD206 /* MultipleProductPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleProductPicker.swift; sourceTree = "<group>"; };
 		B23448652793489A000AD206 /* SelectProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProducts.swift; sourceTree = "<group>"; };
+		B249CD4627A1BDD800A025C1 /* SelectUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUnit.swift; sourceTree = "<group>"; };
+		B249CD4927A1C0D200A025C1 /* UnitPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitPicker.swift; sourceTree = "<group>"; };
 		B26FD1492774CCD100E75FFC /* ARMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26FD14C2774CCD100E75FFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B26FD14E2774CCD100E75FFC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -145,6 +149,15 @@
 				B229A86A27A069CA00B31484 /* CategoryPicker.swift */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		B249CD4827A1BF2A00A025C1 /* Unit */ = {
+			isa = PBXGroup;
+			children = (
+				B249CD4627A1BDD800A025C1 /* SelectUnit.swift */,
+				B249CD4927A1C0D200A025C1 /* UnitPicker.swift */,
+			);
+			path = Unit;
 			sourceTree = "<group>";
 		};
 		B26FD1402774CCD100E75FFC = {
@@ -240,6 +253,7 @@
 			children = (
 				B26FD1622774CE9F00E75FFC /* AddProduct.swift */,
 				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
+				B249CD4827A1BF2A00A025C1 /* Unit */,
 				B229A86C27A06DCE00B31484 /* Category */,
 				B27ADA912798BFF50000A750 /* Additives */,
 				B27ADA932798C01C0000A750 /* Allergens */,
@@ -418,12 +432,14 @@
 				B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */,
 				B26FD16F2774CF8F00E75FFC /* MenuDetail.swift in Sources */,
 				B2BA9B3927A19CD1004B9852 /* Unit.swift in Sources */,
+				B249CD4727A1BDD800A025C1 /* SelectUnit.swift in Sources */,
 				B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */,
 				B224E012279720600022A054 /* MultipleToppingPicker.swift in Sources */,
 				B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */,
 				B2BA9B3727A19BEA004B9852 /* ServingSize.swift in Sources */,
 				B26FD1652774CECC00E75FFC /* changePassword.swift in Sources */,
 				B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */,
+				B249CD4A27A1C0D200A025C1 /* UnitPicker.swift in Sources */,
 				B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */,
 				B26FD1732774CFCC00E75FFC /* MenuRow.swift in Sources */,
 				B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */,

@@ -13,7 +13,7 @@ struct AddProduct: View {
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
-    @State private var showingUnits = false
+    @State private var showingUnitsSheet = false
     @FocusState private var isFocused: Bool
     var disableForm: Bool {
         productDummy.image == nil ||
@@ -33,7 +33,7 @@ struct AddProduct: View {
         var image: UIImage!
         var name: String = ""
         var category: Category = Category(name:"")
-        var unit: Unit = Unit(name: "")
+        var unit: Unit = Unit(name: "l")
         var size: Double!
         var price: Double!
         
@@ -123,25 +123,27 @@ struct AddProduct: View {
                     
                 
                     
-//                    HStack{
-//                        Button {
-//                            showingUnits = true
-//                        } label: {
-//                            HStack{
-//                                Text(productDummy.unit.name)
-//                                    .foregroundColor(.blue)
-//                                Image(systemName: "chevron.right")
-//                                    .imageScale(.small)
-//                                    .foregroundColor(.gray)
-//                                Divider()
-//                            }
-//                        }.padding(.trailing)
-//                        .buttonStyle(.plain)
-//                        }
-//
-//                        TextField("Menge", value: $productDummy.size, format: .number)
-//                            .keyboardType(.decimalPad)
-//                    }
+                    HStack{
+                        Button {
+                            showingUnitsSheet = true
+                        } label: {
+                            HStack{
+                                Text(productDummy.unit.name)
+                                    .foregroundColor(.blue)
+                                Image(systemName: "chevron.right")
+                                    .imageScale(.small)
+                                    .foregroundColor(.gray)
+                                Divider()
+                            }
+                        }.padding(.trailing)
+                        .buttonStyle(.plain)
+
+                        TextField("Menge", value: $productDummy.size, format: .number)
+                            .keyboardType(.decimalPad)
+                    }
+                .sheet(isPresented: $showingUnitsSheet) {
+                    SelectUnit(selectedUnit: $productDummy.unit, showingUnitsSheet: $showingUnitsSheet)
+                }
 
                     
                     HStack{
