@@ -51,7 +51,7 @@ struct OfferDetail: View {
                             Divider()
                         }
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 14))
+                            .imageScale(.small)
                             .foregroundColor(Color.gray)
                     }
                 }

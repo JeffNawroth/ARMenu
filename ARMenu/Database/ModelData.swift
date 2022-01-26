@@ -16,6 +16,7 @@ class ModelData: ObservableObject{
     @Published var additives = [Additive]()
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
+    @Published var units = [Unit]()
     
     var db = Firestore.firestore()
 
@@ -37,7 +38,7 @@ class ModelData: ObservableObject{
     
     func addProduct(productToAdd: Product, imagePath: String){
         
-        let product = Product(image: imagePath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+        let product = Product(image: imagePath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)

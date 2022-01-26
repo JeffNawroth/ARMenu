@@ -9,11 +9,11 @@ import SwiftUI
 
 struct AddProduct: View {
     
-    
     @EnvironmentObject var modelData: ModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
+    @State private var showingUnits = false
     @FocusState private var isFocused: Bool
     var disableForm: Bool {
         productDummy.image == nil ||
@@ -28,19 +28,26 @@ struct AddProduct: View {
     }
     
     struct ProductDummy{
+        var isVisible = false
+
         var image: UIImage!
         var name: String = ""
         var category: Category = Category(name:"")
+        var unit: Unit = Unit(name: "")
+        var size: Double!
         var price: Double!
+        
         var description: String = ""
+        
         var isVegan: Bool = false
         var isBio: Bool = false
         var isFairtrade: Bool = false
-        var isVisible = false
+        
         var calories: Int!
         var fat: Double!
         var carbs: Double!
         var protein: Double!
+        
         var allergens: [Allergen] = []
         var additives: [Additive] = []
         var toppings: [Topping] = []
@@ -53,7 +60,7 @@ struct AddProduct: View {
     var body: some View {
         
         NavigationView{
-            List{
+            Form{
                 Section{
                     VStack{
                         if productDummy.image != nil{
@@ -94,7 +101,15 @@ struct AddProduct: View {
                     Toggle("Veröffentlichen", isOn: $productDummy.isVisible)
                 }
                 
+                
                 Section{
+                HStack{
+                    Text("Name")
+                    TextField("Name", text: $productDummy.name)
+                        .multilineTextAlignment(.trailing)
+                        .focused($isFocused)                 
+                }
+                                        
                     NavigationLink {
                         SelectCategory(selectedCategory: $productDummy.category)
                     } label: {
@@ -105,17 +120,30 @@ struct AddProduct: View {
                                 .foregroundColor(.gray)
                         }
                     }
+                    
+                
+                    
+//                    HStack{
+//                        Button {
+//                            showingUnits = true
+//                        } label: {
+//                            HStack{
+//                                Text(productDummy.unit.name)
+//                                    .foregroundColor(.blue)
+//                                Image(systemName: "chevron.right")
+//                                    .imageScale(.small)
+//                                    .foregroundColor(.gray)
+//                                Divider()
+//                            }
+//                        }.padding(.trailing)
+//                        .buttonStyle(.plain)
+//                        }
+//
+//                        TextField("Menge", value: $productDummy.size, format: .number)
+//                            .keyboardType(.decimalPad)
+//                    }
 
                     
-                    HStack{
-                        Text("Name")
-                        TextField("Name", text: $productDummy.name)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
-                        
-                        
-                        
-                    }
                     HStack{
                         Text("Preis")
                         TextField("0", value: $productDummy.price, format: .number)
@@ -127,11 +155,34 @@ struct AddProduct: View {
                     
                 }
                 
+                
+                
                 Section(header: Text("Beschreibung")){
                     TextEditor(text: $productDummy.description)
                         .focused($isFocused)
                     
                 }
+                
+//                Section(){
+//
+//                        ForEach(servingSizeViews, id: \.self){ view in
+//                            view
+//                        }
+//                        .onDelete { offsets in
+//                            servingSizeViews.remove(atOffsets: offsets)
+//                        }
+//                        HStack{
+//                            Button {
+//                                servingSizeViews.append(ServingSizeView())
+//                            } label: {
+//                                Image(systemName: "plus.circle.fill")
+//                                    .foregroundColor(.green)
+//                            }
+//                            Text("Serviergröße hinzufügen")
+//
+//                        }
+//
+//                }
                 
                 Section(header: Text("Zertifikate")){
                     Toggle(isOn: $productDummy.isVegan) {
@@ -255,7 +306,7 @@ struct AddProduct: View {
                                 category: productDummy.category,
                                 price: productDummy.price,
                                 description: productDummy.description,
-                                isVegan: productDummy.isVegan,
+                                servingSize: ServingSize(unit: productDummy.unit, size: productDummy.size), isVegan: productDummy.isVegan,
                                 isBio: productDummy.isBio,
                                 isFairtrade: productDummy.isFairtrade, isVisible: productDummy.isVisible, nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
                                 allergens:productDummy.allergens,
@@ -294,7 +345,10 @@ struct AddProduct: View {
             }
             
         }
+
     }
+
+
     func loadImage() {
         guard let inputImage = inputImage else { return }
         productDummy.image = inputImage

@@ -36,6 +36,12 @@ struct MenuRow: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
+                    Text("\(product.servingSize.size)" + product.servingSize.unit.name)
+                    
+                    Text("•")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
+                    
                     Text(product.category.name)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
