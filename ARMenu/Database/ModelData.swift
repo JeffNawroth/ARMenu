@@ -93,7 +93,7 @@ class ModelData: ObservableObject{
             let storage = Storage.storage()
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-            storage.reference().child(productToAdd.name).putData(imageData, metadata: metadata){
+            storage.reference().child("ProductImages/\(productToAdd.name)").putData(imageData, metadata: metadata){
                 (_, err) in
                 if let err = err {
                     print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
@@ -109,7 +109,7 @@ class ModelData: ObservableObject{
     }
     
     func getImagePathProduct(productToAdd: Product){
-        let storageRef = Storage.storage().reference(withPath: productToAdd.name)
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/\(productToAdd.name)")
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -374,7 +374,7 @@ class ModelData: ObservableObject{
             let storage = Storage.storage()
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-            storage.reference().child(offerToAdd.title).putData(imageData, metadata: metadata){
+            storage.reference().child("OfferImages/\(offerToAdd.title)").putData(imageData, metadata: metadata){
                 (_, err) in
                 if let err = err {
                     print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
@@ -390,7 +390,7 @@ class ModelData: ObservableObject{
     }
     
     func getImagePathOffer(offerToAdd: Offer){
-        let storageRef = Storage.storage().reference(withPath: offerToAdd.title)
+        let storageRef = Storage.storage().reference(withPath: "OfferImages/\(offerToAdd.title)")
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
