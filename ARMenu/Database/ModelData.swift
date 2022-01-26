@@ -478,4 +478,21 @@ class ModelData: ObservableObject{
         
     }
     
+    //MARK: Unit
+    
+    func fetchUnitsData() {
+        db.collection("ImHörnken").document("Menu").collection("Units").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error: Units nicht gefunden!")
+                return
+            }
+            
+            self.units = documents.compactMap { queryDocumentSnapshot -> Unit? in
+                return try? queryDocumentSnapshot.data(as: Unit.self)
+                
+            }
+            
+        }
+    }
+    
 }
