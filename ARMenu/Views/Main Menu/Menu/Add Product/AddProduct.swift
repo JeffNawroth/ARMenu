@@ -239,12 +239,6 @@ struct AddProduct: View {
                 }
                 
                 Section(header: Text("Toppings")){
-                    NavigationLink{
-                        SelectToppings(selections: $productDummy.toppings)
-                    } label:{
-                        Text("Toppings hinzufügen")
-                            .foregroundColor(.blue)
-                    }
                     
                     ForEach(productDummy.toppings,id:\.self){ topping in
                         HStack{
@@ -253,36 +247,67 @@ struct AddProduct: View {
                             Text("+ \(topping.price, specifier: "%.2f")")
                         }
                     }
+                    .onDelete { IndexSet in
+                        productDummy.toppings.remove(atOffsets: IndexSet)
+                    }
                     
+                    NavigationLink{
+                        SelectToppings(selections: $productDummy.toppings)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Toppings hinzufügen")
+                        }
+                    }
                 }
                 
                 Section(header: Text("Allergene")){
-                    NavigationLink{
-                        SelectAllergens(selections: $productDummy.allergens)
-                    } label:{
-                        Text("Allergene hinzufügen")
-                            .foregroundColor(.blue)
-                    }
                     
                     ForEach(productDummy.allergens, id:\.self){
                         Text($0.name)
                     }
+                    .onDelete { IndexSet in
+                        productDummy.allergens.remove(atOffsets: IndexSet)
+                    }
+                    
+                    
+                    NavigationLink{
+                        SelectAllergens(selections: $productDummy.allergens)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Allergene hinzufügen")
+                        }
+                        
+                    }
+                    
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
                     
-                    NavigationLink{
-                        SelectAdditives(selections: $productDummy.additives)
-                    } label:{
-                        Text("Zusatzstoffe hinzufügen")
-                            .foregroundColor(.blue)
-                    }
-                    
                     ForEach(productDummy.additives,id:\.self){
                         Text($0.name)
                     }
+                    .onDelete { IndexSet in
+                        productDummy.additives.remove(atOffsets: IndexSet)
+                    }
                     
-                    
+                    NavigationLink{
+                        SelectAdditives(selections: $productDummy.additives)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Zusatzstoffe hinzufügen")
+                        }
+                           
+                    }
+   
                 }
                 
                 
