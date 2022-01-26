@@ -32,7 +32,6 @@ struct SelectCategory: View {
         }
         .navigationTitle("Kategorie")
         .navigationBarTitleDisplayMode(.inline)
-        .listStyle(.plain)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
