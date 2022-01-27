@@ -76,7 +76,7 @@ class ModelData: ObservableObject{
             }
         }
         let storage = Storage.storage()
-        storage.reference().child(productToDelete.name).delete { error in
+        storage.reference().child("ProductImages/\(productToDelete.name)").delete { error in
             if error != nil {
               print("Error: Bild konnte nicht gelöscht werden!")
             } else {
@@ -135,6 +135,18 @@ class ModelData: ObservableObject{
             }
         }
     }
+    
+    //Alternative zu updateData
+//    private func updateData(_ product: Product) {
+//        if let documentId = product.id {
+//          do {
+//              try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: product)
+//          }
+//          catch {
+//            print(error)
+//          }
+//        }
+//      }
     
     //MARK: Additive
     
@@ -359,7 +371,7 @@ class ModelData: ObservableObject{
             }
         }
         let storage = Storage.storage()
-        storage.reference().child(offerToDelete.title).delete { error in
+        storage.reference().child("OfferImages/\(offerToDelete.title)").delete { error in
             if error != nil {
               print("Error: Bild konnte nicht gelöscht werden!")
             } else {
