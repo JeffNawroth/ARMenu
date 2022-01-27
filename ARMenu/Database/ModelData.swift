@@ -18,6 +18,8 @@ class ModelData: ObservableObject{
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
     
+
+    
     var db = Firestore.firestore()
 
     //MARK: Product
@@ -307,11 +309,12 @@ class ModelData: ObservableObject{
     //MARK: Offer
     
     func fetchOffersData() {
-        db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
+      db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Angebote nicht gefunden!")
                 return
             }
+            
             
             self.offers = documents.compactMap { queryDocumentSnapshot -> Offer? in
                 return try? queryDocumentSnapshot.data(as: Offer.self)
