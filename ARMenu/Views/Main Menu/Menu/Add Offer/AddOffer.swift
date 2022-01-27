@@ -22,6 +22,7 @@ struct AddOffer: View {
         var title: String = ""
         var description: String = ""
         var products: [Product] = []
+        var isVisible: Bool = false
     }
     
     @State var offerDummy = OfferDummy()
@@ -60,6 +61,10 @@ struct AddOffer: View {
                         .buttonStyle(PlainButtonStyle())
                     }
                 }.listRowBackground(Color.clear)
+                
+                Section{
+                    Toggle("Veröffentlichen", isOn: $offerDummy.isVisible)
+                }
                 
                 
                 Section{
@@ -103,7 +108,7 @@ struct AddOffer: View {
                     Button("Fertig"){
                         showingSheet = false
  
-                        let offer = Offer(image: "", title: offerDummy.title, description: offerDummy.description, products: offerDummy.products)
+                        let offer = Offer(image: "", title: offerDummy.title, description: offerDummy.description, products: offerDummy.products, isVisible: offerDummy.isVisible)
                         
                         modelData.addOfferController(offerToAdd: offer, imageToAdd: offerDummy.image)
                         

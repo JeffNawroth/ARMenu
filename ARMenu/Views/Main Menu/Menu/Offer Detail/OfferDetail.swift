@@ -10,6 +10,7 @@ import SDWebImageSwiftUI
 
 struct OfferDetail: View {
     var offer: Offer
+
     var body: some View {
         
         ScrollView{
@@ -47,7 +48,7 @@ struct OfferDetail: View {
                             Divider()
                         }
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 14))
+                            .imageScale(.small)
                             .foregroundColor(Color.gray)
                     }
                 }
@@ -56,6 +57,11 @@ struct OfferDetail: View {
         }
         .navigationTitle(Text(offer.title))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar{
+            ToolbarItem(placement: .navigationBarTrailing) {
+                OfferVisibilityButton(isSet: offer.isVisible, offer: offer)
+            }
+        }
     }
 }
 

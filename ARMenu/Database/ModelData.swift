@@ -16,6 +16,9 @@ class ModelData: ObservableObject{
     @Published var additives = [Additive]()
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
+    @Published var units = [Unit]()
+    
+
     
     var db = Firestore.firestore()
 
@@ -37,7 +40,7 @@ class ModelData: ObservableObject{
     
     func addProduct(productToAdd: Product, imagePath: String){
         
-        let product = Product(image: imagePath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+        let product = Product(image: imagePath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
@@ -123,15 +126,18 @@ class ModelData: ObservableObject{
         
     }
     
-    func updateData(productToUpdate: Product, isVisible: Bool){
+    func updateProduct(productToUpdate: Product, isVisible: Bool){
         //Set the data to update
         db.collection("ImHörnken").document("Menu").collection("Products").document(productToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
 
             //Check for Errors
             if error == nil{
-
+                print("Produkt wurde aktualisiert!")
                 //Get the new data
                 self.fetchProductsData()
+            }
+            else{
+                print("Error: Produkt konnte nicht aktualisiert werden!")
             }
         }
     }
@@ -315,11 +321,12 @@ class ModelData: ObservableObject{
     //MARK: Offer
     
     func fetchOffersData() {
-        db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
+      db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Angebote nicht gefunden!")
                 return
             }
+            
             
             self.offers = documents.compactMap { queryDocumentSnapshot -> Offer? in
                 return try? queryDocumentSnapshot.data(as: Offer.self)
@@ -335,7 +342,7 @@ class ModelData: ObservableObject{
     
     func addOffer(offerToAdd: Offer, imagePath: String){
         
-        let offer = Offer(image: imagePath, title: offerToAdd.title, description: offerToAdd.description, products: offerToAdd.products)
+        let offer = Offer(image: imagePath, title: offerToAdd.title, description: offerToAdd.description, products: offerToAdd.products, isVisible: offerToAdd.isVisible)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Offers")
         do {
             let newDocReference = try collectionRef.addDocument(from: offer)
@@ -416,6 +423,22 @@ class ModelData: ObservableObject{
         
     }
     
+    func updateOffer(offerToUpdate: Offer, isVisible: Bool){
+        //Set the data to update
+        db.collection("ImHörnken").document("Menu").collection("Offers").document(offerToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
+
+            //Check for Errors
+            if error == nil{
+                print("Angebot wurde aktualisiert!")
+                //Get the new data
+                self.fetchOffersData()
+            }
+            else{
+                print("Error: Angebot konnte nicht aktualisiert werden!")
+            }
+        }
+    }
+    
     //MARK: Topping
     
     func fetchToppingsData() {
@@ -468,6 +491,23 @@ class ModelData: ObservableObject{
             }
         }
         
+    }
+    
+    //MARK: Unit
+    
+    func fetchUnitsData() {
+        db.collection("ImHörnken").document("Menu").collection("Units").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error: Units nicht gefunden!")
+                return
+            }
+            
+            self.units = documents.compactMap { queryDocumentSnapshot -> Unit? in
+                return try? queryDocumentSnapshot.data(as: Unit.self)
+                
+            }
+            
+        }
     }
     
 }

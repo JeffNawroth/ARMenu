@@ -15,6 +15,7 @@ struct MenuList: View {
     @State private var searchText = ""
     @State private var showsConfirmation = false
     @State private var selectedCategory = Category(name: "Alles")
+    @State private var mode: EditMode = .inactive
     
     
     var filteredMenuList: [Product] {
@@ -49,10 +50,22 @@ struct MenuList: View {
                             ForEach(modelData.offers){ offer in
                                 NavigationLink{
                                     OfferDetail(offer: offer)
+                                        .opacity(offer.isVisible ? 1: 0.25)
+                                    
                                 } label:{
-                                    OfferColumn(offer: offer)
+                                    
+                                    OfferColumn(offer: offer, mode: $mode){
+                                        withAnimation(.spring()){
+//                                            modelData.deleteOffer(offerToDelete: offer)
+                                            
+                                            print("Angebot gelöscht")
+                                        }
+                                    }
+                                    .opacity(offer.isVisible ? 1: 0.25)
                                     
                                 }
+                                
+                                
                             }
                         }
                     }
@@ -112,6 +125,7 @@ struct MenuList: View {
                     }
                 }
             }
+            .environment(\.editMode, $mode)
         }
         .onAppear{
             modelData.fetchProductsData()

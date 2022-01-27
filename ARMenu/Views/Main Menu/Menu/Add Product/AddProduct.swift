@@ -9,11 +9,11 @@ import SwiftUI
 
 struct AddProduct: View {
     
-    
     @EnvironmentObject var modelData: ModelData
     @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
+    @State private var showingUnitsSheet = false
     @FocusState private var isFocused: Bool
     var disableForm: Bool {
         productDummy.image == nil ||
@@ -28,19 +28,26 @@ struct AddProduct: View {
     }
     
     struct ProductDummy{
+        var isVisible = false
+
         var image: UIImage!
         var name: String = ""
         var category: Category = Category(name:"")
+        var unit: Unit = Unit(name: "l")
+        var size: Double!
         var price: Double!
+        
         var description: String = ""
+        
         var isVegan: Bool = false
         var isBio: Bool = false
         var isFairtrade: Bool = false
-        var isVisible = false
+        
         var calories: Int!
         var fat: Double!
         var carbs: Double!
         var protein: Double!
+        
         var allergens: [Allergen] = []
         var additives: [Additive] = []
         var toppings: [Topping] = []
@@ -53,7 +60,7 @@ struct AddProduct: View {
     var body: some View {
         
         NavigationView{
-            List{
+            Form{
                 Section{
                     VStack{
                         if productDummy.image != nil{
@@ -94,37 +101,90 @@ struct AddProduct: View {
                     Toggle("Veröffentlichen", isOn: $productDummy.isVisible)
                 }
                 
+                
                 Section{
-                    Picker("Kategorie", selection: $productDummy.category) {
-                        ForEach(modelData.categories, id: \.self){
-                            Text($0.name)
+                HStack{
+                    Text("Name")
+                    TextField("Name", text: $productDummy.name)
+                        .multilineTextAlignment(.trailing)
+                        .focused($isFocused)                 
+                }
+                                        
+                    NavigationLink {
+                        SelectCategory(selectedCategory: $productDummy.category)
+                    } label: {
+                        HStack{
+                            Text("Kategorie")
+                            Spacer()
+                            Text(productDummy.category.name)
+                                .foregroundColor(.gray)
                         }
                     }
+                    
+                
+                    
                     HStack{
-                        Text("Name")
-                        TextField("Name", text: $productDummy.name)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
+                        Button {
+                            showingUnitsSheet = true
+                        } label: {
+                            HStack{
+                                Text(productDummy.unit.name)
+                                    .foregroundColor(.blue)
+                                Image(systemName: "chevron.right")
+                                    .imageScale(.small)
+                                    .foregroundColor(.gray)
+                                Divider()
+                            }
+                        }.padding(.trailing)
+                        .buttonStyle(.plain)
 
-                        
-                        
+                        TextField("Menge", value: $productDummy.size, format: .number)
+                            .keyboardType(.decimalPad)
                     }
+                .sheet(isPresented: $showingUnitsSheet) {
+                    SelectUnit(selectedUnit: $productDummy.unit, showingUnitsSheet: $showingUnitsSheet)
+                }
+
+                    
                     HStack{
                         Text("Preis")
                         TextField("0", value: $productDummy.price, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                     }
                     
                 }
                 
+                
+                
                 Section(header: Text("Beschreibung")){
                     TextEditor(text: $productDummy.description)
                         .focused($isFocused)
-
+                    
                 }
+                
+//                Section(){
+//
+//                        ForEach(servingSizeViews, id: \.self){ view in
+//                            view
+//                        }
+//                        .onDelete { offsets in
+//                            servingSizeViews.remove(atOffsets: offsets)
+//                        }
+//                        HStack{
+//                            Button {
+//                                servingSizeViews.append(ServingSizeView())
+//                            } label: {
+//                                Image(systemName: "plus.circle.fill")
+//                                    .foregroundColor(.green)
+//                            }
+//                            Text("Serviergröße hinzufügen")
+//
+//                        }
+//
+//                }
                 
                 Section(header: Text("Zertifikate")){
                     Toggle(isOn: $productDummy.isVegan) {
@@ -145,7 +205,7 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                         
                     }
                     HStack{
@@ -154,7 +214,7 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                         
                         
                     }
@@ -164,7 +224,7 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                     }
                     
                     HStack{
@@ -173,18 +233,12 @@ struct AddProduct: View {
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-
+                        
                     }
                     
                 }
                 
                 Section(header: Text("Toppings")){
-                    NavigationLink{
-                        SelectToppings(selections: $productDummy.toppings)
-                    } label:{
-                        Text("Toppings hinzufügen")
-                            .foregroundColor(.blue)
-                    }
                     
                     ForEach(productDummy.toppings,id:\.self){ topping in
                         HStack{
@@ -193,36 +247,67 @@ struct AddProduct: View {
                             Text("+ \(topping.price, specifier: "%.2f")")
                         }
                     }
+                    .onDelete { IndexSet in
+                        productDummy.toppings.remove(atOffsets: IndexSet)
+                    }
                     
+                    NavigationLink{
+                        SelectToppings(selections: $productDummy.toppings)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Toppings hinzufügen")
+                        }
+                    }
                 }
                 
                 Section(header: Text("Allergene")){
-                    NavigationLink{
-                        SelectAllergens(selections: $productDummy.allergens)
-                    } label:{
-                        Text("Allergene hinzufügen")
-                            .foregroundColor(.blue)
-                    }
                     
                     ForEach(productDummy.allergens, id:\.self){
                         Text($0.name)
                     }
+                    .onDelete { IndexSet in
+                        productDummy.allergens.remove(atOffsets: IndexSet)
+                    }
+                    
+                    
+                    NavigationLink{
+                        SelectAllergens(selections: $productDummy.allergens)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Allergene hinzufügen")
+                        }
+                        
+                    }
+                    
                 }
                 
                 Section(header: Text("Zusatzstoffe")){
                     
-                    NavigationLink{
-                        SelectAdditives(selections: $productDummy.additives)
-                    } label:{
-                        Text("Zusatzstoffe hinzufügen")
-                            .foregroundColor(.blue)
-                    }
-                    
                     ForEach(productDummy.additives,id:\.self){
                         Text($0.name)
                     }
+                    .onDelete { IndexSet in
+                        productDummy.additives.remove(atOffsets: IndexSet)
+                    }
                     
-                    
+                    NavigationLink{
+                        SelectAdditives(selections: $productDummy.additives)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Zusatzstoffe hinzufügen")
+                        }
+                           
+                    }
+   
                 }
                 
                 
@@ -248,7 +333,7 @@ struct AddProduct: View {
                                 category: productDummy.category,
                                 price: productDummy.price,
                                 description: productDummy.description,
-                                isVegan: productDummy.isVegan,
+                                servingSize: ServingSize(unit: productDummy.unit, size: productDummy.size), isVegan: productDummy.isVegan,
                                 isBio: productDummy.isBio,
                                 isFairtrade: productDummy.isFairtrade, isVisible: productDummy.isVisible, nutritionFacts: NutritionFacts(calories: productDummy.calories, fat: productDummy.fat, carbs: productDummy.carbs, protein: productDummy.protein),
                                 allergens:productDummy.allergens,
@@ -279,7 +364,7 @@ struct AddProduct: View {
                     
                     Button {
                         isFocused = false
-
+                        
                     } label: {
                         Image(systemName:"keyboard.chevron.compact.down")
                     }
@@ -287,7 +372,10 @@ struct AddProduct: View {
             }
             
         }
+
     }
+
+
     func loadImage() {
         guard let inputImage = inputImage else { return }
         productDummy.image = inputImage

@@ -21,9 +21,18 @@ struct MenuRow: View {
             VStack(alignment: .leading, spacing: 5){
                 
                 HStack{
-                    Text(product.name)
-                        .font(.title2)
-                        .fontWeight(.semibold)
+                    VStack(alignment: .leading){
+                        Text(product.category.name)
+                            .font(.footnote)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                        
+                        Text(product.name)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    
+                    
                 }
                 
                 
@@ -36,9 +45,10 @@ struct MenuRow: View {
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
                     
-                    Text(product.category.name)
+                    Text("\(product.servingSize.size)" + product.servingSize.unit.name)
                         .fontWeight(.semibold)
                         .foregroundColor(.secondary)
+                    
                 }
                 
                 if product.isVegan||product.isBio||product.isFairtrade{
