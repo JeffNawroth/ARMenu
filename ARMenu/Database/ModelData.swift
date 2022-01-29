@@ -17,11 +17,14 @@ class ModelData: ObservableObject{
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
+    @Published var product: Product = Product(image: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
+    @Published var errorMessage: String?
     
-
+    
+    
     
     var db = Firestore.firestore()
-
+    
     //MARK: Product
     
     func fetchProductsData() {
@@ -54,8 +57,8 @@ class ModelData: ObservableObject{
     
     func addProductController(productToAdd: Product, imageToAdd: UIImage)    {
         uploadImageProduct(image: imageToAdd, productToAdd: productToAdd)
-        }
-        
+    }
+    
     func deleteProduct(productToDelete: Product){
         //Specify the document to delete
         db.collection("ImHörnken").document("Menu").collection("Products").document(productToDelete.id ?? "").delete { error in
@@ -81,11 +84,11 @@ class ModelData: ObservableObject{
         let storage = Storage.storage()
         storage.reference().child("ProductImages/\(productToDelete.name)").delete { error in
             if error != nil {
-              print("Error: Bild konnte nicht gelöscht werden!")
+                print("Error: Bild konnte nicht gelöscht werden!")
             } else {
-              print("Bild wurde erfolgreich gelöscht!")
+                print("Bild wurde erfolgreich gelöscht!")
             }
-          }
+        }
         
     }
     
@@ -129,7 +132,7 @@ class ModelData: ObservableObject{
     func updateProduct(productToUpdate: Product, isVisible: Bool){
         //Set the data to update
         db.collection("ImHörnken").document("Menu").collection("Products").document(productToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
-
+            
             //Check for Errors
             if error == nil{
                 print("Produkt wurde aktualisiert!")
@@ -143,16 +146,16 @@ class ModelData: ObservableObject{
     }
     
     //Alternative zu updateData
-//    private func updateData(_ product: Product) {
-//        if let documentId = product.id {
-//          do {
-//              try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: product)
-//          }
-//          catch {
-//            print(error)
-//          }
-//        }
-//      }
+    //    private func updateData(_ product: Product) {
+    //        if let documentId = product.id {
+    //          do {
+    //              try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: product)
+    //          }
+    //          catch {
+    //            print(error)
+    //          }
+    //        }
+    //      }
     
     //MARK: Additive
     
@@ -321,7 +324,7 @@ class ModelData: ObservableObject{
     //MARK: Offer
     
     func fetchOffersData() {
-      db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
+        db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Angebote nicht gefunden!")
                 return
@@ -329,6 +332,35 @@ class ModelData: ObservableObject{
             
             
             self.offers = documents.compactMap { queryDocumentSnapshot -> Offer? in
+                
+                let data = queryDocumentSnapshot.data()
+                
+                let products = data["products"] as? [DocumentReference] ?? []
+                
+                
+                
+                for product in products {
+                    product.getDocument {document, error in
+                        if let error = error as NSError? {
+                            self.errorMessage = "Error getting document: \(error.localizedDescription)"
+                        }
+                        else {
+                            if let document = document {
+                                do {
+                                    self.product = try document.data(as: Product.self)!
+                                    print("Name:" + self.product.name)
+                                    print("IsVisible:" + "\(self.product.isVisible)")
+                                }
+                                catch {
+                                    print(error)
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                
+                
                 return try? queryDocumentSnapshot.data(as: Offer.self)
                 
             }
@@ -338,7 +370,7 @@ class ModelData: ObservableObject{
     
     func addOfferController(offerToAdd: Offer, imageToAdd: UIImage)    {
         uploadImageOffer(image: imageToAdd, offerToAdd: offerToAdd)
-        }
+    }
     
     func addOffer(offerToAdd: Offer, imagePath: String){
         
@@ -380,11 +412,11 @@ class ModelData: ObservableObject{
         let storage = Storage.storage()
         storage.reference().child("OfferImages/\(offerToDelete.title)").delete { error in
             if error != nil {
-              print("Error: Bild konnte nicht gelöscht werden!")
+                print("Error: Bild konnte nicht gelöscht werden!")
             } else {
-              print("Bild wurde erfolgreich gelöscht!")
+                print("Bild wurde erfolgreich gelöscht!")
             }
-          }
+        }
         
     }
     
@@ -426,7 +458,7 @@ class ModelData: ObservableObject{
     func updateOffer(offerToUpdate: Offer, isVisible: Bool){
         //Set the data to update
         db.collection("ImHörnken").document("Menu").collection("Offers").document(offerToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
-
+            
             //Check for Errors
             if error == nil{
                 print("Angebot wurde aktualisiert!")
@@ -455,7 +487,7 @@ class ModelData: ObservableObject{
             
         }
     }
-
+    
     func addTopping(toppingToAdd: Topping) {
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Toppings")
         do {

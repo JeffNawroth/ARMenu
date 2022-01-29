@@ -57,6 +57,8 @@ struct AddProduct: View {
     @State var productDummy = ProductDummy()
     
     
+    
+    
     var body: some View {
         
         NavigationView{
@@ -240,12 +242,32 @@ struct AddProduct: View {
                 
                 Section(header: Text("Toppings")){
                     
-                    ForEach(productDummy.toppings,id:\.self){ topping in
+                    let sortedToppings = productDummy.toppings.sorted{
+                        $0.name < $1.name
+                    }
+                    
+                    ForEach(sortedToppings,id:\.self){ topping in
                         HStack{
-                            Text(topping.name)
-                            Spacer()
-                            Text("+ \(topping.price, specifier: "%.2f")")
+                            
+                            Button(action: {
+                                withAnimation(.spring()){
+                                    productDummy.toppings.removeAll{
+                                        $0 == topping
+                                    }
+                                }
+                               
+                            }, label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundColor(Color.red)
+                            })
+                                .buttonStyle(.plain)
+                            HStack{
+                                Text(topping.name)
+                                Spacer()
+                                Text("+ \(topping.price, specifier: "%.2f")")
+                            }
                         }
+                        
                     }
                     .onDelete { IndexSet in
                         productDummy.toppings.remove(atOffsets: IndexSet)
@@ -265,8 +287,28 @@ struct AddProduct: View {
                 
                 Section(header: Text("Allergene")){
                     
-                    ForEach(productDummy.allergens, id:\.self){
-                        Text($0.name)
+                    let sortedAllergens = productDummy.allergens.sorted{
+                        $0.name < $1.name
+                    }
+                    
+                    ForEach(sortedAllergens, id:\.self){ allergen in
+                        HStack{
+                            Button(action: {
+                                withAnimation(.spring()){
+                                    productDummy.allergens.removeAll{
+                                        $0 == allergen
+                                    }
+                                }
+                               
+                            }, label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundColor(Color.red)
+                            })
+                                .buttonStyle(.plain)
+                            
+                            Text(allergen.name)
+                        }
+                       
                     }
                     .onDelete { IndexSet in
                         productDummy.allergens.remove(atOffsets: IndexSet)
@@ -289,12 +331,34 @@ struct AddProduct: View {
                 
                 Section(header: Text("Zusatzstoffe")){
                     
-                    ForEach(productDummy.additives,id:\.self){
-                        Text($0.name)
+                    let sortedAdditives = productDummy.additives.sorted{
+                        $0.name < $1.name
+                    }
+                    
+                    ForEach(sortedAdditives,id:\.self){ additive in
+                        HStack{
+                            
+                            Button(action: {
+                                withAnimation(.spring()){
+                                    productDummy.additives.removeAll{
+                                        $0 == additive
+                                    }
+                                }
+                               
+                            }, label: {
+                                Image(systemName: "minus.circle.fill")
+                                    .foregroundColor(Color.red)
+                            })
+                                .buttonStyle(.plain)
+                                
+                            Text(additive.name)
+                            
+                        }
                     }
                     .onDelete { IndexSet in
                         productDummy.additives.remove(atOffsets: IndexSet)
                     }
+                    
                     
                     NavigationLink{
                         SelectAdditives(selections: $productDummy.additives)

@@ -12,5 +12,6 @@ struct Allergen:Identifiable, Codable, Hashable{
     @DocumentID var id: String?
     var name: String
     
+    
     static var dummyAllergens: [Allergen] = [Allergen(name: "Gluten"), Allergen(name: "Krebstiere"), Allergen(name: "Fisch"),Allergen(name: "Ei")]
 }
