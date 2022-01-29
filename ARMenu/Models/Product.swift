@@ -9,7 +9,7 @@
 import SwiftUI
 import FirebaseFirestoreSwift
 
-struct Product: Identifiable, Codable{
+struct Product: Identifiable, Codable, Hashable{
     
     @DocumentID var id: String?
     var image: String

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestoreSwift
 
-struct ServingSize: Identifiable, Codable{
+struct ServingSize: Identifiable, Codable, Hashable{
     @DocumentID var id: String?
     var unit: Unit
     var size: Double

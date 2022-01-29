@@ -19,19 +19,21 @@ struct OfferColumn: View {
                 .scaledToFit()
                 .cornerRadius(20)
                 .frame(width: 125)
+              
             
             
             if(mode == .active){
                 Button(action: action){
                     Image(systemName: "minus.circle.fill")
-                        .foregroundColor(Color.red)
-                        .padding(.top)
-                        .font(.system(size: 22))
+                        .renderingMode(.original)
+                        .font(.system(size: 24))
                         .offset(x: 60, y: -60)
+                    
                 }
                 .buttonStyle(.plain)
             }
         }
+        .padding(.top, 10)
         
         
         

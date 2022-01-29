@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NutritionFacts: Codable{
+struct NutritionFacts: Codable, Hashable{
     var calories: Int
     var fat: Double
     var carbs: Double

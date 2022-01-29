@@ -17,8 +17,8 @@ class ModelData: ObservableObject{
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
-    @Published var product: Product = Product(image: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
-    @Published var errorMessage: String?
+//    @Published var product: Product = Product(image: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
+//    @Published var errorMessage: String?
     
     
     
@@ -333,31 +333,31 @@ class ModelData: ObservableObject{
             
             self.offers = documents.compactMap { queryDocumentSnapshot -> Offer? in
                 
-                let data = queryDocumentSnapshot.data()
-                
-                let products = data["products"] as? [DocumentReference] ?? []
-                
-                
-                
-                for product in products {
-                    product.getDocument {document, error in
-                        if let error = error as NSError? {
-                            self.errorMessage = "Error getting document: \(error.localizedDescription)"
-                        }
-                        else {
-                            if let document = document {
-                                do {
-                                    self.product = try document.data(as: Product.self)!
-                                    print("Name:" + self.product.name)
-                                    print("IsVisible:" + "\(self.product.isVisible)")
-                                }
-                                catch {
-                                    print(error)
-                                }
-                            }
-                        }
-                    }
-                }
+//                let data = queryDocumentSnapshot.data()
+//
+//                let products = data["products"] as? [DocumentReference] ?? []
+//
+//
+//
+//                for product in products {
+//                    product.getDocument {document, error in
+//                        if let error = error as NSError? {
+//                            self.errorMessage = "Error getting document: \(error.localizedDescription)"
+//                        }
+//                        else {
+//                            if let document = document {
+//                                do {
+//                                    self.product = try document.data(as: Product.self)!
+//                                    print("Name:" + self.product.name)
+//                                    print("IsVisible:" + "\(self.product.isVisible)")
+//                                }
+//                                catch {
+//                                    print(error)
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
                 
                 
                 

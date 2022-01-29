@@ -56,9 +56,7 @@ struct MenuList: View {
                                     
                                     OfferColumn(offer: offer, mode: $mode){
                                         withAnimation(.spring()){
-//                                            modelData.deleteOffer(offerToDelete: offer)
-                                            
-                                            print("Angebot gelöscht")
+                                            modelData.deleteOffer(offerToDelete: offer)                                            
                                         }
                                     }
                                     .opacity(offer.isVisible ? 1: 0.25)
@@ -105,7 +103,7 @@ struct MenuList: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .confirmationDialog("Was möchten sie tun?", isPresented: $showsConfirmation) {
+                    .confirmationDialog("", isPresented: $showsConfirmation) {
                         Button("Angebot erstellen"){
                             showingOfferSheet = true
                         }

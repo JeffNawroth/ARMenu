@@ -13,6 +13,7 @@ struct OfferDetail: View {
 
     var body: some View {
         
+        
         ScrollView{
             AnimatedImage(url: URL(string: offer.image))
                 .resizable()
@@ -37,7 +38,9 @@ struct OfferDetail: View {
                 Text("Produkte")
                     .font(.headline)
                 
-                ForEach(offer.products){ product in
+                ForEach(offer.products, id: \.self){ product in
+                    let _ = print(product.name)
+
                     NavigationLink {
                         MenuDetail(product: product)
                     } label: {
