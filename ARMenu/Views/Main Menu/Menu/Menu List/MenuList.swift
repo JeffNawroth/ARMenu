@@ -56,8 +56,16 @@ struct MenuList: View {
                                     
                                     OfferColumn(offer: offer, mode: $mode){
                                         withAnimation(.spring()){
-                                            modelData.deleteOffer(offerToDelete: offer)                                            
+                                            showsConfirmation  = true
                                         }
+                                    }
+                                    .confirmationDialog("Dieses Angebot wirklich löschen?", isPresented: $showsConfirmation, titleVisibility: .visible) {
+                                        
+                                        Button("Löschen", role: .destructive){
+                                            modelData.deleteOffer(offerToDelete: offer)
+                                        }
+                                        
+                                        Button("Abbrechen", role: .cancel){}
                                     }
                                     .opacity(offer.isVisible ? 1: 0.25)
                                     
