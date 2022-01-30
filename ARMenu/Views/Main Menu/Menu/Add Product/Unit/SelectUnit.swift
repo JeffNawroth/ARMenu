@@ -12,20 +12,51 @@ struct SelectUnit: View {
     @Environment(\.presentationMode) var presentationMode
     @Binding var selectedUnit: Unit
     @Binding var showingUnitsSheet: Bool
+    @State var showingSheet = false
     var body: some View {
-        List{
-            ForEach(modelData.units){ unit in
-                UnitPicker(unit: unit, isSelected: selectedUnit.name == unit.name) {
-                    if selectedUnit != unit{
-                        selectedUnit = unit
+        NavigationView{
+            List{
+                ForEach(modelData.units){ unit in
+                    UnitPicker(unit: unit, isSelected: selectedUnit.name == unit.name) {
+                        if selectedUnit != unit{
+                            selectedUnit = unit
+                        }
+                        presentationMode.wrappedValue.dismiss()
                     }
-                    presentationMode.wrappedValue.dismiss()
+                }
+                .onDelete{(indexSet) in
+                    for index in indexSet{
+                        let unitToDelete = modelData.units[index]
+                        modelData.deleteUnit(unitToDelete: unitToDelete)
+                    }
                 }
             }
+            .toolbar{
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingSheet = true
+
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                    .sheet(isPresented: $showingSheet) {
+                        AddUnit(showingSheet: $showingSheet)
+                    }
+
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    EditButton()
+                }
+                
+            }
+            .onAppear {
+                modelData.fetchUnitsData()
+            }
+            .navigationTitle("Einheit")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .onAppear {
-            modelData.fetchUnitsData()
-        }
+       
+            
     }
 }
 

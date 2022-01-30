@@ -542,4 +542,42 @@ class ModelData: ObservableObject{
         }
     }
     
+    func addUnit(unitToAdd: Unit) {
+        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Units")
+        do {
+            let newDocReference = try collectionRef.addDocument(from: unitToAdd)
+            print("Unit wurde erfolgreich mit folgender Referenz hinzugefügt: \(newDocReference)")
+        }
+        catch {
+            print(error)
+            print("Error: Unit wurde erfolgreich hinzugefügt!")
+        }
+    }
+    
+    func deleteUnit(unitToDelete: Unit){
+        //Specify the document to delete
+        db.collection("ImHörnken").document("Menu").collection("Units").document(unitToDelete.id ?? "").delete { error in
+            //Check for Errors
+            if error == nil{
+                //No errors
+                
+                //Update the UI from the main thread
+                DispatchQueue.main.async {
+                    
+                    //Remove the product that wass just deleted
+                    self.units.removeAll { i in
+                        // Check for product to remove
+                        return i.id == unitToDelete.id
+                    }
+                }
+                print("Unit wurde erfolgreich gelöscht!")
+                
+            }
+            else{
+                print("Error: Unit konnte nicht gelöscht werden!")
+            }
+        }
+        
+    }
+    
 }

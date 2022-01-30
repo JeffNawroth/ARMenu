@@ -60,6 +60,7 @@
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
 		B2D39D102784C34F009B5D25 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0F2784C34F009B5D25 /* Offer.swift */; };
 		B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D112784CB17009B5D25 /* OfferDetail.swift */; };
+		B2DE077E27A6D08A000F1E00 /* AddUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DE077D27A6D08A000F1E00 /* AddUnit.swift */; };
 		B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FC34AE277E2409004092F6 /* SelectAllergens.swift */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,7 @@
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
 		B2D39D0F2784C34F009B5D25 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		B2D39D112784CB17009B5D25 /* OfferDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetail.swift; sourceTree = "<group>"; };
+		B2DE077D27A6D08A000F1E00 /* AddUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUnit.swift; sourceTree = "<group>"; };
 		B2FC34AE277E2409004092F6 /* SelectAllergens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAllergens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				B249CD4627A1BDD800A025C1 /* SelectUnit.swift */,
+				B2DE077D27A6D08A000F1E00 /* AddUnit.swift */,
 				B249CD4927A1C0D200A025C1 /* UnitPicker.swift */,
 			);
 			path = Unit;
@@ -480,6 +483,7 @@
 				B2A11389279C8E5600AA3A9A /* ProductVisibilityButton.swift in Sources */,
 				B234486227934003000AD206 /* MultipleAdditivePicker.swift in Sources */,
 				B224E01427972A810022A054 /* AddTopping.swift in Sources */,
+				B2DE077E27A6D08A000F1E00 /* AddUnit.swift in Sources */,
 				B2A1138F279F322700AA3A9A /* AddCategory.swift in Sources */,
 				B27ADA902798BEAF0000A750 /* AddAdditive.swift in Sources */,
 				B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */,

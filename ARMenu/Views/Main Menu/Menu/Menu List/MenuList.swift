@@ -14,6 +14,8 @@ struct MenuList: View {
     @State private var showingOfferSheet = false
     @State private var searchText = ""
     @State private var showsConfirmation = false
+    @State private var showsOfferConfirmation = false
+
     @State private var selectedCategory = Category(name: "Alles")
     @State private var mode: EditMode = .inactive
     
@@ -56,10 +58,10 @@ struct MenuList: View {
                                     
                                     OfferColumn(offer: offer, mode: $mode){
                                         withAnimation(.spring()){
-                                            showsConfirmation  = true
+                                            showsOfferConfirmation  = true
                                         }
                                     }
-                                    .confirmationDialog("Dieses Angebot wirklich löschen?", isPresented: $showsConfirmation, titleVisibility: .visible) {
+                                    .confirmationDialog("Dieses Angebot wirklich löschen?", isPresented: $showsOfferConfirmation, titleVisibility: .visible) {
                                         
                                         Button("Löschen", role: .destructive){
                                             modelData.deleteOffer(offerToDelete: offer)
