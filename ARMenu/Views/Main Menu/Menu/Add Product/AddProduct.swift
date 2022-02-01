@@ -430,6 +430,7 @@ struct AddProduct: View {
                         
                         let product: Product =
                         Product(image: "",
+                                model: "",
                                 name: productDummy.name,
                                 category: productDummy.category,
                                 price: productDummy.price,
