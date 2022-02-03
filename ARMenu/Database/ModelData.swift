@@ -41,9 +41,9 @@ class ModelData: ObservableObject{
         }
     }
     
-    func addProduct(productToAdd: Product, imagePath: String){
+    func addProduct(productToAdd: Product, imagePath: String, modelPath: String){
         
-        let product = Product(image: imagePath, model: productToAdd.model, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
@@ -53,6 +53,89 @@ class ModelData: ObservableObject{
             print(error)
             print("Error: Produkt konnte nicht hinzugefügt werden!")
         }
+    }
+    
+    func addProductController(productToAdd: Product, imageToAdd: UIImage, modelToAdd: URL)    {
+        uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, model: modelToAdd)
+    }
+    
+    func uploadImageProduct(image:UIImage, productToAdd:Product, model: URL) {
+        if let imageData = image.jpegData(compressionQuality: 1){
+            let storage = Storage.storage()
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            storage.reference().child("ProductImages/\(productToAdd.name)").putData(imageData, metadata: metadata){
+                (_, err) in
+                if let err = err {
+                    print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
+                } else {
+                    print("Bild wurde erfolgreich hochgeladen!")
+                    self.uploadModel(localURL: model, productToAdd: productToAdd)
+//                    self.getImagePathProduct(productToAdd: productToAdd)
+                    
+                }
+            }
+        } else {
+            print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
+        }
+    }
+    
+    //Image zum Produkt hinzufügen
+    func uploadModel(localURL: URL, productToAdd: Product){
+        
+        guard localURL.startAccessingSecurityScopedResource(),
+                  let data = try? Data(contentsOf: localURL) else { return }
+            localURL.stopAccessingSecurityScopedResource()
+        
+        let storageRef = Storage.storage().reference()
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "model/vnd.usdz+zip"
+
+        let riversRef = storageRef.child("3DModels/\(productToAdd.name).usdz")
+
+        let uploadTask = riversRef.putData(data, metadata: metadata) { (metadata, error) in
+            if let error = error{
+                print("Error: Modell konnte nicht hochgeladen werden!\(error.localizedDescription)")
+            }
+            else {
+              print("Modell wurde erfolgreich hochgeladen!")
+                self.getImagePathProduct(productToAdd: productToAdd)
+          }
+         
+//            riversRef.downloadURL { (url, error) in
+//            guard let downloadURL = url else {
+//                print(error?.localizedDescription)
+//              return
+//            }
+//          }
+        }
+    }
+    
+    func getImagePathProduct(productToAdd: Product){
+        //Bildpfad ermitteln
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/\(productToAdd.name)")
+        storageRef.downloadURL(completion: { [self] url, error in
+            guard let url = url, error == nil else {
+                print("Error: Bildpfad konnte nicht ermittelt werden!")
+                return
+            }
+            //Modellpfad ermitteln
+            let imageURL = url.absoluteString
+            print("Bildpfad wurde erfolgreich ermittelt!")
+            let storageRef = Storage.storage().reference(withPath: "3DModels/\(productToAdd.name).usdz")
+            storageRef.downloadURL(completion: { [self] url, error in
+                guard let url = url, error == nil else {
+                    print("Error: Modellpfad konnte nicht ermittelt werden!")
+                    return
+                }
+                let modelURL = url.absoluteString
+                print("Modellpfad wurde erfolgreich ermittelt!")
+                addProduct(productToAdd: productToAdd, imagePath: imageURL, modelPath: modelURL)
+            }
+        )}
+        )
+        
     }
     
     func addProductController(productToAdd: Product, imageToAdd: UIImage)    {
@@ -87,6 +170,13 @@ class ModelData: ObservableObject{
                 print("Error: Bild konnte nicht gelöscht werden!")
             } else {
                 print("Bild wurde erfolgreich gelöscht!")
+            }
+        }
+        storage.reference().child("3DModels/\(productToDelete.name).usdz").delete { error in
+            if error != nil {
+                print("Error: Modell konnte nicht gelöscht werden!")
+            } else {
+                print("Modell wurde erfolgreich gelöscht!")
             }
         }
         
@@ -628,31 +718,4 @@ class ModelData: ObservableObject{
     }
     
     
-    func uploadModel(localURL: URL){
-        
-        guard localURL.startAccessingSecurityScopedResource(),
-                  let data = try? Data(contentsOf: localURL) else { return }
-            localURL.stopAccessingSecurityScopedResource()
-        
-        let storageRef = Storage.storage().reference()
-        
-        let metadata = StorageMetadata()
-        metadata.contentType = "model/vnd.usdz+zip"
-
-        let riversRef = storageRef.child("3DModels/\(localURL.lastPathComponent)")
-
-        let uploadTask = riversRef.putData(data, metadata: metadata) { (metadata, error) in
-          guard let metadata = metadata else {
-              print(error?.localizedDescription)
-            return
-          }
-         
-//            riversRef.downloadURL { (url, error) in
-//            guard let downloadURL = url else {
-//                print(error?.localizedDescription)
-//              return
-//            }
-//          }
-        }
-    }
 }
