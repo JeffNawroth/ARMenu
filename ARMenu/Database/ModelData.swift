@@ -8,7 +8,21 @@ import SwiftUI
 import Foundation
 import Firebase
 import FirebaseStorage
+import MobileCoreServices
 
+extension Array where Element:Equatable {
+    func removeDuplicates() -> [Element] {
+        var result = [Element]()
+
+        for value in self {
+            if result.contains(value) == false {
+                result.append(value)
+            }
+        }
+
+        return result
+    }
+}
 class ModelData: ObservableObject{
     @Published var offers = [Offer]()
     @Published var products = [Product]()
@@ -17,13 +31,30 @@ class ModelData: ObservableObject{
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
-//    @Published var product: Product = Product(image: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
+    @Published var product: Product = Product(image: "", model: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
 //    @Published var errorMessage: String?
-    
+    @Published var offerProducts = [Product]()
     
     
     
     var db = Firestore.firestore()
+    
+    
+    
+    //MARK: Models
+    
+    func uploadARModel(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        let storage = Storage.storage().reference()
+        
+        storage.child((urls.first?.deletingPathExtension().lastPathComponent)!).putFile(from: urls.first!, metadata: nil) { _, error in
+            if error != nil{
+                print((error?.localizedDescription)!)
+                print("Error: Fehler beim Hochladen des AR-Modells!")
+                return
+            }
+            print("AR-Modell erfolgreich hochgeladen!")
+        }
+    }
     
     //MARK: Product
     
@@ -114,6 +145,24 @@ class ModelData: ObservableObject{
         }
     }
     
+    func uploadFile(url: URL) {
+            let fileData = url
+            let storage = Storage.storage()
+            let metadata = StorageMetadata()
+            metadata.contentType = "model/vnd.usdz+zip"
+        storage.reference().child("3DModels/\(url.lastPathComponent)").putFile(from: fileData, metadata: metadata) { metadata, err in
+
+                if let err = err {
+                    print("Error: Datei konnte nicht hochgeladen werden! \(err.localizedDescription)")
+                } else {
+                    print("Datei wurde erfolgreich hochgeladen!")
+                    
+                    
+                }
+            }
+         
+    }
+    
     func getImagePathProduct(productToAdd: Product){
         let storageRef = Storage.storage().reference(withPath: "ProductImages/\(productToAdd.name)")
         storageRef.downloadURL(completion: { [self] url, error in
@@ -145,17 +194,28 @@ class ModelData: ObservableObject{
         }
     }
     
-    //Alternative zu updateData
-    //    private func updateData(_ product: Product) {
-    //        if let documentId = product.id {
-    //          do {
-    //              try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: product)
-    //          }
-    //          catch {
-    //            print(error)
-    //          }
-    //        }
-    //      }
+//    Alternative zu updateData
+        private func updateData(_ product: Product) {
+            if let documentId = product.id {
+              do {
+                  try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: product)
+              }
+              catch {
+                print(error)
+              }
+            }
+          }
+    
+    private func updateOffer(_ offer: Offer) {
+        if let documentId = offer.id {
+          do {
+              try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offer)
+          }
+          catch {
+            print(error)
+          }
+        }
+      }
     
     //MARK: Additive
     
@@ -324,49 +384,67 @@ class ModelData: ObservableObject{
     //MARK: Offer
     
     func fetchOffersData() {
+        
         db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Angebote nicht gefunden!")
                 return
             }
             
-            
             self.offers = documents.compactMap { queryDocumentSnapshot -> Offer? in
                 
-//                let data = queryDocumentSnapshot.data()
-//
-//                let products = data["products"] as? [DocumentReference] ?? []
-//
-//
-//
-//                for product in products {
-//                    product.getDocument {document, error in
-//                        if let error = error as NSError? {
-//                            self.errorMessage = "Error getting document: \(error.localizedDescription)"
-//                        }
-//                        else {
-//                            if let document = document {
-//                                do {
-//                                    self.product = try document.data(as: Product.self)!
-//                                    print("Name:" + self.product.name)
-//                                    print("IsVisible:" + "\(self.product.isVisible)")
-//                                }
-//                                catch {
-//                                    print(error)
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
+                let data = queryDocumentSnapshot.data()
+
+                let products = data["products"] as? [String] ?? []
                 
-                
-                
+                for product in products {
+                    self.db.collection("ImHörnken").document("Menu").collection("Products").document(product).getDocument { document, error in
+                        if let error = error{
+                            print((error.localizedDescription))
+                        }
+                        else {
+                            if let document = document {
+                                do {
+                                    self.product = try document.data(as: Product.self) ?? Product(image: "", model: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
+                                    print(self.product.name + " 1")
+                                }
+                                catch {
+                                    print(error)
+                                }
+                            }
+                            
+                    }
+                        
+                        self.offerProducts.append(self.product)
+                        self.fetchOffer(offerProducts: self.offerProducts.removeDuplicates())
+                        }
+                    }
                 return try? queryDocumentSnapshot.data(as: Offer.self)
-                
+                }
             }
-            
+        print(self.product.name + " Yeah")
         }
-    }
+    
+    func fetchOffer(offerProducts: [Product]){
+        db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
+              guard let documents = querySnapshot?.documents else {
+                print("No documents")
+                return
+              }
+
+              self.offers = documents.map { queryDocumentSnapshot -> Offer in
+                let data = queryDocumentSnapshot.data()
+                let image = data["image"] as? String ?? ""
+                let title = data["title"] as? String ?? ""
+                let description = data["description"] as? String ?? ""
+                let products = offerProducts
+                  let isVisible = data["isVisible"] as? Bool ?? false
+
+                  return Offer(image: image, title: title, description: description, products: products, isVisible: isVisible)
+              }
+            }
+          }
+    
     
     func addOfferController(offerToAdd: Offer, imageToAdd: UIImage)    {
         uploadImageOffer(image: imageToAdd, offerToAdd: offerToAdd)
@@ -580,4 +658,5 @@ class ModelData: ObservableObject{
         
     }
     
+
 }
