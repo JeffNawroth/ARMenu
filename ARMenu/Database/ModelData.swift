@@ -8,21 +8,7 @@ import SwiftUI
 import Foundation
 import Firebase
 import FirebaseStorage
-import MobileCoreServices
 
-extension Array where Element:Equatable {
-    func removeDuplicates() -> [Element] {
-        var result = [Element]()
-
-        for value in self {
-            if result.contains(value) == false {
-                result.append(value)
-            }
-        }
-
-        return result
-    }
-}
 class ModelData: ObservableObject{
     @Published var offers = [Offer]()
     @Published var products = [Product]()
@@ -38,23 +24,6 @@ class ModelData: ObservableObject{
     
     
     var db = Firestore.firestore()
-    
-    
-    
-    //MARK: Models
-    
-    func uploadARModel(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        let storage = Storage.storage().reference()
-        
-        storage.child((urls.first?.deletingPathExtension().lastPathComponent)!).putFile(from: urls.first!, metadata: nil) { _, error in
-            if error != nil{
-                print((error?.localizedDescription)!)
-                print("Error: Fehler beim Hochladen des AR-Modells!")
-                return
-            }
-            print("AR-Modell erfolgreich hochgeladen!")
-        }
-    }
     
     //MARK: Product
     
@@ -658,5 +627,32 @@ class ModelData: ObservableObject{
         
     }
     
+    
+    func uploadModel(localURL: URL){
+        
+        guard localURL.startAccessingSecurityScopedResource(),
+                  let data = try? Data(contentsOf: localURL) else { return }
+            localURL.stopAccessingSecurityScopedResource()
+        
+        let storageRef = Storage.storage().reference()
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "model/vnd.usdz+zip"
 
+        let riversRef = storageRef.child("3DModels/\(localURL.lastPathComponent)")
+
+        let uploadTask = riversRef.putData(data, metadata: metadata) { (metadata, error) in
+          guard let metadata = metadata else {
+              print(error?.localizedDescription)
+            return
+          }
+         
+//            riversRef.downloadURL { (url, error) in
+//            guard let downloadURL = url else {
+//                print(error?.localizedDescription)
+//              return
+//            }
+//          }
+        }
+    }
 }
