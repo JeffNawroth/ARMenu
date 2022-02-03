@@ -35,6 +35,7 @@ struct AddProduct: View {
         var isVisible = false
 
         var image: UIImage!
+        var modelURL: URL!
         var name: String = ""
         var category: Category = Category(name:"")
         var unit: Unit = Unit(name: "l")
@@ -404,11 +405,12 @@ struct AddProduct: View {
             }
             .fileImporter(isPresented: $openFile, allowedContentTypes: [.usdz]) { res in
                 do{
-                    fileURL = try res.get()
+                    productDummy.modelURL = try res.get()
+                    
+                    
                     //print(fileUrl)
                     
-                   // modelData.uploadFile(url: fileUrl)
-                    self.fileName = fileURL!.lastPathComponent
+                    self.fileName = productDummy.modelURL.lastPathComponent
                 }
                 catch{
                     print("error reading docs")
@@ -445,8 +447,8 @@ struct AddProduct: View {
                                 toppings: productDummy.toppings
                         )
                         
-                        modelData.addProductController(productToAdd: product, imageToAdd: productDummy.image)
-                        modelData.uploadModel(localURL: fileURL!)
+                        modelData.addProductController(productToAdd: product, imageToAdd: productDummy.image, modelToAdd: productDummy.modelURL)
+
                         
                     } label: {
                         Text("Fertig")
