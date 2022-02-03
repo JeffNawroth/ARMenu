@@ -16,6 +16,7 @@ struct AddProduct: View {
     @State private var showingUnitsSheet = false
     @FocusState private var isFocused: Bool
     @State var fileName = ""
+    @State var fileURL = URL(string: "")
     @State var openFile = false
     
     var disableForm: Bool {
@@ -403,10 +404,11 @@ struct AddProduct: View {
             }
             .fileImporter(isPresented: $openFile, allowedContentTypes: [.usdz]) { res in
                 do{
-                    let fileUrl = try res.get()
-                    print(fileUrl)
+                    fileURL = try res.get()
+                    //print(fileUrl)
                     
-                    self.fileName = fileUrl.lastPathComponent
+                   // modelData.uploadFile(url: fileUrl)
+                    self.fileName = fileURL!.lastPathComponent
                 }
                 catch{
                     print("error reading docs")
@@ -444,6 +446,7 @@ struct AddProduct: View {
                         )
                         
                         modelData.addProductController(productToAdd: product, imageToAdd: productDummy.image)
+                        modelData.uploadModel(localURL: fileURL!)
                         
                     } label: {
                         Text("Fertig")

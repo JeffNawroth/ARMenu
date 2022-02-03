@@ -580,4 +580,32 @@ class ModelData: ObservableObject{
         
     }
     
+    
+    func uploadModel(localURL: URL){
+        
+        guard localURL.startAccessingSecurityScopedResource(),
+                  let data = try? Data(contentsOf: localURL) else { return }
+            localURL.stopAccessingSecurityScopedResource()
+        
+        let storageRef = Storage.storage().reference()
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "model/vnd.usdz+zip"
+
+        let riversRef = storageRef.child("3DModels/\(localURL.lastPathComponent)")
+
+        let uploadTask = riversRef.putData(data, metadata: metadata) { (metadata, error) in
+          guard let metadata = metadata else {
+              print(error?.localizedDescription)
+            return
+          }
+         
+//            riversRef.downloadURL { (url, error) in
+//            guard let downloadURL = url else {
+//                print(error?.localizedDescription)
+//              return
+//            }
+//          }
+        }
+    }
 }
