@@ -109,7 +109,7 @@ struct MenuDetail: View {
                 
             }
             .sheet(isPresented: $showingARPreview) {
-                ARViewContainer().edgesIgnoringSafeArea(.all)
+                ARViewContainer(product: product).edgesIgnoringSafeArea(.all)
             }
                 
                 Text("Beschreibung")

@@ -9,59 +9,65 @@ import SwiftUI
 import RealityKit
 
 struct ARViewContainer: UIViewRepresentable {
+    var product: Product
     
     func makeUIView(context: Context) -> ARView {
         
-        let arView = ARView(frame: .zero)
-        
-      
-
-   
-     /*   let boxAnchor = loadRealityComposerScene(filename: "kaesekuchen", fileExtension: "reality", sceneName: "")
-        
-        arView.scene.addAnchor(boxAnchor!)*/
-        
+                let arView = ARView(frame: .zero)
 
 
+        
+        let url = URL(string: product.model)
+                let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                let destination = documents.appendingPathComponent(url!.lastPathComponent)
+                let session = URLSession(configuration: .default,
+                                              delegate: nil,
+                                         delegateQueue: nil)
+                
+                var request = URLRequest(url: url!)
+                request.httpMethod = "GET"
+                
+                let downloadTask = session.downloadTask(with: request, completionHandler: { (location: URL?,
+                                          response: URLResponse?,
+                                             error: Error?) -> Void in
+                    
+                    let fileManager = FileManager.default
+                        
+                    if fileManager.fileExists(atPath: destination.path) {
+                        try! fileManager.removeItem(atPath: destination.path)
+                    }
+                    try! fileManager.moveItem(atPath: location!.path,
+                                              toPath: destination.path)
+                        
+                    DispatchQueue.main.async {
+                        do {
+                            let model = try ModelEntity.loadModel(contentsOf: destination)
+                            model.generateCollisionShapes(recursive: true)
+                            arView.installGestures(for: model)
+
+                            let anchor = AnchorEntity(plane: .horizontal)
+                                anchor.addChild(model)
+                            arView.scene.addAnchor(anchor)
+                            
+                          //  model.playAnimation(model.availableAnimations.first!.repeat())
+                        } catch {
+                            print("Fail loading entity.")
+                        }
+                    }
+                })
+                downloadTask.resume()
+        
         return arView
         
     }
+
     
     func updateUIView(_ uiView: ARView, context: Context) {}
-    
- /*   func createRealityURL(filename: String,
-                          fileExtension: String,
-                          sceneName:String) -> URL? {
-        // Create a URL that points to the specified Reality file.
-        guard let realityFileURL = Bundle.main.url(forResource: filename,
-                                                   withExtension: fileExtension) else {
-            print("Error finding Reality file \(filename).\(fileExtension)")
-            return nil
-        }
-
-        // Append the scene name to the URL to point to
-        // a single scene within the file.
-        let realityFileSceneURL = realityFileURL.appendingPathComponent(sceneName,
-                                                                        isDirectory: false)
-        return realityFileSceneURL
-    }
-    func loadRealityComposerScene (filename: String,
-                                    fileExtension: String,
-                                    sceneName: String) -> (Entity & HasAnchoring)? {
-        guard let realitySceneURL = createRealityURL(filename: filename,
-                                                     fileExtension: fileExtension,
-                                                     sceneName: sceneName) else {
-            return nil
-        }
-        let loadedAnchor = try? Entity.loadAnchor(contentsOf: realitySceneURL)
-        
-        return loadedAnchor
-    } */
-    
 }
+    
 
 struct ARViewContainer_Previews: PreviewProvider {
     static var previews: some View {
-        ARViewContainer()
+        ARViewContainer(product: Product.dummyProducts[0])
     }
 }

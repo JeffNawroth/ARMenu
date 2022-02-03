@@ -15,6 +15,9 @@ struct AddProduct: View {
     @State private var inputImage: UIImage?
     @State private var showingUnitsSheet = false
     @FocusState private var isFocused: Bool
+    @State var fileName = ""
+    @State var openFile = false
+    
     var disableForm: Bool {
         productDummy.image == nil ||
         productDummy.name.isEmpty ||
@@ -95,9 +98,31 @@ struct AddProduct: View {
                                 .foregroundColor(Color.blue)
                         }
                         .buttonStyle(PlainButtonStyle())
+                        
+                        Spacer()
+                        
+                        
                     }
                     
                 }.listRowBackground(Color.clear)
+                
+                Section{
+                    Button {
+                        openFile = true
+                    } label: {
+                        HStack{
+                            Image(systemName: "arkit")
+                            Text("AR-Modell hinzufügen")
+                        }
+                        
+                        
+                    }
+                   
+                    
+                    if !fileName.isEmpty{
+                        Text(fileName)
+                    }
+                }
                 
                 Section{
                     Toggle("Veröffentlichen", isOn: $productDummy.isVisible)
@@ -376,6 +401,18 @@ struct AddProduct: View {
                 
                 
             }
+            .fileImporter(isPresented: $openFile, allowedContentTypes: [.usdz]) { res in
+                do{
+                    let fileUrl = try res.get()
+                    print(fileUrl)
+                    
+                    self.fileName = fileUrl.lastPathComponent
+                }
+                catch{
+                    print("error reading docs")
+                    print(error.localizedDescription)
+                }
+            }
             .navigationTitle("neues Produkt")
             .navigationBarTitleDisplayMode(.inline)
             .onChange(of: inputImage) { _ in loadImage() }
@@ -393,6 +430,7 @@ struct AddProduct: View {
                         
                         let product: Product =
                         Product(image: "",
+                                model: "",
                                 name: productDummy.name,
                                 category: productDummy.category,
                                 price: productDummy.price,

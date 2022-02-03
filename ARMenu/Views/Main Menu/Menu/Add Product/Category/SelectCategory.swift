@@ -13,8 +13,6 @@ struct SelectCategory: View {
     @Environment(\.presentationMode) var presentationMode
     @State var showingSheet = false
     
-    
-    
     var body: some View {
         List{
             ForEach(modelData.categories){ category in

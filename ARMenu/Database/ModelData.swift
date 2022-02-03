@@ -43,7 +43,7 @@ class ModelData: ObservableObject{
     
     func addProduct(productToAdd: Product, imagePath: String){
         
-        let product = Product(image: imagePath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+        let product = Product(image: imagePath, model: productToAdd.model, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
@@ -540,6 +540,44 @@ class ModelData: ObservableObject{
             }
             
         }
+    }
+    
+    func addUnit(unitToAdd: Unit) {
+        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Units")
+        do {
+            let newDocReference = try collectionRef.addDocument(from: unitToAdd)
+            print("Unit wurde erfolgreich mit folgender Referenz hinzugefügt: \(newDocReference)")
+        }
+        catch {
+            print(error)
+            print("Error: Unit wurde erfolgreich hinzugefügt!")
+        }
+    }
+    
+    func deleteUnit(unitToDelete: Unit){
+        //Specify the document to delete
+        db.collection("ImHörnken").document("Menu").collection("Units").document(unitToDelete.id ?? "").delete { error in
+            //Check for Errors
+            if error == nil{
+                //No errors
+                
+                //Update the UI from the main thread
+                DispatchQueue.main.async {
+                    
+                    //Remove the product that wass just deleted
+                    self.units.removeAll { i in
+                        // Check for product to remove
+                        return i.id == unitToDelete.id
+                    }
+                }
+                print("Unit wurde erfolgreich gelöscht!")
+                
+            }
+            else{
+                print("Error: Unit konnte nicht gelöscht werden!")
+            }
+        }
+        
     }
     
 }
