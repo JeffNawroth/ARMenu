@@ -221,17 +221,17 @@ class ModelData: ObservableObject{
         }
     }
     
-    //Alternative zu updateData
-    //    private func updateData(_ product: Product) {
-    //        if let documentId = product.id {
-    //          do {
-    //              try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: product)
-    //          }
-    //          catch {
-    //            print(error)
-    //          }
-    //        }
-    //      }
+   // Alternative zu updateData
+        func updateData(productToUpdate: Product) {
+            if let documentId = productToUpdate.id {
+              do {
+                  try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: productToUpdate)
+              }
+              catch {
+                print(error)
+              }
+            }
+          }
     
     //MARK: Additive
     

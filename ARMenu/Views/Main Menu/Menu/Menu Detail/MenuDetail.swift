@@ -14,6 +14,7 @@ struct MenuDetail: View {
     @State private var nutritionsExpanded = false
     @State private var allergensExpanded = false
     @State private var toppingsExpanded = false
+    @State private var showingSheet = false
     var body: some View {
         ScrollView{
             AnimatedImage(url: URL(string: product.image))
@@ -201,7 +202,18 @@ struct MenuDetail: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
-                ProductVisibilityButton(isSet: product.isVisible, product: product)
+               // ProductVisibilityButton(isSet: product.isVisible, product: product)
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingSheet = true
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                }
+                .sheet(isPresented: $showingSheet) {
+                    EditProduct(product: product, showingSheet: $showingSheet)
+                }
+
             }
         }
     }
