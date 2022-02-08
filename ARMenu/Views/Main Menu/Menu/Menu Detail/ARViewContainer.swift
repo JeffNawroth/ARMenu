@@ -50,8 +50,9 @@ struct ARViewContainer: UIViewRepresentable {
                     let model = try ModelEntity.loadModel(contentsOf: destination)
                     model.generateCollisionShapes(recursive: true)
                     arView.installGestures(for: model)
+                
                     
-                    let anchor = AnchorEntity(plane: .horizontal)
+                    let anchor = AnchorEntity(plane: .horizontal )
                     anchor.addChild(model)
                     arView.scene.addAnchor(anchor)
                     
@@ -88,9 +89,9 @@ extension ARView: ARCoachingOverlayViewDelegate{
         
     }
     
-    public func coachingOverlayViewDidDeactivate(_ coachingOverlayView: ARCoachingOverlayView) {
-           print("found")
-       }
+//    public func coachingOverlayViewDidDeactivate(_ coachingOverlayView: ARCoachingOverlayView) {
+//           print("found")
+//       }
 }
 
 
