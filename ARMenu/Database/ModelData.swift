@@ -547,6 +547,17 @@ class ModelData: ObservableObject{
         }
     }
     
+    func updateData(offerToUpdate: Offer) {
+        if let documentId = offerToUpdate.id {
+          do {
+              try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offerToUpdate)
+          }
+          catch {
+            print(error)
+          }
+        }
+      }
+    
     //MARK: Topping
     
     func fetchToppingsData() {

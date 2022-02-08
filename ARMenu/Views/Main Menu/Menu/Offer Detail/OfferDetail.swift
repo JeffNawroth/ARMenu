@@ -11,6 +11,7 @@ import SDWebImageSwiftUI
 struct OfferDetail: View {
     @EnvironmentObject var modelData: ModelData
     var offer: Offer
+    @State var showingSheet = false
     
 //    var productIDs = ["0mwCqIUNSP7avrN6uwgI", "AdKSHUGnTnDAJEWHDvmw"]
 //
@@ -69,7 +70,14 @@ struct OfferDetail: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
-                OfferVisibilityButton(isSet: offer.isVisible, offer: offer)
+                Button {
+                    showingSheet = true
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                }
+                .sheet(isPresented: $showingSheet) {
+                    EditOffer(offer: offer, showingSheet: $showingSheet)
+                }
             }
         }
     }

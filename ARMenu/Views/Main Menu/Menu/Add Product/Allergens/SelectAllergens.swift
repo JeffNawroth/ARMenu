@@ -25,14 +25,15 @@ struct SelectAllergens: View {
     var body: some View{
         List{
             ForEach(searchResults, id:\.self){ allergen in
-                MultipleAllergenPicker(allergen: allergen, isSelected: selections.contains(allergen)){
-                    if selections.contains(allergen){
-                        selections.removeAll(where: {$0 == allergen})
+                MultipleAllergenPicker(allergen: allergen, isSelected: selections.contains{$0.name == allergen.name}){
+                    if (selections.contains{$0.name == allergen.name}){
+                        selections.removeAll(where: {$0.name == allergen.name})
                     }else{
                         selections.append(allergen)
                     }
                 }
-            }.onDelete{(indexSet) in
+            }
+            .onDelete{(indexSet) in
                 for index in indexSet{
                     let allergenToDelete = modelData.allergens[index]
                     modelData.deleteAllergen(allergenToDelete: allergenToDelete)
@@ -48,7 +49,6 @@ struct SelectAllergens: View {
                     Image(systemName: "plus")
                 }
                 .sheet(isPresented: $showingSheet) {
-                    //AddProduct(showingSheet: $showingSheet)
                     AddAllergen(showingSheet: $showingSheet)
                 }
 

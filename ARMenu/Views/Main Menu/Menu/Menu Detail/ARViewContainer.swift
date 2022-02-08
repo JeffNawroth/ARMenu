@@ -68,6 +68,6 @@ struct ARViewContainer: UIViewRepresentable {
 
 struct ARViewContainer_Previews: PreviewProvider {
     static var previews: some View {
-        ARViewContainer(product: Product.dummyProducts[0])
+        ARViewContainer(product: Product.dummyProduct)
     }
 }

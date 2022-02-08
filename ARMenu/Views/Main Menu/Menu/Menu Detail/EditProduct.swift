@@ -16,9 +16,6 @@ struct EditProduct: View {
     @State private var inputImage: UIImage?
     @State private var showingUnitsSheet = false
     @FocusState private var isFocused: Bool
-    var fileName: String{
-        fileURL?.lastPathComponent ?? ""
-    }
     @State var fileURL = URL(string: "")
     @State var openFile = false
     
@@ -28,7 +25,7 @@ struct EditProduct: View {
             Form{
                 Section{
                     VStack{
-                        if product.image != nil && inputImage == nil{
+                        if inputImage == nil{
                             AnimatedImage(url: URL(string: product.image))
                                 .resizable()
                                 .scaledToFit()
@@ -84,7 +81,7 @@ struct EditProduct: View {
                         
                         Text(URL(string:product.model)!.lastPathComponent)
                     }else{
-                        Text(fileName)
+                        Text(fileURL!.lastPathComponent)
                     }
                 }
                 
@@ -436,7 +433,7 @@ struct EditProduct: View {
 
 struct EditProduct_Previews: PreviewProvider {
     static var previews: some View {
-        EditProduct(product: Product.dummyProducts[0], showingSheet: .constant(true))
+        EditProduct(product: Product.dummyProduct, showingSheet: .constant(true))
             .environmentObject(ModelData())
     }
 }

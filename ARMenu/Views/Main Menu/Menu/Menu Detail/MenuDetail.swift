@@ -222,7 +222,7 @@ struct MenuDetail: View {
 
 struct MenuDetail_Previews: PreviewProvider {
     static var previews: some View {
-        MenuDetail(product: Product.dummyProducts[0])
+        MenuDetail(product: Product.dummyProduct)
     }
 }
 

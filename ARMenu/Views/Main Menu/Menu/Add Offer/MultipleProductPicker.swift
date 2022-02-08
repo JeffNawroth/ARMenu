@@ -27,7 +27,7 @@ struct MultipleProductPicker: View {
 
 struct MultipleProductPicker_Previews: PreviewProvider {
     static var previews: some View {
-        MultipleProductPicker(product: Product.dummyProducts[0], isSelected: true){
+        MultipleProductPicker(product: Product.dummyProduct, isSelected: true){
             
         }
     }

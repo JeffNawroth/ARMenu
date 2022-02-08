@@ -25,9 +25,9 @@ struct SelectAdditives: View {
     var body: some View {
         List{
             ForEach(searchResults, id:\.self){ additive in
-                MultipleAdditivePicker(additive: additive, isSelected: selections.contains(additive)){
-                    if selections.contains(additive){
-                        selections.removeAll(where: {$0 == additive})
+                MultipleAdditivePicker(additive: additive, isSelected: selections.contains{$0.name == additive.name}){
+                    if (selections.contains{$0.name == additive.name}){
+                        selections.removeAll(where: {$0.name == additive.name})
                     }else{
                         selections.append(additive)
                     }
