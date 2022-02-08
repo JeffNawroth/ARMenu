@@ -88,6 +88,6 @@ struct MenuRow: View {
 
 struct MenuListRow_Previews: PreviewProvider {
     static var previews: some View {
-        MenuRow(product: Product.dummyProducts[0])
+        MenuRow(product: Product.dummyProduct)
     }
 }

@@ -25,6 +25,8 @@
 		B23448662793489A000AD206 /* SelectProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23448652793489A000AD206 /* SelectProducts.swift */; };
 		B249CD4727A1BDD800A025C1 /* SelectUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249CD4627A1BDD800A025C1 /* SelectUnit.swift */; };
 		B249CD4A27A1C0D200A025C1 /* UnitPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249CD4927A1C0D200A025C1 /* UnitPicker.swift */; };
+		B255C24A27B18EFF00D30CF4 /* EditProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = B255C24927B18EFF00D30CF4 /* EditProduct.swift */; };
+		B255C24C27B2A9C600D30CF4 /* EditOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B255C24B27B2A9C600D30CF4 /* EditOffer.swift */; };
 		B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14C2774CCD100E75FFC /* AppDelegate.swift */; };
 		B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14E2774CCD100E75FFC /* ContentView.swift */; };
 		B26FD1512774CCD100E75FFC /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1502774CCD100E75FFC /* Experience.rcproject */; };
@@ -79,6 +81,8 @@
 		B23448652793489A000AD206 /* SelectProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProducts.swift; sourceTree = "<group>"; };
 		B249CD4627A1BDD800A025C1 /* SelectUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUnit.swift; sourceTree = "<group>"; };
 		B249CD4927A1C0D200A025C1 /* UnitPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitPicker.swift; sourceTree = "<group>"; };
+		B255C24927B18EFF00D30CF4 /* EditProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProduct.swift; sourceTree = "<group>"; };
+		B255C24B27B2A9C600D30CF4 /* EditOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditOffer.swift; sourceTree = "<group>"; };
 		B26FD1492774CCD100E75FFC /* ARMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26FD14C2774CCD100E75FFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B26FD14E2774CCD100E75FFC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -279,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				B2A11388279C8E5600AA3A9A /* ProductVisibilityButton.swift */,
+				B255C24927B18EFF00D30CF4 /* EditProduct.swift */,
 				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
 				B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */,
 			);
@@ -300,6 +305,7 @@
 			children = (
 				B2A1138A279F1A1200AA3A9A /* OfferVisibilityButton.swift */,
 				B2D39D112784CB17009B5D25 /* OfferDetail.swift */,
+				B255C24B27B2A9C600D30CF4 /* EditOffer.swift */,
 			);
 			path = "Offer Detail";
 			sourceTree = "<group>";
@@ -486,9 +492,11 @@
 				B2DE077E27A6D08A000F1E00 /* AddUnit.swift in Sources */,
 				B2A1138F279F322700AA3A9A /* AddCategory.swift in Sources */,
 				B27ADA902798BEAF0000A750 /* AddAdditive.swift in Sources */,
+				B255C24C27B2A9C600D30CF4 /* EditOffer.swift in Sources */,
 				B26FD1772774D01800E75FFC /* NutritionFacts.swift in Sources */,
 				B23448662793489A000AD206 /* SelectProducts.swift in Sources */,
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
+				B255C24A27B18EFF00D30CF4 /* EditProduct.swift in Sources */,
 				B224E00E279714410022A054 /* Topping.swift in Sources */,
 				B224E01027971E710022A054 /* SelectToppings.swift in Sources */,
 				B229A86B27A069CA00B31484 /* CategoryPicker.swift in Sources */,

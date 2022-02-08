@@ -253,11 +253,11 @@ class ModelData: ObservableObject{
         }
     }
     
-//    Alternative zu updateData
-        private func updateData(_ product: Product) {
-            if let documentId = product.id {
+   // Alternative zu updateData
+        func updateData(productToUpdate: Product) {
+            if let documentId = productToUpdate.id {
               do {
-                  try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: product)
+                  try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: productToUpdate)
               }
               catch {
                 print(error)
@@ -607,6 +607,17 @@ class ModelData: ObservableObject{
             }
         }
     }
+    
+    func updateData(offerToUpdate: Offer) {
+        if let documentId = offerToUpdate.id {
+          do {
+              try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offerToUpdate)
+          }
+          catch {
+            print(error)
+          }
+        }
+      }
     
     //MARK: Topping
     

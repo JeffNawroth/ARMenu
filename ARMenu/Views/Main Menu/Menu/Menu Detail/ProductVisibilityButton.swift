@@ -32,7 +32,7 @@ struct ProductVisibilityButton: View {
 
 struct VisibilityButton_Previews: PreviewProvider {
     static var previews: some View {
-        ProductVisibilityButton(isSet: true, product: Product.dummyProducts[0])
+        ProductVisibilityButton(isSet: true, product: Product.dummyProduct)
 
     }
 }

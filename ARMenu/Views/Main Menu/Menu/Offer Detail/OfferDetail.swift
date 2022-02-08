@@ -9,7 +9,17 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct OfferDetail: View {
+    @EnvironmentObject var modelData: ModelData
     var offer: Offer
+    @State var showingSheet = false
+    
+//    var productIDs = ["0mwCqIUNSP7avrN6uwgI", "AdKSHUGnTnDAJEWHDvmw"]
+//
+//    var products: [Product]{
+//        modelData.products.filter{
+//            productIDs.contains($0.id!)
+//        }
+//    }
 
     var body: some View {
         
@@ -39,8 +49,6 @@ struct OfferDetail: View {
                     .font(.headline)
                 
                 ForEach(offer.products, id: \.self){ product in
-                    let _ = print(product.name)
-
                     NavigationLink {
                         MenuDetail(product: product)
                     } label: {
@@ -62,7 +70,14 @@ struct OfferDetail: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {
-                OfferVisibilityButton(isSet: offer.isVisible, offer: offer)
+                Button {
+                    showingSheet = true
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                }
+                .sheet(isPresented: $showingSheet) {
+                    EditOffer(offer: offer, showingSheet: $showingSheet)
+                }
             }
         }
     }
