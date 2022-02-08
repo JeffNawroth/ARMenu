@@ -201,9 +201,9 @@ struct MenuDetail: View {
         .navigationTitle(product.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
-            ToolbarItem(placement: .navigationBarTrailing) {
-               // ProductVisibilityButton(isSet: product.isVisible, product: product)
-            }
+//            ToolbarItem(placement: .navigationBarTrailing) {
+//               ProductVisibilityButton(isSet: product.isVisible, product: product)
+//            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true
