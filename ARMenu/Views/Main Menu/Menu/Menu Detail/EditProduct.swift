@@ -9,15 +9,15 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct EditProduct: View {
-    @State var product: Product
     @EnvironmentObject var modelData: ModelData
-    @Binding var showingSheet: Bool
+    @State var product: Product
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     @State private var showingUnitsSheet = false
+    @State private var fileURL: URL?
+    @State private var openFile = false
     @FocusState private var isFocused: Bool
-    @State var fileURL: URL?
-    @State var openFile = false
+    @Binding var showingSheet: Bool
     
     
     var body: some View {
@@ -75,7 +75,7 @@ struct EditProduct: View {
                         
                         
                     }
-                   
+                    
                     
                     if (fileURL == nil){
                         
@@ -91,13 +91,13 @@ struct EditProduct: View {
                 
                 
                 Section{
-                HStack{
-                    Text("Name")
-                    TextField("Name", text: $product.name)
-                        .multilineTextAlignment(.trailing)
-                        .focused($isFocused)
-                }
-                                        
+                    HStack{
+                        Text("Name")
+                        TextField("Name", text: $product.name)
+                            .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+                    }
+                    
                     NavigationLink {
                         SelectCategory(selectedCategory: $product.category)
                     } label: {
@@ -109,7 +109,7 @@ struct EditProduct: View {
                         }
                     }
                     
-                
+                    
                     
                     HStack{
                         Button {
@@ -124,106 +124,118 @@ struct EditProduct: View {
                                 Divider()
                             }
                         }.padding(.trailing)
-                        .buttonStyle(.plain)
-
+                            .buttonStyle(.plain)
+                        
                         TextField("Menge", value: $product.servingSize.size, format: .number)
                             .keyboardType(.decimalPad)
                     }
-                .sheet(isPresented: $showingUnitsSheet) {
-                    SelectUnit(selectedUnit: $product.servingSize.unit, showingUnitsSheet: $showingUnitsSheet)
-                }
-
-                    
-                    HStack{
-                        Text("Preis")
-                        TextField("0", value: $product.price, format: .number)
-                            .keyboardType(.decimalPad)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
-                        
+                    .sheet(isPresented: $showingUnitsSheet) {
+                        SelectUnit(selectedUnit: $product.servingSize.unit, showingUnitsSheet: $showingUnitsSheet)
                     }
                     
+                    
+//                    HStack{
+//                        Text("Preis")
+//                        TextField("0", value: $product.price, format: .number)
+//                            .keyboardType(.decimalPad)
+//                            .multilineTextAlignment(.trailing)
+//                            .focused($isFocused)
+//
+//                    }
+                    NumberTextField(name: "Preis", value: $product.price, isFocused: _isFocused)
                 }
                 
                 Section(header: Text("Beschreibung")){
-                ZStack{
-                    TextEditor(text: $product.description)
+                    ZStack{
+                        TextEditor(text: $product.description)
                             .focused($isFocused)
-                    Text(product.description).opacity(0).padding(.all, 8)
+                        Text(product.description).opacity(0).padding(.all, 8)
+                    }
                 }
-            }
                 
                 
-//                Section(){
-//
-//                        ForEach(servingSizeViews, id: \.self){ view in
-//                            view
-//                        }
-//                        .onDelete { offsets in
-//                            servingSizeViews.remove(atOffsets: offsets)
-//                        }
-//                        HStack{
-//                            Button {
-//                                servingSizeViews.append(ServingSizeView())
-//                            } label: {
-//                                Image(systemName: "plus.circle.fill")
-//                                    .foregroundColor(.green)
-//                            }
-//                            Text("Serviergröße hinzufügen")
-//
-//                        }
-//
-//                }
+                //                Section(){
+                //
+                //                        ForEach(servingSizeViews, id: \.self){ view in
+                //                            view
+                //                        }
+                //                        .onDelete { offsets in
+                //                            servingSizeViews.remove(atOffsets: offsets)
+                //                        }
+                //                        HStack{
+                //                            Button {
+                //                                servingSizeViews.append(ServingSizeView())
+                //                            } label: {
+                //                                Image(systemName: "plus.circle.fill")
+                //                                    .foregroundColor(.green)
+                //                            }
+                //                            Text("Serviergröße hinzufügen")
+                //
+                //                        }
+                //
+                //                }
                 
                 Section(header: Text("Zertifikate")){
-                    Toggle(isOn: $product.isVegan) {
-                        Text("Vegan")
-                    }
-                    Toggle(isOn: $product.isBio) {
-                        Text("Bio")
-                    }
-                    Toggle(isOn: $product.isFairtrade) {
-                        Text("Fairtrade")
-                    }
+                    
+                    Toggle("Vegan", isOn: $product.isVegan)
+                    Toggle("Bio", isOn: $product.isBio)
+                    Toggle("Fairtrade", isOn: $product.isFairtrade)
+
+                    
+                   
+//                    Toggle(isOn: $product.isVegan) {
+//                        Text("Vegan")
+//                    }
+//                    Toggle(isOn: $product.isBio) {
+//                        Text("Bio")
+//                    }
+//                    Toggle(isOn: $product.isFairtrade) {
+//                        Text("Fairtrade")
+//                    }
                 }
                 
                 Section(header: Text("Nährwerte")){
+                    
                     HStack{
                         Text("Kalorien")
                         TextField("0", value: $product.nutritionFacts.calories, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
-                        
-                        
-                    }
-                    HStack{
-                        Text("Fett")
-                        TextField("0", value: $product.nutritionFacts.fat, format: .number)
-                            .keyboardType(.decimalPad)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
-                        
-                        
-                        
-                    }
-                    HStack{
-                        Text("Kohlenhydrate")
-                        TextField("0", value: $product.nutritionFacts.carbs, format: .number)
-                            .keyboardType(.decimalPad)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
-                        
                     }
                     
-                    HStack{
-                        Text("Protein")
-                        TextField("0", value: $product.nutritionFacts.protein, format: .number)
-                            .keyboardType(.decimalPad)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
-                        
-                    }
+                    NumberTextField(name: "Fett", value: $product.nutritionFacts.fat, isFocused: _isFocused)
+                    NumberTextField(name: "Kohlenhydrate", value: $product.nutritionFacts.carbs, isFocused: _isFocused)
+                    NumberTextField(name: "Protein", value: $product.nutritionFacts.protein, isFocused: _isFocused)
+                    
+                    //                    HStack{
+                    //                        Text("Fett")
+                    //                        TextField("0", value: $product.nutritionFacts.fat, format: .number)
+                    //                            .keyboardType(.decimalPad)
+                    //                            .multilineTextAlignment(.trailing)
+                    //                            .focused($isFocused)
+                    //                    }
+                    
+                    
+                    
+                    
+                    //                    HStack{
+                    //                        Text("Kohlenhydrate")
+                    //                        TextField("0", value: $product.nutritionFacts.carbs, format: .number)
+                    //                            .keyboardType(.decimalPad)
+                    //                            .multilineTextAlignment(.trailing)
+                    //                            .focused($isFocused)
+                    //
+                    //                    }
+                    
+                    //                    HStack{
+                    //                        Text("Protein")
+                    //                        TextField("0", value: $product.nutritionFacts.protein, format: .number)
+                    //                            .keyboardType(.decimalPad)
+                    //                            .multilineTextAlignment(.trailing)
+                    //                            .focused($isFocused)
+                    //
+                    //                    }
                     
                 }
                 
@@ -238,7 +250,7 @@ struct EditProduct: View {
                     } label:{
                         HStack{
                             Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
+                                .foregroundColor(.green)
                             
                             Text("Toppings hinzufügen")
                         }
@@ -253,7 +265,7 @@ struct EditProduct: View {
                                         $0 == topping
                                     }
                                 }
-                               
+                                
                             }, label: {
                                 Image(systemName: "minus.circle.fill")
                                     .foregroundColor(Color.red)
@@ -271,27 +283,27 @@ struct EditProduct: View {
                         product.toppings.remove(atOffsets: IndexSet)
                     }
                     
-                   
+                    
                 }
                 
                 Section(header: Text("Allergene")){
-                    
+
                     let sortedAllergens = product.allergens.sorted{
                         $0.name < $1.name
                     }
-                    
+
                     NavigationLink{
                         SelectAllergens(selections: $product.allergens)
                     } label:{
                         HStack{
                             Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                            
+                                .foregroundColor(.green)
+
                             Text("Allergene hinzufügen")
                         }
-                        
+
                     }
-                    
+
                     ForEach(sortedAllergens, id:\.self){ allergen in
                         HStack{
                             Button(action: {
@@ -300,69 +312,24 @@ struct EditProduct: View {
                                         $0 == allergen
                                     }
                                 }
-                               
+
                             }, label: {
                                 Image(systemName: "minus.circle.fill")
                                     .foregroundColor(Color.red)
                             })
                                 .buttonStyle(.plain)
-                            
+
                             Text(allergen.name)
                         }
-                       
+
                     }
                     .onDelete { IndexSet in
                         product.allergens.remove(atOffsets: IndexSet)
                     }
-                    
-                    
-                    
-                    
                 }
                 
-                Section(header: Text("Zusatzstoffe")){
-                    
-                    let sortedAdditives = product.additives.sorted{
-                        $0.name < $1.name
-                    }
-                     
-                    NavigationLink{
-                        SelectAdditives(selections: $product.additives)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                            
-                            Text("Zusatzstoffe hinzufügen")
-                        }
-                           
-                    }
-                    
-                    ForEach(sortedAdditives,id:\.self){ additive in
-                        HStack{
-                            
-                            Button(action: {
-                                withAnimation(.spring()){
-                                    product.additives.removeAll{
-                                        $0 == additive
-                                    }
-                                }
-                               
-                            }, label: {
-                                Image(systemName: "minus.circle.fill")
-                                    .foregroundColor(Color.red)
-                            })
-                                .buttonStyle(.plain)
-                                
-                            Text(additive.name)
-                            
-                        }
-                    }
-                    .onDelete { IndexSet in
-                        product.additives.remove(atOffsets: IndexSet)
-                    }
-   
-                }
+                
+                
                 
                 
             }
@@ -418,13 +385,13 @@ struct EditProduct: View {
             }
             
         }
-
+        
     }
-
-
+    
+    
     func loadImage() {
         guard let inputImage = inputImage else { return }
-       // product.image = inputImage
+        // product.image = inputImage
     }
 }
 
@@ -434,3 +401,19 @@ struct EditProduct_Previews: PreviewProvider {
             .environmentObject(ModelData())
     }
 }
+
+struct NumberTextField: View{
+    var name: String
+    @Binding var value: Double
+    @FocusState  var isFocused: Bool
+    var body: some View{
+        HStack{
+            Text(name)
+            TextField("0", value: $value, format: .number)
+                .keyboardType(.decimalPad)
+                .multilineTextAlignment(.trailing)
+                .focused($isFocused)
+        }
+    }
+}
+
