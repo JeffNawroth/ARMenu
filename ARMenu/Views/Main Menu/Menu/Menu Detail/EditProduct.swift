@@ -16,7 +16,7 @@ struct EditProduct: View {
     @State private var inputImage: UIImage?
     @State private var showingUnitsSheet = false
     @FocusState private var isFocused: Bool
-    @State var fileURL = URL(string: "")
+    @State var fileURL: URL?
     @State var openFile = false
     
     
@@ -77,7 +77,7 @@ struct EditProduct: View {
                     }
                    
                     
-                    if ((fileURL?.absoluteString) == nil){
+                    if (fileURL == nil){
                         
                         Text(URL(string:product.model)!.lastPathComponent)
                     }else{
@@ -233,6 +233,17 @@ struct EditProduct: View {
                         $0.name < $1.name
                     }
                     
+                    NavigationLink{
+                        SelectToppings(selections: $product.toppings)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Toppings hinzufügen")
+                        }
+                    }
+                    
                     ForEach(sortedToppings,id:\.self){ topping in
                         HStack{
                             
@@ -260,22 +271,25 @@ struct EditProduct: View {
                         product.toppings.remove(atOffsets: IndexSet)
                     }
                     
-                    NavigationLink{
-                        SelectToppings(selections: $product.toppings)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                            
-                            Text("Toppings hinzufügen")
-                        }
-                    }
+                   
                 }
                 
                 Section(header: Text("Allergene")){
                     
                     let sortedAllergens = product.allergens.sorted{
                         $0.name < $1.name
+                    }
+                    
+                    NavigationLink{
+                        SelectAllergens(selections: $product.allergens)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Allergene hinzufügen")
+                        }
+                        
                     }
                     
                     ForEach(sortedAllergens, id:\.self){ allergen in
@@ -302,17 +316,7 @@ struct EditProduct: View {
                     }
                     
                     
-                    NavigationLink{
-                        SelectAllergens(selections: $product.allergens)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                            
-                            Text("Allergene hinzufügen")
-                        }
-                        
-                    }
+                    
                     
                 }
                 
@@ -320,6 +324,18 @@ struct EditProduct: View {
                     
                     let sortedAdditives = product.additives.sorted{
                         $0.name < $1.name
+                    }
+                     
+                    NavigationLink{
+                        SelectAdditives(selections: $product.additives)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Zusatzstoffe hinzufügen")
+                        }
+                           
                     }
                     
                     ForEach(sortedAdditives,id:\.self){ additive in
@@ -345,19 +361,6 @@ struct EditProduct: View {
                     .onDelete { IndexSet in
                         product.additives.remove(atOffsets: IndexSet)
                     }
-                    
-                    
-                    NavigationLink{
-                        SelectAdditives(selections: $product.additives)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                            
-                            Text("Zusatzstoffe hinzufügen")
-                        }
-                           
-                    }
    
                 }
                 
@@ -366,11 +369,6 @@ struct EditProduct: View {
             .fileImporter(isPresented: $openFile, allowedContentTypes: [.usdz]) { res in
                 do{
                     fileURL = try res.get()
-
-
-                    //print(fileUrl)
-
-                  //  self.fileName = fileURL?.lastPathComponent ?? ""
                 }
                 catch{
                     print("error reading docs")
@@ -390,7 +388,6 @@ struct EditProduct: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingSheet = false
-                        
                         modelData.updateData(productToUpdate: product)
                         
                     } label: {

@@ -15,7 +15,6 @@ struct MenuList: View {
     @State private var searchText = ""
     @State private var showsConfirmation = false
     @State private var showsOfferConfirmation = false
-
     @State private var selectedCategory = Category(name: "Alles")
     @State private var mode: EditMode = .inactive
     

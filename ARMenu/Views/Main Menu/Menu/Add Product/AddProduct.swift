@@ -289,6 +289,19 @@ struct AddProduct: View {
                         $0.name < $1.name
                     }
                     
+                    
+                    
+                    NavigationLink{
+                        SelectToppings(selections: $productDummy.toppings)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Toppings hinzufügen")
+                        }
+                    }
+                    
                     ForEach(sortedToppings,id:\.self){ topping in
                         HStack{
                             
@@ -315,17 +328,6 @@ struct AddProduct: View {
                     .onDelete { IndexSet in
                         productDummy.toppings.remove(atOffsets: IndexSet)
                     }
-                    
-                    NavigationLink{
-                        SelectToppings(selections: $productDummy.toppings)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                            
-                            Text("Toppings hinzufügen")
-                        }
-                    }
                 }
                 Group{
                 
@@ -333,6 +335,18 @@ struct AddProduct: View {
                     
                     let sortedAllergens = productDummy.allergens.sorted{
                         $0.name < $1.name
+                    }
+                       
+                    NavigationLink{
+                        SelectAllergens(selections: $productDummy.allergens)
+                    } label:{
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                            
+                            Text("Allergene hinzufügen")
+                        }
+                        
                     }
                     
                     ForEach(sortedAllergens, id:\.self){ allergen in
@@ -358,25 +372,27 @@ struct AddProduct: View {
                         productDummy.allergens.remove(atOffsets: IndexSet)
                     }
                     
-                    
-                    NavigationLink{
-                        SelectAllergens(selections: $productDummy.allergens)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                            
-                            Text("Allergene hinzufügen")
-                        }
-                        
-                    }
-                    
                 }
               
                     Section(header: Text("Zusatzstoffe")){
                         
                         let sortedAdditives = productDummy.additives.sorted{
                             $0.name < $1.name
+                        }
+                        
+                        
+                        
+                        
+                        NavigationLink{
+                            SelectAdditives(selections: $productDummy.additives)
+                        } label:{
+                            HStack{
+                                Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                                
+                                Text("Zusatzstoffe hinzufügen")
+                            }
+                               
                         }
                         
                         ForEach(sortedAdditives,id:\.self){ additive in
@@ -401,19 +417,6 @@ struct AddProduct: View {
                         }
                         .onDelete { IndexSet in
                             productDummy.additives.remove(atOffsets: IndexSet)
-                        }
-                        
-                        
-                        NavigationLink{
-                            SelectAdditives(selections: $productDummy.additives)
-                        } label:{
-                            HStack{
-                                Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.green)
-                                
-                                Text("Zusatzstoffe hinzufügen")
-                            }
-                               
                         }
        
                     }
