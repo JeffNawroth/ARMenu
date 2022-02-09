@@ -128,20 +128,14 @@ struct EditProduct: View {
                         
                         TextField("Menge", value: $product.servingSize.size, format: .number)
                             .keyboardType(.decimalPad)
+                        
+                        
+                        
                     }
                     .sheet(isPresented: $showingUnitsSheet) {
                         SelectUnit(selectedUnit: $product.servingSize.unit, showingUnitsSheet: $showingUnitsSheet)
                     }
                     
-                    
-//                    HStack{
-//                        Text("Preis")
-//                        TextField("0", value: $product.price, format: .number)
-//                            .keyboardType(.decimalPad)
-//                            .multilineTextAlignment(.trailing)
-//                            .focused($isFocused)
-//
-//                    }
                     NumberTextField(name: "Preis", value: $product.price, isFocused: _isFocused)
                 }
                 
@@ -154,44 +148,12 @@ struct EditProduct: View {
                 }
                 
                 
-                //                Section(){
-                //
-                //                        ForEach(servingSizeViews, id: \.self){ view in
-                //                            view
-                //                        }
-                //                        .onDelete { offsets in
-                //                            servingSizeViews.remove(atOffsets: offsets)
-                //                        }
-                //                        HStack{
-                //                            Button {
-                //                                servingSizeViews.append(ServingSizeView())
-                //                            } label: {
-                //                                Image(systemName: "plus.circle.fill")
-                //                                    .foregroundColor(.green)
-                //                            }
-                //                            Text("Serviergröße hinzufügen")
-                //
-                //                        }
-                //
-                //                }
-                
                 Section(header: Text("Zertifikate")){
                     
                     Toggle("Vegan", isOn: $product.isVegan)
                     Toggle("Bio", isOn: $product.isBio)
                     Toggle("Fairtrade", isOn: $product.isFairtrade)
 
-                    
-                   
-//                    Toggle(isOn: $product.isVegan) {
-//                        Text("Vegan")
-//                    }
-//                    Toggle(isOn: $product.isBio) {
-//                        Text("Bio")
-//                    }
-//                    Toggle(isOn: $product.isFairtrade) {
-//                        Text("Fairtrade")
-//                    }
                 }
                 
                 Section(header: Text("Nährwerte")){
@@ -208,34 +170,6 @@ struct EditProduct: View {
                     NumberTextField(name: "Kohlenhydrate", value: $product.nutritionFacts.carbs, isFocused: _isFocused)
                     NumberTextField(name: "Protein", value: $product.nutritionFacts.protein, isFocused: _isFocused)
                     
-                    //                    HStack{
-                    //                        Text("Fett")
-                    //                        TextField("0", value: $product.nutritionFacts.fat, format: .number)
-                    //                            .keyboardType(.decimalPad)
-                    //                            .multilineTextAlignment(.trailing)
-                    //                            .focused($isFocused)
-                    //                    }
-                    
-                    
-                    
-                    
-                    //                    HStack{
-                    //                        Text("Kohlenhydrate")
-                    //                        TextField("0", value: $product.nutritionFacts.carbs, format: .number)
-                    //                            .keyboardType(.decimalPad)
-                    //                            .multilineTextAlignment(.trailing)
-                    //                            .focused($isFocused)
-                    //
-                    //                    }
-                    
-                    //                    HStack{
-                    //                        Text("Protein")
-                    //                        TextField("0", value: $product.nutritionFacts.protein, format: .number)
-                    //                            .keyboardType(.decimalPad)
-                    //                            .multilineTextAlignment(.trailing)
-                    //                            .focused($isFocused)
-                    //
-                    //                    }
                     
                 }
                 
@@ -355,7 +289,6 @@ struct EditProduct: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingSheet = false
-                      //  modelData.updateData(productToUpdate: product)
                         modelData.updateProductController(productToUpdate: product, imageToUpdate: inputImage, modelToUpdate: fileURL)
                         
                     } label: {

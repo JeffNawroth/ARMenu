@@ -56,6 +56,8 @@
 		B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A2F162278028A4001451B8 /* SelectAdditives.swift */; };
 		B2BA9B3727A19BEA004B9852 /* ServingSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA9B3627A19BEA004B9852 /* ServingSize.swift */; };
 		B2BA9B3927A19CD1004B9852 /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA9B3827A19CD1004B9852 /* Unit.swift */; };
+		B2BAC31927B42AED006B0381 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = B2BAC31827B42AED006B0381 /* CodeScanner */; };
+		B2BAC31B27B42B9C006B0381 /* CustomerQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC31A27B42B9C006B0381 /* CustomerQRCode.swift */; };
 		B2BE46A827988E5A008484B1 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B2BE46A727988E5A008484B1 /* SDWebImageSwiftUI */; };
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
 		B2D39D102784C34F009B5D25 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0F2784C34F009B5D25 /* Offer.swift */; };
@@ -112,6 +114,7 @@
 		B2A2F162278028A4001451B8 /* SelectAdditives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdditives.swift; sourceTree = "<group>"; };
 		B2BA9B3627A19BEA004B9852 /* ServingSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServingSize.swift; sourceTree = "<group>"; };
 		B2BA9B3827A19CD1004B9852 /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
+		B2BAC31A27B42B9C006B0381 /* CustomerQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerQRCode.swift; sourceTree = "<group>"; };
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
 		B2D39D0F2784C34F009B5D25 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		B2D39D112784CB17009B5D25 /* OfferDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetail.swift; sourceTree = "<group>"; };
@@ -126,6 +129,7 @@
 			files = (
 				B2BE46A827988E5A008484B1 /* SDWebImageSwiftUI in Frameworks */,
 				A5BA8514279885720011C06A /* FirebaseFirestore in Frameworks */,
+				B2BAC31927B42AED006B0381 /* CodeScanner in Frameworks */,
 				A5BA851A279885720011C06A /* FirebaseStorageSwift-Beta in Frameworks */,
 				A5BA8516279885720011C06A /* FirebaseFirestoreSwift-Beta in Frameworks */,
 				A5BA8518279885720011C06A /* FirebaseStorage in Frameworks */,
@@ -330,6 +334,7 @@
 			children = (
 				B26FD14E2774CCD100E75FFC /* ContentView.swift */,
 				B26FD1682774CF1F00E75FFC /* Login.swift */,
+				B2BAC31A27B42B9C006B0381 /* CustomerQRCode.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -391,6 +396,7 @@
 				A5BA8517279885720011C06A /* FirebaseStorage */,
 				A5BA8519279885720011C06A /* FirebaseStorageSwift-Beta */,
 				B2BE46A727988E5A008484B1 /* SDWebImageSwiftUI */,
+				B2BAC31827B42AED006B0381 /* CodeScanner */,
 			);
 			productName = ARMenu;
 			productReference = B26FD1492774CCD100E75FFC /* ARMenu.app */;
@@ -423,6 +429,7 @@
 			packageReferences = (
 				A5BA8512279885720011C06A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B2BE46A627988E5A008484B1 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				B2BAC31727B42AED006B0381 /* XCRemoteSwiftPackageReference "CodeScanner" */,
 			);
 			productRefGroup = B26FD14A2774CCD100E75FFC /* Products */;
 			projectDirPath = "";
@@ -496,6 +503,7 @@
 				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,
 				B27ADA8C2798AECC0000A750 /* Category.swift in Sources */,
 				B26FD1632774CE9F00E75FFC /* AddProduct.swift in Sources */,
+				B2BAC31B27B42B9C006B0381 /* CustomerQRCode.swift in Sources */,
 				B27ADA882798A9340000A750 /* MultipleAllergenPicker.swift in Sources */,
 				B27ADA8E2798BDE60000A750 /* AddAllergen.swift in Sources */,
 			);
@@ -716,6 +724,14 @@
 				minimumVersion = 8.0.0;
 			};
 		};
+		B2BAC31727B42AED006B0381 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		B2BE46A627988E5A008484B1 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -746,6 +762,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5BA8512279885720011C06A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageSwift-Beta";
+		};
+		B2BAC31827B42AED006B0381 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B2BAC31727B42AED006B0381 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
 		};
 		B2BE46A727988E5A008484B1 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

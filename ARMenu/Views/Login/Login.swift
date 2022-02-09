@@ -39,18 +39,7 @@ struct Login: View {
                 }
                 
                 
-                Section(header: Text("Oder für kunden")){
-                    Button {
-                    } label: {
-                        HStack{
-                            Image(systemName: "qrcode.viewfinder")
-                            Divider()
-                            Text("QR-Code scannen")
-                        }
-                        
-                    }
-
-                }
+              CustomerQRCode()
                 
             }
             .navigationTitle("Willkommen!")
