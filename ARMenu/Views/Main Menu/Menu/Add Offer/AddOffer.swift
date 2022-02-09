@@ -81,22 +81,51 @@ struct AddOffer: View {
                 
                 Section(header: Text("Produkte")){
                     
+                    let sortedProducts = offerDummy.products.sorted{
+                        $0.name < $1.name
+                    }
+                    
+                    
                     
                     NavigationLink{
                   SelectProducts(selections: $offerDummy.products)
                     } label:{
-                       Text("Produkte hinzufügen")
-                            .foregroundColor(.blue)
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                            
+                            Text("Produkte hinzufügen")
+                        }
                     }
                     
-                    ForEach(offerDummy.products){ product in
+                    ForEach(sortedProducts, id: \.self){ product in
                             NavigationLink {
                                 MenuDetail(product: product)
                             } label: {
-                                MenuRow(product: product)
+                                HStack{
+                                    Button(action: {
+                                        withAnimation(.spring()){
+                                            offerDummy.products.removeAll{
+                                                $0 == product
+                                            }
+                                        }
+                                    }, label: {
+                                        Image(systemName: "minus.circle.fill")
+                                            .foregroundColor(Color.red)
+                                    })
+                                        .buttonStyle(.borderless)
+                                    
+                                    MenuRow(product: product)
+                                }
                             }
                     }
+                    .onDelete { IndexSet in
+                        offerDummy.products.remove(atOffsets: IndexSet)
+                    }
+                    
+                   
                 }
+                
             }
             .navigationBarTitle(Text("neues Angebot"), displayMode: .inline)
             .onChange(of: inputImage) { _ in loadImage() }

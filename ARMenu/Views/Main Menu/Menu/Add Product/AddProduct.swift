@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import SceneKit
+
 
 struct AddProduct: View {
     
@@ -108,6 +110,9 @@ struct AddProduct: View {
                     
                 }.listRowBackground(Color.clear)
                 
+               
+        
+                
                 Section{
                     Button {
                         openFile = true
@@ -122,7 +127,18 @@ struct AddProduct: View {
                    
                     
                     if !fileName.isEmpty{
-                        Text(fileName)
+                        HStack{
+                            Text(fileName)
+                            Spacer()
+                            Button {
+                                
+                            } label: {
+                                Image(systemName: "eye")
+                            }
+                            .buttonStyle(.borderless)
+
+                        }
+                        
                     }
                 }
                 
@@ -311,6 +327,7 @@ struct AddProduct: View {
                         }
                     }
                 }
+                Group{
                 
                 Section(header: Text("Allergene")){
                     
@@ -355,51 +372,53 @@ struct AddProduct: View {
                     }
                     
                 }
-                
-                Section(header: Text("Zusatzstoffe")){
-                    
-                    let sortedAdditives = productDummy.additives.sorted{
-                        $0.name < $1.name
-                    }
-                    
-                    ForEach(sortedAdditives,id:\.self){ additive in
-                        HStack{
-                            
-                            Button(action: {
-                                withAnimation(.spring()){
-                                    productDummy.additives.removeAll{
-                                        $0 == additive
-                                    }
-                                }
-                               
-                            }, label: {
-                                Image(systemName: "minus.circle.fill")
-                                    .foregroundColor(Color.red)
-                            })
-                                .buttonStyle(.plain)
+              
+                    Section(header: Text("Zusatzstoffe")){
+                        
+                        let sortedAdditives = productDummy.additives.sorted{
+                            $0.name < $1.name
+                        }
+                        
+                        ForEach(sortedAdditives,id:\.self){ additive in
+                            HStack{
                                 
-                            Text(additive.name)
-                            
+                                Button(action: {
+                                    withAnimation(.spring()){
+                                        productDummy.additives.removeAll{
+                                            $0 == additive
+                                        }
+                                    }
+                                   
+                                }, label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(Color.red)
+                                })
+                                    .buttonStyle(.plain)
+                                    
+                                Text(additive.name)
+                                
+                            }
                         }
-                    }
-                    .onDelete { IndexSet in
-                        productDummy.additives.remove(atOffsets: IndexSet)
-                    }
-                    
-                    
-                    NavigationLink{
-                        SelectAdditives(selections: $productDummy.additives)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.green)
-                            
-                            Text("Zusatzstoffe hinzufügen")
+                        .onDelete { IndexSet in
+                            productDummy.additives.remove(atOffsets: IndexSet)
                         }
-                           
+                        
+                        
+                        NavigationLink{
+                            SelectAdditives(selections: $productDummy.additives)
+                        } label:{
+                            HStack{
+                                Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                                
+                                Text("Zusatzstoffe hinzufügen")
+                            }
+                               
+                        }
+       
                     }
-   
                 }
+               
                 
                 
             }

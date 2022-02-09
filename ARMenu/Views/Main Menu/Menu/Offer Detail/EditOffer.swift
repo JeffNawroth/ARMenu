@@ -69,24 +69,52 @@ struct EditOffer: View {
                 
                 Section(header: Text("Produkte")){
                     
+                    let sortedProducts = offer.products.sorted{
+                        $0.name < $1.name
+                    }
+                    
+                    
                     
                     NavigationLink{
                   SelectProducts(selections: $offer.products)
                     } label:{
-                       Text("Produkte hinzufügen")
-                            .foregroundColor(.blue)
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                            
+                            Text("Produkte hinzufügen")
+                        }
                     }
                     
-                    ForEach(offer.products, id: \.self){ product in
+                    ForEach(sortedProducts, id: \.self){ product in
                             NavigationLink {
                                 MenuDetail(product: product)
                             } label: {
-                                MenuRow(product: product)
+                                HStack{
+                                    Button(action: {
+                                        withAnimation(.spring()){
+                                            offer.products.removeAll{
+                                                $0 == product
+                                            }
+                                        }
+                                    }, label: {
+                                        Image(systemName: "minus.circle.fill")
+                                            .foregroundColor(Color.red)
+                                    })
+                                        .buttonStyle(.borderless)
+                                    
+                                    MenuRow(product: product)
+                                }
                             }
                     }
+                    .onDelete { IndexSet in
+                        offer.products.remove(atOffsets: IndexSet)
+                    }
+                    
+                   
                 }
             }
-            .navigationBarTitle(Text("neues Angebot"), displayMode: .inline)
+            .navigationBarTitle(Text("Angebot bearbeiten"), displayMode: .inline)
             .onChange(of: inputImage) { _ in loadImage() }
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
