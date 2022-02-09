@@ -16,7 +16,7 @@ struct EditProduct: View {
     @State private var inputImage: UIImage?
     @State private var showingUnitsSheet = false
     @FocusState private var isFocused: Bool
-    @State var fileURL = URL(string: "")
+    @State var fileURL : URL?
     @State var openFile = false
     
     
@@ -391,7 +391,8 @@ struct EditProduct: View {
                     Button {
                         showingSheet = false
                         
-                        modelData.updateData(productToUpdate: product)
+//                        modelData.updateData(productToUpdate: product)
+                        modelData.updateDataController(productToUpdate: product, imageToUpdate: inputImage, modelToUpdate: fileURL)
                         
                     } label: {
                         Text("Fertig")
@@ -426,7 +427,7 @@ struct EditProduct: View {
 
 
     func loadImage() {
-        guard let inputImage = inputImage else { return }
+        guard inputImage != nil else { return }
        // product.image = inputImage
     }
 }

@@ -95,7 +95,7 @@ struct EditOffer: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button("Fertig"){
                         showingSheet = false
-                        modelData.updateData(offerToUpdate: offer)
+                        modelData.updateOffersDataController(offerToUpdate: offer, imageToUpdate: inputImage)
                     }
                     
                 }
@@ -109,7 +109,7 @@ struct EditOffer: View {
         }
     }
     func loadImage() {
-        guard let inputImage = inputImage else { return }
+        guard inputImage != nil else { return }
     }
 }
 
