@@ -39,7 +39,7 @@ struct Login: View {
                 }
                 
                 
-              CustomerQRCode()
+              CustomerQRCode(signInSuccess: $signInSucces)
                 
             }
             .navigationTitle("Willkommen!")
