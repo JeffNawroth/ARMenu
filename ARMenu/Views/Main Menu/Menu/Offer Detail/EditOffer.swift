@@ -123,7 +123,7 @@ struct EditOffer: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button("Fertig"){
                         showingSheet = false
-                        modelData.updateData(offerToUpdate: offer)
+                        modelData.updateOfferController(offerToUpdate: offer, imageToUpdate: inputImage)
                     }
                     
                 }

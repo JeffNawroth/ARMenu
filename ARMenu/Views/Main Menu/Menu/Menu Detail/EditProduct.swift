@@ -355,7 +355,8 @@ struct EditProduct: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingSheet = false
-                        modelData.updateData(productToUpdate: product)
+                      //  modelData.updateData(productToUpdate: product)
+                        modelData.updateProductController(productToUpdate: product, imageToUpdate: inputImage, modelToUpdate: fileURL)
                         
                     } label: {
                         Text("Fertig")
