@@ -17,6 +17,21 @@ struct Profile: View {
                     Text("imHoernken")
                         .foregroundColor(.gray)
                 }
+                
+                Section{
+                    NavigationLink {
+                        QRCodeGenerator()
+                    } label: {
+                        HStack{
+                            Image(systemName: "qrcode.viewfinder")
+                            Divider()
+                            Text("QR-Code verwalten")
+                        }
+                  
+                    }
+
+
+                }
                
                 
                 
@@ -32,18 +47,7 @@ struct Profile: View {
                     }
                 }
                 
-                Section{
-                    Button {
-//                        showingSheet = true
-                        //TODO: create sheet for QR-Code
-                    } label: {
-                        Text("QR-Code verwalten")
-                    }
-
-                    .sheet(isPresented: $showingSheet) {
-                        changePassword(showingSheet: $showingSheet )
-                    }
-                }
+             
              
                 HStack{
                     Spacer()

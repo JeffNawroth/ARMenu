@@ -26,6 +26,8 @@ struct CustomerQRCode: View {
         }
         .sheet(isPresented: $isShowingScanner) {
             CodeScannerView(codeTypes: [.qr], completion:handleScan)
+                .overlay(ScanOverlayView())
+                .ignoresSafeArea()
         }
     }
     
@@ -34,7 +36,7 @@ struct CustomerQRCode: View {
         
         switch result{
         case .success(let result):
-            print (result)
+            print (result.string)
         case .failure(let error):
             print("Scanning failed: \(error.localizedDescription)")
         }
