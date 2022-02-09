@@ -25,7 +25,7 @@ struct MenuDetail: View {
                 .padding()
             
             VStack(alignment: .leading){
-
+                
                 HStack{
                     VStack(alignment: .leading){
                         Text(product.category.name)
@@ -52,9 +52,9 @@ struct MenuDetail: View {
                             
                             
                         }
-                       
+                        
                     }
-                   
+                    
                 }
                 
                 Spacer()
@@ -110,7 +110,26 @@ struct MenuDetail: View {
                 
             }
             .sheet(isPresented: $showingARPreview) {
-                ARViewContainer(product: product).edgesIgnoringSafeArea(.all)
+                ZStack{
+                    ARViewContainer(product: product).ignoresSafeArea()
+                    VStack{
+                        HStack{
+                            Button {
+                                showingARPreview = false
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .imageScale(.large)
+                            }
+                            .padding()
+                            Spacer()
+
+                        }
+                        Spacer()
+                    }
+                    
+                    
+                    
+                }
             }
                 
                 Text("Beschreibung")
@@ -201,9 +220,9 @@ struct MenuDetail: View {
         .navigationTitle(product.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
-//            ToolbarItem(placement: .navigationBarTrailing) {
-//               ProductVisibilityButton(isSet: product.isVisible, product: product)
-//            }
+            //            ToolbarItem(placement: .navigationBarTrailing) {
+            //               ProductVisibilityButton(isSet: product.isVisible, product: product)
+            //            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true
@@ -213,7 +232,7 @@ struct MenuDetail: View {
                 .sheet(isPresented: $showingSheet) {
                     EditProduct(product: product, showingSheet: $showingSheet)
                 }
-
+                
             }
         }
     }
