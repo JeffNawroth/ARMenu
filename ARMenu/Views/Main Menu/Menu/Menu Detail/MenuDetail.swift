@@ -28,10 +28,13 @@ struct MenuDetail: View {
                 
                 HStack{
                     VStack(alignment: .leading){
-                        Text(product.category.name)
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
+                        if let category = product.category{
+                            Text(category.name)
+                                .font(.footnote)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                        }
+                        
                         
                         HStack{
                             Text(product.name)
@@ -39,18 +42,21 @@ struct MenuDetail: View {
                             
                             Spacer()
                             
-                            Text("\(product.price, specifier: "%.2f")")
-                                .fontWeight(.semibold)
-                                .foregroundColor(.secondary)
-                            Text("•")
-                                .fontWeight(.semibold)
-                                .foregroundColor(.secondary)
+                            if let price = product.price{
+                                Text("\(price, specifier: "%.2f")")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.secondary)
+                                Text("•")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.secondary)
+                            }
+                          
                             
-                            Text("\(product.servingSize.size)" + product.servingSize.unit.name)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.secondary)
-                            
-                            
+                            if let servingSize = product.servingSize{
+                                Text("\(servingSize.size)" + servingSize.unit.name)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                         
                     }
@@ -110,10 +116,13 @@ struct MenuDetail: View {
                 
             }
             .sheet(isPresented: $showingARPreview) {
+                
                 ZStack{
-                    ARViewContainer(product: product).ignoresSafeArea()
+                    ARViewContainer(product: product)
+                        .ignoresSafeArea()
                     VStack{
                         HStack{
+                            Spacer()
                             Button {
                                 showingARPreview = false
                             } label: {
@@ -121,98 +130,139 @@ struct MenuDetail: View {
                                     .imageScale(.large)
                             }
                             .padding()
-                            Spacer()
-
                         }
                         Spacer()
                     }
-                    
-                    
-                    
+
+
+
                 }
             }
-                
-                Text("Beschreibung")
-                    .font(.title2)
-                Text(product.description)
+             
+                if let description = product.description{
+                    Text("Beschreibung")
+                        .font(.title2)
+                    Text(description)
+                }
             }
             .padding()
             
             VStack{
                 
-                DisclosureGroup(isExpanded: $toppingsExpanded) {
-                    ForEach(product.toppings, id: \.self){topping in
+                if let toppings = product.toppings{
+                    DisclosureGroup(isExpanded: $toppingsExpanded) {
+                        ForEach(toppings, id: \.self){topping in
+                            HStack{
+                                Text(topping.name)
+                                Spacer()
+                                Text("+ \(topping.price, specifier: "%.2f")")
+                            }
+                        }
+                    } label: {
+                        Text("Toppings")
+                    }
+
+                }
+                
+                
+                
+                if let nutritionFacts =  product.nutritionFacts{
+                    DisclosureGroup(isExpanded: $nutritionsExpanded) {
                         HStack{
-                            Text(topping.name)
                             Spacer()
-                            Text("+ \(topping.price, specifier: "%.2f")")
-                        }
-                        
-                    }
-                } label: {
-                    Text("Toppings")
-                }
-                
-                DisclosureGroup(isExpanded: $nutritionsExpanded) {
-                    HStack{
-                        Spacer()
-                        Text("pro 100 g")
-                            .fontWeight(.semibold)
-                        
-                    }
-                    
-                    HStack{
-                        Text("Brennwert")
-                        Spacer()
-                        Text(String(product.nutritionFacts.calories) + " kcal")
-                        
-                    }
-                    
-                    HStack{
-                        Text("Fett")
-                        Spacer()
-                        Text(String(product.nutritionFacts.fat) + " g")
-                    }
-                    HStack{
-                        Text("Kohlenhydrate")
-                        Spacer()
-                        Text(String(product.nutritionFacts.carbs) + " g")
-                    }
-                    HStack{
-                        Text("Protein")
-                        Spacer()
-                        Text(String(product.nutritionFacts.protein) + " g")
-                    }
-                    
-                } label: {
-                    Text("Nährwerte")
-                }
-                
-                DisclosureGroup(isExpanded: $allergensExpanded) {
-                    
-                    HStack(alignment: .top){
-                        
-                        VStack(alignment: .leading){
-                            Text("Allergene")
+                            Text("pro 100 g")
                                 .fontWeight(.semibold)
                             
-                            ForEach(product.allergens, id:\.self){
-                                Text($0.name)
+                        }
+                       
+                        if let calories = nutritionFacts.calories{
+                            HStack{
+                                Text("Brennwert")
+                                Spacer()
+                                Text(String(calories) + " kcal")
+                                
                             }
                         }
-                        Spacer()
-                        VStack(alignment: .leading){
+                        
+                        if let fat = nutritionFacts.fat{
+                            HStack{
+                                Text("Fett")
+                                Spacer()
+                                Text(String(fat) + " g")
+                            }
+                        }
+                        
+                        if let carbs = nutritionFacts.carbs{
+                            HStack{
+                                Text("Kohlenhydrate")
+                                Spacer()
+                                Text(String(carbs) + " g")
+                            }
+                        }
+                        
+                        if let protein = nutritionFacts.protein{
+                            HStack{
+                                Text("Protein")
+                                Spacer()
+                                Text(String(protein) + " g")
+                            }
+                        }
+                      
+                        
+                    } label: {
+                        Text("Nährwerte")
+                    }
+                }
+               
+                
+                
+                if product.allergens != nil || product.additives != nil{
+                    DisclosureGroup(isExpanded: $allergensExpanded) {
+                        
+                        HStack(alignment: .top){
+                            if let allergens = product.allergens{
+                                VStack(alignment: .leading){
+                                    if product.additives != nil{
+                                        Text("Allergene")
+                                            .fontWeight(.semibold)
+                                    }
+                                    ForEach(allergens, id:\.self){
+                                        Text($0.name)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            
+                            if let additives = product.additives{
+                                VStack(alignment: .leading){
+                                    if product.allergens != nil{
+                                        Text("Zusatzstoffe")
+                                            .fontWeight(.semibold)
+                                    }
+                                    ForEach(additives, id:\.self){
+                                        Text($0.name)
+                                    }
+                                }
+                                if product.allergens == nil{
+                                    Spacer()
+                                }
+                            }
+                           
+                        }
+                    } label: {
+                        if product.additives != nil && product.allergens != nil{
+                            Text("Allergene & Zusatzstoffe")
+                        }
+                        else if product.additives != nil{
                             Text("Zusatzstoffe")
-                                .fontWeight(.semibold)
-                            
-                            ForEach(product.additives, id:\.self){
-                                Text($0.name)
-                            }
                         }
+                        else if product.allergens != nil{
+                            Text("Allergene")
+                        }
+                            
                     }
-                } label: {
-                    Text("Allergene & Zusatzstoffe ")
                 }
+                
                 
             }.padding(.horizontal)
             
@@ -220,9 +270,6 @@ struct MenuDetail: View {
         .navigationTitle(product.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
-            //            ToolbarItem(placement: .navigationBarTrailing) {
-            //               ProductVisibilityButton(isSet: product.isVisible, product: product)
-            //            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true

@@ -14,6 +14,8 @@ struct EditOffer: View {
     @State private var showingImagePicker = false
     @Binding var showingSheet: Bool
     @State private var inputImage: UIImage?
+    @FocusState private var isFocused: Bool
+
     
     var body: some View {
         NavigationView{
@@ -60,12 +62,16 @@ struct EditOffer: View {
                         Text("Titel")
                         TextField("Titel", text: $offer.title)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                     }
                 }
                 
-                Section(header: Text("Beschreibung")){
-                    TextEditor(text: $offer.description)
-                }
+//                Section(header: Text("Beschreibung")){
+//                    TextEditor(text: $offer.description)
+//                        .focused($isFocused)
+//
+//                }
                 
                 Section(header: Text("Produkte")){
                     
@@ -131,6 +137,17 @@ struct EditOffer: View {
                 ToolbarItem(placement: .navigationBarLeading){
                     Button("Abbrechen"){
                         showingSheet = false
+                    }
+                }
+                
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    
+                    Button {
+                        isFocused = false
+                        
+                    } label: {
+                        Image(systemName:"keyboard.chevron.compact.down")
                     }
                 }
             }

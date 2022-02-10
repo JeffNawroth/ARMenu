@@ -21,11 +21,14 @@ struct MenuRow: View {
             VStack(alignment: .leading, spacing: 5){
                 
                 HStack{
+                    
                     VStack(alignment: .leading){
-                        Text(product.category.name)
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
+                        if let category = product.category{
+                            Text(category.name)
+                                .font(.footnote)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                        }
                         
                         Text(product.name)
                             .font(.title2)
@@ -37,17 +40,25 @@ struct MenuRow: View {
                 
                 
                 HStack{
-                    Text("\(product.price, specifier: "%.2f")")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
+                    if let price = product.price{
+                        Text("\(price, specifier: "%.2f")")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                        
+                        
+                    }
+                    if product.price != nil && product.servingSize?.size != nil{
+                        Text("•")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                    }
                     
-                    Text("•")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
+                    if let servingSize = product.servingSize{
+                        Text("\(servingSize.size)" + servingSize.unit.name)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                    }
                     
-                    Text("\(product.servingSize.size)" + product.servingSize.unit.name)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
                     
                 }
                 
@@ -59,14 +70,14 @@ struct MenuRow: View {
                                 .scaledToFit()
                                 .frame(width: 25)
                         }
-
+                        
                         if product.isBio{
                             Image("bio")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 26)
                         }
-
+                        
                         if product.isFairtrade{
                             Image("fairtrade")
                                 .resizable()
@@ -75,7 +86,7 @@ struct MenuRow: View {
                         }
                     }
                 }
-              
+                
                 
                 
                 

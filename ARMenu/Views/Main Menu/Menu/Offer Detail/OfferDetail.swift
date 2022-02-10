@@ -38,7 +38,7 @@ struct OfferDetail: View {
                         .font(.title)
                         .padding(.bottom)
                     
-                    Text(offer.description)
+                Text(offer.description ?? "")
                         .foregroundColor(.secondary)
                         .padding(.bottom)
 

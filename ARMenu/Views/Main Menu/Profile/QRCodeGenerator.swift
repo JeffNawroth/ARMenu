@@ -11,44 +11,68 @@ import CoreImage.CIFilterBuiltins
 
 struct QRCodeGenerator: View {
     
-   @State private var name = "imHoernken"
-     var qrCode: UIImage{
+    
+    @State private var name = "imHoernken"
+    @State private var showingShareSheet = false
+    var qrCode: UIImage{
         generateQRCode(from: name)
     }
     
     let context = CIContext()
     let filter = CIFilter.qrCodeGenerator()
     
+    @Binding var showingSheet: Bool
+    
     var body: some View {
-        VStack{
-            Image(uiImage: qrCode)
-                .resizable()
-                .interpolation(.none)
-                .scaledToFit()
-                .padding()
-                
-        }
-        .navigationTitle("QR-Code")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    actionSheet(image: qrCode.resized(toWidth: 512) ?? UIImage())
-                } label: {
-                    Image(systemName: "square.and.arrow.up")
-
-                }
-
+        NavigationView{
+            VStack{
+                Image(uiImage: qrCode)
+                    .resizable()
+                    .interpolation(.none)
+                    .scaledToFit()
+                    .padding()
             }
+            .navigationTitle("QR-Code")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingShareSheet = true
+                        // actionSheet(image: qrCode.resized(toWidth: 512) ?? UIImage())
+                    } label: {
+                        Image(systemName: "square.and.arrow.up")
+                        
+                    }
+                    .sheet(isPresented: $showingShareSheet) {
+                        ShareSheet(image: qrCode.resized(toWidth: 512) ?? UIImage())
+                            .ignoresSafeArea()
+                    }
+                    
+                }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        showingSheet = false
+                    } label: {
+                        Image(systemName: "xmark")
+                            .imageScale(.large)
+                    }
+                    
+                }
+                
+                
+                
+                
+            }
+            
         }
         
     }
     
-    func actionSheet(image: UIImage) {
-            let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        UIApplication.shared.keyWindow?.rootViewController?
-            .present(activityVC, animated: true, completion: nil)
-        }
+//    func actionSheet(image: UIImage) {
+//        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+//        UIApplication.shared.keyWindow?.rootViewController?
+//            .present(activityVC, animated: true, completion: nil)
+//    }
     
     func generateQRCode(from string: String) -> UIImage{
         filter.message = Data(string.utf8)
@@ -67,13 +91,13 @@ extension UIApplication {
     var keyWindow: UIWindow? {
         // Get connected scenes
         return UIApplication.shared.connectedScenes
-            // Keep only active scenes, onscreen and visible to the user
+        // Keep only active scenes, onscreen and visible to the user
             .filter { $0.activationState == .foregroundActive }
-            // Keep only the first `UIWindowScene`
+        // Keep only the first `UIWindowScene`
             .first(where: { $0 is UIWindowScene })
-            // Get its associated windows
+        // Get its associated windows
             .flatMap({ $0 as? UIWindowScene })?.windows
-            // Finally, keep only the key window
+        // Finally, keep only the key window
             .first(where: \.isKeyWindow)
     }
     
@@ -95,6 +119,22 @@ extension UIImage {
 
 struct GenerateQRCode_Previews: PreviewProvider {
     static var previews: some View {
-        QRCodeGenerator()
+        QRCodeGenerator(showingSheet: .constant(true))
     }
+}
+
+struct ShareSheet: UIViewControllerRepresentable{
+    
+    var image: UIImage
+    
+    func makeUIViewController(context: Context) -> some UIActivityViewController {
+        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+        return activityVC
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+        
+    }
+    
+    
 }

@@ -12,4 +12,12 @@ struct Category:Identifiable, Codable, Hashable{
     @DocumentID var id: String?
     var name: String
 
+    init(){
+        self.name = ""
+    }
+    
+    init(name: String){
+        self.name = name
+    }
+    
 }

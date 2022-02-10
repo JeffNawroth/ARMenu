@@ -60,7 +60,7 @@
 		B2BAC31B27B42B9C006B0381 /* CustomerQRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC31A27B42B9C006B0381 /* CustomerQRCode.swift */; };
 		B2BAC31D27B4321A006B0381 /* QRCodeGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC31C27B4321A006B0381 /* QRCodeGenerator.swift */; };
 		B2BAC31F27B43893006B0381 /* ScanOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC31E27B43893006B0381 /* ScanOverlayView.swift */; };
-		B2BAC32127B4571D006B0381 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC32027B4571C006B0381 /* File.swift */; };
+		B2BAC32527B53D19006B0381 /* BindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC32427B53D18006B0381 /* BindingExtension.swift */; };
 		B2BE46A827988E5A008484B1 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B2BE46A727988E5A008484B1 /* SDWebImageSwiftUI */; };
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
 		B2D39D102784C34F009B5D25 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0F2784C34F009B5D25 /* Offer.swift */; };
@@ -120,7 +120,7 @@
 		B2BAC31A27B42B9C006B0381 /* CustomerQRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerQRCode.swift; sourceTree = "<group>"; };
 		B2BAC31C27B4321A006B0381 /* QRCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGenerator.swift; sourceTree = "<group>"; };
 		B2BAC31E27B43893006B0381 /* ScanOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanOverlayView.swift; sourceTree = "<group>"; };
-		B2BAC32027B4571C006B0381 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		B2BAC32427B53D18006B0381 /* BindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
 		B2D39D0F2784C34F009B5D25 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		B2D39D112784CB17009B5D25 /* OfferDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetail.swift; sourceTree = "<group>"; };
@@ -195,6 +195,7 @@
 				A5BA850C279884B90011C06A /* GoogleService-Info.plist */,
 				B26FD1842774D19B00E75FFC /* Info.plist */,
 				B26FD14C2774CCD100E75FFC /* AppDelegate.swift */,
+				B2BAC32427B53D18006B0381 /* BindingExtension.swift */,
 				A5BA8511279884FB0011C06A /* Database */,
 				B26FD1812774D18800E75FFC /* Euphoria_Script */,
 				B26FD1802774D11600E75FFC /* Views */,
@@ -378,7 +379,6 @@
 				B27ADA8B2798AECC0000A750 /* Category.swift */,
 				B27ADA892798AB5B0000A750 /* Additive.swift */,
 				B224E00D279714410022A054 /* Topping.swift */,
-				B2BAC32027B4571C006B0381 /* File.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -494,7 +494,6 @@
 				B27ADA862798A77F0000A750 /* Allergen.swift in Sources */,
 				B228E993278CAA0F00792F7E /* AddOffer.swift in Sources */,
 				B2BAC31F27B43893006B0381 /* ScanOverlayView.swift in Sources */,
-				B2BAC32127B4571D006B0381 /* File.swift in Sources */,
 				B26FD1792774D02F00E75FFC /* Product.swift in Sources */,
 				B229A86927A0645800B31484 /* SelectCategory.swift in Sources */,
 				B2D39D102784C34F009B5D25 /* Offer.swift in Sources */,
@@ -515,6 +514,7 @@
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
 				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,
 				B27ADA8C2798AECC0000A750 /* Category.swift in Sources */,
+				B2BAC32527B53D19006B0381 /* BindingExtension.swift in Sources */,
 				B26FD1632774CE9F00E75FFC /* AddProduct.swift in Sources */,
 				B2BAC31B27B42B9C006B0381 /* CustomerQRCode.swift in Sources */,
 				B27ADA882798A9340000A750 /* MultipleAllergenPicker.swift in Sources */,

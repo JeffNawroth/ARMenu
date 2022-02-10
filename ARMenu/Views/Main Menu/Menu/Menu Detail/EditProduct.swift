@@ -98,54 +98,54 @@ struct EditProduct: View {
                             .focused($isFocused)
                     }
                     
-                    NavigationLink {
-                        SelectCategory(selectedCategory: $product.category)
-                    } label: {
-                        HStack{
-                            Text("Kategorie")
-                            Spacer()
-                            Text(product.category.name)
-                                .foregroundColor(.gray)
-                        }
-                    }
+//                    NavigationLink {
+//                        SelectCategory(selectedCategory: $product.category)
+//                    } label: {
+//                        HStack{
+//                            Text("Kategorie")
+//                            Spacer()
+//                            Text(product.category.name)
+//                                .foregroundColor(.gray)
+//                        }
+//                    }
                     
                     
                     
-                    HStack{
-                        Button {
-                            showingUnitsSheet = true
-                        } label: {
-                            HStack{
-                                Text(product.servingSize.unit.name)
-                                    .foregroundColor(.blue)
-                                Image(systemName: "chevron.right")
-                                    .imageScale(.small)
-                                    .foregroundColor(.gray)
-                                Divider()
-                            }
-                        }.padding(.trailing)
-                            .buttonStyle(.plain)
-                        
-                        TextField("Menge", value: $product.servingSize.size, format: .number)
-                            .keyboardType(.decimalPad)
-                        
-                        
-                        
-                    }
-                    .sheet(isPresented: $showingUnitsSheet) {
-                        SelectUnit(selectedUnit: $product.servingSize.unit, showingUnitsSheet: $showingUnitsSheet)
-                    }
+//                    HStack{
+//                        Button {
+//                            showingUnitsSheet = true
+//                        } label: {
+//                            HStack{
+//                                Text(product.servingSize.unit.name)
+//                                    .foregroundColor(.blue)
+//                                Image(systemName: "chevron.right")
+//                                    .imageScale(.small)
+//                                    .foregroundColor(.gray)
+//                                Divider()
+//                            }
+//                        }.padding(.trailing)
+//                            .buttonStyle(.plain)
+//                        
+//                        TextField("Menge", value: $product.servingSize.size, format: .number)
+//                            .keyboardType(.decimalPad)
+//                        
+//                        
+//                        
+//                    }
+//                    .sheet(isPresented: $showingUnitsSheet) {
+//                        SelectUnit(selectedUnit: $product.servingSize.unit, showingUnitsSheet: $showingUnitsSheet)
+//                    }
                     
-                    NumberTextField(name: "Preis", value: $product.price, isFocused: _isFocused)
+                //    NumberTextField(name: "Preis", value: $product.price, isFocused: _isFocused)
                 }
                 
-                Section(header: Text("Beschreibung")){
-                    ZStack{
-                        TextEditor(text: $product.description)
-                            .focused($isFocused)
-                        Text(product.description).opacity(0).padding(.all, 8)
-                    }
-                }
+//                Section(header: Text("Beschreibung")){
+//                    ZStack{
+//                        TextEditor(text: $product.description)
+//                            .focused($isFocused)
+//                        Text(product.description).opacity(0).padding(.all, 8)
+//                    }
+//                }
                 
                 
                 Section(header: Text("Zertifikate")){
@@ -158,109 +158,109 @@ struct EditProduct: View {
                 
                 Section(header: Text("Nährwerte")){
                     
-                    HStack{
-                        Text("Kalorien")
-                        TextField("0", value: $product.nutritionFacts.calories, format: .number)
-                            .keyboardType(.decimalPad)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
-                    }
+//                    HStack{
+//                        Text("Kalorien")
+//                        TextField("0", value: $product.nutritionFacts.calories, format: .number)
+//                            .keyboardType(.decimalPad)
+//                            .multilineTextAlignment(.trailing)
+//                            .focused($isFocused)
+//                    }
                     
-                    NumberTextField(name: "Fett", value: $product.nutritionFacts.fat, isFocused: _isFocused)
-                    NumberTextField(name: "Kohlenhydrate", value: $product.nutritionFacts.carbs, isFocused: _isFocused)
-                    NumberTextField(name: "Protein", value: $product.nutritionFacts.protein, isFocused: _isFocused)
-                    
-                    
-                }
-                
-                Section(header: Text("Toppings")){
-                    
-                    let sortedToppings = product.toppings.sorted{
-                        $0.name < $1.name
-                    }
-                    
-                    NavigationLink{
-                        SelectToppings(selections: $product.toppings)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.green)
-                            
-                            Text("Toppings hinzufügen")
-                        }
-                    }
-                    
-                    ForEach(sortedToppings,id:\.self){ topping in
-                        HStack{
-                            
-                            Button(action: {
-                                withAnimation(.spring()){
-                                    product.toppings.removeAll{
-                                        $0 == topping
-                                    }
-                                }
-                                
-                            }, label: {
-                                Image(systemName: "minus.circle.fill")
-                                    .foregroundColor(Color.red)
-                            })
-                                .buttonStyle(.plain)
-                            HStack{
-                                Text(topping.name)
-                                Spacer()
-                                Text("+ \(topping.price, specifier: "%.2f")")
-                            }
-                        }
-                        
-                    }
-                    .onDelete { IndexSet in
-                        product.toppings.remove(atOffsets: IndexSet)
-                    }
+//                    NumberTextField(name: "Fett", value: $product.nutritionFacts.fat, isFocused: _isFocused)
+//                    NumberTextField(name: "Kohlenhydrate", value: $product.nutritionFacts.carbs, isFocused: _isFocused)
+//                    NumberTextField(name: "Protein", value: $product.nutritionFacts.protein, isFocused: _isFocused)
                     
                     
                 }
                 
-                Section(header: Text("Allergene")){
-
-                    let sortedAllergens = product.allergens.sorted{
-                        $0.name < $1.name
-                    }
-
-                    NavigationLink{
-                        SelectAllergens(selections: $product.allergens)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.green)
-
-                            Text("Allergene hinzufügen")
-                        }
-
-                    }
-
-                    ForEach(sortedAllergens, id:\.self){ allergen in
-                        HStack{
-                            Button(action: {
-                                withAnimation(.spring()){
-                                    product.allergens.removeAll{
-                                        $0 == allergen
-                                    }
-                                }
-
-                            }, label: {
-                                Image(systemName: "minus.circle.fill")
-                                    .foregroundColor(Color.red)
-                            })
-                                .buttonStyle(.plain)
-
-                            Text(allergen.name)
-                        }
-
-                    }
-                    .onDelete { IndexSet in
-                        product.allergens.remove(atOffsets: IndexSet)
-                    }
-                }
+//                Section(header: Text("Toppings")){
+//
+//                    let sortedToppings = product.toppings.sorted{
+//                        $0.name < $1.name
+//                    }
+//
+//                    NavigationLink{
+//                        SelectToppings(selections: $product.toppings)
+//                    } label:{
+//                        HStack{
+//                            Image(systemName: "plus.circle.fill")
+//                                .foregroundColor(.green)
+//
+//                            Text("Toppings hinzufügen")
+//                        }
+//                    }
+                    
+//                    ForEach(sortedToppings,id:\.self){ topping in
+//                        HStack{
+//
+//                            Button(action: {
+//                                withAnimation(.spring()){
+//                                    product.toppings.removeAll{
+//                                        $0 == topping
+//                                    }
+//                                }
+//
+//                            }, label: {
+//                                Image(systemName: "minus.circle.fill")
+//                                    .foregroundColor(Color.red)
+//                            })
+//                                .buttonStyle(.plain)
+//                            HStack{
+//                                Text(topping.name)
+//                                Spacer()
+//                                Text("+ \(topping.price, specifier: "%.2f")")
+//                            }
+//                        }
+//
+//                    }
+//                    .onDelete { IndexSet in
+//                        product.toppings.remove(atOffsets: IndexSet)
+//                    }
+//
+//
+//                }
+                
+//                Section(header: Text("Allergene")){
+//
+//                    let sortedAllergens = product.allergens.sorted{
+//                        $0.name < $1.name
+//                    }
+//
+//                    NavigationLink{
+//                        SelectAllergens(selections: $product.allergens)
+//                    } label:{
+//                        HStack{
+//                            Image(systemName: "plus.circle.fill")
+//                                .foregroundColor(.green)
+//
+//                            Text("Allergene hinzufügen")
+//                        }
+//
+//                    }
+//
+//                    ForEach(sortedAllergens, id:\.self){ allergen in
+//                        HStack{
+//                            Button(action: {
+//                                withAnimation(.spring()){
+//                                    product.allergens.removeAll{
+//                                        $0 == allergen
+//                                    }
+//                                }
+//
+//                            }, label: {
+//                                Image(systemName: "minus.circle.fill")
+//                                    .foregroundColor(Color.red)
+//                            })
+//                                .buttonStyle(.plain)
+//
+//                            Text(allergen.name)
+//                        }
+//
+//                    }
+//                    .onDelete { IndexSet in
+//                        product.allergens.remove(atOffsets: IndexSet)
+//                    }
+//                }
                 
                 
                 
@@ -324,8 +324,7 @@ struct EditProduct: View {
     
     
     func loadImage() {
-        guard let inputImage = inputImage else { return }
-        // product.image = inputImage
+        guard inputImage != nil else { return }
     }
 }
 

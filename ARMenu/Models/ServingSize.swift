@@ -13,5 +13,15 @@ struct ServingSize: Identifiable, Codable, Hashable{
     var unit: Unit
     var size: Double
     
+    init(){
+        self.unit = Unit()
+        self.size = 0
+    }
+    
+    init(unit: Unit, size: Double){
+        self.unit = unit
+        self.size = size
+    }
+    
     static var dummyServingSize = ServingSize(unit: Unit.dummyUnits[1], size: 0.33)
 }
