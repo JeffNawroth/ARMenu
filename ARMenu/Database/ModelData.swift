@@ -54,7 +54,7 @@ class ModelData: ObservableObject{
         uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, model: modelToAdd)
     }
     
-    func uploadImageProduct(image:UIImage?, productToAdd:Product, model: URL?) {
+    func uploadImageProduct(image:UIImage?, productToAdd: Product, model: URL?) {
         if let image = image {
             if let imageData = image.jpegData(compressionQuality: 1){
                 let storage = Storage.storage()
@@ -67,8 +67,30 @@ class ModelData: ObservableObject{
                     } else {
                         print("Bild wurde erfolgreich hochgeladen!")
                         if let model = model {
-                            self.uploadModel(localURL: model, productToAdd: productToAdd)
+                            guard model.startAccessingSecurityScopedResource(),
+                                      let data = try? Data(contentsOf: model) else { return }
+                                model.stopAccessingSecurityScopedResource()
+                            
+                            let storageRef = Storage.storage().reference()
+                            
+                            let metadata = StorageMetadata()
+                            metadata.contentType = "model/vnd.usdz+zip"
 
+                            let riversRef = storageRef.child("3DModels/" + productToAdd.name! + ".usdz")
+
+                            _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
+                                if let error = error{
+                                    print("Error: Modell konnte nicht hochgeladen werden!\(error.localizedDescription)")
+                                }
+                                else {
+                                  print("Modell wurde erfolgreich hochgeladen!")
+                                    self.getImageAndModelPathProduct(productToAdd: productToAdd)
+                              }
+                             
+                            }
+                        }
+                        else{
+                            self.getImagePathProduct(productToAdd: productToAdd)
                         }
                     }
                 }
@@ -76,17 +98,20 @@ class ModelData: ObservableObject{
                 print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
             }
         }
+        else if let model = model{
+            self.uploadModel(localURL: model, productToAdd: productToAdd)
+        }
         else{
             addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: nil)
         }
         
     }
     
-    func uploadModel(localURL: URL, productToAdd: Product){
+    func uploadModel(localURL: URL?, productToAdd: Product){
         
-        guard localURL.startAccessingSecurityScopedResource(),
-                  let data = try? Data(contentsOf: localURL) else { return }
-            localURL.stopAccessingSecurityScopedResource()
+        guard localURL!.startAccessingSecurityScopedResource(),
+                  let data = try? Data(contentsOf: localURL!) else { return }
+            localURL!.stopAccessingSecurityScopedResource()
         
         let storageRef = Storage.storage().reference()
         
@@ -101,10 +126,24 @@ class ModelData: ObservableObject{
             }
             else {
               print("Modell wurde erfolgreich hochgeladen!")
-                self.getImagePathProduct(productToAdd: productToAdd)
+                self.getModelPathProduct(productToAdd: productToAdd)
           }
          
         }
+    }
+    
+    func getModelPathProduct(productToAdd: Product){
+        let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToAdd.name! + ".usdz")
+        storageRef.downloadURL(completion: { [self] url, error in
+            guard let url = url, error == nil else {
+                print("Error: Modellpfad konnte nicht ermittelt werden!")
+                return
+            }
+            let modelURL = url.absoluteString
+            print("Modellpfad wurde erfolgreich ermittelt!")
+            addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: modelURL)
+        }
+    )
     }
     
     func getImagePathProduct(productToAdd: Product){
@@ -115,7 +154,20 @@ class ModelData: ObservableObject{
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
                 return
             }
-            //Modellpfad ermitteln
+            let imageURL = url.absoluteString
+            print("Bildpfad wurde erfolgreich ermittelt!")
+            addProduct(productToAdd: productToAdd, imagePath: imageURL, modelPath: nil)
+        }
+    )}
+    
+    func getImageAndModelPathProduct(productToAdd: Product){
+        //Bildpfad ermitteln
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToAdd.name!)
+        storageRef.downloadURL(completion: { [self] url, error in
+            guard let url = url, error == nil else {
+                print("Error: Bildpfad konnte nicht ermittelt werden!")
+                return
+            }
             let imageURL = url.absoluteString
             print("Bildpfad wurde erfolgreich ermittelt!")
             let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToAdd.name! + ".usdz")

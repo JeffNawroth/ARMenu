@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import SwiftUI
 
+
 class UserAuthentication: ObservableObject{
     
     let auth = Auth.auth()
@@ -29,6 +30,8 @@ class UserAuthentication: ObservableObject{
             }
         }
     }
+    
+    
     
     func signUp(email: String, password: String){
         auth.createUser(withEmail: email, password: password) { result, error in

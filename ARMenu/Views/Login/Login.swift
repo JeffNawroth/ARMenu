@@ -9,10 +9,10 @@ import SwiftUI
 import FirebaseAuth
 
 struct Login: View {
-    @EnvironmentObject var userModel: UserAuthentication
-    @State var email: String = "ec_61@hotmail.de"
-    @State var password: String = "imhörnken123"
-//    @Binding var signInSucces: Bool
+    
+    @State var email: String = "ImHoernken"
+    @State var password: String = "ImHoernken"
+    @Binding var signInSucces: Bool
     
         
     var body: some View {
@@ -33,14 +33,18 @@ struct Login: View {
                         
                     
                         Button("Anmelden"){
-                            userModel.signIn(email: email, password: password)
+                            if email == "ImHoernken" && password == "ImHoernken"{
+                                signInSucces = true
+
+                            }
+//                            userModel.signIn(email: email, password: password)
                             }
                         }
                     
                 }
                 
                 
-              CustomerQRCode(signInSuccess: $signInSucces)
+//              CustomerQRCode(signInSuccess: $signInSucces)
                 
             }
             .navigationTitle("Willkommen!")
@@ -53,8 +57,8 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-//        Login(signInSucces: .constant(true))
-        Login()
+        Login(signInSucces: .constant(true))
+//        Login()
     }
 }
 
