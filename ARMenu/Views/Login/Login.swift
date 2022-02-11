@@ -6,20 +6,23 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct Login: View {
-    @State var username: String = "imHoernken"
-    @State var password: String = "imHoernken"
-    @Binding var signInSucces: Bool
+    @EnvironmentObject var userModel: UserAuthentication
+    @State var email: String = "ec_61@hotmail.de"
+    @State var password: String = "imhörnken123"
+//    @Binding var signInSucces: Bool
+    
         
     var body: some View {
         NavigationView{
             Form{
                 Section(header: Text("Mit Benutzerkonto Einloggen")){
                     HStack{
-                        Text("Benutzername")
+                        Text("Email-Adresse")
                             .padding(.trailing)
-                        TextField("Benutzername", text:$username)
+                        TextField("Email-Adresse", text:$email)
                     }
                     HStack {
                         Text("Passwort")
@@ -30,9 +33,7 @@ struct Login: View {
                         
                     
                         Button("Anmelden"){
-                            if(username == "imHoernken" && password == "imHoernken"){
-                                signInSucces = true
-
+                            userModel.signIn(email: email, password: password)
                             }
                         }
                     
@@ -57,11 +58,14 @@ struct Login: View {
         }
         
     }
-}
+    
+    
+    
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login(signInSucces: .constant(true))
+//        Login(signInSucces: .constant(true))
+        Login()
     }
 }
 

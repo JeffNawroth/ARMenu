@@ -17,11 +17,6 @@ class ModelData: ObservableObject{
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
-    @Published var product: Product = Product(image: "", model: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
-//    @Published var errorMessage: String?
-    @Published var offerProducts = [Product]()
-    
-    
     
     var db = Firestore.firestore()
     
@@ -78,7 +73,6 @@ class ModelData: ObservableObject{
         }
     }
     
-    //Image zum Produkt hinzufügen
     func uploadModel(localURL: URL, productToAdd: Product){
         
         guard localURL.startAccessingSecurityScopedResource(),
@@ -101,12 +95,6 @@ class ModelData: ObservableObject{
                 self.getImagePathProduct(productToAdd: productToAdd)
           }
          
-//            riversRef.downloadURL { (url, error) in
-//            guard let downloadURL = url else {
-//                print(error?.localizedDescription)
-//              return
-//            }
-//          }
         }
     }
     
@@ -176,38 +164,7 @@ class ModelData: ObservableObject{
         
     }
     
-//    func getImagePathProduct(productToAdd: Product){
-//        let storageRef = Storage.storage().reference(withPath: "ProductImages/\(productToAdd.name)")
-//        storageRef.downloadURL(completion: { [self] url, error in
-//            guard let url = url, error == nil else {
-//                print("Error: Bildpfad konnte nicht ermittelt werden!")
-//                return
-//            }
-//            let imageURL = url.absoluteString
-//            print("Bildpfad wurde erfolgreich ermittelt!")
-//            addProduct(productToAdd: productToAdd, imagePath: imageURL)
-//        }
-//        )
-//        
-//    }
-    
-    func updateProduct(productToUpdate: Product, isVisible: Bool){
-        //Set the data to update
-        db.collection("ImHörnken").document("Menu").collection("Products").document(productToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
-            
-            //Check for Errors
-            if error == nil{
-                print("Produkt wurde aktualisiert!")
-                //Get the new data
-                self.fetchProductsData()
-            }
-            else{
-                print("Error: Produkt konnte nicht aktualisiert werden!")
-            }
-        }
-    }
-    
-    func updateData(productToUpdate: Product){
+    func updateProduct(productToUpdate: Product){
         if let documentId = productToUpdate.id {
             do {
                 try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: productToUpdate)
@@ -223,7 +180,7 @@ class ModelData: ObservableObject{
                 
                 //Wenn Bild als auch Modell nicht aktualisiert werden muss
                 if imageToUpdate == nil && modelToUpdate == nil{
-                    updateData(productToUpdate: productToUpdate)
+                    updateProduct(productToUpdate: productToUpdate)
                 }
                 //Wenn Bild oder Modell aktualisiert werden muss
                 else if imageToUpdate != nil || modelToUpdate != nil{
@@ -336,7 +293,7 @@ class ModelData: ObservableObject{
                 
                 let updatedProduct = Product(id: productToUpdate.id, image: imageURL, model: modelURL, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSize: productToUpdate.servingSize, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
                 
-                updateData(productToUpdate: updatedProduct)
+                updateProduct(productToUpdate: updatedProduct)
             }
         )}
         )
@@ -657,33 +614,6 @@ class ModelData: ObservableObject{
         
     }
     
-    func updateOffer(offerToUpdate: Offer, isVisible: Bool){
-        //Set the data to update
-        db.collection("ImHörnken").document("Menu").collection("Offers").document(offerToUpdate.id ?? "").setData(["isVisible": isVisible] , merge: true) { error in
-            
-            //Check for Errors
-            if error == nil{
-                print("Angebot wurde aktualisiert!")
-                //Get the new data
-                self.fetchOffersData()
-            }
-            else{
-                print("Error: Angebot konnte nicht aktualisiert werden!")
-            }
-        }
-    }
-    
-    func updateData(offerToUpdate: Offer) {
-        if let documentId = offerToUpdate.id {
-          do {
-              try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offerToUpdate)
-          }
-          catch {
-            print(error)
-          }
-        }
-      }
-    
     func updateOffersDataController(offerToUpdate: Offer, imageToUpdate: UIImage?){
         if imageToUpdate == nil {
             updateOffer(offer: offerToUpdate)
@@ -725,7 +655,7 @@ class ModelData: ObservableObject{
         }
     }
     
-    private func updateOffer(offer: Offer) {
+    func updateOffer(offer: Offer) {
         if let documentId = offer.id {
           do {
               try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offer)

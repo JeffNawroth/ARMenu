@@ -9,18 +9,26 @@ import SwiftUI
 import RealityKit
 
 struct ContentView : View {
-    
+    @EnvironmentObject var userModel: UserAuthentication
     @State var signInSucces = false
     
     var body: some View {
-        if signInSucces{
+        if userModel.isSignedIn{
             MainView()
                 .environmentObject(ModelData())
-                
-            
-        }else{
-            Login(signInSucces: $signInSucces)
         }
+        else{
+            Login()
+        }
+//        if signInSucces{
+//            MainView()
+//                .environmentObject(ModelData())
+//
+//
+//        }else{
+//            Login(signInSucces: $signInSucces)
+//        }
+        
     }
 }
 

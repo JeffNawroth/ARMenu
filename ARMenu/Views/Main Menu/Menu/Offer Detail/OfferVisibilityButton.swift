@@ -22,7 +22,7 @@ struct OfferVisibilityButton: View {
             
             Button(isSet ? "Geheim halten": "Veröffentlichen"){
                 isSet.toggle()
-                modelData.updateOffer(offerToUpdate: offer, isVisible: isSet)
+                modelData.updateOffer(offer: offer)
             }
             Button("Abbrechen", role:.cancel) {}
             
