@@ -16,7 +16,7 @@ struct SelectProducts: View {
         if searchText.isEmpty {
             return modelData.products
         } else {
-            return modelData.products.filter { $0.name.contains(searchText) }
+            return modelData.products.filter { $0.name!.contains(searchText) }
         }
     }
     

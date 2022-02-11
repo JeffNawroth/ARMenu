@@ -37,7 +37,7 @@ struct MenuDetail: View {
                         
                         
                         HStack{
-                            Text(product.name)
+                            Text(product.name!)
                                 .font(.title)
                             
                             Spacer()
@@ -267,7 +267,7 @@ struct MenuDetail: View {
             }.padding(.horizontal)
             
         }
-        .navigationTitle(product.name)
+        .navigationTitle(product.name!)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {

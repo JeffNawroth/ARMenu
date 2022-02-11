@@ -76,7 +76,7 @@ struct EditOffer: View {
                 Section(header: Text("Produkte")){
                     
                     let sortedProducts = offer.products.sorted{
-                        $0.name < $1.name
+                        $0.name! < $1.name!
                     }
                     
                     
@@ -154,7 +154,7 @@ struct EditOffer: View {
         }
     }
     func loadImage() {
-        guard let inputImage = inputImage else { return }
+        guard inputImage != nil else { return }
     }
 }
 

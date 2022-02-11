@@ -19,21 +19,20 @@ struct AddProduct: View {
     @State private var showingUnitsSheet = false
     @FocusState private var isFocused: Bool
     
-    @State var fileName = ""
-    @State var fileURL = URL(string: "")
+    @State var fileURL: URL?
     @State var openFile = false
     
     var disableForm: Bool {
         inputImage == nil ||
-        productDummy.name.isEmpty ||
-        productDummy.modelURL == nil
+        productDummy.name == nil ||
+        fileURL == nil
     }
     
     struct ProductDummy{
         var isVisible = false
         
-        var modelURL: URL!
-        var name: String = ""
+      //  var modelURL: URL!
+        var name: String?
         var category: Category?
         var size: Double!
         var price: Double?
@@ -122,10 +121,9 @@ struct AddProduct: View {
                         
                     }
                     
-                    
-                    if !fileName.isEmpty{
+                    if let fileURL = fileURL {
                         HStack{
-                            Text(fileName)
+                            Text(fileURL.lastPathComponent)
                             Spacer()
                             Button {
                                 
@@ -135,7 +133,6 @@ struct AddProduct: View {
                             .buttonStyle(.borderless)
                             
                         }
-                        
                     }
                 }
                 
@@ -147,7 +144,7 @@ struct AddProduct: View {
                 Section{
                     HStack{
                         Text("Name")
-                        TextField("Name", text: $productDummy.name)
+                        TextField("Name", text: $productDummy.name.toNonOptionalString())
                             .multilineTextAlignment(.trailing)
                             .focused($isFocused)
                     }
@@ -431,12 +428,8 @@ struct AddProduct: View {
             }
             .fileImporter(isPresented: $openFile, allowedContentTypes: [.usdz]) { res in
                 do{
-                    productDummy.modelURL = try res.get()
+                    fileURL = try res.get()
                     
-                    
-                    //print(fileUrl)
-                    
-                    self.fileName = productDummy.modelURL.lastPathComponent
                 }
                 catch{
                     print("error reading docs")
@@ -460,7 +453,7 @@ struct AddProduct: View {
                         let product: Product =
                         Product(image: "",model: "",name: productDummy.name,category: productDummy.category,price: productDummy.price,description: productDummy.description,servingSize: productDummy.servingSize, isVegan: productDummy.isVegan,isBio: productDummy.isBio,isFairtrade: productDummy.isFairtrade, isVisible: productDummy.isVisible, nutritionFacts: productDummy.nutritionFacts,allergens:productDummy.allergens,additives: productDummy.additives,toppings: productDummy.toppings)
                         
-                        modelData.addProductController(productToAdd: product, imageToAdd: inputImage!, modelToAdd: productDummy.modelURL)
+                        modelData.addProductController(productToAdd: product, imageToAdd: inputImage!, modelToAdd: fileURL!)
                         
                     } label: {
                         Text("Fertig")

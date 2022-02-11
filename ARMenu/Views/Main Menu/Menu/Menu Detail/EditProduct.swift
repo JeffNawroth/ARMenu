@@ -91,12 +91,12 @@ struct EditProduct: View {
                 
                 
                 Section{
-                    HStack{
-                        Text("Name")
-                        TextField("Name", text: $product.name)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
-                    }
+//                    HStack{
+//                        Text("Name")
+//                        TextField("Name", text: $product.name)
+//                            .multilineTextAlignment(.trailing)
+//                            .focused($isFocused)
+//                    }
                     
 //                    NavigationLink {
 //                        SelectCategory(selectedCategory: $product.category)

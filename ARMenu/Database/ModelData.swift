@@ -59,7 +59,7 @@ class ModelData: ObservableObject{
             let storage = Storage.storage()
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-            storage.reference().child("ProductImages/\(productToAdd.name)").putData(imageData, metadata: metadata){
+            storage.reference().child("ProductImages/" + productToAdd.name!).putData(imageData, metadata: metadata){
                 (_, err) in
                 if let err = err {
                     print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
@@ -84,7 +84,7 @@ class ModelData: ObservableObject{
         let metadata = StorageMetadata()
         metadata.contentType = "model/vnd.usdz+zip"
 
-        let riversRef = storageRef.child("3DModels/\(productToAdd.name).usdz")
+        let riversRef = storageRef.child("3DModels/" + productToAdd.name! + ".usdz")
 
         _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
             if let error = error{
@@ -100,7 +100,7 @@ class ModelData: ObservableObject{
     
     func getImagePathProduct(productToAdd: Product){
         //Bildpfad ermitteln
-        let storageRef = Storage.storage().reference(withPath: "ProductImages/\(productToAdd.name)")
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToAdd.name!)
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -109,7 +109,7 @@ class ModelData: ObservableObject{
             //Modellpfad ermitteln
             let imageURL = url.absoluteString
             print("Bildpfad wurde erfolgreich ermittelt!")
-            let storageRef = Storage.storage().reference(withPath: "3DModels/\(productToAdd.name).usdz")
+            let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToAdd.name! + ".usdz")
             storageRef.downloadURL(completion: { [self] url, error in
                 guard let url = url, error == nil else {
                     print("Error: Modellpfad konnte nicht ermittelt werden!")
@@ -147,14 +147,14 @@ class ModelData: ObservableObject{
             }
         }
         let storage = Storage.storage()
-        storage.reference().child("ProductImages/\(productToDelete.name)").delete { error in
+        storage.reference().child("ProductImages/" + productToDelete.name!).delete { error in
             if error != nil {
                 print("Error: Bild konnte nicht gelöscht werden!")
             } else {
                 print("Bild wurde erfolgreich gelöscht!")
             }
         }
-        storage.reference().child("3DModels/\(productToDelete.name).usdz").delete { error in
+        storage.reference().child("3DModels/" + productToDelete.name! + ".usdz").delete { error in
             if error != nil {
                 print("Error: Modell konnte nicht gelöscht werden!")
             } else {
@@ -196,7 +196,7 @@ class ModelData: ObservableObject{
                 let storage = Storage.storage()
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
-                storage.reference().child("ProductImages/\(productToUpdate.name)").putData(imageData, metadata: metadata){
+                storage.reference().child("ProductImages/" + productToUpdate.name!).putData(imageData, metadata: metadata){
                     (_, err) in
                     if let err = err {
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
@@ -211,7 +211,7 @@ class ModelData: ObservableObject{
                         let metadata = StorageMetadata()
                         metadata.contentType = "model/vnd.usdz+zip"
 
-                        let riversRef = storageRef.child("3DModels/\(productToUpdate.name).usdz")
+                        let riversRef = storageRef.child("3DModels/" + productToUpdate.name! + ".usdz")
 
                         _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                             if let error = error{
@@ -239,7 +239,7 @@ class ModelData: ObservableObject{
             let metadata = StorageMetadata()
             metadata.contentType = "model/vnd.usdz+zip"
 
-            let riversRef = storageRef.child("3DModels/\(productToUpdate.name).usdz")
+            let riversRef = storageRef.child("3DModels" + productToUpdate.name! + ".usdz")
 
             _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                 if let error = error{
@@ -256,7 +256,7 @@ class ModelData: ObservableObject{
                 let storage = Storage.storage()
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
-                storage.reference().child("ProductImages/\(productToUpdate.name)").putData(imageData, metadata: metadata){
+                storage.reference().child("ProductImages/" + productToUpdate.name!).putData(imageData, metadata: metadata){
                     (_, err) in
                     if let err = err {
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
@@ -273,7 +273,7 @@ class ModelData: ObservableObject{
     }
     
     func getUpdatedPath(productToUpdate: Product){
-        let storageRef = Storage.storage().reference(withPath: "ProductImages/\(productToUpdate.name)")
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToUpdate.name!)
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -282,7 +282,7 @@ class ModelData: ObservableObject{
             //Modellpfad ermitteln
             let imageURL = url.absoluteString
             print("Bildpfad wurde erfolgreich ermittelt!")
-            let storageRef = Storage.storage().reference(withPath: "3DModels/\(productToUpdate.name).usdz")
+            let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToUpdate.name! + ".usdz")
             storageRef.downloadURL(completion: { [self] url, error in
                 guard let url = url, error == nil else {
                     print("Error: Modellpfad konnte nicht ermittelt werden!")

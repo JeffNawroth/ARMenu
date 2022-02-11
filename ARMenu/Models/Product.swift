@@ -14,7 +14,7 @@ struct Product: Identifiable, Codable, Hashable{
     @DocumentID var id: String?
     var image: String
     var model: String
-    var name: String
+    var name: String?
     var category: Category?
     var price: Double?
     var description: String?
@@ -30,6 +30,39 @@ struct Product: Identifiable, Codable, Hashable{
     var allergens: [Allergen]?
     var additives: [Additive]?
     var toppings: [Topping]?
+    
+    
+//    init(){
+//        self.image = ""
+//        self.model = ""
+//        self.name = ""
+//        self.isVegan = false
+//        self.isBio = false
+//        self.isFairtrade = false
+//        self.isVisible = false
+//    }
+//
+//    init(image: String, model: String, name: String, category: Category, price: Double, description: String, servingSize: ServingSize, isVegan: Bool,isBio: Bool,isFairtrade: Bool, isVisible: Bool, nutritionFacts: NutritionFacts, allergens: [Allergen], additives: [Additive], toppings: [Topping] ){
+//
+//        self.image = image
+//        self.model = model
+//        self.name = name
+//        self.category = category
+//        self.price = price
+//        self.description = description
+//        self.servingSize = servingSize
+//
+//        self.isVegan = isVegan
+//        self.isBio = isBio
+//        self.isFairtrade = isFairtrade
+//        self.isVisible = isVisible
+//
+//
+//        self.nutritionFacts = nutritionFacts
+//        self.allergens = allergens
+//        self.additives = additives
+//        self.toppings = toppings
+//    }
     
     
     
