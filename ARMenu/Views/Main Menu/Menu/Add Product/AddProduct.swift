@@ -23,12 +23,9 @@ struct AddProduct: View {
     @State var openFile = false
     @State var disableButton = false
     
-    
     var disableForm: Bool {
         productDummy.name == nil
     }
-    
-    
     
     @State var productDummy = Product(isVisible: false)
     
@@ -434,10 +431,7 @@ struct AddProduct: View {
                         
                         disableButton = true
                         
-                        let product: Product =
-                        Product(image: productDummy.image,model: productDummy.model,name: productDummy.name,category: productDummy.category,price: productDummy.price,description: productDummy.description,servingSize: productDummy.servingSize, isVegan: productDummy.isVegan,isBio: productDummy.isBio,isFairtrade: productDummy.isFairtrade, isVisible: productDummy.isVisible, nutritionFacts: productDummy.nutritionFacts,allergens:productDummy.allergens,additives: productDummy.additives,toppings: productDummy.toppings)
-                        
-                        modelData.addProductController(productToAdd: product, imageToAdd: inputImage, modelToAdd: fileURL)
+                        modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
                         
                     } label: {
                         Text("Fertig")
