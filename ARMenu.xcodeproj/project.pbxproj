@@ -54,8 +54,6 @@
 		B27ADA8C2798AECC0000A750 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27ADA8B2798AECC0000A750 /* Category.swift */; };
 		B27ADA8E2798BDE60000A750 /* AddAllergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27ADA8D2798BDE60000A750 /* AddAllergen.swift */; };
 		B27ADA902798BEAF0000A750 /* AddAdditive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27ADA8F2798BEAF0000A750 /* AddAdditive.swift */; };
-		B2A11389279C8E5600AA3A9A /* ProductVisibilityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A11388279C8E5600AA3A9A /* ProductVisibilityButton.swift */; };
-		B2A1138B279F1A1200AA3A9A /* OfferVisibilityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A1138A279F1A1200AA3A9A /* OfferVisibilityButton.swift */; };
 		B2A1138F279F322700AA3A9A /* AddCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A1138E279F322700AA3A9A /* AddCategory.swift */; };
 		B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A2F162278028A4001451B8 /* SelectAdditives.swift */; };
 		B2BA9B3727A19BEA004B9852 /* ServingSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA9B3627A19BEA004B9852 /* ServingSize.swift */; };
@@ -113,8 +111,6 @@
 		B27ADA8B2798AECC0000A750 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		B27ADA8D2798BDE60000A750 /* AddAllergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAllergen.swift; sourceTree = "<group>"; };
 		B27ADA8F2798BEAF0000A750 /* AddAdditive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdditive.swift; sourceTree = "<group>"; };
-		B2A11388279C8E5600AA3A9A /* ProductVisibilityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductVisibilityButton.swift; sourceTree = "<group>"; };
-		B2A1138A279F1A1200AA3A9A /* OfferVisibilityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferVisibilityButton.swift; sourceTree = "<group>"; };
 		B2A1138E279F322700AA3A9A /* AddCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategory.swift; sourceTree = "<group>"; };
 		B2A2F162278028A4001451B8 /* SelectAdditives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdditives.swift; sourceTree = "<group>"; };
 		B2BA9B3627A19BEA004B9852 /* ServingSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServingSize.swift; sourceTree = "<group>"; };
@@ -286,7 +282,6 @@
 		B2A9DA0127A1CF79006183F5 /* Menu Detail */ = {
 			isa = PBXGroup;
 			children = (
-				B2A11388279C8E5600AA3A9A /* ProductVisibilityButton.swift */,
 				B255C24927B18EFF00D30CF4 /* EditProduct.swift */,
 				B26FD16E2774CF8F00E75FFC /* MenuDetail.swift */,
 				B26FD1602774CE5C00E75FFC /* ARViewContainer.swift */,
@@ -307,7 +302,6 @@
 		B2A9DA0327A1CFAE006183F5 /* Offer Detail */ = {
 			isa = PBXGroup;
 			children = (
-				B2A1138A279F1A1200AA3A9A /* OfferVisibilityButton.swift */,
 				B2D39D112784CB17009B5D25 /* OfferDetail.swift */,
 				B255C24B27B2A9C600D30CF4 /* EditOffer.swift */,
 			);
@@ -486,14 +480,12 @@
 				B26FD1512774CCD100E75FFC /* Experience.rcproject in Sources */,
 				B26FD1672774CEF700E75FFC /* ImagePicker.swift in Sources */,
 				B27ADA862798A77F0000A750 /* Allergen.swift in Sources */,
-				B2A1138B279F1A1200AA3A9A /* OfferVisibilityButton.swift in Sources */,
 				B228E993278CAA0F00792F7E /* AddOffer.swift in Sources */,
 				A5F4869D27B6A9C8001361E1 /* UserAuthentication.swift in Sources */,
 				B26FD1792774D02F00E75FFC /* Product.swift in Sources */,
 				B229A86927A0645800B31484 /* SelectCategory.swift in Sources */,
 				B2D39D102784C34F009B5D25 /* Offer.swift in Sources */,
 				B26FD1692774CF1F00E75FFC /* Login.swift in Sources */,
-				B2A11389279C8E5600AA3A9A /* ProductVisibilityButton.swift in Sources */,
 				B234486227934003000AD206 /* MultipleAdditivePicker.swift in Sources */,
 				B224E01427972A810022A054 /* AddTopping.swift in Sources */,
 				B2DE077E27A6D08A000F1E00 /* AddUnit.swift in Sources */,
