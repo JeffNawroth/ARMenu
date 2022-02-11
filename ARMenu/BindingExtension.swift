@@ -47,19 +47,8 @@ extension Binding{
         toNonOptionalValue(fallback: fallback)
     }
     
-  
-    
-    
-    
-    
-    
-    
-    
-    
+    func toNonOptionalBoolean(fallback: Bool = false) -> Binding<Bool> where Value == Bool?{
+        toNonOptionalValue(fallback: fallback)
 
-    
-//    func toNonOptionalBoolean(fallback: Bool = false) -> Binding<Bool> where Value == Bool?{
-//        toNonOptionalValue(fallback: fallback)
-//
-//    }
+    }
 }

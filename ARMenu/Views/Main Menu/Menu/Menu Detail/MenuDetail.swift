@@ -75,29 +75,39 @@ struct MenuDetail: View {
                 
                 Spacer()
                 
-                HStack{
-                    if product.isVegan{
-                        Image("vegan")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30)
-                    }
-                    
-                    
-                    if product.isBio{
-                        Image("bio")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30)
-                    }
-                    
-                    if product.isFairtrade{
-                        Image("fairtrade")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 30)
+                if (product.isVegan != nil || product.isBio != nil || product.isFairtrade != nil){
+                    HStack{
+                        if let isVegan = product.isVegan{
+                            if isVegan{
+                                Image("vegan")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 30)
+                            }
+                        }
+                        
+                        
+                        if let isBio = product.isBio{
+                            if isBio{
+                                Image("bio")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 30)
+                            }
+                        }
+                        
+                        if let isFairtrade = product.isFairtrade{
+                            if isFairtrade{
+                                Image("fairtrade")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 30)
+                            }
+                        }
+                       
                     }
                 }
+           
                 
                 
                 

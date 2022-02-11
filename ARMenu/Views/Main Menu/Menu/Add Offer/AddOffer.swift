@@ -27,122 +27,142 @@ struct AddOffer: View {
        offerDummy.title.isEmpty||inputImage == nil
     }
     
+    @State var disableButton = false
+    
+    
+    
     
     @State var offerDummy = OfferDummy()
     
     
     var body: some View {
         NavigationView{
-            List{
-                Section{
-                    VStack{
-                        if let image = image {
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(10)
-                                .shadow(radius: 3)
-                                .onTapGesture {
-                                    showingImagePicker = true
-                                }
+            ZStack{
+                List{
+                    Section{
+                        VStack{
+                            if let image = image {
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                                    .shadow(radius: 3)
+                                    .onTapGesture {
+                                        showingImagePicker = true
+                                    }
+                            }
+                            else{
+                                Image(systemName: "photo")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundColor(.gray)
+                                    .onTapGesture {
+                                        showingImagePicker = true
+                                    }
+                            }
+                            Button {
+                                showingImagePicker = true
+                                
+                            } label: {
+                                Text("Foto hinzufügen")
+                                    .foregroundColor(Color.blue)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                         }
-                        else{
-                            Image(systemName: "photo")
-                                .resizable()
-                                .scaledToFit()
-                                .foregroundColor(.gray)
-                                .onTapGesture {
-                                    showingImagePicker = true
-                                }
-                        }
-                        Button {
-                            showingImagePicker = true
-                            
-                        } label: {
-                            Text("Foto hinzufügen")
-                                .foregroundColor(Color.blue)
-                        }
-                        .buttonStyle(PlainButtonStyle())
+                    }.listRowBackground(Color.clear)
+                    
+                    Section{
+                        Toggle("Veröffentlichen", isOn: $offerDummy.isVisible)
                     }
-                }.listRowBackground(Color.clear)
-                
-                Section{
-                    Toggle("Veröffentlichen", isOn: $offerDummy.isVisible)
-                }
-                
-                
-                Section{
-                    HStack{
-                        Text("Titel")
-                        TextField("Titel", text: $offerDummy.title)
-                            .multilineTextAlignment(.trailing)
+                    
+                    
+                    Section{
+                        HStack{
+                            Text("Titel")
+                            TextField("Titel", text: $offerDummy.title)
+                                .multilineTextAlignment(.trailing)
+                                .focused($isFocused)
+
+                        }
+                    }
+                    
+                    Section(header: Text("Beschreibung")){
+                        TextEditor(text: $offerDummy.description.toNonOptionalString())
                             .focused($isFocused)
 
                     }
-                }
-                
-                Section(header: Text("Beschreibung")){
-                    TextEditor(text: $offerDummy.description.toNonOptionalString())
-                        .focused($isFocused)
-
-                }
-                
-                Section(header: Text("Produkte")){
                     
-                        let sortedProducts = offerDummy.products.sorted{
-                            $0.name! < $1.name!
-                         }
-                         
-                         
-                         
-                         NavigationLink{
-                       SelectProducts(selections: $offerDummy.products)
-                         } label:{
-                             HStack{
-                                 Image(systemName: "plus.circle.fill")
-                                     .foregroundColor(.green)
-                                 
-                                 Text("Produkte hinzufügen")
+                    Section(header: Text("Produkte")){
+                        
+                            let sortedProducts = offerDummy.products.sorted{
+                                $0.name! < $1.name!
                              }
-                         }
-                         
-                        ForEach(sortedProducts, id: \.self){ product in
-                                 NavigationLink {
-                                     MenuDetail(product: product)
-                                 } label: {
-                                     HStack{
-                                         Button(action: {
-                                             withAnimation(.spring()){
-                                                 offerDummy.products.removeAll{
-                                                     $0 == product
-                                                 }
-                                             }
-                                         }, label: {
-                                             Image(systemName: "minus.circle.fill")
-                                                 .foregroundColor(Color.red)
-                                         })
-                                             .buttonStyle(.borderless)
-                                         
-                                         MenuRow(product: product)
-                                     }
+                             
+                             
+                             
+                             NavigationLink{
+                           SelectProducts(selections: $offerDummy.products)
+                             } label:{
+                                 HStack{
+                                     Image(systemName: "plus.circle.fill")
+                                         .foregroundColor(.green)
+                                     
+                                     Text("Produkte hinzufügen")
                                  }
-                         }
-                         .onDelete { IndexSet in
-                             offerDummy.products.remove(atOffsets: IndexSet)
-                         }
+                             }
+                             
+                            ForEach(sortedProducts, id: \.self){ product in
+                                     NavigationLink {
+                                         MenuDetail(product: product)
+                                     } label: {
+                                         HStack{
+                                             Button(action: {
+                                                 withAnimation(.spring()){
+                                                     offerDummy.products.removeAll{
+                                                         $0 == product
+                                                     }
+                                                 }
+                                             }, label: {
+                                                 Image(systemName: "minus.circle.fill")
+                                                     .foregroundColor(Color.red)
+                                             })
+                                                 .buttonStyle(.borderless)
+                                             
+                                             MenuRow(product: product)
+                                         }
+                                     }
+                             }
+                             .onDelete { IndexSet in
+                                 offerDummy.products.remove(atOffsets: IndexSet)
+                             }
+                    }
+                    
+                }
+                if modelData.loading{
+                    ZStack{
+                        Color(.systemBackground)
+                            .ignoresSafeArea()
+                            .opacity(0.8)
+                        
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                            .scaleEffect(3)
+                    }
                 }
                 
             }
+          
             .navigationBarTitle(Text("neues Angebot"), displayMode: .inline)
             .onChange(of: inputImage) { _ in loadImage() }
+            .onChange(of: modelData.loading){_ in if !modelData.loading{showingSheet = false}}
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
             }
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button("Fertig"){
-                        showingSheet = false
- 
+                        disableButton = true
+                        
                         let offer = Offer(image: "", title: offerDummy.title, description: offerDummy.description, products: offerDummy.products, isVisible: offerDummy.isVisible)
                         
                         modelData.addOfferController(offerToAdd: offer, imageToAdd: inputImage!)
@@ -150,13 +170,17 @@ struct AddOffer: View {
                         
                     }
                     .disabled(disableForm)
+                    .disabled(disableButton)
                 }
                 
                 ToolbarItem(placement: .navigationBarLeading){
                     Button("Abbrechen"){
                         showingSheet = false
                     }
+                    .disabled(disableButton)
                 }
+                
+
                 
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()

@@ -17,6 +17,8 @@ class ModelData: ObservableObject{
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
+    
+    @Published var loading = false
 
     var db = Firestore.firestore()
     
@@ -43,6 +45,7 @@ class ModelData: ObservableObject{
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
             print("Produkt hinzugefügt mit folgender Referenz: \(newDocReference)")
+            self.loading = false
         }
         catch {
             print(error)
@@ -51,6 +54,7 @@ class ModelData: ObservableObject{
     }
     
     func addProductController(productToAdd: Product, imageToAdd: UIImage?, modelToAdd: URL?)    {
+        self.loading = true
         uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, model: modelToAdd)
     }
     
@@ -589,6 +593,7 @@ class ModelData: ObservableObject{
     
     
     func addOfferController(offerToAdd: Offer, imageToAdd: UIImage)    {
+        self.loading = true
         uploadImageOffer(image: imageToAdd, offerToAdd: offerToAdd)
     }
     
@@ -599,6 +604,7 @@ class ModelData: ObservableObject{
         do {
             let newDocReference = try collectionRef.addDocument(from: offer)
             print("Angebot hinzugefügt mit folgender Referenz: \(newDocReference)")
+            self.loading = false
         }
         catch {
             print(error)

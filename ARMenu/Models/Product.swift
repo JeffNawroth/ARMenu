@@ -20,10 +20,10 @@ struct Product: Identifiable, Codable, Hashable{
     var description: String?
     var servingSize: ServingSize?
         
-    var isVegan: Bool
-    var isBio: Bool
-    var isFairtrade: Bool
-    var isVisible: Bool
+    var isVegan: Bool?
+    var isBio: Bool?
+    var isFairtrade: Bool?
+    var isVisible: Bool?
     
     
     var nutritionFacts: NutritionFacts?
