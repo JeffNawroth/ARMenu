@@ -23,47 +23,11 @@ struct AddProduct: View {
     @State var openFile = false
     
     var disableForm: Bool {
-        inputImage == nil ||
-        productDummy.name == nil ||
-        fileURL == nil
+        productDummy.name == nil
     }
     
-    struct ProductDummy{
-        var isVisible = false
-        
-      //  var modelURL: URL!
-        var name: String?
-        var category: Category?
-        var size: Double!
-        var price: Double?
-        
-        var description: String?
-        
-        var isVegan: Bool = false
-        var isBio: Bool = false
-        var isFairtrade: Bool = false
-        
-        var calories: Int!
-        var fat: Double!
-        var carbs: Double!
-        var protein: Double!
-        
-        var nutritionFacts: NutritionFacts?
-        var servingSize: ServingSize?
-        
-        
-        var allergens: [Allergen]?
-        var additives: [Additive]?
-        var toppings: [Topping]?
-        
-        
-    }
-    
-    @State var productDummy = ProductDummy()
-    
-    
-    
-    
+    @State var productDummy = Product(image: "", model: "", isVegan: false, isBio: false, isFairtrade: false, isVisible: false)
+
     var body: some View {
         
         NavigationView{
@@ -453,7 +417,7 @@ struct AddProduct: View {
                         let product: Product =
                         Product(image: "",model: "",name: productDummy.name,category: productDummy.category,price: productDummy.price,description: productDummy.description,servingSize: productDummy.servingSize, isVegan: productDummy.isVegan,isBio: productDummy.isBio,isFairtrade: productDummy.isFairtrade, isVisible: productDummy.isVisible, nutritionFacts: productDummy.nutritionFacts,allergens:productDummy.allergens,additives: productDummy.additives,toppings: productDummy.toppings)
                         
-                        modelData.addProductController(productToAdd: product, imageToAdd: inputImage!, modelToAdd: fileURL!)
+                        modelData.addProductController(productToAdd: product, imageToAdd: inputImage, modelToAdd: fileURL)
                         
                     } label: {
                         Text("Fertig")

@@ -36,7 +36,7 @@ class ModelData: ObservableObject{
         }
     }
     
-    func addProduct(productToAdd: Product, imagePath: String, modelPath: String){
+    func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
         
         let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
@@ -50,27 +50,36 @@ class ModelData: ObservableObject{
         }
     }
     
-    func addProductController(productToAdd: Product, imageToAdd: UIImage, modelToAdd: URL)    {
+    func addProductController(productToAdd: Product, imageToAdd: UIImage?, modelToAdd: URL?)    {
         uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, model: modelToAdd)
     }
     
-    func uploadImageProduct(image:UIImage, productToAdd:Product, model: URL) {
-        if let imageData = image.jpegData(compressionQuality: 1){
-            let storage = Storage.storage()
-            let metadata = StorageMetadata()
-            metadata.contentType = "image/jpeg"
-            storage.reference().child("ProductImages/" + productToAdd.name!).putData(imageData, metadata: metadata){
-                (_, err) in
-                if let err = err {
-                    print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
-                } else {
-                    print("Bild wurde erfolgreich hochgeladen!")
-                    self.uploadModel(localURL: model, productToAdd: productToAdd)
+    func uploadImageProduct(image:UIImage?, productToAdd:Product, model: URL?) {
+        if let image = image {
+            if let imageData = image.jpegData(compressionQuality: 1){
+                let storage = Storage.storage()
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                storage.reference().child("ProductImages/" + productToAdd.name!).putData(imageData, metadata: metadata){
+                    (_, err) in
+                    if let err = err {
+                        print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
+                    } else {
+                        print("Bild wurde erfolgreich hochgeladen!")
+                        if let model = model {
+                            self.uploadModel(localURL: model, productToAdd: productToAdd)
+
+                        }
+                    }
                 }
+            } else {
+                print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
             }
-        } else {
-            print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
         }
+        else{
+            addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: nil)
+        }
+        
     }
     
     func uploadModel(localURL: URL, productToAdd: Product){

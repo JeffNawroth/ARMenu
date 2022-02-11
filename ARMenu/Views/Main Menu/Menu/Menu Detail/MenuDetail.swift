@@ -17,12 +17,22 @@ struct MenuDetail: View {
     @State private var showingSheet = false
     var body: some View {
         ScrollView{
-            AnimatedImage(url: URL(string: product.image))
-                .resizable()
-                .scaledToFit()
-                .cornerRadius(10)
-                .shadow(radius: 3)
-                .padding()
+            if let image = product.image{
+                AnimatedImage(url: URL(string: image))
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
+                    .shadow(radius: 3)
+                    .padding()
+            }
+            else{
+               Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
+                    .shadow(radius: 3)
+                    .padding()
+            }
             
             VStack(alignment: .leading){
                 
@@ -93,16 +103,19 @@ struct MenuDetail: View {
                 
                 Divider()
                 
-                Button {
-                    showingARPreview.toggle()
-                }
-            label: {
-                HStack{
-                    
-                    Image(systemName: "arkit")
-                        .font(.headline)
-                    Text("In AR ansehen")
-                        .fontWeight(.semibold)
+                if product.model != nil{
+                    Button {
+                        showingARPreview.toggle()
+                    }
+                label: {
+                    HStack{
+                        
+                        Image(systemName: "arkit")
+                            .font(.headline)
+                        Text("In AR ansehen")
+                            .fontWeight(.semibold)
+                
+               
                     
                     
                     
@@ -138,6 +151,7 @@ struct MenuDetail: View {
 
                 }
             }
+                }
              
                 if let description = product.description{
                     Text("Beschreibung")

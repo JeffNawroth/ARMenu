@@ -25,27 +25,27 @@ struct EditProduct: View {
             Form{
                 Section{
                     VStack{
-                        if inputImage == nil{
-                            AnimatedImage(url: URL(string: product.image))
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(10)
-                                .shadow(radius: 3)
-                                .onTapGesture {
-                                    showingImagePicker = true
-                                }
-                            
-                        }else{
-                            
-                            Image(uiImage: inputImage!)
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(10)
-                                .shadow(radius: 3)
-                                .onTapGesture {
-                                    showingImagePicker = true
-                                }
-                        }
+//                        if inputImage == nil{
+//                            AnimatedImage(url: URL(string: product.image))
+//                                .resizable()
+//                                .scaledToFit()
+//                                .cornerRadius(10)
+//                                .shadow(radius: 3)
+//                                .onTapGesture {
+//                                    showingImagePicker = true
+//                                }
+//
+//                        }else{
+//
+//                            Image(uiImage: inputImage!)
+//                                .resizable()
+//                                .scaledToFit()
+//                                .cornerRadius(10)
+//                                .shadow(radius: 3)
+//                                .onTapGesture {
+//                                    showingImagePicker = true
+//                                }
+//                        }
                         
                         
                         Button {
@@ -76,13 +76,13 @@ struct EditProduct: View {
                         
                     }
                     
-                    
-                    if (fileURL == nil){
-                        
-                        Text(URL(string:product.model)!.lastPathComponent)
-                    }else{
-                        Text(fileURL!.lastPathComponent)
-                    }
+//                    
+//                    if (fileURL == nil){
+//                        
+//                        Text(URL(string:product.model)!.lastPathComponent)
+//                    }else{
+//                        Text(fileURL!.lastPathComponent)
+//                    }
                 }
                 
                 Section{

@@ -12,11 +12,21 @@ struct MenuRow: View {
     var product: Product
     var body: some View {
         HStack {
-            AnimatedImage(url: URL(string: product.image))
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100)
-                .cornerRadius(8)
+            if let image = product.image{
+                AnimatedImage(url: URL(string: image))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100)
+                    .cornerRadius(8)
+            }
+            else{
+               Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100)
+                    .cornerRadius(8)
+            }
+            
             
             VStack(alignment: .leading, spacing: 5){
                 

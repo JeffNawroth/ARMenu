@@ -12,8 +12,8 @@ import FirebaseFirestoreSwift
 struct Product: Identifiable, Codable, Hashable{
     
     @DocumentID var id: String?
-    var image: String
-    var model: String
+    var image: String?
+    var model: String?
     var name: String?
     var category: Category?
     var price: Double?
