@@ -85,9 +85,9 @@ struct EditProduct: View {
 //                    }
                 }
                 
-                Section{
-                    Toggle("Veröffentlichen", isOn: $product.isVisible)
-                }
+//                Section{
+//                    Toggle("Veröffentlichen", isOn: $product.isVisible)
+//                }
                 
                 
                 Section{
@@ -148,14 +148,14 @@ struct EditProduct: View {
 //                }
                 
                 
-                Section(header: Text("Zertifikate")){
-                    
-                    Toggle("Vegan", isOn: $product.isVegan)
-                    Toggle("Bio", isOn: $product.isBio)
-                    Toggle("Fairtrade", isOn: $product.isFairtrade)
-
-                }
-                
+//                Section(header: Text("Zertifikate")){
+//                    
+//                    Toggle("Vegan", isOn: $product.isVegan)
+//                    Toggle("Bio", isOn: $product.isBio)
+//                    Toggle("Fairtrade", isOn: $product.isFairtrade)
+//
+//                }
+//                
                 Section(header: Text("Nährwerte")){
                     
 //                    HStack{
