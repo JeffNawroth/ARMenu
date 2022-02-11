@@ -22,52 +22,55 @@ struct ARViewContainer: UIViewRepresentable {
         arView.session.run(config, options: [])
         
         
-        
-        let url = URL(string: product.model)
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let destination = documents.appendingPathComponent(url!.lastPathComponent)
-        let urlSession = URLSession(configuration: .default,
-                                    delegate: nil,
-                                    delegateQueue: nil)
-        
-        var request = URLRequest(url: url!)
-        request.httpMethod = "GET"
-        
-        let downloadTask = urlSession.downloadTask(with: request, completionHandler: { (location: URL?,
-                                                                                        response: URLResponse?,
-                                                                                        error: Error?) -> Void in
+        if let url = product.model{
+            let url = URL(string: url)
+            let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let destination = documents.appendingPathComponent(url!.lastPathComponent)
+            let urlSession = URLSession(configuration: .default,
+                                        delegate: nil,
+                                        delegateQueue: nil)
             
-            let fileManager = FileManager.default
+            var request = URLRequest(url: url!)
+            request.httpMethod = "GET"
             
-            if fileManager.fileExists(atPath: destination.path) {
-                try! fileManager.removeItem(atPath: destination.path)
-            }
-            try! fileManager.moveItem(atPath: location!.path,
-                                      toPath: destination.path)
-            
-            DispatchQueue.main.async {
-                do {
-                    let model = try ModelEntity.loadModel(contentsOf: destination)
-                    model.generateCollisionShapes(recursive: true)
-                    arView.installGestures(for: model)
+            let downloadTask = urlSession.downloadTask(with: request, completionHandler: { (location: URL?,
+                                                                                            response: URLResponse?,
+                                                                                            error: Error?) -> Void in
                 
-                    
-                    let anchor = AnchorEntity(plane: .horizontal )
-                    anchor.addChild(model)
-                    arView.scene.addAnchor(anchor)
-                    
-                    //  model.playAnimation(model.availableAnimations.first!.repeat())
-                } catch {
-                    print("Fail loading entity.")
+                let fileManager = FileManager.default
+                
+                if fileManager.fileExists(atPath: destination.path) {
+                    try! fileManager.removeItem(atPath: destination.path)
                 }
-            }
-        })
-        downloadTask.resume()
-        
-        
+                try! fileManager.moveItem(atPath: location!.path,
+                                          toPath: destination.path)
+                
+                DispatchQueue.main.async {
+                    do {
+                        let model = try ModelEntity.loadModel(contentsOf: destination)
+                        model.generateCollisionShapes(recursive: true)
+                        arView.installGestures(for: model)
+                    
+                        
+                        let anchor = AnchorEntity(plane: .horizontal )
+                        anchor.addChild(model)
+                        arView.scene.addAnchor(anchor)
+                        
+                        //  model.playAnimation(model.availableAnimations.first!.repeat())
+                    } catch {
+                        print("Fail loading entity.")
+                    }
+                }
+            })
+            downloadTask.resume()
+            
+            
+            
+        }
         return arView
-        
+
     }
+        
     
     
     func updateUIView(_ uiView: ARView, context: Context) {}

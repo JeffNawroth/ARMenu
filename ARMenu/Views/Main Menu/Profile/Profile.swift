@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Profile: View {
     @State var showingSheet = false
+    @State var showingQRSheet = false
     @State var oldPassword = ""
     var body: some View {
         NavigationView{
@@ -17,7 +18,22 @@ struct Profile: View {
                     Text("imHoernken")
                         .foregroundColor(.gray)
                 }
-               
+                
+                Section{
+                    Button {
+                        showingQRSheet = true
+                    } label: {
+                        HStack{
+                            Image(systemName: "qrcode.viewfinder")
+                            Divider()
+                            Text("QR-Code verwalten")
+                        }
+                    }
+
+                    .sheet(isPresented: $showingQRSheet) {
+                        QRCodeGenerator(showingSheet: $showingQRSheet )
+                    }
+                }
                 
                 
                 Section{
@@ -32,18 +48,7 @@ struct Profile: View {
                     }
                 }
                 
-                Section{
-                    Button {
-//                        showingSheet = true
-                        //TODO: create sheet for QR-Code
-                    } label: {
-                        Text("QR-Code verwalten")
-                    }
-
-                    .sheet(isPresented: $showingSheet) {
-                        changePassword(showingSheet: $showingSheet )
-                    }
-                }
+             
              
                 HStack{
                     Spacer()

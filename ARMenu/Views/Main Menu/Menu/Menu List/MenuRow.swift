@@ -12,22 +12,35 @@ struct MenuRow: View {
     var product: Product
     var body: some View {
         HStack {
-            AnimatedImage(url: URL(string: product.image))
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100)
-                .cornerRadius(8)
+            if let image = product.image{
+                AnimatedImage(url: URL(string: image))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100)
+                    .cornerRadius(8)
+            }
+            else{
+               Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100)
+                    .cornerRadius(8)
+            }
+            
             
             VStack(alignment: .leading, spacing: 5){
                 
                 HStack{
+                    
                     VStack(alignment: .leading){
-                        Text(product.category.name)
-                            .font(.footnote)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
+                        if let category = product.category{
+                            Text(category.name)
+                                .font(.footnote)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.secondary)
+                        }
                         
-                        Text(product.name)
+                        Text(product.name ?? "")
                             .font(.title2)
                             .fontWeight(.semibold)
                     }
@@ -37,17 +50,25 @@ struct MenuRow: View {
                 
                 
                 HStack{
-                    Text("\(product.price, specifier: "%.2f")")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
+                    if let price = product.price{
+                        Text("\(price, specifier: "%.2f")")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                        
+                        
+                    }
+                    if product.price != nil && product.servingSize?.size != nil{
+                        Text("•")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                    }
                     
-                    Text("•")
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
+                    if let servingSize = product.servingSize{
+                        Text("\(servingSize.size)" + servingSize.unit.name)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.secondary)
+                    }
                     
-                    Text("\(product.servingSize.size)" + product.servingSize.unit.name)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.secondary)
                     
                 }
                 
@@ -59,14 +80,14 @@ struct MenuRow: View {
                                 .scaledToFit()
                                 .frame(width: 25)
                         }
-
+                        
                         if product.isBio{
                             Image("bio")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 26)
                         }
-
+                        
                         if product.isFairtrade{
                             Image("fairtrade")
                                 .resizable()
@@ -75,7 +96,7 @@ struct MenuRow: View {
                         }
                     }
                 }
-              
+                
                 
                 
                 

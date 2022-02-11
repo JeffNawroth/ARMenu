@@ -15,14 +15,13 @@ struct MenuList: View {
     @State private var searchText = ""
     @State private var showsConfirmation = false
     @State private var showsOfferConfirmation = false
-
     @State private var selectedCategory = Category(name: "Alles")
     @State private var mode: EditMode = .inactive
     
     
     var filteredMenuList: [Product] {
         modelData.products.filter{ product in
-            (selectedCategory.name == "Alles" || selectedCategory.name == product.category.name)
+            (selectedCategory.name == "Alles" || selectedCategory.name == product.category?.name)
         }
     }
     
@@ -30,7 +29,7 @@ struct MenuList: View {
         if searchText.isEmpty {
             return filteredMenuList
         } else {
-            return filteredMenuList.filter { $0.name.contains(searchText) || $0.category.name.contains(searchText)}
+            return filteredMenuList.filter { $0.name!.contains(searchText) /*|| $0.category.name.contains(searchText)*/}
         }
     }
     
@@ -67,7 +66,6 @@ struct MenuList: View {
                                             modelData.deleteOffer(offerToDelete: offer)
                                         }
                                         
-                                        Button("Abbrechen", role: .cancel){}
                                     }
                                     .opacity(offer.isVisible ? 1: 0.25)
                                     
@@ -120,9 +118,7 @@ struct MenuList: View {
                         Button("Produkt erstellen"){
                             showingProductSheet = true
                         }
-                        
-                        Button("Abbrechen", role:.cancel) {}
-                        
+                                                
                     }
                     
                     .sheet(isPresented: $showingProductSheet) {

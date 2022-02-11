@@ -17,7 +17,7 @@ class ModelData: ObservableObject{
     @Published var categories = [Category]()
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
-    
+
     var db = Firestore.firestore()
     
     //MARK: Product
@@ -36,7 +36,7 @@ class ModelData: ObservableObject{
         }
     }
     
-    func addProduct(productToAdd: Product, imagePath: String, modelPath: String){
+    func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
         
         let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
@@ -50,27 +50,36 @@ class ModelData: ObservableObject{
         }
     }
     
-    func addProductController(productToAdd: Product, imageToAdd: UIImage, modelToAdd: URL)    {
+    func addProductController(productToAdd: Product, imageToAdd: UIImage?, modelToAdd: URL?)    {
         uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, model: modelToAdd)
     }
     
-    func uploadImageProduct(image:UIImage, productToAdd:Product, model: URL) {
-        if let imageData = image.jpegData(compressionQuality: 1){
-            let storage = Storage.storage()
-            let metadata = StorageMetadata()
-            metadata.contentType = "image/jpeg"
-            storage.reference().child("ProductImages/\(productToAdd.name)").putData(imageData, metadata: metadata){
-                (_, err) in
-                if let err = err {
-                    print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
-                } else {
-                    print("Bild wurde erfolgreich hochgeladen!")
-                    self.uploadModel(localURL: model, productToAdd: productToAdd)
+    func uploadImageProduct(image:UIImage?, productToAdd:Product, model: URL?) {
+        if let image = image {
+            if let imageData = image.jpegData(compressionQuality: 1){
+                let storage = Storage.storage()
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                storage.reference().child("ProductImages/" + productToAdd.name!).putData(imageData, metadata: metadata){
+                    (_, err) in
+                    if let err = err {
+                        print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
+                    } else {
+                        print("Bild wurde erfolgreich hochgeladen!")
+                        if let model = model {
+                            self.uploadModel(localURL: model, productToAdd: productToAdd)
+
+                        }
+                    }
                 }
+            } else {
+                print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
             }
-        } else {
-            print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
         }
+        else{
+            addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: nil)
+        }
+        
     }
     
     func uploadModel(localURL: URL, productToAdd: Product){
@@ -84,7 +93,7 @@ class ModelData: ObservableObject{
         let metadata = StorageMetadata()
         metadata.contentType = "model/vnd.usdz+zip"
 
-        let riversRef = storageRef.child("3DModels/\(productToAdd.name).usdz")
+        let riversRef = storageRef.child("3DModels/" + productToAdd.name! + ".usdz")
 
         _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
             if let error = error{
@@ -100,7 +109,7 @@ class ModelData: ObservableObject{
     
     func getImagePathProduct(productToAdd: Product){
         //Bildpfad ermitteln
-        let storageRef = Storage.storage().reference(withPath: "ProductImages/\(productToAdd.name)")
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToAdd.name!)
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -109,7 +118,7 @@ class ModelData: ObservableObject{
             //Modellpfad ermitteln
             let imageURL = url.absoluteString
             print("Bildpfad wurde erfolgreich ermittelt!")
-            let storageRef = Storage.storage().reference(withPath: "3DModels/\(productToAdd.name).usdz")
+            let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToAdd.name! + ".usdz")
             storageRef.downloadURL(completion: { [self] url, error in
                 guard let url = url, error == nil else {
                     print("Error: Modellpfad konnte nicht ermittelt werden!")
@@ -147,14 +156,14 @@ class ModelData: ObservableObject{
             }
         }
         let storage = Storage.storage()
-        storage.reference().child("ProductImages/\(productToDelete.name)").delete { error in
+        storage.reference().child("ProductImages/" + productToDelete.name!).delete { error in
             if error != nil {
                 print("Error: Bild konnte nicht gelöscht werden!")
             } else {
                 print("Bild wurde erfolgreich gelöscht!")
             }
         }
-        storage.reference().child("3DModels/\(productToDelete.name).usdz").delete { error in
+        storage.reference().child("3DModels/" + productToDelete.name! + ".usdz").delete { error in
             if error != nil {
                 print("Error: Modell konnte nicht gelöscht werden!")
             } else {
@@ -176,7 +185,7 @@ class ModelData: ObservableObject{
         }
     }
 
-    func updateDataController(productToUpdate: Product, imageToUpdate: UIImage?, modelToUpdate: URL?) {
+    func updateProductController(productToUpdate: Product, imageToUpdate: UIImage?, modelToUpdate: URL?) {
                 
                 //Wenn Bild als auch Modell nicht aktualisiert werden muss
                 if imageToUpdate == nil && modelToUpdate == nil{
@@ -196,7 +205,7 @@ class ModelData: ObservableObject{
                 let storage = Storage.storage()
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
-                storage.reference().child("ProductImages/\(productToUpdate.name)").putData(imageData, metadata: metadata){
+                storage.reference().child("ProductImages/" + productToUpdate.name!).putData(imageData, metadata: metadata){
                     (_, err) in
                     if let err = err {
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
@@ -211,7 +220,7 @@ class ModelData: ObservableObject{
                         let metadata = StorageMetadata()
                         metadata.contentType = "model/vnd.usdz+zip"
 
-                        let riversRef = storageRef.child("3DModels/\(productToUpdate.name).usdz")
+                        let riversRef = storageRef.child("3DModels/" + productToUpdate.name! + ".usdz")
 
                         _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                             if let error = error{
@@ -239,7 +248,7 @@ class ModelData: ObservableObject{
             let metadata = StorageMetadata()
             metadata.contentType = "model/vnd.usdz+zip"
 
-            let riversRef = storageRef.child("3DModels/\(productToUpdate.name).usdz")
+            let riversRef = storageRef.child("3DModels" + productToUpdate.name! + ".usdz")
 
             _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                 if let error = error{
@@ -256,7 +265,7 @@ class ModelData: ObservableObject{
                 let storage = Storage.storage()
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
-                storage.reference().child("ProductImages/\(productToUpdate.name)").putData(imageData, metadata: metadata){
+                storage.reference().child("ProductImages/" + productToUpdate.name!).putData(imageData, metadata: metadata){
                     (_, err) in
                     if let err = err {
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
@@ -273,7 +282,7 @@ class ModelData: ObservableObject{
     }
     
     func getUpdatedPath(productToUpdate: Product){
-        let storageRef = Storage.storage().reference(withPath: "ProductImages/\(productToUpdate.name)")
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToUpdate.name!)
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -282,7 +291,7 @@ class ModelData: ObservableObject{
             //Modellpfad ermitteln
             let imageURL = url.absoluteString
             print("Bildpfad wurde erfolgreich ermittelt!")
-            let storageRef = Storage.storage().reference(withPath: "3DModels/\(productToUpdate.name).usdz")
+            let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToUpdate.name! + ".usdz")
             storageRef.downloadURL(completion: { [self] url, error in
                 guard let url = url, error == nil else {
                     print("Error: Modellpfad konnte nicht ermittelt werden!")
@@ -614,7 +623,7 @@ class ModelData: ObservableObject{
         
     }
     
-    func updateOffersDataController(offerToUpdate: Offer, imageToUpdate: UIImage?){
+    func updateOfferController(offerToUpdate: Offer, imageToUpdate: UIImage?){
         if imageToUpdate == nil {
             updateOffer(offer: offerToUpdate)
         }
@@ -655,7 +664,7 @@ class ModelData: ObservableObject{
         }
     }
     
-    func updateOffer(offer: Offer) {
+     func updateOffer(offer: Offer) {
         if let documentId = offer.id {
           do {
               try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offer)

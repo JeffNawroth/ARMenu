@@ -14,6 +14,8 @@ struct EditOffer: View {
     @State private var showingImagePicker = false
     @Binding var showingSheet: Bool
     @State private var inputImage: UIImage?
+    @FocusState private var isFocused: Bool
+
     
     var body: some View {
         NavigationView{
@@ -60,33 +62,65 @@ struct EditOffer: View {
                         Text("Titel")
                         TextField("Titel", text: $offer.title)
                             .multilineTextAlignment(.trailing)
+                            .focused($isFocused)
+
                     }
                 }
                 
-                Section(header: Text("Beschreibung")){
-                    TextEditor(text: $offer.description)
-                }
+//                Section(header: Text("Beschreibung")){
+//                    TextEditor(text: $offer.description)
+//                        .focused($isFocused)
+//
+//                }
                 
                 Section(header: Text("Produkte")){
+                    
+                    let sortedProducts = offer.products.sorted{
+                        $0.name! < $1.name!
+                    }
+                    
                     
                     
                     NavigationLink{
                   SelectProducts(selections: $offer.products)
                     } label:{
-                       Text("Produkte hinzufügen")
-                            .foregroundColor(.blue)
+                        HStack{
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                            
+                            Text("Produkte hinzufügen")
+                        }
                     }
                     
-                    ForEach(offer.products, id: \.self){ product in
+                    ForEach(sortedProducts, id: \.self){ product in
                             NavigationLink {
                                 MenuDetail(product: product)
                             } label: {
-                                MenuRow(product: product)
+                                HStack{
+                                    Button(action: {
+                                        withAnimation(.spring()){
+                                            offer.products.removeAll{
+                                                $0 == product
+                                            }
+                                        }
+                                    }, label: {
+                                        Image(systemName: "minus.circle.fill")
+                                            .foregroundColor(Color.red)
+                                    })
+                                        .buttonStyle(.borderless)
+                                    
+                                    MenuRow(product: product)
+                                }
                             }
                     }
+                    .onDelete { IndexSet in
+                        offer.products.remove(atOffsets: IndexSet)
+                    }
+                    
+                   
                 }
             }
-            .navigationBarTitle(Text("neues Angebot"), displayMode: .inline)
+            .navigationBarTitle(Text("Angebot bearbeiten"), displayMode: .inline)
             .onChange(of: inputImage) { _ in loadImage() }
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
@@ -95,7 +129,7 @@ struct EditOffer: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button("Fertig"){
                         showingSheet = false
-                        modelData.updateOffersDataController(offerToUpdate: offer, imageToUpdate: inputImage)
+                        modelData.updateOfferController(offerToUpdate: offer, imageToUpdate: inputImage)
                     }
                     
                 }
@@ -103,6 +137,17 @@ struct EditOffer: View {
                 ToolbarItem(placement: .navigationBarLeading){
                     Button("Abbrechen"){
                         showingSheet = false
+                    }
+                }
+                
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    
+                    Button {
+                        isFocused = false
+                        
+                    } label: {
+                        Image(systemName:"keyboard.chevron.compact.down")
                     }
                 }
             }
