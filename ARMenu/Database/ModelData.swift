@@ -18,7 +18,7 @@ class ModelData: ObservableObject{
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
     
-    @Published var loading = false
+    var loading = false
 
     var db = Firestore.firestore()
     
@@ -39,13 +39,13 @@ class ModelData: ObservableObject{
     }
     
     func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
-        
-        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+            
+//        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
-            let newDocReference = try collectionRef.addDocument(from: product)
+            let newDocReference = try collectionRef.addDocument(from: productToAdd)
             print("Produkt hinzugefügt mit folgender Referenz: \(newDocReference)")
-            self.loading = false
+           loading = false
         }
         catch {
             print(error)
@@ -54,7 +54,7 @@ class ModelData: ObservableObject{
     }
     
     func addProductController(productToAdd: Product, imageToAdd: UIImage?, modelToAdd: URL?)    {
-        self.loading = true
+        loading = true
         uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, model: modelToAdd)
     }
     
@@ -106,7 +106,9 @@ class ModelData: ObservableObject{
             self.uploadModel(localURL: model, productToAdd: productToAdd)
         }
         else{
-            addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: nil)
+            }
         }
         
     }

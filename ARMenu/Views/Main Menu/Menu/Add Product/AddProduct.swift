@@ -428,9 +428,8 @@ struct AddProduct: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        
+
                         disableButton = true
-                        
                         modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
                         
                     } label: {
