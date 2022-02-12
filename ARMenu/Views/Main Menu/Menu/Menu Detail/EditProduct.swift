@@ -335,18 +335,18 @@ struct EditProduct_Previews: PreviewProvider {
     }
 }
 
-struct NumberTextField: View{
-    var name: String
-    @Binding var value: Double
-    @FocusState  var isFocused: Bool
-    var body: some View{
-        HStack{
-            Text(name)
-            TextField("0", value: $value, format: .number)
-                .keyboardType(.decimalPad)
-                .multilineTextAlignment(.trailing)
-                .focused($isFocused)
-        }
-    }
-}
+//struct NumberTextField: View{
+//    var name: String
+//    @Binding var value: Double
+//    @FocusState  var isFocused: Bool
+//    var body: some View{
+//        HStack{
+//            Text(name)
+//            TextField("0", value: $value, format: .number)
+//                .keyboardType(.decimalPad)
+//                .multilineTextAlignment(.trailing)
+//                .focused($isFocused)
+//        }
+//    }
+//}
 

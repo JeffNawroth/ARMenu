@@ -7,13 +7,6 @@
 
 import SwiftUI
 
-struct OfferDummy{
-    var title: String = ""
-    var description: String?
-    var products: [Product] = []
-    var isVisible: Bool = false
-}
-
 struct AddOffer: View {
     @EnvironmentObject var modelData: ModelData
     @State private var showingImagePicker = false
@@ -24,15 +17,12 @@ struct AddOffer: View {
 
     
     var disableForm: Bool{
-       offerDummy.title.isEmpty||inputImage == nil
+       offerDummy.title == nil
     }
     
     @State var disableButton = false
     
-    
-    
-    
-    @State var offerDummy = OfferDummy()
+    @State var offerDummy = Offer(isVisible: false)
     
     
     var body: some View {
@@ -72,14 +62,14 @@ struct AddOffer: View {
                     }.listRowBackground(Color.clear)
                     
                     Section{
-                        Toggle("Veröffentlichen", isOn: $offerDummy.isVisible)
+                        Toggle("Veröffentlichen", isOn: $offerDummy.isVisible.toNonOptionalBoolean())
                     }
                     
                     
                     Section{
                         HStack{
                             Text("Titel")
-                            TextField("Titel", text: $offerDummy.title)
+                            TextField("Titel", text: $offerDummy.title.toNonOptionalString())
                                 .multilineTextAlignment(.trailing)
                                 .focused($isFocused)
 
@@ -94,14 +84,12 @@ struct AddOffer: View {
                     
                     Section(header: Text("Produkte")){
                         
-                            let sortedProducts = offerDummy.products.sorted{
-                                $0.name! < $1.name!
-                             }
+                            
                              
                              
                              
                              NavigationLink{
-                           SelectProducts(selections: $offerDummy.products)
+                                 SelectProducts(selections: $offerDummy.products.toNonOptionalProducts())
                              } label:{
                                  HStack{
                                      Image(systemName: "plus.circle.fill")
@@ -111,6 +99,12 @@ struct AddOffer: View {
                                  }
                              }
                              
+                        
+                        if let products = offerDummy.products{
+                            let sortedProducts = products.sorted{
+                                $0.name! < $1.name!
+                             }
+                            
                             ForEach(sortedProducts, id: \.self){ product in
                                      NavigationLink {
                                          MenuDetail(product: product)
@@ -118,7 +112,7 @@ struct AddOffer: View {
                                          HStack{
                                              Button(action: {
                                                  withAnimation(.spring()){
-                                                     offerDummy.products.removeAll{
+                                                     offerDummy.products?.removeAll{
                                                          $0 == product
                                                      }
                                                  }
@@ -133,8 +127,13 @@ struct AddOffer: View {
                                      }
                              }
                              .onDelete { IndexSet in
-                                 offerDummy.products.remove(atOffsets: IndexSet)
+                                 offerDummy.products?.remove(atOffsets: IndexSet)
                              }
+                            
+                        }
+                       
+                        
+                            
                     }
                     
                 }
@@ -163,9 +162,8 @@ struct AddOffer: View {
                     Button("Fertig"){
                         disableButton = true
                         
-                        let offer = Offer(image: "", title: offerDummy.title, description: offerDummy.description, products: offerDummy.products, isVisible: offerDummy.isVisible)
                         
-                        modelData.addOfferController(offerToAdd: offer, imageToAdd: inputImage!)
+                        modelData.addOfferController(offerToAdd: offerDummy, imageToAdd: inputImage)
                         
                         
                     }
