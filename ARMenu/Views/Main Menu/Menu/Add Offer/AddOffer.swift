@@ -12,12 +12,13 @@ struct AddOffer: View {
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     @State private var image: Image?
+    @State private var showingImageConfirmation = false
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
-
+    
     
     var disableForm: Bool{
-       offerDummy.title == nil
+        offerDummy.title == nil
     }
     
     @State var disableButton = false
@@ -38,7 +39,8 @@ struct AddOffer: View {
                                     .cornerRadius(10)
                                     .shadow(radius: 3)
                                     .onTapGesture {
-                                        showingImagePicker = true
+                                        showingImageConfirmation = true
+                                        
                                     }
                             }
                             else{
@@ -47,11 +49,13 @@ struct AddOffer: View {
                                     .scaledToFit()
                                     .foregroundColor(.gray)
                                     .onTapGesture {
-                                        showingImagePicker = true
+                                        showingImageConfirmation = true
+                                        
                                     }
                             }
                             Button {
-                                showingImagePicker = true
+                                showingImageConfirmation = true
+                                // showingImagePicker = true
                                 
                             } label: {
                                 Text("Foto hinzufügen")
@@ -72,68 +76,68 @@ struct AddOffer: View {
                             TextField("Titel", text: $offerDummy.title.toNonOptionalString())
                                 .multilineTextAlignment(.trailing)
                                 .focused($isFocused)
-
+                            
                         }
                     }
                     
                     Section(header: Text("Beschreibung")){
                         TextEditor(text: $offerDummy.description.toNonOptionalString())
                             .focused($isFocused)
-
+                        
                     }
                     
                     Section(header: Text("Produkte")){
                         
-                            
-                             
-                             
-                             
-                             NavigationLink{
-                                 SelectProducts(selections: $offerDummy.products.toNonOptionalProducts())
-                             } label:{
-                                 HStack{
-                                     Image(systemName: "plus.circle.fill")
-                                         .foregroundColor(.green)
-                                     
-                                     Text("Produkte hinzufügen")
-                                 }
-                             }
-                             
+                        
+                        
+                        
+                        
+                        NavigationLink{
+                            SelectProducts(selections: $offerDummy.products.toNonOptionalProducts())
+                        } label:{
+                            HStack{
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.green)
+                                
+                                Text("Produkte hinzufügen")
+                            }
+                        }
+                        
                         
                         if let products = offerDummy.products{
                             let sortedProducts = products.sorted{
                                 $0.name! < $1.name!
-                             }
+                            }
                             
                             ForEach(sortedProducts, id: \.self){ product in
-                                     NavigationLink {
-                                         MenuDetail(product: product)
-                                     } label: {
-                                         HStack{
-                                             Button(action: {
-                                                 withAnimation(.spring()){
-                                                     offerDummy.products?.removeAll{
-                                                         $0 == product
-                                                     }
-                                                 }
-                                             }, label: {
-                                                 Image(systemName: "minus.circle.fill")
-                                                     .foregroundColor(Color.red)
-                                             })
-                                                 .buttonStyle(.borderless)
-                                             
-                                             MenuRow(product: product)
-                                         }
-                                     }
-                             }
-                             .onDelete { IndexSet in
-                                 offerDummy.products?.remove(atOffsets: IndexSet)
-                             }
+                                NavigationLink {
+                                    MenuDetail(product: product)
+                                } label: {
+                                    HStack{
+                                        Button(action: {
+                                            withAnimation(.spring()){
+                                                offerDummy.products?.removeAll{
+                                                    $0 == product
+                                                }
+                                            }
+                                        }, label: {
+                                            Image(systemName: "minus.circle.fill")
+                                                .foregroundColor(Color.red)
+                                        })
+                                            .buttonStyle(.borderless)
+                                        
+                                        MenuRow(product: product)
+                                    }
+                                }
+                            }
+                            .onDelete { IndexSet in
+                                offerDummy.products?.remove(atOffsets: IndexSet)
+                            }
                             
                         }
-                       
                         
-                            
+                        
+                        
                     }
                     
                 }
@@ -150,7 +154,7 @@ struct AddOffer: View {
                 }
                 
             }
-          
+            
             .navigationBarTitle(Text("neues Angebot"), displayMode: .inline)
             .onChange(of: inputImage) { _ in loadImage() }
             .onChange(of: modelData.loading){_ in if !modelData.loading{showingSheet = false}}
@@ -178,7 +182,7 @@ struct AddOffer: View {
                     .disabled(disableButton)
                 }
                 
-
+                
                 
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
@@ -191,6 +195,18 @@ struct AddOffer: View {
                     }
                 }
             }
+            .confirmationDialog("", isPresented: $showingImageConfirmation) {
+                Button("Fotobibliothek öffnen"){
+                    showingImagePicker = true
+                }
+                if  inputImage != nil {
+                    Button("Löschen", role: .destructive){
+                        inputImage = nil
+                        image = nil
+                    }
+                }
+                
+            }
         }
     }
     func loadImage() {
@@ -198,8 +214,8 @@ struct AddOffer: View {
         image = Image(uiImage: inputImage)
     }
 }
-    struct AddOffer_Previews: PreviewProvider {
-        static var previews: some View {
-            AddOffer(showingSheet: .constant(true))
-        }
+struct AddOffer_Previews: PreviewProvider {
+    static var previews: some View {
+        AddOffer(showingSheet: .constant(true))
     }
+}

@@ -17,6 +17,7 @@ struct AddProduct: View {
     @State private var inputImage: UIImage?
     @State private var image: Image?
     @State private var showingUnitsSheet = false
+    @State private var showingImageConfirmation = false
     @FocusState private var isFocused: Bool
     
     @State var fileURL: URL?
@@ -43,7 +44,7 @@ struct AddProduct: View {
                                     .cornerRadius(10)
                                     .shadow(radius: 3)
                                     .onTapGesture {
-                                        showingImagePicker = true
+                                        showingImageConfirmation = true
                                     }
                                 
                             }else{
@@ -52,13 +53,13 @@ struct AddProduct: View {
                                     .scaledToFit()
                                     .foregroundColor(.gray)
                                     .onTapGesture {
-                                        showingImagePicker = true
+                                        showingImageConfirmation = true
                                     }
                             }
                             
                             Button {
-                                showingImagePicker = true
-                                
+                                showingImageConfirmation = true
+
                             } label: {
                                 Text("Foto hinzufügen")
                                     .foregroundColor(Color.blue)
@@ -428,6 +429,18 @@ struct AddProduct: View {
                         Image(systemName:"keyboard.chevron.compact.down")
                     }
                 }
+            }
+            .confirmationDialog("", isPresented: $showingImageConfirmation) {
+                Button("Fotobibliothek öffnen"){
+                    showingImagePicker = true
+                }
+                if  inputImage != nil {
+                    Button("Löschen", role: .destructive){
+                        inputImage = nil
+                        image = nil
+                    }
+                }
+                
             }
             
         }
