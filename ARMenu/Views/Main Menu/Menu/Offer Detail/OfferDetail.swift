@@ -25,16 +25,27 @@ struct OfferDetail: View {
         
         
         ScrollView{
-            AnimatedImage(url: URL(string: offer.image))
-                .resizable()
-                .scaledToFit()
-                .cornerRadius(10)
-                .shadow(radius: 3)
-                .padding()
+            if let image = offer.image{
+                AnimatedImage(url: URL(string: image))
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
+                    .shadow(radius: 3)
+                    .padding()
+            }
+            else{
+                Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
+                    .shadow(radius: 3)
+                    .padding()
+            }
+            
             
             VStack(alignment: .leading){
                 
-                    Text(offer.title)
+                    Text(offer.title!)
                         .font(.title)
                         .padding(.bottom)
                     
@@ -44,29 +55,32 @@ struct OfferDetail: View {
 
                 
              
-            
-                Text("Produkte")
-                    .font(.headline)
-                
-                ForEach(offer.products, id: \.self){ product in
-                    NavigationLink {
-                        MenuDetail(product: product)
-                    } label: {
-                        VStack{
-                            MenuRow(product: product)
-                                .foregroundColor(Color.primary)
-                            
-                            Divider()
+                if let products = offer.products{
+                    Text("Produkte")
+                        .font(.headline)
+                    
+                    ForEach(products, id: \.self){ product in
+                        NavigationLink {
+                            MenuDetail(product: product)
+                        } label: {
+                            VStack{
+                                MenuRow(product: product)
+                                    .foregroundColor(Color.primary)
+                                
+                                Divider()
+                            }
+                            Image(systemName: "chevron.right")
+                                .imageScale(.small)
+                                .foregroundColor(Color.gray)
                         }
-                        Image(systemName: "chevron.right")
-                            .imageScale(.small)
-                            .foregroundColor(Color.gray)
                     }
                 }
+
+              
             }
             .padding(.horizontal)
         }
-        .navigationTitle(Text(offer.title))
+        .navigationTitle(Text(offer.title!))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
             ToolbarItem(placement: .navigationBarTrailing) {

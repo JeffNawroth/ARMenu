@@ -17,6 +17,7 @@ extension Binding{
         }
     }
     
+
     func toNonOptionalString(fallback: String = "") -> Binding<String> where Value == String?{
         toNonOptionalValue(fallback: fallback)
 
@@ -51,4 +52,15 @@ extension Binding{
         toNonOptionalValue(fallback: fallback)
 
     }
+    
+    func toNonOptionalDouble(fallback: Double = 0) -> Binding<Double> where Value == Double?{
+        toNonOptionalValue(fallback: fallback)
+
+    }
+    
+    func toNonOptionalProducts(fallback: [Product] = []) -> Binding<[Product]> where Value == [Product]?{
+        toNonOptionalValue(fallback: fallback)
+
+    }
+    
 }

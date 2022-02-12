@@ -15,11 +15,21 @@ struct OfferColumn: View {
     var action: () -> Void
     var body: some View {
         ZStack{
-            AnimatedImage(url: URL(string: offer.image))
-                .resizable()
-                .scaledToFit()
-                .cornerRadius(20)
-                .frame(width: 125)
+            if let image = offer.image{
+                AnimatedImage(url: URL(string: image))
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(20)
+                    .frame(width: 125)
+            }else{
+                Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(20)
+                    .frame(width: 125)
+                    .foregroundColor(.gray)
+            }
+           
               
             
             

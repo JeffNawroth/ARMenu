@@ -20,52 +20,52 @@ struct EditOffer: View {
     var body: some View {
         NavigationView{
             List{
-                Section{
-                    VStack{
-                        if(inputImage == nil){
-                            AnimatedImage(url: URL(string: offer.image))
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(10)
-                                .shadow(radius: 3)
-                                .onTapGesture {
-                                    showingImagePicker = true
-                                }
-                        }else{
-                            Image(uiImage: inputImage!)
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(10)
-                                .shadow(radius: 3)
-                                .onTapGesture {
-                                    showingImagePicker = true
-                                }
-                        }
-                        Button {
-                            showingImagePicker = true
-                            
-                        } label: {
-                            Text("Foto hinzufügen")
-                                .foregroundColor(Color.blue)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                }.listRowBackground(Color.clear)
+//                Section{
+//                    VStack{
+//                        if(inputImage == nil){
+//                            AnimatedImage(url: URL(string: offer.image))
+//                                .resizable()
+//                                .scaledToFit()
+//                                .cornerRadius(10)
+//                                .shadow(radius: 3)
+//                                .onTapGesture {
+//                                    showingImagePicker = true
+//                                }
+//                        }else{
+//                            Image(uiImage: inputImage!)
+//                                .resizable()
+//                                .scaledToFit()
+//                                .cornerRadius(10)
+//                                .shadow(radius: 3)
+//                                .onTapGesture {
+//                                    showingImagePicker = true
+//                                }
+//                        }
+//                        Button {
+//                            showingImagePicker = true
+//                            
+//                        } label: {
+//                            Text("Foto hinzufügen")
+//                                .foregroundColor(Color.blue)
+//                        }
+//                        .buttonStyle(PlainButtonStyle())
+//                    }
+//                }.listRowBackground(Color.clear)
+//                
+//                Section{
+//                    Toggle("Veröffentlichen", isOn: $offer.isVisible)
+//                }
                 
-                Section{
-                    Toggle("Veröffentlichen", isOn: $offer.isVisible)
-                }
                 
-                
-                Section{
-                    HStack{
-                        Text("Titel")
-                        TextField("Titel", text: $offer.title)
-                            .multilineTextAlignment(.trailing)
-                            .focused($isFocused)
-
-                    }
-                }
+//                Section{
+//                    HStack{
+//                        Text("Titel")
+//                        TextField("Titel", text: $offer.title)
+//                            .multilineTextAlignment(.trailing)
+//                            .focused($isFocused)
+//
+//                    }
+//                }
                 
 //                Section(header: Text("Beschreibung")){
 //                    TextEditor(text: $offer.description)
@@ -73,52 +73,52 @@ struct EditOffer: View {
 //
 //                }
                 
-                Section(header: Text("Produkte")){
-                    
-                    let sortedProducts = offer.products.sorted{
-                        $0.name! < $1.name!
-                    }
-                    
-                    
-                    
-                    NavigationLink{
-                  SelectProducts(selections: $offer.products)
-                    } label:{
-                        HStack{
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.green)
-                            
-                            Text("Produkte hinzufügen")
-                        }
-                    }
-                    
-                    ForEach(sortedProducts, id: \.self){ product in
-                            NavigationLink {
-                                MenuDetail(product: product)
-                            } label: {
-                                HStack{
-                                    Button(action: {
-                                        withAnimation(.spring()){
-                                            offer.products.removeAll{
-                                                $0 == product
-                                            }
-                                        }
-                                    }, label: {
-                                        Image(systemName: "minus.circle.fill")
-                                            .foregroundColor(Color.red)
-                                    })
-                                        .buttonStyle(.borderless)
-                                    
-                                    MenuRow(product: product)
-                                }
-                            }
-                    }
-                    .onDelete { IndexSet in
-                        offer.products.remove(atOffsets: IndexSet)
-                    }
+//                Section(header: Text("Produkte")){
+//
+//                    let sortedProducts = offer.products.sorted{
+//                        $0.name! < $1.name!
+//                    }
+//
+//
+//
+//                    NavigationLink{
+//                  SelectProducts(selections: $offer.products)
+//                    } label:{
+//                        HStack{
+//                            Image(systemName: "plus.circle.fill")
+//                                .foregroundColor(.green)
+//
+//                            Text("Produkte hinzufügen")
+//                        }
+//                    }
+//
+//                    ForEach(sortedProducts, id: \.self){ product in
+//                            NavigationLink {
+//                                MenuDetail(product: product)
+//                            } label: {
+//                                HStack{
+//                                    Button(action: {
+//                                        withAnimation(.spring()){
+//                                            offer.products.removeAll{
+//                                                $0 == product
+//                                            }
+//                                        }
+//                                    }, label: {
+//                                        Image(systemName: "minus.circle.fill")
+//                                            .foregroundColor(Color.red)
+//                                    })
+//                                        .buttonStyle(.borderless)
+//
+//                                    MenuRow(product: product)
+//                                }
+//                            }
+//                    }
+//                    .onDelete { IndexSet in
+//                        offer.products.remove(atOffsets: IndexSet)
+//                    }
                     
                    
-                }
+//                }
             }
             .navigationBarTitle(Text("Angebot bearbeiten"), displayMode: .inline)
             .onChange(of: inputImage) { _ in loadImage() }

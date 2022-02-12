@@ -18,7 +18,7 @@ class ModelData: ObservableObject{
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
     
-    @Published var loading = false
+    var loading = false
 
     var db = Firestore.firestore()
     
@@ -39,13 +39,13 @@ class ModelData: ObservableObject{
     }
     
     func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
-        
-        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+            
+//        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
-            let newDocReference = try collectionRef.addDocument(from: product)
+            let newDocReference = try collectionRef.addDocument(from: productToAdd)
             print("Produkt hinzugefügt mit folgender Referenz: \(newDocReference)")
-            self.loading = false
+           loading = false
         }
         catch {
             print(error)
@@ -54,7 +54,7 @@ class ModelData: ObservableObject{
     }
     
     func addProductController(productToAdd: Product, imageToAdd: UIImage?, modelToAdd: URL?)    {
-        self.loading = true
+        loading = true
         uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, model: modelToAdd)
     }
     
@@ -106,7 +106,9 @@ class ModelData: ObservableObject{
             self.uploadModel(localURL: model, productToAdd: productToAdd)
         }
         else{
-            addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: nil)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: nil)
+            }
         }
         
     }
@@ -592,12 +594,12 @@ class ModelData: ObservableObject{
           }
     
     
-    func addOfferController(offerToAdd: Offer, imageToAdd: UIImage)    {
+    func addOfferController(offerToAdd: Offer, imageToAdd: UIImage?)    {
         self.loading = true
         uploadImageOffer(image: imageToAdd, offerToAdd: offerToAdd)
     }
     
-    func addOffer(offerToAdd: Offer, imagePath: String){
+    func addOffer(offerToAdd: Offer, imagePath: String?){
         
         let offer = Offer(image: imagePath, title: offerToAdd.title, description: offerToAdd.description, products: offerToAdd.products, isVisible: offerToAdd.isVisible)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Offers")
@@ -636,7 +638,7 @@ class ModelData: ObservableObject{
             }
         }
         let storage = Storage.storage()
-        storage.reference().child("OfferImages/\(offerToDelete.title)").delete { error in
+        storage.reference().child("OfferImages/" + offerToDelete.title!).delete { error in
             if error != nil {
                 print("Error: Bild konnte nicht gelöscht werden!")
             } else {
@@ -646,28 +648,36 @@ class ModelData: ObservableObject{
         
     }
     
-    func uploadImageOffer(image: UIImage, offerToAdd: Offer) {
+    func uploadImageOffer(image: UIImage?, offerToAdd: Offer) {
+        if let image = image{
         if let imageData = image.jpegData(compressionQuality: 1){
             let storage = Storage.storage()
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-            storage.reference().child("OfferImages/\(offerToAdd.title)").putData(imageData, metadata: metadata){
+            storage.reference().child("OfferImages/" + offerToAdd.title! + ".jpg").putData(imageData, metadata: metadata){
                 (_, err) in
                 if let err = err {
                     print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
                 } else {
                     print("Bild wurde erfolgreich hochgeladen!")
                     self.getImagePathOffer(offerToAdd: offerToAdd)
+                
                     
                 }
             }
-        } else {
+        }else {
             print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
+        }}
+        else{
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.addOffer(offerToAdd: offerToAdd, imagePath: nil)
+            }
         }
     }
     
     func getImagePathOffer(offerToAdd: Offer){
-        let storageRef = Storage.storage().reference(withPath: "OfferImages/\(offerToAdd.title)")
+        let storageRef = Storage.storage().reference(withPath: "OfferImages/" + offerToAdd.title! + ".jpg")
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -695,13 +705,13 @@ class ModelData: ObservableObject{
             let storage = Storage.storage()
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-            storage.reference().child("OfferImages/\(offerToUpdate.title)").putData(imageData, metadata: metadata){
+            storage.reference().child("OfferImages/" + offerToUpdate.title!).putData(imageData, metadata: metadata){
                 (_, err) in
                 if let err = err {
                     print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
                 } else {
                     print("Bild wurde erfolgreich hochgeladen!")
-                    let storageRef = Storage.storage().reference(withPath: "OfferImages/\(offerToUpdate.title)")
+                    let storageRef = Storage.storage().reference(withPath: "OfferImages/" + offerToUpdate.title!)
                     storageRef.downloadURL(completion: { [self] url, error in
                         guard let url = url, error == nil else {
                             print("Error: Bildpfad konnte nicht ermittelt werden!")

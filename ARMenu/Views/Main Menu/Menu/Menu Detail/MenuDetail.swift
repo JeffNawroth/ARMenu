@@ -32,6 +32,7 @@ struct MenuDetail: View {
                     .cornerRadius(10)
                     .shadow(radius: 3)
                     .padding()
+                    .foregroundColor(.gray)
             }
             
             VStack(alignment: .leading){

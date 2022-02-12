@@ -47,7 +47,6 @@ struct AddProduct: View {
                                     }
                                 
                             }else{
-                                
                                 Image(systemName: "photo")
                                     .resizable()
                                     .scaledToFit()
@@ -56,7 +55,6 @@ struct AddProduct: View {
                                         showingImagePicker = true
                                     }
                             }
-                            
                             
                             Button {
                                 showingImagePicker = true
@@ -199,8 +197,7 @@ struct AddProduct: View {
                     }
                     
                     Section(header: Text("Nährwerte")){
-                        
-                        
+
                         HStack{
                             Text("Kalorien")
                             
@@ -210,42 +207,15 @@ struct AddProduct: View {
                                 .focused($isFocused)
                             
                         }
-                        HStack{
-                            Text("Fett")
-                            TextField("0", value: $productDummy.nutritionFacts.toNonOptionalNutritionFacts().fat, format: .number)
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .focused($isFocused)
-                            
-                            
-                            
-                        }
-                        HStack{
-                            Text("Kohlenhydrate")
-                            TextField("0", value: $productDummy.nutritionFacts.toNonOptionalNutritionFacts().carbs, format: .number)
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .focused($isFocused)
-                            
-                        }
                         
-                        HStack{
-                            Text("Protein")
-                            TextField("0", value: $productDummy.nutritionFacts.toNonOptionalNutritionFacts().protein, format: .number)
-                                .keyboardType(.decimalPad)
-                                .multilineTextAlignment(.trailing)
-                                .focused($isFocused)
-                            
-                        }
+                        NutritionTextField(name: "Fett", value:  $productDummy.nutritionFacts.toNonOptionalNutritionFacts().fat, isFocused: _isFocused)
+                        NutritionTextField(name: "Kohlenhydrate", value:  $productDummy.nutritionFacts.toNonOptionalNutritionFacts().carbs, isFocused: _isFocused)
+                        NutritionTextField(name: "Protein", value:  $productDummy.nutritionFacts.toNonOptionalNutritionFacts().protein, isFocused: _isFocused)
                         
                     }
                     
                     Section(header: Text("Toppings")){
-                        
-                        
-                        
-                        
-                        
+        
                         NavigationLink{
                             SelectToppings(selections: $productDummy.toppings.toNonOptionalToppings())
                         } label:{
@@ -388,9 +358,6 @@ struct AddProduct: View {
                             
                         }
                     }
-                    
-                    
-                    
                 }
                 
                 if modelData.loading{
@@ -428,9 +395,8 @@ struct AddProduct: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        
+
                         disableButton = true
-                        
                         modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
                         
                     } label: {
@@ -482,3 +448,20 @@ struct addFood_Previews: PreviewProvider {
             .environmentObject(ModelData())
     }
 }
+
+struct NutritionTextField: View{
+   
+    var name: String
+    @Binding var value: Double?
+    @FocusState  var isFocused: Bool
+    var body: some View{
+        HStack{
+            Text(name)
+            TextField("0", value: $value, format: .number)
+                .keyboardType(.decimalPad)
+                .multilineTextAlignment(.trailing)
+                .focused($isFocused)
+        }
+    }
+}
+

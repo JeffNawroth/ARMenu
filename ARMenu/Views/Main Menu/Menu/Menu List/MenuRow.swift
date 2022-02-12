@@ -25,6 +25,7 @@ struct MenuRow: View {
                     .scaledToFit()
                     .frame(width: 100)
                     .cornerRadius(8)
+                    .foregroundColor(.gray)
             }
             
             
