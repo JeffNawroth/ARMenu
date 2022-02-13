@@ -10,7 +10,7 @@ import SceneKit
 
 
 struct AddProduct: View {
-    
+   
     @EnvironmentObject var modelData: ModelData
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -21,6 +21,7 @@ struct AddProduct: View {
     @State private var showingFileImporter = false
     @State private var disableButton = false
     @State var productDummy = Product(isVisible: false)
+    @State var product: Product?
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
     
@@ -467,7 +468,7 @@ struct AddProduct: View {
     }
 }
 
-struct addFood_Previews: PreviewProvider {
+struct AddProduct_Previews: PreviewProvider {
     static var previews: some View {
         AddProduct(showingSheet: .constant(true))
             .environmentObject(ModelData())

@@ -595,7 +595,7 @@ class ModelData: ObservableObject{
     
     
     func addOfferController(offerToAdd: Offer, imageToAdd: UIImage?)    {
-        self.loading = true
+        loading = true
         uploadImageOffer(image: imageToAdd, offerToAdd: offerToAdd)
     }
     
@@ -606,7 +606,7 @@ class ModelData: ObservableObject{
         do {
             let newDocReference = try collectionRef.addDocument(from: offer)
             print("Angebot hinzugefügt mit folgender Referenz: \(newDocReference)")
-            self.loading = false
+            loading = false
         }
         catch {
             print(error)
@@ -692,8 +692,11 @@ class ModelData: ObservableObject{
     }
     
     func updateOfferController(offerToUpdate: Offer, imageToUpdate: UIImage?){
+        loading = true
         if imageToUpdate == nil {
-            updateOffer(offer: offerToUpdate)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.updateOffer(offer: offerToUpdate)
+            }
         }
         else{
             updateImageOffer(offerToUpdate: offerToUpdate, imageToUpdate: imageToUpdate!)
@@ -737,6 +740,7 @@ class ModelData: ObservableObject{
           do {
               try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offer)
               print("Angebot wurde erfolgreich aktualisiert!")
+              loading = false
           }
           catch {
             print(error)

@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct AddOffer: View {
+    
     @EnvironmentObject var modelData: ModelData
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -16,7 +18,12 @@ struct AddOffer: View {
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
     @State var disableButton = false
-    @State var offerDummy = Offer(isVisible: false)
+    @State var offerDummy: Offer
+    enum Mode{
+        case new
+        case edit
+    }
+    var mode: Mode
     
     var body: some View {
         NavigationView{
@@ -26,6 +33,17 @@ struct AddOffer: View {
                         VStack{
                             if let image = image {
                                 image
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                                    .shadow(radius: 3)
+                                    .onTapGesture {
+                                        showingImageConfirmation = true
+                                        
+                                    }
+                            }
+                            else if let image = offerDummy.image{
+                                AnimatedImage(url: URL(string: image))
                                     .resizable()
                                     .scaledToFit()
                                     .cornerRadius(10)
@@ -147,7 +165,8 @@ struct AddOffer: View {
                 
             }
             
-            .navigationBarTitle(Text("neues Angebot"), displayMode: .inline)
+            .navigationBarTitle(mode == .new ? Text("neues Angebot"): Text("Angebot bearbeiten"))
+            .navigationBarTitleDisplayMode(.inline)
             .onChange(of: inputImage) { _ in loadImage() }
             .onChange(of: modelData.loading){_ in if !modelData.loading{showingSheet = false}}
             .sheet(isPresented: $showingImagePicker) {
@@ -158,8 +177,11 @@ struct AddOffer: View {
                     Button("Fertig"){
                         disableButton = true
                         
-                        
-                        modelData.addOfferController(offerToAdd: offerDummy, imageToAdd: inputImage)
+                        if mode == .new{
+                            modelData.addOfferController(offerToAdd: offerDummy, imageToAdd: inputImage)
+                        }else{
+                            modelData.updateOfferController(offerToUpdate: offerDummy, imageToUpdate: inputImage)
+                        }
                         
                         
                     }
@@ -191,10 +213,11 @@ struct AddOffer: View {
                 Button("Fotobibliothek öffnen"){
                     showingImagePicker = true
                 }
-                if  inputImage != nil {
+                if  inputImage != nil || offerDummy.image != nil {
                     Button("Löschen", role: .destructive){
                         inputImage = nil
                         image = nil
+                        offerDummy.image = nil
                     }
                 }
                 
@@ -208,6 +231,6 @@ struct AddOffer: View {
 }
 struct AddOffer_Previews: PreviewProvider {
     static var previews: some View {
-        AddOffer(showingSheet: .constant(true))
+        AddOffer(showingSheet: .constant(true), offerDummy: Offer.dummyOffer, mode: .new)
     }
 }

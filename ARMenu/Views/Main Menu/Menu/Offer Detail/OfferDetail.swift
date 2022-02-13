@@ -90,7 +90,7 @@ struct OfferDetail: View {
                     Image(systemName: "square.and.pencil")
                 }
                 .sheet(isPresented: $showingSheet) {
-                    EditOffer(offer: offer, showingSheet: $showingSheet)
+                    AddOffer(showingSheet: $showingSheet, offerDummy: offer, mode: .edit)
                 }
             }
         }
