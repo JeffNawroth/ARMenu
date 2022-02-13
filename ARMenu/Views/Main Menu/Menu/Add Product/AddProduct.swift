@@ -12,23 +12,17 @@ import SceneKit
 struct AddProduct: View {
     
     @EnvironmentObject var modelData: ModelData
-    @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     @State private var image: Image?
     @State private var showingUnitsSheet = false
     @State private var showingImageConfirmation = false
-    @FocusState private var isFocused: Bool
-    
-    @State var fileURL: URL?
-    @State var openFile = false
-    @State var disableButton = false
-    
-    var disableForm: Bool {
-        productDummy.name == nil
-    }
-    
+    @State private var fileURL: URL?
+    @State private var showingFileImporter = false
+    @State private var disableButton = false
     @State var productDummy = Product(isVisible: false)
+    @FocusState private var isFocused: Bool
+    @Binding var showingSheet: Bool
     
     var body: some View {
         
@@ -76,19 +70,36 @@ struct AddProduct: View {
                     
                     Section{
                         Button {
-                            openFile = true
+                            if showingFileImporter{
+                                showingFileImporter = false
+                                DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
+                                        showingFileImporter = true
+                                    })
+                            }else{
+                                showingFileImporter = true
+                            }
                         } label: {
                             HStack{
-                                Image(systemName: "arkit")
-                                Text("AR-Modell hinzufügen")
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.green)
+                                
+                                Text("3D-Model hinzufügen")
                             }
-                            
-                            
                         }
+                        .disabled(fileURL != nil)
                         
-                        if let fileURL = fileURL {
+                        if let url = fileURL {
                             HStack{
-                                Text(fileURL.lastPathComponent)
+                                Button{
+                                    withAnimation(.spring()) {
+                                        fileURL = nil
+                                    }
+                                }label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(Color.red)
+                                }
+                                .buttonStyle(.borderless)
+                                Text(url.lastPathComponent)
                                 Spacer()
                                 Button {
                                     
@@ -214,7 +225,7 @@ struct AddProduct: View {
                         NutritionTextField(name: "Protein", value:  $productDummy.nutritionFacts.toNonOptionalNutritionFacts().protein, isFocused: _isFocused)
                         
                     }
-                    
+                    Group{
                     Section(header: Text("Toppings")){
         
                         NavigationLink{
@@ -263,7 +274,7 @@ struct AddProduct: View {
                         }
                         
                     }
-                    Group{
+                    
                         
                         Section(header: Text("Allergene")){
                             
@@ -373,10 +384,9 @@ struct AddProduct: View {
                     }
                 }
             }
-            .fileImporter(isPresented: $openFile, allowedContentTypes: [.usdz]) { res in
+            .fileImporter(isPresented: $showingFileImporter, allowedContentTypes: [.usdz]) { res in
                 do{
                     fileURL = try res.get()
-                    
                 }
                 catch{
                     print("error reading docs")
@@ -398,13 +408,15 @@ struct AddProduct: View {
                     Button {
 
                         disableButton = true
+                       
+                        
                         modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
                         
                     } label: {
                         Text("Fertig")
                         
                     }
-                    .disabled(disableForm)
+                    .disabled(productDummy.name == nil)
                     .disabled(disableButton)
                     
                 }

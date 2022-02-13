@@ -15,16 +15,8 @@ struct AddOffer: View {
     @State private var showingImageConfirmation = false
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
-    
-    
-    var disableForm: Bool{
-        offerDummy.title == nil
-    }
-    
     @State var disableButton = false
-    
     @State var offerDummy = Offer(isVisible: false)
-    
     
     var body: some View {
         NavigationView{
@@ -171,7 +163,7 @@ struct AddOffer: View {
                         
                         
                     }
-                    .disabled(disableForm)
+                    .disabled( offerDummy.title == nil)
                     .disabled(disableButton)
                 }
                 
