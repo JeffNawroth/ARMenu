@@ -50,6 +50,7 @@
 		B27ADA8C2798AECC0000A750 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27ADA8B2798AECC0000A750 /* Category.swift */; };
 		B27ADA8E2798BDE60000A750 /* AddAllergen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27ADA8D2798BDE60000A750 /* AddAllergen.swift */; };
 		B27ADA902798BEAF0000A750 /* AddAdditive.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27ADA8F2798BEAF0000A750 /* AddAdditive.swift */; };
+		B2820EEE27BAE6D300949735 /* ARPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2820EED27BAE6D300949735 /* ARPreview.swift */; };
 		B2A1138F279F322700AA3A9A /* AddCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A1138E279F322700AA3A9A /* AddCategory.swift */; };
 		B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A2F162278028A4001451B8 /* SelectAdditives.swift */; };
 		B2BA9B3727A19BEA004B9852 /* ServingSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA9B3627A19BEA004B9852 /* ServingSize.swift */; };
@@ -109,6 +110,7 @@
 		B27ADA8B2798AECC0000A750 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		B27ADA8D2798BDE60000A750 /* AddAllergen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAllergen.swift; sourceTree = "<group>"; };
 		B27ADA8F2798BEAF0000A750 /* AddAdditive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdditive.swift; sourceTree = "<group>"; };
+		B2820EED27BAE6D300949735 /* ARPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARPreview.swift; sourceTree = "<group>"; };
 		B2A1138E279F322700AA3A9A /* AddCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategory.swift; sourceTree = "<group>"; };
 		B2A2F162278028A4001451B8 /* SelectAdditives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAdditives.swift; sourceTree = "<group>"; };
 		B2BA9B3627A19BEA004B9852 /* ServingSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServingSize.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 			children = (
 				B26FD1622774CE9F00E75FFC /* AddProduct.swift */,
 				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
+				B2820EED27BAE6D300949735 /* ARPreview.swift */,
 				B249CD4827A1BF2A00A025C1 /* Unit */,
 				B229A86C27A06DCE00B31484 /* Category */,
 				B27ADA912798BFF50000A750 /* Additives */,
@@ -487,6 +490,7 @@
 				B26FD1672774CEF700E75FFC /* ImagePicker.swift in Sources */,
 				B27ADA862798A77F0000A750 /* Allergen.swift in Sources */,
 				B228E993278CAA0F00792F7E /* AddOffer.swift in Sources */,
+				B2820EEE27BAE6D300949735 /* ARPreview.swift in Sources */,
 				B2BAC31F27B43893006B0381 /* ScanOverlayView.swift in Sources */,
 				B26FD1792774D02F00E75FFC /* Product.swift in Sources */,
 				B229A86927A0645800B31484 /* SelectCategory.swift in Sources */,

@@ -18,6 +18,7 @@ struct AddProduct: View {
     @State private var image: Image?
     @State private var showingUnitsSheet = false
     @State private var showingImageConfirmation = false
+    @State private var showingARPreview = false
     @State private var fileURL: URL?
     @State private var showingFileImporter = false
     @State private var disableButton = false
@@ -119,11 +120,12 @@ struct AddProduct: View {
                                 Text(url.lastPathComponent)
                                 Spacer()
                                 Button {
-                                    
+                                    showingARPreview = true
                                 } label: {
                                     Image(systemName: "eye")
                                 }
                                 .buttonStyle(.borderless)
+                                
                                 
                             }
                         }
@@ -417,6 +419,9 @@ struct AddProduct: View {
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
             }
+            .sheet(isPresented: $showingARPreview){
+                ARPreview(url: fileURL!)
+            }
             .onAppear{
                 modelData.fetchCategoriesData()
             }
@@ -478,6 +483,7 @@ struct AddProduct: View {
                 }
                 
             }
+            
             
         }
         

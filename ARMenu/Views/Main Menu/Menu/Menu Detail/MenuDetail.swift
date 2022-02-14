@@ -57,12 +57,14 @@ struct MenuDetail: View {
                                 Text("\(price, specifier: "%.2f")")
                                     .fontWeight(.semibold)
                                     .foregroundColor(.secondary)
+                                }
+                            
+                            if product.price != nil && product.servingSize != nil{
                                 Text("•")
                                     .fontWeight(.semibold)
                                     .foregroundColor(.secondary)
                             }
                           
-                            
                             if let servingSize = product.servingSize{
                                 Text("\(servingSize.size)" + servingSize.unit.name)
                                     .fontWeight(.semibold)
