@@ -19,7 +19,7 @@ class ModelData: ObservableObject{
     @Published var units = [Unit]()
     
     var loading = false
-
+    
     var db = Firestore.firestore()
     
     //MARK: Product
@@ -39,13 +39,13 @@ class ModelData: ObservableObject{
     }
     
     func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
-            
+        
         let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
             print("Produkt hinzugefügt mit folgender Referenz: \(newDocReference)")
-           loading = false
+            loading = false
         }
         catch {
             print(error)
@@ -72,25 +72,25 @@ class ModelData: ObservableObject{
                         print("Bild wurde erfolgreich hochgeladen!")
                         if let model = model {
                             guard model.startAccessingSecurityScopedResource(),
-                                      let data = try? Data(contentsOf: model) else { return }
-                                model.stopAccessingSecurityScopedResource()
+                                  let data = try? Data(contentsOf: model) else { return }
+                            model.stopAccessingSecurityScopedResource()
                             
                             let storageRef = Storage.storage().reference()
                             
                             let metadata = StorageMetadata()
                             metadata.contentType = "model/vnd.usdz+zip"
-
+                            
                             let riversRef = storageRef.child("3DModels/" + productToAdd.name! + ".usdz")
-
+                            
                             _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                                 if let error = error{
                                     print("Error: Modell konnte nicht hochgeladen werden!\(error.localizedDescription)")
                                 }
                                 else {
-                                  print("Modell wurde erfolgreich hochgeladen!")
+                                    print("Modell wurde erfolgreich hochgeladen!")
                                     self.getImageAndModelPathProduct(productToAdd: productToAdd)
-                              }
-                             
+                                }
+                                
                             }
                         }
                         else{
@@ -116,25 +116,25 @@ class ModelData: ObservableObject{
     func uploadModel(localURL: URL?, productToAdd: Product){
         
         guard localURL!.startAccessingSecurityScopedResource(),
-                  let data = try? Data(contentsOf: localURL!) else { return }
-            localURL!.stopAccessingSecurityScopedResource()
+              let data = try? Data(contentsOf: localURL!) else { return }
+        localURL!.stopAccessingSecurityScopedResource()
         
         let storageRef = Storage.storage().reference()
         
         let metadata = StorageMetadata()
         metadata.contentType = "model/vnd.usdz+zip"
-
+        
         let riversRef = storageRef.child("3DModels/" + productToAdd.name! + ".usdz")
-
+        
         _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
             if let error = error{
                 print("Error: Modell konnte nicht hochgeladen werden!\(error.localizedDescription)")
             }
             else {
-              print("Modell wurde erfolgreich hochgeladen!")
+                print("Modell wurde erfolgreich hochgeladen!")
                 self.getModelPathProduct(productToAdd: productToAdd)
-          }
-         
+            }
+            
         }
     }
     
@@ -149,7 +149,7 @@ class ModelData: ObservableObject{
             print("Modellpfad wurde erfolgreich ermittelt!")
             addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: modelURL)
         }
-    )
+        )
     }
     
     func getImagePathProduct(productToAdd: Product){
@@ -164,7 +164,7 @@ class ModelData: ObservableObject{
             print("Bildpfad wurde erfolgreich ermittelt!")
             addProduct(productToAdd: productToAdd, imagePath: imageURL, modelPath: nil)
         }
-    )}
+        )}
     
     func getImageAndModelPathProduct(productToAdd: Product){
         //Bildpfad ermitteln
@@ -186,7 +186,7 @@ class ModelData: ObservableObject{
                 print("Modellpfad wurde erfolgreich ermittelt!")
                 addProduct(productToAdd: productToAdd, imagePath: imageURL, modelPath: modelURL)
             }
-        )}
+            )}
         )
         
     }
@@ -243,22 +243,22 @@ class ModelData: ObservableObject{
             }
         }
     }
-
+    
     func updateProductController(productToUpdate: Product, imageToUpdate: UIImage?, modelToUpdate: URL?) {
-                loading = true
-                //Wenn Bild als auch Modell nicht aktualisiert werden muss
-                if imageToUpdate == nil && modelToUpdate == nil{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-                        self.updateProduct(productToUpdate: productToUpdate)
-
-                    }
-                }
-                //Wenn Bild oder Modell aktualisiert werden muss
-                else if imageToUpdate != nil || modelToUpdate != nil{
-                    updateImageAndModelProduct(imageToUpdate: imageToUpdate, productToUpdate: productToUpdate, modelToUpdate: modelToUpdate)
-                }
-              
-          }
+        loading = true
+        //Wenn Bild als auch Modell nicht aktualisiert werden muss
+        if imageToUpdate == nil && modelToUpdate == nil{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                self.updateProduct(productToUpdate: productToUpdate)
+                
+            }
+        }
+        //Wenn Bild oder Modell aktualisiert werden muss
+        else if imageToUpdate != nil || modelToUpdate != nil{
+            updateImageAndModelProduct(imageToUpdate: imageToUpdate, productToUpdate: productToUpdate, modelToUpdate: modelToUpdate)
+        }
+        
+    }
     
     
     func updateImageAndModelProduct(imageToUpdate: UIImage?, productToUpdate: Product, modelToUpdate: URL?){
@@ -274,24 +274,24 @@ class ModelData: ObservableObject{
                     } else {
                         print("Bild wurde erfolgreich hochgeladen!")
                         guard modelToUpdate!.startAccessingSecurityScopedResource(),
-                                  let data = try? Data(contentsOf: modelToUpdate!) else { return }
-                            modelToUpdate!.stopAccessingSecurityScopedResource()
+                              let data = try? Data(contentsOf: modelToUpdate!) else { return }
+                        modelToUpdate!.stopAccessingSecurityScopedResource()
                         
                         let storageRef = Storage.storage().reference()
                         
                         let metadata = StorageMetadata()
                         metadata.contentType = "model/vnd.usdz+zip"
-
+                        
                         let riversRef = storageRef.child("3DModels/" + productToUpdate.name! + ".usdz")
-
+                        
                         _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                             if let error = error{
                                 print("Error: Modell konnte nicht hochgeladen werden!\(error.localizedDescription)")
                             }
                             else {
-                              print("Modell wurde erfolgreich hochgeladen!")
-                                self.getUpdatedPath(productToUpdate: productToUpdate)
-                          }
+                                print("Modell wurde erfolgreich hochgeladen!")
+                                self.getUpdatedImageAndModelPath(productToUpdate: productToUpdate)
+                            }
                         }
                         
                     }
@@ -302,24 +302,24 @@ class ModelData: ObservableObject{
         }
         else if modelToUpdate != nil{
             guard modelToUpdate!.startAccessingSecurityScopedResource(),
-                      let data = try? Data(contentsOf: modelToUpdate!) else { return }
-                modelToUpdate!.stopAccessingSecurityScopedResource()
+                  let data = try? Data(contentsOf: modelToUpdate!) else { return }
+            modelToUpdate!.stopAccessingSecurityScopedResource()
             
             let storageRef = Storage.storage().reference()
             
             let metadata = StorageMetadata()
             metadata.contentType = "model/vnd.usdz+zip"
-
-            let riversRef = storageRef.child("3DModels" + productToUpdate.name! + ".usdz")
-
+            
+            let riversRef = storageRef.child("3DModels/" + productToUpdate.name! + ".usdz")
+            
             _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                 if let error = error{
                     print("Error: Modell konnte nicht hochgeladen werden!\(error.localizedDescription)")
                 }
                 else {
-                  print("Modell wurde erfolgreich hochgeladen!")
-                    self.getUpdatedPath(productToUpdate: productToUpdate)
-              }
+                    print("Modell wurde erfolgreich hochgeladen!")
+                    self.getUpdatedModelPath(productToUpdate: productToUpdate)
+                }
             }
         }
         else if imageToUpdate != nil{
@@ -333,7 +333,7 @@ class ModelData: ObservableObject{
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
                     } else {
                         print("Bild wurde erfolgreich hochgeladen!")
-                        self.getUpdatedPath(productToUpdate: productToUpdate)
+                        self.getUpdatedImagePath(productToUpdate: productToUpdate)
                     }
                 }
             } else {
@@ -343,7 +343,25 @@ class ModelData: ObservableObject{
         
     }
     
-    func getUpdatedPath(productToUpdate: Product){
+    func getUpdatedImagePath(productToUpdate: Product){
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToUpdate.name!)
+        storageRef.downloadURL(completion: { [self] url, error in
+            guard let url = url, error == nil else {
+                print("Error: Bildpfad konnte nicht ermittelt werden!")
+                return
+            }
+            let imageURL = url.absoluteString
+            print("Bildpfad wurde erfolgreich ermittelt!")
+            
+            let updatedProduct = Product(id: productToUpdate.id, image: imageURL, model: productToUpdate.model, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSize: productToUpdate.servingSize, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
+            
+            updateProduct(productToUpdate: updatedProduct)
+            
+        }
+        )
+    }
+    
+    func getUpdatedImageAndModelPath(productToUpdate: Product){
         let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToUpdate.name!)
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
@@ -366,8 +384,27 @@ class ModelData: ObservableObject{
                 
                 updateProduct(productToUpdate: updatedProduct)
             }
-        )}
+            )}
         )
+    }
+    
+    func getUpdatedModelPath(productToUpdate: Product){
+        //Modellpfad ermitteln
+        let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToUpdate.name! + ".usdz")
+        storageRef.downloadURL(completion: { [self] url, error in
+            guard let url = url, error == nil else {
+                print("Error: Modellpfad konnte nicht ermittelt werden!")
+                return
+            }
+            let modelURL = url.absoluteString
+            print("Modellpfad wurde erfolgreich ermittelt!")
+            
+            let updatedProduct = Product(id: productToUpdate.id, image: productToUpdate.image, model: modelURL, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSize: productToUpdate.servingSize, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
+            
+            updateProduct(productToUpdate: updatedProduct)
+        }
+        )
+        
     }
     
     //MARK: Additive
@@ -546,56 +583,56 @@ class ModelData: ObservableObject{
             
             self.offers = documents.compactMap { queryDocumentSnapshot -> Offer? in
                 
-//                let data = queryDocumentSnapshot.data()
-//
-//                let products = data["products"] as? [String] ?? []
-//
-//                for product in products {
-//                    self.db.collection("ImHörnken").document("Menu").collection("Products").document(product).getDocument { document, error in
-//                        if let error = error{
-//                            print((error.localizedDescription))
-//                        }
-//                        else {
-//                            if let document = document {
-//                                do {
-//                                    self.product = try document.data(as: Product.self) ?? Product(image: "", model: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
-//                                    print(self.product.name + " 1")
-//                                }
-//                                catch {
-//                                    print(error)
-//                                }
-//                            }
-//
-//                    }
-//
-//                        self.offerProducts.append(self.product)
-//
-//                        }
-//                    }
+                //                let data = queryDocumentSnapshot.data()
+                //
+                //                let products = data["products"] as? [String] ?? []
+                //
+                //                for product in products {
+                //                    self.db.collection("ImHörnken").document("Menu").collection("Products").document(product).getDocument { document, error in
+                //                        if let error = error{
+                //                            print((error.localizedDescription))
+                //                        }
+                //                        else {
+                //                            if let document = document {
+                //                                do {
+                //                                    self.product = try document.data(as: Product.self) ?? Product(image: "", model: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
+                //                                    print(self.product.name + " 1")
+                //                                }
+                //                                catch {
+                //                                    print(error)
+                //                                }
+                //                            }
+                //
+                //                    }
+                //
+                //                        self.offerProducts.append(self.product)
+                //
+                //                        }
+                //                    }
                 return try? queryDocumentSnapshot.data(as: Offer.self)
-                }
             }
         }
+    }
     
     func fetchOffer(offerProducts: [Product]){
         db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
-              guard let documents = querySnapshot?.documents else {
+            guard let documents = querySnapshot?.documents else {
                 print("No documents")
                 return
-              }
-
-              self.offers = documents.map { queryDocumentSnapshot -> Offer in
+            }
+            
+            self.offers = documents.map { queryDocumentSnapshot -> Offer in
                 let data = queryDocumentSnapshot.data()
                 let image = data["image"] as? String ?? ""
                 let title = data["title"] as? String ?? ""
                 let description = data["description"] as? String ?? ""
                 let products = offerProducts
-                  let isVisible = data["isVisible"] as? Bool ?? false
-
-                  return Offer(image: image, title: title, description: description, products: products, isVisible: isVisible)
-              }
+                let isVisible = data["isVisible"] as? Bool ?? false
+                
+                return Offer(image: image, title: title, description: description, products: products, isVisible: isVisible)
             }
-          }
+        }
+    }
     
     
     func addOfferController(offerToAdd: Offer, imageToAdd: UIImage?)    {
@@ -654,24 +691,24 @@ class ModelData: ObservableObject{
     
     func uploadImageOffer(image: UIImage?, offerToAdd: Offer) {
         if let image = image{
-        if let imageData = image.jpegData(compressionQuality: 1){
-            let storage = Storage.storage()
-            let metadata = StorageMetadata()
-            metadata.contentType = "image/jpeg"
-            storage.reference().child("OfferImages/" + offerToAdd.title! + ".jpg").putData(imageData, metadata: metadata){
-                (_, err) in
-                if let err = err {
-                    print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
-                } else {
-                    print("Bild wurde erfolgreich hochgeladen!")
-                    self.getImagePathOffer(offerToAdd: offerToAdd)
-                
-                    
+            if let imageData = image.jpegData(compressionQuality: 1){
+                let storage = Storage.storage()
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                storage.reference().child("OfferImages/" + offerToAdd.title! + ".jpg").putData(imageData, metadata: metadata){
+                    (_, err) in
+                    if let err = err {
+                        print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
+                    } else {
+                        print("Bild wurde erfolgreich hochgeladen!")
+                        self.getImagePathOffer(offerToAdd: offerToAdd)
+                        
+                        
+                    }
                 }
-            }
-        }else {
-            print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
-        }}
+            }else {
+                print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
+            }}
         else{
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
@@ -739,18 +776,18 @@ class ModelData: ObservableObject{
         }
     }
     
-     func updateOffer(offer: Offer) {
+    func updateOffer(offer: Offer) {
         if let documentId = offer.id {
-          do {
-              try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offer)
-              print("Angebot wurde erfolgreich aktualisiert!")
-              loading = false
-          }
-          catch {
-            print(error)
-          }
+            do {
+                try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offer)
+                print("Angebot wurde erfolgreich aktualisiert!")
+                loading = false
+            }
+            catch {
+                print(error)
+            }
         }
-      }
+    }
     
     //MARK: Topping
     
