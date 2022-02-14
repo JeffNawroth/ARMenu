@@ -236,6 +236,7 @@ class ModelData: ObservableObject{
             do {
                 try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: productToUpdate)
                 print("Produkt wurde erfolgreich aktualisiert!")
+                loading = false
             }
             catch {
                 print("Error: Produkt konnte nicht aktualsiert werden!" + error.localizedDescription)
@@ -244,10 +245,13 @@ class ModelData: ObservableObject{
     }
 
     func updateProductController(productToUpdate: Product, imageToUpdate: UIImage?, modelToUpdate: URL?) {
-                
+                loading = true
                 //Wenn Bild als auch Modell nicht aktualisiert werden muss
                 if imageToUpdate == nil && modelToUpdate == nil{
-                    updateProduct(productToUpdate: productToUpdate)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        self.updateProduct(productToUpdate: productToUpdate)
+
+                    }
                 }
                 //Wenn Bild oder Modell aktualisiert werden muss
                 else if imageToUpdate != nil || modelToUpdate != nil{

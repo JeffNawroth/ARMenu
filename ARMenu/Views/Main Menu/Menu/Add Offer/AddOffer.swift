@@ -65,7 +65,6 @@ struct AddOffer: View {
                             }
                             Button {
                                 showingImageConfirmation = true
-                                // showingImagePicker = true
                                 
                             } label: {
                                 Text("Foto hinzufügen")

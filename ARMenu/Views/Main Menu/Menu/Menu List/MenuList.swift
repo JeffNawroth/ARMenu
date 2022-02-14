@@ -125,7 +125,7 @@ struct MenuList: View {
                     }
                     
                     .sheet(isPresented: $showingProductSheet) {
-                        AddProduct(showingSheet: $showingProductSheet)
+                        AddProduct(productDummy: Product(isVisible:false), showingSheet: $showingProductSheet, mode: .new)
                     }
                     .sheet(isPresented: $showingOfferSheet) {
                         AddOffer(showingSheet: $showingOfferSheet, offerDummy: Offer(isVisible:false), mode: .new)

@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
-import SceneKit
+import SDWebImageSwiftUI
 
 
 struct AddProduct: View {
+    
    
     @EnvironmentObject var modelData: ModelData
     @State private var showingImagePicker = false
@@ -20,10 +21,15 @@ struct AddProduct: View {
     @State private var fileURL: URL?
     @State private var showingFileImporter = false
     @State private var disableButton = false
-    @State var productDummy = Product(isVisible: false)
-    @State var product: Product?
+    @State var productDummy: Product
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
+    
+    enum Mode{
+        case new
+        case edit
+    }
+    var mode: Mode
     
     var body: some View {
         
@@ -42,7 +48,17 @@ struct AddProduct: View {
                                         showingImageConfirmation = true
                                     }
                                 
-                            }else{
+                            }else if let image = productDummy.image{
+                                AnimatedImage(url: URL(string: image))
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                                    .shadow(radius: 3)
+                                    .onTapGesture {
+                                        showingImageConfirmation = true
+                                    }
+                            }
+                            else{
                                 Image(systemName: "photo")
                                     .resizable()
                                     .scaledToFit()
@@ -394,7 +410,7 @@ struct AddProduct: View {
                     print(error.localizedDescription)
                 }
             }
-            .navigationTitle("neues Produkt")
+            .navigationTitle(mode == .new ? "neues Produkt": "Produkt bearbeiten")
             .navigationBarTitleDisplayMode(.inline)
             .onChange(of: inputImage) { _ in loadImage() }
             .onChange(of: modelData.loading){_ in if !modelData.loading{showingSheet = false}}
@@ -410,8 +426,14 @@ struct AddProduct: View {
 
                         disableButton = true
                        
+                        if mode == .new{
+                            modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
+
+                        }
+                        else{
+                            modelData.updateProductController(productToUpdate: productDummy, imageToUpdate: inputImage, modelToUpdate: fileURL)
+                        }
                         
-                        modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
                         
                     } label: {
                         Text("Fertig")
@@ -447,10 +469,11 @@ struct AddProduct: View {
                 Button("Fotobibliothek öffnen"){
                     showingImagePicker = true
                 }
-                if  inputImage != nil {
+                if  inputImage != nil || productDummy.image != nil {
                     Button("Löschen", role: .destructive){
                         inputImage = nil
                         image = nil
+                        productDummy.image = nil
                     }
                 }
                 
@@ -470,7 +493,7 @@ struct AddProduct: View {
 
 struct AddProduct_Previews: PreviewProvider {
     static var previews: some View {
-        AddProduct(showingSheet: .constant(true))
+        AddProduct(productDummy: Product.dummyProduct, showingSheet: .constant(true), mode: .new)
             .environmentObject(ModelData())
     }
 }
