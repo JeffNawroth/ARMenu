@@ -6,28 +6,30 @@
 //
 
 import SwiftUI
-import SceneKit
+import SDWebImageSwiftUI
 
 
 struct AddProduct: View {
     
+   
     @EnvironmentObject var modelData: ModelData
-    @Binding var showingSheet: Bool
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
     @State private var image: Image?
     @State private var showingUnitsSheet = false
+    @State private var showingImageConfirmation = false
+    @State private var fileURL: URL?
+    @State private var showingFileImporter = false
+    @State private var disableButton = false
+    @State var productDummy: Product
     @FocusState private var isFocused: Bool
+    @Binding var showingSheet: Bool
     
-    @State var fileURL: URL?
-    @State var openFile = false
-    @State var disableButton = false
-    
-    var disableForm: Bool {
-        productDummy.name == nil
+    enum Mode{
+        case new
+        case edit
     }
-    
-    @State var productDummy = Product(isVisible: false)
+    var mode: Mode
     
     var body: some View {
         
@@ -43,22 +45,32 @@ struct AddProduct: View {
                                     .cornerRadius(10)
                                     .shadow(radius: 3)
                                     .onTapGesture {
-                                        showingImagePicker = true
+                                        showingImageConfirmation = true
                                     }
                                 
-                            }else{
+                            }else if let image = productDummy.image{
+                                AnimatedImage(url: URL(string: image))
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(10)
+                                    .shadow(radius: 3)
+                                    .onTapGesture {
+                                        showingImageConfirmation = true
+                                    }
+                            }
+                            else{
                                 Image(systemName: "photo")
                                     .resizable()
                                     .scaledToFit()
                                     .foregroundColor(.gray)
                                     .onTapGesture {
-                                        showingImagePicker = true
+                                        showingImageConfirmation = true
                                     }
                             }
                             
                             Button {
-                                showingImagePicker = true
-                                
+                                showingImageConfirmation = true
+
                             } label: {
                                 Text("Foto hinzufügen")
                                     .foregroundColor(Color.blue)
@@ -75,19 +87,36 @@ struct AddProduct: View {
                     
                     Section{
                         Button {
-                            openFile = true
+                            if showingFileImporter{
+                                showingFileImporter = false
+                                DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
+                                        showingFileImporter = true
+                                    })
+                            }else{
+                                showingFileImporter = true
+                            }
                         } label: {
                             HStack{
-                                Image(systemName: "arkit")
-                                Text("AR-Modell hinzufügen")
+                                Image(systemName: "plus.circle.fill")
+                                    .foregroundColor(.green)
+                                
+                                Text("3D-Model hinzufügen")
                             }
-                            
-                            
                         }
+                        .disabled(fileURL != nil)
                         
-                        if let fileURL = fileURL {
+                        if let url = fileURL {
                             HStack{
-                                Text(fileURL.lastPathComponent)
+                                Button{
+                                    withAnimation(.spring()) {
+                                        fileURL = nil
+                                    }
+                                }label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(Color.red)
+                                }
+                                .buttonStyle(.borderless)
+                                Text(url.lastPathComponent)
                                 Spacer()
                                 Button {
                                     
@@ -213,7 +242,7 @@ struct AddProduct: View {
                         NutritionTextField(name: "Protein", value:  $productDummy.nutritionFacts.toNonOptionalNutritionFacts().protein, isFocused: _isFocused)
                         
                     }
-                    
+                    Group{
                     Section(header: Text("Toppings")){
         
                         NavigationLink{
@@ -262,7 +291,7 @@ struct AddProduct: View {
                         }
                         
                     }
-                    Group{
+                    
                         
                         Section(header: Text("Allergene")){
                             
@@ -372,17 +401,16 @@ struct AddProduct: View {
                     }
                 }
             }
-            .fileImporter(isPresented: $openFile, allowedContentTypes: [.usdz]) { res in
+            .fileImporter(isPresented: $showingFileImporter, allowedContentTypes: [.usdz]) { res in
                 do{
                     fileURL = try res.get()
-                    
                 }
                 catch{
                     print("error reading docs")
                     print(error.localizedDescription)
                 }
             }
-            .navigationTitle("neues Produkt")
+            .navigationTitle(mode == .new ? "neues Produkt": "Produkt bearbeiten")
             .navigationBarTitleDisplayMode(.inline)
             .onChange(of: inputImage) { _ in loadImage() }
             .onChange(of: modelData.loading){_ in if !modelData.loading{showingSheet = false}}
@@ -397,13 +425,21 @@ struct AddProduct: View {
                     Button {
 
                         disableButton = true
-                        modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
+                       
+                        if mode == .new{
+                            modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
+
+                        }
+                        else{
+                            modelData.updateProductController(productToUpdate: productDummy, imageToUpdate: inputImage, modelToUpdate: fileURL)
+                        }
+                        
                         
                     } label: {
                         Text("Fertig")
                         
                     }
-                    .disabled(disableForm)
+                    .disabled(productDummy.name == nil)
                     .disabled(disableButton)
                     
                 }
@@ -429,6 +465,19 @@ struct AddProduct: View {
                     }
                 }
             }
+            .confirmationDialog("", isPresented: $showingImageConfirmation) {
+                Button("Fotobibliothek öffnen"){
+                    showingImagePicker = true
+                }
+                if  inputImage != nil || productDummy.image != nil {
+                    Button("Löschen", role: .destructive){
+                        inputImage = nil
+                        image = nil
+                        productDummy.image = nil
+                    }
+                }
+                
+            }
             
         }
         
@@ -442,9 +491,9 @@ struct AddProduct: View {
     }
 }
 
-struct addFood_Previews: PreviewProvider {
+struct AddProduct_Previews: PreviewProvider {
     static var previews: some View {
-        AddProduct(showingSheet: .constant(true))
+        AddProduct(productDummy: Product.dummyProduct, showingSheet: .constant(true), mode: .new)
             .environmentObject(ModelData())
     }
 }

@@ -20,58 +20,53 @@ struct MenuRow: View {
                     .cornerRadius(8)
             }
             else{
-               Image(systemName: "photo")
+                Image(systemName: "photo")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100)
-                    .cornerRadius(8)
                     .foregroundColor(.gray)
             }
             
             
-            VStack(alignment: .leading, spacing: 5){
+            VStack(alignment: .leading, spacing: 3){
                 
-                HStack{
-                    
-                    VStack(alignment: .leading){
-                        if let category = product.category{
-                            Text(category.name)
-                                .font(.footnote)
-                                .fontWeight(.semibold)
+                
+                if let category = product.category{
+                    Text(category.name)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                Text(product.name!)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                
+                
+                if product.price != nil || product.servingSize != nil{
+                    HStack{
+                        if let price = product.price{
+                            Text("\(price, specifier: "%.2f")")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+
+
+                        }
+                        if product.price != nil && product.servingSize?.size != nil{
+                            Text("•")
+                                .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
-                        
-                        Text(product.name ?? "")
-                            .font(.title2)
-                            .fontWeight(.semibold)
+
+                        if let servingSize = product.servingSize{
+                            Text("\(servingSize.size)" + servingSize.unit.name)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+
+
                     }
-                    
-                    
                 }
-                
-                
-                HStack{
-                    if let price = product.price{
-                        Text("\(price, specifier: "%.2f")")
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
-                        
-                        
-                    }
-                    if product.price != nil && product.servingSize?.size != nil{
-                        Text("•")
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    if let servingSize = product.servingSize{
-                        Text("\(servingSize.size)" + servingSize.unit.name)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    
-                }
+               
                 
                 if (product.isVegan != nil || product.isBio != nil || product.isFairtrade != nil){
                     HStack{
@@ -103,13 +98,9 @@ struct MenuRow: View {
                             }
                         }
                         
-                       
+                        
                     }
                 }
-                
-                
-                
-                
             }
             
             Spacer()
@@ -120,5 +111,6 @@ struct MenuRow: View {
 struct MenuListRow_Previews: PreviewProvider {
     static var previews: some View {
         MenuRow(product: Product.dummyProduct)
+        
     }
 }

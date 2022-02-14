@@ -11,7 +11,6 @@ import SDWebImageSwiftUI
 struct OfferColumn: View {
     var offer: Offer
     @Binding var mode: EditMode
-    //@Binding var showsConfirmation: Bool
     var action: () -> Void
     var body: some View {
         ZStack{
@@ -29,9 +28,6 @@ struct OfferColumn: View {
                     .frame(width: 125)
                     .foregroundColor(.gray)
             }
-           
-              
-            
             
             if(mode == .active){
                 Button(action: action){

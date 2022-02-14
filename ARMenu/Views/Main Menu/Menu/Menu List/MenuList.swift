@@ -45,38 +45,41 @@ struct MenuList: View {
                         }
                     }
                 }
-                Section(header: Text("Angebote")){
-                    ScrollView(.horizontal, showsIndicators: false){
-                        HStack{
-                            ForEach(modelData.offers){ offer in
-                                NavigationLink{
-                                    OfferDetail(offer: offer)
+                if !modelData.offers.isEmpty{
+                    Section(header: Text("Angebote")){
+                        ScrollView(.horizontal, showsIndicators: false){
+                            HStack{
+                                ForEach(modelData.offers){ offer in
+                                    NavigationLink{
+                                        OfferDetail(offer: offer)
+                                            .opacity(offer.isVisible ?? false ? 1: 0.25)
+                                        
+                                    } label:{
+                                        
+                                        OfferColumn(offer: offer, mode: $mode){
+                                            withAnimation(.spring()){
+                                                showsOfferConfirmation  = true
+                                            }
+                                        }
+                                        .confirmationDialog("Dieses Angebot wirklich löschen?", isPresented: $showsOfferConfirmation, titleVisibility: .visible) {
+                                            
+                                            Button("Löschen", role: .destructive){
+                                                modelData.deleteOffer(offerToDelete: offer)
+                                            }
+                                            
+                                        }
                                         .opacity(offer.isVisible ?? false ? 1: 0.25)
-                                    
-                                } label:{
-                                    
-                                    OfferColumn(offer: offer, mode: $mode){
-                                        withAnimation(.spring()){
-                                            showsOfferConfirmation  = true
-                                        }
-                                    }
-                                    .confirmationDialog("Dieses Angebot wirklich löschen?", isPresented: $showsOfferConfirmation, titleVisibility: .visible) {
-                                        
-                                        Button("Löschen", role: .destructive){
-                                            modelData.deleteOffer(offerToDelete: offer)
-                                        }
                                         
                                     }
-                                    .opacity(offer.isVisible ?? false ? 1: 0.25)
+                                    
                                     
                                 }
-                                
-                                
                             }
                         }
-                    }
-                    .listRowInsets(EdgeInsets())
-                }.listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                    }.listRowBackground(Color.clear)
+                }
+               
                 
                 Section(header: Text("Produkte")){
                     List{
@@ -122,10 +125,10 @@ struct MenuList: View {
                     }
                     
                     .sheet(isPresented: $showingProductSheet) {
-                        AddProduct(showingSheet: $showingProductSheet)
+                        AddProduct(productDummy: Product(isVisible:false), showingSheet: $showingProductSheet, mode: .new)
                     }
                     .sheet(isPresented: $showingOfferSheet) {
-                        AddOffer(showingSheet: $showingOfferSheet)
+                        AddOffer(showingSheet: $showingOfferSheet, offerDummy: Offer(isVisible:false), mode: .new)
                     }
                 }
             }

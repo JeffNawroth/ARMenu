@@ -302,7 +302,7 @@ struct MenuDetail: View {
                     Image(systemName: "square.and.pencil")
                 }
                 .sheet(isPresented: $showingSheet) {
-                    EditProduct(product: product, showingSheet: $showingSheet)
+                    AddProduct(productDummy: product, showingSheet: $showingSheet, mode: .edit)
                 }
                 
             }
