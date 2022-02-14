@@ -40,10 +40,10 @@ class ModelData: ObservableObject{
     
     func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
             
-//        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
-            let newDocReference = try collectionRef.addDocument(from: productToAdd)
+            let newDocReference = try collectionRef.addDocument(from: product)
             print("Produkt hinzugefügt mit folgender Referenz: \(newDocReference)")
            loading = false
         }
