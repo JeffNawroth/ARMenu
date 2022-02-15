@@ -20,7 +20,7 @@ struct ARPreview: UIViewRepresentable {
         config.planeDetection = .horizontal
         arView.session.run(config, options: [])
         
-        url.startAccessingSecurityScopedResource()
+       let _ = url.startAccessingSecurityScopedResource()
         let model = try! ModelEntity.loadModel(contentsOf: url)
         url.stopAccessingSecurityScopedResource()
         model.generateCollisionShapes(recursive: true)
