@@ -52,9 +52,9 @@ struct ARViewContainer: UIViewRepresentable {
                         arView.installGestures(for: model)
                     
                         
-//                        let anchor = AnchorEntity(plane: .horizontal )
-//                        anchor.addChild(model)
-//                        arView.scene.addAnchor(anchor)
+                        let anchor = AnchorEntity(plane: .horizontal )
+                        anchor.addChild(model)
+                        arView.scene.addAnchor(anchor)
                         
                         //  model.playAnimation(model.availableAnimations.first!.repeat())
                     } catch {

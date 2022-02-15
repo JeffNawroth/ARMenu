@@ -125,8 +125,26 @@ struct AddProduct: View {
                                     Image(systemName: "eye")
                                 }
                                 .buttonStyle(.borderless)
-                                
-                                
+                            }
+                        }else if let url = productDummy.model{
+                            HStack{
+                                Button{
+                                    withAnimation(.spring()) {
+                                        productDummy.model = nil
+                                    }
+                                }label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(Color.red)
+                                }
+                                .buttonStyle(.borderless)
+                                Text(URL(string: url)!.lastPathComponent)
+                                Spacer()
+                                Button {
+                                    showingARPreview = true
+                                } label: {
+                                    Image(systemName: "eye")
+                                }
+                                .buttonStyle(.borderless)
                             }
                         }
                     }
@@ -420,7 +438,18 @@ struct AddProduct: View {
                 ImagePicker(image: $inputImage)
             }
             .sheet(isPresented: $showingARPreview){
-                ARPreview(url: fileURL!)
+                if mode == .new{
+                    ARPreview(url: fileURL!)
+                        .ignoresSafeArea()
+                   
+                }
+                else{
+                    ZStack{
+                        ARViewContainer(product: productDummy)
+                            .ignoresSafeArea()
+                    }
+                }
+               
             }
             .onAppear{
                 modelData.fetchCategoriesData()
@@ -519,6 +548,9 @@ struct NutritionTextField: View{
         }
     }
 }
+
+
+
 
 
 

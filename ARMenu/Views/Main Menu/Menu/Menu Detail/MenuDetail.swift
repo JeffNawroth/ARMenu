@@ -127,11 +127,7 @@ struct MenuDetail: View {
                             .font(.headline)
                         Text("In AR ansehen")
                             .fontWeight(.semibold)
-                
-               
-                    
-                    
-                    
+   
                 }
                 .foregroundColor(.white)
                 .font(.system(size: 19))
