@@ -11,7 +11,8 @@ import SDWebImageSwiftUI
 struct OfferDetail: View {
     @EnvironmentObject var modelData: ModelData
     var offer: Offer
-    @State var showingSheet = false
+    @State private var showingSheet = false
+    @State private var showingDeleteConfirmation = false
     
 //    var productIDs = ["0mwCqIUNSP7avrN6uwgI", "AdKSHUGnTnDAJEWHDvmw"]
 //
@@ -92,6 +93,20 @@ struct OfferDetail: View {
                 .sheet(isPresented: $showingSheet) {
                     AddOffer(showingSheet: $showingSheet, offerDummy: offer, mode: .edit)
                 }
+                
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingDeleteConfirmation = true
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .confirmationDialog("Dieses Angebot wirklich löschen?", isPresented: $showingDeleteConfirmation, titleVisibility: .visible) {
+                    Button("Löschen", role: .destructive){
+                        modelData.deleteOffer(offerToDelete: offer)
+                    }
+                }
+
             }
         }
     }

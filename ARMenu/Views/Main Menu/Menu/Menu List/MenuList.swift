@@ -16,7 +16,6 @@ struct MenuList: View {
     @State private var showsConfirmation = false
     @State private var showsOfferConfirmation = false
     @State private var selectedCategory = Category(name: "Alles")
-    @State private var mode: EditMode = .inactive
     
     
     var filteredMenuList: [Product] {
@@ -37,14 +36,17 @@ struct MenuList: View {
     var body: some View {
         NavigationView{
             Form{
-                Section{
-                    Picker("Kategorie", selection: $selectedCategory) {
-                        Text("Alles").tag(Category(name: "Alles"))
-                        ForEach(modelData.categories, id: \.self) {
-                            Text($0.name)
+                if !modelData.categories.isEmpty{
+                    Section{
+                        Picker("Kategorie", selection: $selectedCategory) {
+                            Text("Alles").tag(Category(name: "Alles"))
+                            ForEach(modelData.categories, id: \.self) {
+                                Text($0.name)
+                            }
                         }
                     }
                 }
+                
                 if !modelData.offers.isEmpty{
                     Section(header: Text("Angebote")){
                         ScrollView(.horizontal, showsIndicators: false){
@@ -56,19 +58,9 @@ struct MenuList: View {
                                         
                                     } label:{
                                         
-                                        OfferColumn(offer: offer, mode: $mode){
-                                            withAnimation(.spring()){
-                                                showsOfferConfirmation  = true
-                                            }
-                                        }
-                                        .confirmationDialog("Dieses Angebot wirklich löschen?", isPresented: $showsOfferConfirmation, titleVisibility: .visible) {
-                                            
-                                            Button("Löschen", role: .destructive){
-                                                modelData.deleteOffer(offerToDelete: offer)
-                                            }
-                                            
-                                        }
-                                        .opacity(offer.isVisible ?? false ? 1: 0.25)
+                                        OfferColumn(offer: offer)
+                                            .opacity(offer.isVisible ?? false ? 1: 0.25)
+                                        
                                         
                                     }
                                     
@@ -79,27 +71,24 @@ struct MenuList: View {
                         .listRowInsets(EdgeInsets())
                     }.listRowBackground(Color.clear)
                 }
-               
                 
-                Section(header: Text("Produkte")){
-                    List{
-                        ForEach(searchResults){ product in
-                            NavigationLink{
-                                MenuDetail(product: product)
-                                    .opacity(product.isVisible ?? false ? 1: 0.25)
-                            } label:{
-                                MenuRow(product: product)
-                                    .opacity(product.isVisible ?? false ? 1: 0.25)
-                            }
-                        }.onDelete{(indexSet) in
-                            for index in indexSet{
-                                let productToDelete = modelData.products[index]
-                                modelData.deleteProduct(productToDelete: productToDelete)
+                
+                if !modelData.products.isEmpty{
+                    Section(header: Text("Produkte")){
+                        List{
+                            ForEach(searchResults){ product in
+                                NavigationLink{
+                                    MenuDetail(product: product)
+                                        .opacity(product.isVisible ?? false ? 1: 0.25)
+                                } label:{
+                                    MenuRow(product: product)
+                                        .opacity(product.isVisible ?? false ? 1: 0.25)
+                                }
                             }
                         }
                     }
-                    
                 }
+               
             }
             .navigationTitle("Speisekarte")
             .searchable(text: $searchText)
@@ -121,7 +110,7 @@ struct MenuList: View {
                         Button("Produkt erstellen"){
                             showingProductSheet = true
                         }
-                                                
+                        
                     }
                     
                     .sheet(isPresented: $showingProductSheet) {
@@ -132,7 +121,6 @@ struct MenuList: View {
                     }
                 }
             }
-            .environment(\.editMode, $mode)
         }
         .onAppear{
             modelData.fetchProductsData()
@@ -140,6 +128,7 @@ struct MenuList: View {
             modelData.fetchCategoriesData()
         }
     }
+    
 }
 
 struct MenuList_Previews: PreviewProvider {
