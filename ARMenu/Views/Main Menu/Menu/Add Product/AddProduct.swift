@@ -102,6 +102,16 @@ struct AddProduct: View {
                                     .foregroundColor(.green)
                                 
                                 Text("3D-Model hinzufügen")
+                                
+                                Spacer()
+                                
+                                Button{
+                                    
+                                }label:{
+                                    Image(systemName: "questionmark")
+
+                                }
+                                .buttonStyle(.borderless)
                             }
                         }
                         .disabled(fileURL != nil)
