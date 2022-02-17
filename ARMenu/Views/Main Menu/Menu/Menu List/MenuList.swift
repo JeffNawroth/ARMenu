@@ -28,7 +28,7 @@ struct MenuList: View {
         if searchText.isEmpty {
             return filteredMenuList
         } else {
-            return filteredMenuList.filter { $0.name!.contains(searchText) /*|| $0.category.name.contains(searchText)*/}
+            return filteredMenuList.filter { $0.name!.contains(searchText) || $0.category != nil && $0.category!.name.contains(searchText)}
         }
     }
     
