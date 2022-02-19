@@ -18,6 +18,7 @@ struct AddProduct: View {
     @State private var image: Image?
     @State private var showingUnitsSheet = false
     @State private var showingImageConfirmation = false
+    @State private var showingARPreview = false
     @State private var fileURL: URL?
     @State private var showingFileImporter = false
     @State private var disableButton = false
@@ -101,6 +102,16 @@ struct AddProduct: View {
                                     .foregroundColor(.green)
                                 
                                 Text("3D-Model hinzufügen")
+                                
+                                Spacer()
+                                
+                                Button{
+                                    
+                                }label:{
+                                    Image(systemName: "questionmark")
+
+                                }
+                                .buttonStyle(.borderless)
                             }
                         }
                         .disabled(fileURL != nil)
@@ -119,12 +130,31 @@ struct AddProduct: View {
                                 Text(url.lastPathComponent)
                                 Spacer()
                                 Button {
-                                    
+                                    showingARPreview = true
                                 } label: {
                                     Image(systemName: "eye")
                                 }
                                 .buttonStyle(.borderless)
-                                
+                            }
+                        }else if let url = productDummy.model{
+                            HStack{
+                                Button{
+                                    withAnimation(.spring()) {
+                                        productDummy.model = nil
+                                    }
+                                }label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(Color.red)
+                                }
+                                .buttonStyle(.borderless)
+                                Text(URL(string: url)!.lastPathComponent)
+                                Spacer()
+                                Button {
+                                    showingARPreview = true
+                                } label: {
+                                    Image(systemName: "eye")
+                                }
+                                .buttonStyle(.borderless)
                             }
                         }
                     }
@@ -417,6 +447,20 @@ struct AddProduct: View {
             .sheet(isPresented: $showingImagePicker) {
                 ImagePicker(image: $inputImage)
             }
+            .sheet(isPresented: $showingARPreview){
+                if mode == .new{
+                    ARPreview(url: fileURL!)
+                        .ignoresSafeArea()
+                   
+                }
+                else{
+                    ZStack{
+                        ARViewContainer(product: productDummy)
+                            .ignoresSafeArea()
+                    }
+                }
+               
+            }
             .onAppear{
                 modelData.fetchCategoriesData()
             }
@@ -479,6 +523,7 @@ struct AddProduct: View {
                 
             }
             
+            
         }
         
     }
@@ -513,4 +558,9 @@ struct NutritionTextField: View{
         }
     }
 }
+
+
+
+
+
 

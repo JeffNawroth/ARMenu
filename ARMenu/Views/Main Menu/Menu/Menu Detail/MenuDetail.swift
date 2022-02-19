@@ -9,12 +9,14 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct MenuDetail: View {
-    var product: Product
+    @EnvironmentObject var modelData: ModelData
     @State private var showingARPreview = false
     @State private var nutritionsExpanded = false
     @State private var allergensExpanded = false
     @State private var toppingsExpanded = false
     @State private var showingSheet = false
+    @State private var showingDeleteConfirmation = false
+    var product: Product
     var body: some View {
         ScrollView{
             if let image = product.image{
@@ -57,12 +59,14 @@ struct MenuDetail: View {
                                 Text("\(price, specifier: "%.2f")")
                                     .fontWeight(.semibold)
                                     .foregroundColor(.secondary)
+                                }
+                            
+                            if product.price != nil && product.servingSize != nil{
                                 Text("•")
                                     .fontWeight(.semibold)
                                     .foregroundColor(.secondary)
                             }
                           
-                            
                             if let servingSize = product.servingSize{
                                 Text("\(servingSize.size)" + servingSize.unit.name)
                                     .fontWeight(.semibold)
@@ -125,11 +129,7 @@ struct MenuDetail: View {
                             .font(.headline)
                         Text("In AR ansehen")
                             .fontWeight(.semibold)
-                
-               
-                    
-                    
-                    
+   
                 }
                 .foregroundColor(.white)
                 .font(.system(size: 19))
@@ -306,6 +306,20 @@ struct MenuDetail: View {
                 }
                 
             }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showingDeleteConfirmation = true
+                } label: {
+                    Image(systemName: "trash")
+                }
+                .confirmationDialog("Dieses Produkt wirklich löschen?", isPresented: $showingDeleteConfirmation, titleVisibility: .visible) {
+                    Button("Löschen", role: .destructive){
+                        modelData.deleteProduct(productToDelete: product)
+                    }
+                }
+                
+            }
+            
         }
     }
     
