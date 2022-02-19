@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Profile: View {
+    @EnvironmentObject var userInfo: UserInfo
+    @EnvironmentObject var userModel: UserAuthentication
     @State var showingSheet = false
     @State var showingQRSheet = false
     @State var oldPassword = ""
@@ -53,7 +55,8 @@ struct Profile: View {
                 HStack{
                     Spacer()
                     Button("Abmelden"){
-                        
+                        userModel.signOut()
+//                        self.userInfo.isUserAuthenticated = .signedOut
                     }
                     .foregroundColor(.red)
 

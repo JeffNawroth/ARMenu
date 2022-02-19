@@ -110,7 +110,6 @@ class ModelData: ObservableObject{
                 self.addProduct(productToAdd: productToAdd, imagePath: nil, modelPath: nil)
             }
         }
-        
     }
     
     func uploadModel(localURL: URL?, productToAdd: Product){
