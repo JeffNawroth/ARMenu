@@ -61,6 +61,7 @@
 		B2BAC31F27B43893006B0381 /* ScanOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC31E27B43893006B0381 /* ScanOverlayView.swift */; };
 		B2BAC32527B53D19006B0381 /* BindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC32427B53D18006B0381 /* BindingExtension.swift */; };
 		B2BE46A827988E5A008484B1 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B2BE46A727988E5A008484B1 /* SDWebImageSwiftUI */; };
+		B2CD949127BED79F00E0B5B0 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD949027BED79F00E0B5B0 /* RegistrationView.swift */; };
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
 		B2D39D102784C34F009B5D25 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0F2784C34F009B5D25 /* Offer.swift */; };
 		B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D112784CB17009B5D25 /* OfferDetail.swift */; };
@@ -119,6 +120,7 @@
 		B2BAC31C27B4321A006B0381 /* QRCodeGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeGenerator.swift; sourceTree = "<group>"; };
 		B2BAC31E27B43893006B0381 /* ScanOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanOverlayView.swift; sourceTree = "<group>"; };
 		B2BAC32427B53D18006B0381 /* BindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
+		B2CD949027BED79F00E0B5B0 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
 		B2D39D0F2784C34F009B5D25 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		B2D39D112784CB17009B5D25 /* OfferDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetail.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 				B26FD1682774CF1F00E75FFC /* Login.swift */,
 				B2BAC31A27B42B9C006B0381 /* CustomerQRCode.swift */,
 				B2BAC31E27B43893006B0381 /* ScanOverlayView.swift */,
+				B2CD949027BED79F00E0B5B0 /* RegistrationView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				B23448662793489A000AD206 /* SelectProducts.swift in Sources */,
 				B26FD1612774CE5C00E75FFC /* ARViewContainer.swift in Sources */,
 				B224E00E279714410022A054 /* Topping.swift in Sources */,
+				B2CD949127BED79F00E0B5B0 /* RegistrationView.swift in Sources */,
 				B224E01027971E710022A054 /* SelectToppings.swift in Sources */,
 				B229A86B27A069CA00B31484 /* CategoryPicker.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,

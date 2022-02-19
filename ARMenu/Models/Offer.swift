@@ -14,9 +14,9 @@ struct Offer: Identifiable, Codable, Hashable{
     var image: String?
     var title: String?
     var description: String?
-    var products: [Product]?
+    var products: [String]?
     var isVisible: Bool?
     
-    static var dummyOffer = Offer(/*image:"https://firebasestorage.googleapis.com/v0/b/armenu-12bfd.appspot.com/o/Monatswaffel.jpg?alt=media&token=cf9d615b-b922-4160-a500-e15080e92848" ,*/ title: "Im Hörnken Angebot", description: "Dummy beschreibung", products: [Product.dummyProduct] , isVisible: true)
+    static var dummyOffer = Offer(/*image:"https://firebasestorage.googleapis.com/v0/b/armenu-12bfd.appspot.com/o/Monatswaffel.jpg?alt=media&token=cf9d615b-b922-4160-a500-e15080e92848" ,*/ title: "Im Hörnken Angebot", description: "Dummy beschreibung", products: [""] , isVisible: true)
 
 }

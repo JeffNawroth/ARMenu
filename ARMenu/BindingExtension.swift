@@ -63,4 +63,8 @@ extension Binding{
 
     }
     
+    func toNonOptionalStrings(fallback: [String] = []) -> Binding<[String]> where Value == [String]?{
+        toNonOptionalValue(fallback: fallback)
+    }
+    
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SelectProducts: View {
     @EnvironmentObject var modelData: ModelData
-    @Binding var selections: [Product]
+    @Binding var selections: [String]
     @State private var searchText = ""
     
     var searchResults: [Product] {
@@ -24,12 +24,12 @@ struct SelectProducts: View {
         List{
             ForEach(searchResults){ product in
                 MultipleProductPicker(product: product, isSelected: selections.contains{
-                    $0.id == product.id
+                    $0 == product.id
                 }){
-                    if (selections.contains{$0.id == product.id}){
-                        selections.removeAll(where: {$0.id == product.id})
+                    if (selections.contains{$0 == product.id}){
+                        selections.removeAll(where: {$0 == product.id})
                     }else{
-                        selections.append(product)
+                        selections.append(product.id!)
                     }
                 }
             }
@@ -45,7 +45,7 @@ struct SelectProducts: View {
 
 struct SelectProducts_Previews: PreviewProvider {
     static var previews: some View {
-        SelectProducts(selections: .constant(ModelData().products))
+        SelectProducts(selections: .constant([""]))
             .environmentObject(ModelData())
     }
 }

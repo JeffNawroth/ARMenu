@@ -20,6 +20,7 @@ struct ScanOverlayView: View {
                     .fill(Color.black)
                     .frame(width: cutoutWidth, height: cutoutWidth, alignment: .center)
                     .blendMode(.destinationOut)
+                
             }.compositingGroup()
             
             Path { path in

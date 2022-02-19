@@ -14,13 +14,13 @@ struct OfferDetail: View {
     @State private var showingSheet = false
     @State private var showingDeleteConfirmation = false
     
-//    var productIDs = ["0mwCqIUNSP7avrN6uwgI", "AdKSHUGnTnDAJEWHDvmw"]
-//
-//    var products: [Product]{
-//        modelData.products.filter{
-//            productIDs.contains($0.id!)
-//        }
-//    }
+    
+    
+    var products: [Product]{
+            modelData.products.filter{
+                offer.products != nil && offer.products!.contains($0.id!)
+            }
+        }
 
     var body: some View {
         
@@ -41,6 +41,7 @@ struct OfferDetail: View {
                     .cornerRadius(10)
                     .shadow(radius: 3)
                     .padding()
+                    .foregroundColor(.gray)
             }
             
             
@@ -56,7 +57,7 @@ struct OfferDetail: View {
 
                 
              
-                if let products = offer.products{
+                if let products = products{
                     Text("Produkte")
                         .font(.headline)
                     

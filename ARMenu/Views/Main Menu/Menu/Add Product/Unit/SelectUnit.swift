@@ -21,6 +21,9 @@ struct SelectUnit: View {
                         if selectedUnit != unit{
                             selectedUnit = unit
                         }
+                        else{
+                        
+                        }
                         presentationMode.wrappedValue.dismiss()
                     }
                 }

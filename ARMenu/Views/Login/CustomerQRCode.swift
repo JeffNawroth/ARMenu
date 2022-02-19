@@ -12,19 +12,24 @@ struct CustomerQRCode: View {
     @Binding var signInSuccess: Bool
     @State private var isShowingScanner = false
     var body: some View {
-        Section(header: Text("Oder für kunden")){
+        Section(){
+
             Button {
                 isShowingScanner = true
             } label: {
-                HStack{
+                VStack{
                     Image(systemName: "qrcode.viewfinder")
-                    Divider()
+                    .font(.system(size: 250))
                     Text("QR-Code scannen")
                 }
                 
-            }
 
+            }
+            
+            .listRowBackground(Color.clear)
+            
         }
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
         .sheet(isPresented: $isShowingScanner) {
             CodeScannerView(codeTypes: [.qr], completion:handleScan)
                 .overlay(ScanOverlayView())

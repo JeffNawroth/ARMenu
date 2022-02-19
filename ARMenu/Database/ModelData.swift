@@ -614,25 +614,25 @@ class ModelData: ObservableObject{
         }
     }
     
-    func fetchOffer(offerProducts: [Product]){
-        db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("No documents")
-                return
-            }
-            
-            self.offers = documents.map { queryDocumentSnapshot -> Offer in
-                let data = queryDocumentSnapshot.data()
-                let image = data["image"] as? String ?? ""
-                let title = data["title"] as? String ?? ""
-                let description = data["description"] as? String ?? ""
-                let products = offerProducts
-                let isVisible = data["isVisible"] as? Bool ?? false
-                
-                return Offer(image: image, title: title, description: description, products: products, isVisible: isVisible)
-            }
-        }
-    }
+//    func fetchOffer(offerProducts: [Product]){
+//        db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
+//            guard let documents = querySnapshot?.documents else {
+//                print("No documents")
+//                return
+//            }
+//
+//            self.offers = documents.map { queryDocumentSnapshot -> Offer in
+//                let data = queryDocumentSnapshot.data()
+//                let image = data["image"] as? String ?? ""
+//                let title = data["title"] as? String ?? ""
+//                let description = data["description"] as? String ?? ""
+//                let products = offerProducts
+//                let isVisible = data["isVisible"] as? Bool ?? false
+//
+//                return Offer(image: image, title: title, description: description, products: products, isVisible: isVisible)
+//            }
+//        }
+//    }
     
     
     func addOfferController(offerToAdd: Offer, imageToAdd: UIImage?)    {
