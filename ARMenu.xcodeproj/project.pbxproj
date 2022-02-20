@@ -62,6 +62,9 @@
 		B2BAC32527B53D19006B0381 /* BindingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BAC32427B53D18006B0381 /* BindingExtension.swift */; };
 		B2BE46A827988E5A008484B1 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = B2BE46A727988E5A008484B1 /* SDWebImageSwiftUI */; };
 		B2CD949127BED79F00E0B5B0 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD949027BED79F00E0B5B0 /* RegistrationView.swift */; };
+		B2CD949327C16AA400E0B5B0 /* WidthPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD949227C16AA400E0B5B0 /* WidthPreferenceKey.swift */; };
+		B2CD949527C16ADF00E0B5B0 /* WidthPreferenceSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD949427C16ADF00E0B5B0 /* WidthPreferenceSettingView.swift */; };
+		B2CD949727C16F4300E0B5B0 /* ServingSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD949627C16F4300E0B5B0 /* ServingSizeView.swift */; };
 		B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */; };
 		B2D39D102784C34F009B5D25 /* Offer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D0F2784C34F009B5D25 /* Offer.swift */; };
 		B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D39D112784CB17009B5D25 /* OfferDetail.swift */; };
@@ -121,6 +124,9 @@
 		B2BAC31E27B43893006B0381 /* ScanOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanOverlayView.swift; sourceTree = "<group>"; };
 		B2BAC32427B53D18006B0381 /* BindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
 		B2CD949027BED79F00E0B5B0 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		B2CD949227C16AA400E0B5B0 /* WidthPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidthPreferenceKey.swift; sourceTree = "<group>"; };
+		B2CD949427C16ADF00E0B5B0 /* WidthPreferenceSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidthPreferenceSettingView.swift; sourceTree = "<group>"; };
+		B2CD949627C16F4300E0B5B0 /* ServingSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServingSizeView.swift; sourceTree = "<group>"; };
 		B2D39D0D2784BB4A009B5D25 /* OfferColumn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferColumn.swift; sourceTree = "<group>"; };
 		B2D39D0F2784C34F009B5D25 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		B2D39D112784CB17009B5D25 /* OfferDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferDetail.swift; sourceTree = "<group>"; };
@@ -196,6 +202,8 @@
 				B26FD1842774D19B00E75FFC /* Info.plist */,
 				B26FD14C2774CCD100E75FFC /* AppDelegate.swift */,
 				B2BAC32427B53D18006B0381 /* BindingExtension.swift */,
+				B2CD949227C16AA400E0B5B0 /* WidthPreferenceKey.swift */,
+				B2CD949427C16ADF00E0B5B0 /* WidthPreferenceSettingView.swift */,
 				A5BA8511279884FB0011C06A /* Database */,
 				B26FD1812774D18800E75FFC /* Euphoria_Script */,
 				B26FD1802774D11600E75FFC /* Views */,
@@ -266,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				B26FD1622774CE9F00E75FFC /* AddProduct.swift */,
+				B2CD949627C16F4300E0B5B0 /* ServingSizeView.swift */,
 				B26FD1662774CEF700E75FFC /* ImagePicker.swift */,
 				B2820EED27BAE6D300949735 /* ARPreview.swift */,
 				B249CD4827A1BF2A00A025C1 /* Unit */,
@@ -486,6 +495,7 @@
 				B26FD15F2774CDF900E75FFC /* AboutUs.swift in Sources */,
 				B249CD4A27A1C0D200A025C1 /* UnitPicker.swift in Sources */,
 				B2D39D122784CB17009B5D25 /* OfferDetail.swift in Sources */,
+				B2CD949727C16F4300E0B5B0 /* ServingSizeView.swift in Sources */,
 				B26FD1732774CFCC00E75FFC /* MenuRow.swift in Sources */,
 				B2A2F163278028A4001451B8 /* SelectAdditives.swift in Sources */,
 				B27ADA8A2798AB5B0000A750 /* Additive.swift in Sources */,
@@ -495,6 +505,7 @@
 				B228E993278CAA0F00792F7E /* AddOffer.swift in Sources */,
 				B2820EEE27BAE6D300949735 /* ARPreview.swift in Sources */,
 				B2BAC31F27B43893006B0381 /* ScanOverlayView.swift in Sources */,
+				B2CD949527C16ADF00E0B5B0 /* WidthPreferenceSettingView.swift in Sources */,
 				B26FD1792774D02F00E75FFC /* Product.swift in Sources */,
 				B229A86927A0645800B31484 /* SelectCategory.swift in Sources */,
 				B2D39D102784C34F009B5D25 /* Offer.swift in Sources */,
@@ -513,6 +524,7 @@
 				B229A86B27A069CA00B31484 /* CategoryPicker.swift in Sources */,
 				B26FD1712774CFB000E75FFC /* MenuList.swift in Sources */,
 				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,
+				B2CD949327C16AA400E0B5B0 /* WidthPreferenceKey.swift in Sources */,
 				B27ADA8C2798AECC0000A750 /* Category.swift in Sources */,
 				B2BAC32527B53D19006B0381 /* BindingExtension.swift in Sources */,
 				B26FD1632774CE9F00E75FFC /* AddProduct.swift in Sources */,

@@ -14,6 +14,7 @@ struct MenuDetail: View {
     @State private var nutritionsExpanded = false
     @State private var allergensExpanded = false
     @State private var toppingsExpanded = false
+    @State private var servingSizesExpanded = false
     @State private var showingSheet = false
     @State private var showingDeleteConfirmation = false
     var product: Product
@@ -61,16 +62,20 @@ struct MenuDetail: View {
                                     .foregroundColor(.secondary)
                                 }
                             
-                            if product.price != nil && product.servingSize != nil{
+                            if product.price != nil && product.servingSizes != nil && product.servingSizes?.count == 1{
                                 Text("•")
                                     .fontWeight(.semibold)
                                     .foregroundColor(.secondary)
                             }
                           
-                            if let servingSize = product.servingSize{
-                                Text("\(servingSize.size)" + servingSize.unit.name)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.secondary)
+                            if let servingSizes = product.servingSizes{
+                                if servingSizes.count == 1{
+                                    Text("\(servingSizes.first!.size)" + servingSizes.first!.unit.name)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.secondary)
+                                    
+                                }
+                                
                             }
                         }
                         
@@ -173,6 +178,23 @@ struct MenuDetail: View {
             .padding()
             
             VStack{
+                
+                if let servingSizes = product.servingSizes{
+                    if servingSizes.count > 1{
+                        DisclosureGroup(isExpanded: $servingSizesExpanded) {
+                            ForEach(servingSizes, id: \.self){servingSize in
+                                HStack{
+                                    Text("\(servingSize.size, specifier: "%.2f") \(servingSize.unit.name)")
+                                    Spacer()
+                                    Text("\(servingSize.price, specifier: "%.2f")")
+                                }
+                            }
+                        } label: {
+                            Text("Serviergrößen")
+                        }
+                    }
+                    }
+                 
                 
                 if let toppings = product.toppings{
                     DisclosureGroup(isExpanded: $toppingsExpanded) {

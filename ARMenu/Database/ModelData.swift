@@ -40,7 +40,7 @@ class ModelData: ObservableObject{
     
     func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
         
-        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
+        let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSizes: productToAdd.servingSizes, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
         let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
@@ -353,7 +353,7 @@ class ModelData: ObservableObject{
             let imageURL = url.absoluteString
             print("Bildpfad wurde erfolgreich ermittelt!")
             
-            let updatedProduct = Product(id: productToUpdate.id, image: imageURL, model: productToUpdate.model, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSize: productToUpdate.servingSize, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
+            let updatedProduct = Product(id: productToUpdate.id, image: imageURL, model: productToUpdate.model, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSizes: productToUpdate.servingSizes, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
             
             updateProduct(productToUpdate: updatedProduct)
             
@@ -380,7 +380,7 @@ class ModelData: ObservableObject{
                 let modelURL = url.absoluteString
                 print("Modellpfad wurde erfolgreich ermittelt!")
                 
-                let updatedProduct = Product(id: productToUpdate.id, image: imageURL, model: modelURL, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSize: productToUpdate.servingSize, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
+                let updatedProduct = Product(id: productToUpdate.id, image: imageURL, model: modelURL, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSizes: productToUpdate.servingSizes, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
                 
                 updateProduct(productToUpdate: updatedProduct)
             }
@@ -399,7 +399,7 @@ class ModelData: ObservableObject{
             let modelURL = url.absoluteString
             print("Modellpfad wurde erfolgreich ermittelt!")
             
-            let updatedProduct = Product(id: productToUpdate.id, image: productToUpdate.image, model: modelURL, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSize: productToUpdate.servingSize, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
+            let updatedProduct = Product(id: productToUpdate.id, image: productToUpdate.image, model: modelURL, name: productToUpdate.name, category: productToUpdate.category, price: productToUpdate.price, description: productToUpdate.description, servingSizes: productToUpdate.servingSizes, isVegan: productToUpdate.isVegan, isBio: productToUpdate.isBio, isFairtrade: productToUpdate.isFairtrade, isVisible: productToUpdate.isVisible, nutritionFacts: productToUpdate.nutritionFacts, allergens: productToUpdate.allergens, additives: productToUpdate.additives, toppings: productToUpdate.toppings)
             
             updateProduct(productToUpdate: updatedProduct)
         }

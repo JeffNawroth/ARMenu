@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct Login: View {
-    @State private var username: String = "imHoernken"
+    @State private var email: String = "imHoernken"
     @State private var password: String = "imHoernken"
     @Binding  var signInSucces: Bool
     @State private var showingRegistrationSheet = false
     @State private var selectedIndex = 0
+    @State private var width: CGFloat? = nil
+
 
         
     var body: some View {
@@ -34,27 +36,31 @@ struct Login: View {
                 }else{
                     Section(header: Text("Mit Benutzerkonto Einloggen")){
                         HStack{
-                            Text("Benutzername")
-                                .padding(.trailing)
-                            TextField("Benutzername", text:$username)
+                            Text("E-Mail")
+                                .frame(width: width, alignment: .leading)
+                                .lineLimit(1)
+                                .background(WidthPreferenceSettingView())
+                            TextField("E-Mail", text:$email)
                         }
                         HStack {
                             Text("Passwort")
-                                .padding(.trailing, 56)
+                                .frame(width: width, alignment: .leading)
+                                .lineLimit(1)
+                                .background(WidthPreferenceSettingView())
 
                             SecureField("Erforderlich", text: $password)
                         }
                             
                         
                             Button("Anmelden"){
-                                if(username == "imHoernken" && password == "imHoernken"){
+                                if(email == "imHoernken" && password == "imHoernken"){
                                     signInSucces = true
 
                                 }
                             }
                     }
                     
-                    Button("Neues Benutzerkonto erstellen"){
+                    Button("Neues Konto erstellen"){
                         showingRegistrationSheet = true
                     }
                     .sheet(isPresented: $showingRegistrationSheet) {
@@ -67,6 +73,14 @@ struct Login: View {
                 
                 
             }
+            .onPreferenceChange(WidthPreferenceKey.self) { preferences in
+                        for p in preferences {
+                            let oldWidth = self.width ?? CGFloat.zero
+                            if p.width > oldWidth {
+                                self.width = p.width
+                            }
+                        }
+                    }
             .navigationTitle("Willkommen!")
         }
         
@@ -78,4 +92,8 @@ struct Login_Previews: PreviewProvider {
         Login(signInSucces: .constant(true))
     }
 }
+
+
+
+
 

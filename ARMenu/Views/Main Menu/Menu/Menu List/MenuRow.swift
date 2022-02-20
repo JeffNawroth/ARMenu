@@ -42,30 +42,30 @@ struct MenuRow: View {
                     .fontWeight(.semibold)
                 
                 
-                if product.price != nil || product.servingSize != nil{
-                    HStack{
-                        if let price = product.price{
-                            Text("\(price, specifier: "%.2f")")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-
-
-                        }
-                        if product.price != nil && product.servingSize?.size != nil{
-                            Text("•")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-
-                        if let servingSize = product.servingSize{
-                            Text("\(servingSize.size)" + servingSize.unit.name)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-
-
-                    }
-                }
+//                if product.price != nil || product.servingSize != nil{
+//                    HStack{
+//                        if let price = product.price{
+//                            Text("\(price, specifier: "%.2f")")
+//                                .font(.subheadline)
+//                                .foregroundColor(.secondary)
+//
+//
+//                        }
+//                        if product.price != nil && product.servingSize?.size != nil{
+//                            Text("•")
+//                                .font(.subheadline)
+//                                .foregroundColor(.secondary)
+//                        }
+//
+//                        if let servingSize = product.servingSize{
+//                            Text("\(servingSize.size)" + servingSize.unit.name)
+//                                .font(.subheadline)
+//                                .foregroundColor(.secondary)
+//                        }
+//
+//
+//                    }
+//                }
                
                 
                 if (product.isVegan != nil || product.isBio != nil || product.isFairtrade != nil){

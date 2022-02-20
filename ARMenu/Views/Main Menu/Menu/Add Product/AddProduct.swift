@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 struct AddProduct: View {
     
-   
+    
     @EnvironmentObject var modelData: ModelData
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -25,7 +25,6 @@ struct AddProduct: View {
     @State var productDummy: Product
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
-    
     enum Mode{
         case new
         case edit
@@ -71,7 +70,7 @@ struct AddProduct: View {
                             
                             Button {
                                 showingImageConfirmation = true
-
+                                
                             } label: {
                                 Text("Foto hinzufügen")
                                     .foregroundColor(Color.blue)
@@ -91,8 +90,8 @@ struct AddProduct: View {
                             if showingFileImporter{
                                 showingFileImporter = false
                                 DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
-                                        showingFileImporter = true
-                                    })
+                                    showingFileImporter = true
+                                })
                             }else{
                                 showingFileImporter = true
                             }
@@ -109,7 +108,7 @@ struct AddProduct: View {
                                     
                                 }label:{
                                     Image(systemName: "questionmark")
-
+                                    
                                 }
                                 .buttonStyle(.borderless)
                             }
@@ -183,31 +182,31 @@ struct AddProduct: View {
                             }
                         }
                         
-                        HStack{
-                            Button {
-                                showingUnitsSheet = true
-                            } label: {
-                                HStack{
-                                    if let unitName = productDummy.servingSize?.unit.name{
-                                        Text(unitName)
-                                            .foregroundColor(.blue)
-                                    }
-                                    Image(systemName: "chevron.right")
-                                        .imageScale(.small)
-                                        .foregroundColor(.gray)
-                                    Divider()
-                                }
-                            }.padding(.trailing)
-                                .buttonStyle(.plain)
-                            
-                            TextField("Menge", value: $productDummy.servingSize.toNonOptionalServingSize().size, format: .number)
-                                .keyboardType(.decimalPad)
-                                .focused($isFocused)
-                            
-                        }
-                        .sheet(isPresented: $showingUnitsSheet) {
-                            SelectUnit(selectedUnit: $productDummy.servingSize.toNonOptionalServingSize().unit, showingUnitsSheet: $showingUnitsSheet)
-                        }
+                        //                        HStack{
+                        //                            Button {
+                        //                                showingUnitsSheet = true
+                        //                            } label: {
+                        //                                HStack{
+                        //                                    if let unitName = productDummy.servingSize?.unit.name{
+                        //                                        Text(unitName)
+                        //                                            .foregroundColor(.blue)
+                        //                                    }
+                        //                                    Image(systemName: "chevron.right")
+                        //                                        .imageScale(.small)
+                        //                                        .foregroundColor(.gray)
+                        //                                    Divider()
+                        //                                }
+                        //                            }.padding(.trailing)
+                        //                                .buttonStyle(.plain)
+                        //
+                        //                            TextField("Menge", value: $productDummy.servingSize.toNonOptionalServingSize().size, format: .number)
+                        //                                .keyboardType(.decimalPad)
+                        //                                .focused($isFocused)
+                        //
+                        //                        }
+                        //                        .sheet(isPresented: $showingUnitsSheet) {
+                        //                            SelectUnit(selectedUnit: $productDummy.servingSize.toNonOptionalServingSize().unit, showingUnitsSheet: $showingUnitsSheet)
+                        //                        }
                         
                         
                         HStack{
@@ -222,16 +221,10 @@ struct AddProduct: View {
                     }
                     
                     
-                    
-                    Section(header: Text("Beschreibung")){
-                        TextEditor(text: $productDummy.description.toNonOptionalString())
-                            .focused($isFocused)
-                    }
-                    
-                    //                Section(){
+                    //                    Section(){
                     //
-                    //                        ForEach(servingSizeViews, id: \.self){ view in
-                    //                            view
+                    //                        ForEach(servingSizeViews){ view in
+                    //
                     //                        }
                     //                        .onDelete { offsets in
                     //                            servingSizeViews.remove(atOffsets: offsets)
@@ -244,10 +237,64 @@ struct AddProduct: View {
                     //                                    .foregroundColor(.green)
                     //                            }
                     //                            Text("Serviergröße hinzufügen")
-                    //
                     //                        }
                     //
-                    //                }
+                    //                    }
+                    
+                    if productDummy.servingSizes != nil{
+                        ForEach($productDummy.servingSizes.toNonOptionalServingSizes(), id: \.self){ $servingSize in
+                            HStack{
+                                Button{
+                                    withAnimation(.spring()){
+                                        productDummy.servingSizes?.removeAll{
+                                            $0 == servingSize
+                                        }
+                                        if productDummy.servingSizes?.count == 0{
+                                            productDummy.servingSizes = nil
+                                        }
+                                    }
+                                }label:{
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(.red)
+                                }
+                                .buttonStyle(.borderless)
+                                ServingSizeView(servingSize: $servingSize)
+                            }
+                            
+                        }
+                        .onDelete { IndexSet in
+                            productDummy.servingSizes?.remove(atOffsets: IndexSet)
+                        }
+                        
+                    }
+                    
+                    HStack{
+                        Button {
+                            if productDummy.servingSizes != nil {
+                                productDummy.servingSizes?.append(ServingSize())
+                            }
+                            else{
+                                productDummy.servingSizes = []
+                                productDummy.servingSizes?.append(ServingSize())
+
+                            }
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                        }
+                        Text("Serviergröße hinzufügen")
+                    }
+                    
+                    
+                    
+                    
+                    
+                    Section(header: Text("Beschreibung")){
+                        TextEditor(text: $productDummy.description.toNonOptionalString())
+                            .focused($isFocused)
+                    }
+                    
+                    
                     
                     Section(header: Text("Zertifikate")){
                         Toggle("Vegan", isOn: $productDummy.isVegan.toNonOptionalBoolean())
@@ -256,7 +303,7 @@ struct AddProduct: View {
                     }
                     
                     Section(header: Text("Nährwerte")){
-
+                        
                         HStack{
                             Text("Kalorien")
                             
@@ -273,55 +320,55 @@ struct AddProduct: View {
                         
                     }
                     Group{
-                    Section(header: Text("Toppings")){
-        
-                        NavigationLink{
-                            SelectToppings(selections: $productDummy.toppings.toNonOptionalToppings())
-                        } label:{
-                            HStack{
-                                Image(systemName: "plus.circle.fill")
-                                    .foregroundColor(.green)
-                                
-                                Text("Toppings hinzufügen")
-                            }
-                        }
-                        
-                        
-                        if let toppings = productDummy.toppings{
-                            let sortedToppings = toppings.sorted{
-                                $0.name < $1.name
+                        Section(header: Text("Toppings")){
+                            
+                            NavigationLink{
+                                SelectToppings(selections: $productDummy.toppings.toNonOptionalToppings())
+                            } label:{
+                                HStack{
+                                    Image(systemName: "plus.circle.fill")
+                                        .foregroundColor(.green)
+                                    
+                                    Text("Toppings hinzufügen")
+                                }
                             }
                             
-                            ForEach(sortedToppings,id:\.self){ topping in
-                                HStack{
-                                    
-                                    Button(action: {
-                                        withAnimation(.spring()){
-                                            productDummy.toppings?.removeAll{
-                                                $0 == topping
-                                            }
-                                        }
-                                        
-                                    }, label: {
-                                        Image(systemName: "minus.circle.fill")
-                                            .foregroundColor(Color.red)
-                                    })
-                                        .buttonStyle(.plain)
-                                    HStack{
-                                        Text(topping.name)
-                                        Spacer()
-                                        Text("+ \(topping.price, specifier: "%.2f")")
-                                    }
+                            
+                            if let toppings = productDummy.toppings{
+                                let sortedToppings = toppings.sorted{
+                                    $0.name < $1.name
                                 }
                                 
+                                ForEach(sortedToppings,id:\.self){ topping in
+                                    HStack{
+                                        
+                                        Button(action: {
+                                            withAnimation(.spring()){
+                                                productDummy.toppings?.removeAll{
+                                                    $0 == topping
+                                                }
+                                            }
+                                            
+                                        }, label: {
+                                            Image(systemName: "minus.circle.fill")
+                                                .foregroundColor(Color.red)
+                                        })
+                                            .buttonStyle(.plain)
+                                        HStack{
+                                            Text(topping.name)
+                                            Spacer()
+                                            Text("+ \(topping.price, specifier: "%.2f")")
+                                        }
+                                    }
+                                    
+                                }
+                                .onDelete { IndexSet in
+                                    productDummy.toppings?.remove(atOffsets: IndexSet)
+                                }
                             }
-                            .onDelete { IndexSet in
-                                productDummy.toppings?.remove(atOffsets: IndexSet)
-                            }
+                            
                         }
                         
-                    }
-                    
                         
                         Section(header: Text("Allergene")){
                             
@@ -451,7 +498,7 @@ struct AddProduct: View {
                 if mode == .new{
                     ARPreview(url: fileURL!)
                         .ignoresSafeArea()
-                   
+                    
                 }
                 else{
                     ZStack{
@@ -459,7 +506,7 @@ struct AddProduct: View {
                             .ignoresSafeArea()
                     }
                 }
-               
+                
             }
             .onAppear{
                 modelData.fetchCategoriesData()
@@ -467,12 +514,12 @@ struct AddProduct: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-
+                        
                         disableButton = true
-                       
+                        
                         if mode == .new{
                             modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
-
+                            
                         }
                         else{
                             modelData.updateProductController(productToUpdate: productDummy, imageToUpdate: inputImage, modelToUpdate: fileURL)
@@ -544,7 +591,7 @@ struct AddProduct_Previews: PreviewProvider {
 }
 
 struct NutritionTextField: View{
-   
+    
     var name: String
     @Binding var value: Double?
     @FocusState  var isFocused: Bool

@@ -12,6 +12,8 @@ struct changePassword: View {
     @State var newPassword = ""
     @State var newPassword2 = ""
     @Binding var showingSheet: Bool
+    @State private var width: CGFloat? = nil
+    
     
     
     var disableForm: Bool {
@@ -23,26 +25,39 @@ struct changePassword: View {
             Form{
                 HStack{
                     Text("Altes")
-                        .padding(.trailing, 62)
+                        .frame(width: width, alignment: .leading)
+                        .lineLimit(1)
+                        .background(WidthPreferenceSettingView())
                     SecureField("Passwort eingeben", text: $oldPassword)
                     
                 }
                 HStack{
                     Text("Neues")
-                        .padding(.trailing, 52)
-                    
+                        .frame(width: width, alignment: .leading)
+                        .lineLimit(1)
+                        .background(WidthPreferenceSettingView())
                     
                     SecureField("Passwort eingeben", text: $newPassword)
                     
                 }
                 HStack{
                     Text("Bestätigen")
-                        .padding(.trailing, 20)
+                        .frame(width: width, alignment: .leading)
+                        .lineLimit(1)
+                        .background(WidthPreferenceSettingView())
                     
                     SecureField("Passwort wiederholen", text: $newPassword2)
                 }
             }
             .navigationBarTitle(Text("Passwort ändern"), displayMode: .inline)
+            .onPreferenceChange(WidthPreferenceKey.self) { preferences in
+                        for p in preferences {
+                            let oldWidth = self.width ?? CGFloat.zero
+                            if p.width > oldWidth {
+                                self.width = p.width
+                            }
+                        }
+                    }
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Abbrechen"){

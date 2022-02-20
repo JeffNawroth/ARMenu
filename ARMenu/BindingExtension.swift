@@ -67,4 +67,7 @@ extension Binding{
         toNonOptionalValue(fallback: fallback)
     }
     
+    func toNonOptionalServingSizes(fallback: [ServingSize] = []) -> Binding<[ServingSize]> where Value == [ServingSize]?{
+        toNonOptionalValue(fallback: fallback)
+    }
 }
