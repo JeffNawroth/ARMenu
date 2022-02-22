@@ -70,7 +70,7 @@ struct MenuDetail: View {
                           
                             if let servingSizes = product.servingSizes{
                                 if servingSizes.count == 1{
-                                    Text("\(servingSizes.first!.size)" + servingSizes.first!.unit.name)
+                                    Text("\(servingSizes.first!.size ?? 0)" + servingSizes.first!.unit!.name)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.secondary)
                                     
@@ -184,9 +184,9 @@ struct MenuDetail: View {
                         DisclosureGroup(isExpanded: $servingSizesExpanded) {
                             ForEach(servingSizes, id: \.self){servingSize in
                                 HStack{
-                                    Text("\(servingSize.size, specifier: "%.2f") \(servingSize.unit.name)")
+                                    Text("\(servingSize.size!, specifier: "%.2f") \(servingSize.unit!.name)")
                                     Spacer()
-                                    Text("\(servingSize.price, specifier: "%.2f")")
+                                    Text("\(servingSize.price ?? 0, specifier: "%.2f")")
                                 }
                             }
                         } label: {

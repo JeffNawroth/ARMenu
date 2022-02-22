@@ -11,13 +11,14 @@ struct ServingSizeView: View, Identifiable {
     var id: UUID = UUID()
     @State private var showingUnitsSheet = false
     @Binding var servingSize: ServingSize
+    @EnvironmentObject var modelData: ModelData
     var body: some View {
         HStack{
             Button {
                 showingUnitsSheet = true
             } label: {
                 HStack{
-                    Text(servingSize.unit.name)
+                    Text(servingSize.unit?.name ?? "")
                     Image(systemName: "chevron.right")
                         .imageScale(.small)
                         .foregroundColor(.gray)
@@ -38,7 +39,7 @@ struct ServingSizeView: View, Identifiable {
                
         }
         .sheet(isPresented: $showingUnitsSheet) {
-            SelectUnit(selectedUnit: $servingSize.unit, showingUnitsSheet: $showingUnitsSheet)
+            SelectUnit(selectedUnit: $servingSize.unit.toNonOptionalUnit(), showingUnitsSheet: $showingUnitsSheet)
         }
        
     }

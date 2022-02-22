@@ -21,7 +21,22 @@ struct AddProduct: View {
     @State private var showingARPreview = false
     @State private var fileURL: URL?
     @State private var showingFileImporter = false
-    @State private var disableButton = false
+    @State private var disableButtons = false
+     private var disableButton:Bool{
+         var value: Bool = false
+        if let servingSizes = productDummy.servingSizes{
+            for servingSize in servingSizes {
+                if servingSize.unit == nil || servingSize.price == nil || servingSize.size == nil{
+                   
+                    value =  true
+                }
+                else{value =  false}
+            }
+        }else{
+            value =  false
+        }
+         return value
+    }
     @State var productDummy: Product
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
@@ -242,12 +257,12 @@ struct AddProduct: View {
                     //                    }
                     
                     if productDummy.servingSizes != nil{
-                        ForEach($productDummy.servingSizes.toNonOptionalServingSizes(), id: \.self){ $servingSize in
+                        ForEach($productDummy.servingSizes.toNonOptionalServingSizes(), id: \.servingSizeId){ $servingSize in
                             HStack{
                                 Button{
                                     withAnimation(.spring()){
                                         productDummy.servingSizes?.removeAll{
-                                            $0 == servingSize
+                                            $0.servingSizeId == servingSize.servingSizeId
                                         }
                                         if productDummy.servingSizes?.count == 0{
                                             productDummy.servingSizes = nil
@@ -515,7 +530,12 @@ struct AddProduct: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         
-                        disableButton = true
+                        disableButtons = true
+                        
+                        
+                        
+               
+    
                         
                         if mode == .new{
                             modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
@@ -531,6 +551,7 @@ struct AddProduct: View {
                         
                     }
                     .disabled(productDummy.name == nil)
+                    .disabled(disableButtons)
                     .disabled(disableButton)
                     
                 }
@@ -540,7 +561,7 @@ struct AddProduct: View {
                     } label: {
                         Text("Abbrechen")
                     }
-                    .disabled(disableButton)
+                    .disabled(disableButtons)
                     
                 }
                 

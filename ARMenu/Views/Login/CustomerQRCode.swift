@@ -25,8 +25,6 @@ struct CustomerQRCode: View {
                 
 
             }
-            .buttonStyle(.borderless)
-            
             .listRowBackground(Color.clear)
             
         }
