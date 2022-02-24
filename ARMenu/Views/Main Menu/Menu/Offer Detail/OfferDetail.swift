@@ -49,38 +49,46 @@ struct OfferDetail: View {
                 
                     Text(offer.title!)
                         .font(.title)
-                        .padding(.bottom)
+                       
                     
-                Text(offer.description ?? "")
-                        .foregroundColor(.secondary)
-                        .padding(.bottom)
+                if let description = offer.description{
+                    Text("Beschreibung")
+                        .font(.title2)
+                    
+                    Text(description)
+                    
+                }
+             
+                Divider()
+
 
                 
-             
-                if let products = products{
-                    Text("Produkte")
-                        .font(.headline)
-                    
-                    ForEach(products, id: \.self){ product in
-                        NavigationLink {
-                            MenuDetail(product: product)
-                        } label: {
-                            VStack{
-                                MenuRow(product: product)
-                                    .foregroundColor(Color.primary)
-                                
-                                Divider()
+                if !products.isEmpty{
+                        Text("Produkte")
+                            .font(.headline)
+                        
+                        ForEach(products, id: \.self){ product in
+                            NavigationLink {
+                                MenuDetail(product: product)
+                            } label: {
+                                VStack{
+                                    MenuRow(product: product)
+                                        .foregroundColor(Color.primary)
+                                    
+                                    Divider()
+                                }
+                                Image(systemName: "chevron.right")
+                                    .imageScale(.small)
+                                    .foregroundColor(Color.gray)
                             }
-                            Image(systemName: "chevron.right")
-                                .imageScale(.small)
-                                .foregroundColor(Color.gray)
                         }
-                    }
                 }
-
-              
+               
+ 
             }
             .padding(.horizontal)
+            
+            Spacer()
         }
         .navigationTitle(Text(offer.title!))
         .navigationBarTitleDisplayMode(.inline)

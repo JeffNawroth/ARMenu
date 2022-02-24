@@ -65,12 +65,17 @@ struct AddOffer: View {
                                     .scaledToFit()
                                     .foregroundColor(.gray)
                                     .onTapGesture {
-                                        showingImageConfirmation = true
+                                       showingImagePicker = true
                                         
                                     }
                             }
                             Button {
-                                showingImageConfirmation = true
+                                if offerDummy.image == nil && image == nil{
+                                    showingImagePicker = true
+                                }else{
+                                    showingImageConfirmation = true
+
+                                }
                                 
                             } label: {
                                 Text("Foto hinzufügen")

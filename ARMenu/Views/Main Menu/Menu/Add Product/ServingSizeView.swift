@@ -12,6 +12,9 @@ struct ServingSizeView: View, Identifiable {
     @State private var showingUnitsSheet = false
     @Binding var servingSize: ServingSize
     @EnvironmentObject var modelData: ModelData
+    @FocusState  var isFocused: Bool
+
+
     var body: some View {
         HStack{
             Button {
@@ -28,10 +31,19 @@ struct ServingSizeView: View, Identifiable {
                 .buttonStyle(.plain)
             
             TextField("Menge", value: $servingSize.size , format: .number)
+                .keyboardType(.decimalPad)
+                .focused($isFocused)
+
+
             Divider()
 
             HStack{
                 TextField("Preis", value: $servingSize.price, format: .number)
+                    .keyboardType(.decimalPad)
+                    .focused($isFocused)
+
+
+
                 Spacer()
                 Text("€")
             }

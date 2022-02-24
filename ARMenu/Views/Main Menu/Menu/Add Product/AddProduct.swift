@@ -79,12 +79,17 @@ struct AddProduct: View {
                                     .scaledToFit()
                                     .foregroundColor(.gray)
                                     .onTapGesture {
-                                        showingImageConfirmation = true
+                                        showingImagePicker = true
                                     }
                             }
                             
                             Button {
-                                showingImageConfirmation = true
+                                if productDummy.image == nil && image == nil{
+                                    showingImagePicker = true
+                                }else{
+                                    showingImageConfirmation = true
+
+                                }
                                 
                             } label: {
                                 Text("Foto hinzufügen")
@@ -197,33 +202,7 @@ struct AddProduct: View {
                             }
                         }
                         
-                        //                        HStack{
-                        //                            Button {
-                        //                                showingUnitsSheet = true
-                        //                            } label: {
-                        //                                HStack{
-                        //                                    if let unitName = productDummy.servingSize?.unit.name{
-                        //                                        Text(unitName)
-                        //                                            .foregroundColor(.blue)
-                        //                                    }
-                        //                                    Image(systemName: "chevron.right")
-                        //                                        .imageScale(.small)
-                        //                                        .foregroundColor(.gray)
-                        //                                    Divider()
-                        //                                }
-                        //                            }.padding(.trailing)
-                        //                                .buttonStyle(.plain)
-                        //
-                        //                            TextField("Menge", value: $productDummy.servingSize.toNonOptionalServingSize().size, format: .number)
-                        //                                .keyboardType(.decimalPad)
-                        //                                .focused($isFocused)
-                        //
-                        //                        }
-                        //                        .sheet(isPresented: $showingUnitsSheet) {
-                        //                            SelectUnit(selectedUnit: $productDummy.servingSize.toNonOptionalServingSize().unit, showingUnitsSheet: $showingUnitsSheet)
-                        //                        }
-                        
-                        
+                      
                         HStack{
                             Text("Preis")
                             TextField("0", value: $productDummy.price, format: .number)
@@ -235,27 +214,7 @@ struct AddProduct: View {
                         
                     }
                     
-                    
-                    //                    Section(){
-                    //
-                    //                        ForEach(servingSizeViews){ view in
-                    //
-                    //                        }
-                    //                        .onDelete { offsets in
-                    //                            servingSizeViews.remove(atOffsets: offsets)
-                    //                        }
-                    //                        HStack{
-                    //                            Button {
-                    //                                servingSizeViews.append(ServingSizeView())
-                    //                            } label: {
-                    //                                Image(systemName: "plus.circle.fill")
-                    //                                    .foregroundColor(.green)
-                    //                            }
-                    //                            Text("Serviergröße hinzufügen")
-                    //                        }
-                    //
-                    //                    }
-                    
+            
                     if productDummy.servingSizes != nil{
                         ForEach($productDummy.servingSizes.toNonOptionalServingSizes(), id: \.servingSizeId){ $servingSize in
                             HStack{
@@ -273,7 +232,7 @@ struct AddProduct: View {
                                         .foregroundColor(.red)
                                 }
                                 .buttonStyle(.borderless)
-                                ServingSizeView(servingSize: $servingSize)
+                                ServingSizeView(servingSize: $servingSize,isFocused: _isFocused)
                             }
                             
                         }
