@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RegistrationView: View {
+    @EnvironmentObject var session: SessionStore
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var password2: String = ""
@@ -68,11 +69,21 @@ struct RegistrationView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingSheet = false
+                        signUp()
                     } label: {
                         Text("Fertig")
                     }
                     .disabled(disableForm)
                 }
+            }
+        }
+    }
+    func signUp(){
+        session.signUp(email: email, password: password) { (result, error) in
+            if let error = error{
+               print(error.localizedDescription)
+            } else{
+
             }
         }
     }

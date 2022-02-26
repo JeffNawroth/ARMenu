@@ -6,16 +6,19 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct Profile: View {
+    @EnvironmentObject var session: SessionStore
     @State var showingSheet = false
     @State var showingQRSheet = false
     @State var oldPassword = ""
+
     var body: some View {
         NavigationView{
             Form{
                 Section(header: Text("Benutzername")){
-                    Text("imHoernken")
+                    Text((Auth.auth().currentUser?.email) ?? "Kunde")
                         .foregroundColor(.gray)
                 }
                 
@@ -53,13 +56,22 @@ struct Profile: View {
                 HStack{
                     Spacer()
                     Button("Abmelden"){
-                        
+                        session.signOut()
                     }
                     .foregroundColor(.red)
 
                     Spacer()
                 }
               
+                HStack{
+                    Spacer()
+                    Button("Konto löschen"){
+                        session.deleteUser()
+                    }
+                    .foregroundColor(.red)
+
+                    Spacer()
+                }
 
                
                

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct Login: View {
-    @State private var email: String = "imHoernken"
-    @State private var password: String = "imHoernken"
-    @Binding  var signInSucces: Bool
+    @EnvironmentObject var session: SessionStore
+    @State private var email: String = "speisekarte@imhoernken.de"
+    @State private var password: String = "imhoernken"
     @State private var showingRegistrationSheet = false
     @State private var selectedIndex = 0
     @State private var width: CGFloat? = nil
@@ -30,7 +30,7 @@ struct Login: View {
                 
                 if selectedIndex == 0{
                  
-                    CustomerQRCode(signInSuccess: $signInSucces)
+                    CustomerQRCode()
                         .padding(.top, 90)
 
                 }else{
@@ -53,10 +53,7 @@ struct Login: View {
                             
                         
                             Button("Anmelden"){
-                                if(email == "imHoernken" && password == "imHoernken"){
-                                    signInSucces = true
-
-                                }
+                                signIn()
                             }
                     }
                     
@@ -85,11 +82,21 @@ struct Login: View {
         }
         
     }
+    func signIn(){
+        session.signIn(email: email, password: password) { (result, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else{
+//                self.email = ""
+//                self.password = ""
+            }
+        }
+    }
 }
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login(signInSucces: .constant(true))
+        Login()
     }
 }
 

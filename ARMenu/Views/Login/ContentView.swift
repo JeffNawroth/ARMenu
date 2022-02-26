@@ -10,17 +10,23 @@ import RealityKit
 
 struct ContentView : View {
     
-    @State var signInSucces = false
+    @EnvironmentObject var session: SessionStore
     
     var body: some View {
-        if signInSucces{
-            MainView()
-                .environmentObject(ModelData())
-                
-            
-        }else{
-            Login(signInSucces: $signInSucces)
+        Group{
+            if session.loggedInUser != nil{
+                MainView()
+                    
+            }else{
+                Login()
+            }
         }
+        .onAppear(perform: getUser)
+      
+    }
+    
+    func getUser(){
+        session.listen()
     }
 }
 
