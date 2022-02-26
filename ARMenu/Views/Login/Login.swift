@@ -55,14 +55,25 @@ struct Login: View {
                             Button("Anmelden"){
                                 signIn()
                             }
+                        
+                       
                     }
                     
-                    Button("Neues Konto erstellen"){
-                        showingRegistrationSheet = true
+                    Section{
+                        Button("Passwort vergessen"){
+                            
+                        }
                     }
-                    .sheet(isPresented: $showingRegistrationSheet) {
-                        RegistrationView(showingSheet: $showingRegistrationSheet)
+                    
+                    Section{
+                        Button("Neues Konto erstellen"){
+                            showingRegistrationSheet = true
+                        }
+                        .sheet(isPresented: $showingRegistrationSheet) {
+                            RegistrationView(showingSheet: $showingRegistrationSheet)
+                        }
                     }
+                    
                 }
                 
                 
@@ -87,8 +98,6 @@ struct Login: View {
             if let error = error {
                 print(error.localizedDescription)
             } else{
-//                self.email = ""
-//                self.password = ""
             }
         }
     }

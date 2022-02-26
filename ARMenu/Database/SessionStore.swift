@@ -23,7 +23,7 @@ class SessionStore: ObservableObject{
             if let user = user{
                 if !user.isAnonymous{
 
-                    self.loggedInUser = User(uid: user.uid, email: user.email, userRole: .admin)
+                    self.loggedInUser = User(uid: user.uid, email: user.email)
                 }
 
             } else {
@@ -38,7 +38,7 @@ class SessionStore: ObservableObject{
             _ = user.isAnonymous  // true
             _ = user.uid
             print(user.uid)
-            self.loggedInUser = User(userRole: .customer)
+            self.loggedInUser = User()
         }
     }
     
