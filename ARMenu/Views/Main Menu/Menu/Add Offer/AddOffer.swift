@@ -23,6 +23,12 @@ struct AddOffer: View {
         case new
         case edit
     }
+    
+    var products: [Product]{
+            modelData.products.filter{
+                offerDummy.products != nil && offerDummy.products!.contains($0.id!)
+            }
+        }
     var mode: Mode
     
     var body: some View {
@@ -59,12 +65,17 @@ struct AddOffer: View {
                                     .scaledToFit()
                                     .foregroundColor(.gray)
                                     .onTapGesture {
-                                        showingImageConfirmation = true
+                                       showingImagePicker = true
                                         
                                     }
                             }
                             Button {
-                                showingImageConfirmation = true
+                                if offerDummy.image == nil && image == nil{
+                                    showingImagePicker = true
+                                }else{
+                                    showingImageConfirmation = true
+
+                                }
                                 
                             } label: {
                                 Text("Foto hinzufügen")
@@ -102,7 +113,7 @@ struct AddOffer: View {
                         
                         
                         NavigationLink{
-                            SelectProducts(selections: $offerDummy.products.toNonOptionalProducts())
+                            SelectProducts(selections: $offerDummy.products.toNonOptionalStrings())
                         } label:{
                             HStack{
                                 Image(systemName: "plus.circle.fill")
@@ -113,11 +124,13 @@ struct AddOffer: View {
                         }
                         
                         
-                        if let products = offerDummy.products{
+                        
+                        
+                        if let products = products{
                             let sortedProducts = products.sorted{
                                 $0.name! < $1.name!
                             }
-                            
+
                             ForEach(sortedProducts, id: \.self){ product in
                                 NavigationLink {
                                     MenuDetail(product: product)
@@ -126,7 +139,7 @@ struct AddOffer: View {
                                         Button(action: {
                                             withAnimation(.spring()){
                                                 offerDummy.products?.removeAll{
-                                                    $0 == product
+                                                    $0 == product.id
                                                 }
                                             }
                                         }, label: {
@@ -134,7 +147,7 @@ struct AddOffer: View {
                                                 .foregroundColor(Color.red)
                                         })
                                             .buttonStyle(.borderless)
-                                        
+
                                         MenuRow(product: product)
                                     }
                                 }

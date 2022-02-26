@@ -7,35 +7,33 @@
 
 import SwiftUI
 import RealityKit
-import FirebaseAuth
 
 struct ContentView : View {
-
-    @EnvironmentObject var session: SessionStore
-
     
-    func getUser () {
-          session.listen()
-      }
+    @EnvironmentObject var session: SessionStore
+    
     var body: some View {
         Group{
             if session.loggedInUser != nil{
-            MainView()
-//                .environmentObject(ModelData())
+                MainView()
+                    
+            }else{
+                Login()
+            }
         }
-        else{
-            Login()
-//                .environmentObject(SessionStore())
-        }
-        }.onAppear(perform: getUser)
+        .onAppear(perform: getUser)
+      
     }
-
+    
+    func getUser(){
+        session.listen()
+    }
 }
 
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(SessionStore())
+        ContentView()
     }
 }
 #endif

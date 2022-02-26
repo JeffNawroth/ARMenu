@@ -20,6 +20,7 @@ struct ScanOverlayView: View {
                     .fill(Color.black)
                     .frame(width: cutoutWidth, height: cutoutWidth, alignment: .center)
                     .blendMode(.destinationOut)
+                
             }.compositingGroup()
             
             Path { path in
@@ -37,7 +38,7 @@ struct ScanOverlayView: View {
                     )
                 )
             }
-            .stroke(Color.blue, lineWidth: 8)
+            .stroke(Color.primary, lineWidth: 8)
             .frame(width: cutoutWidth, height: cutoutWidth, alignment: .center)
             .aspectRatio(1, contentMode: .fit)
         }

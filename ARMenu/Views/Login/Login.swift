@@ -6,110 +6,92 @@
 //
 
 import SwiftUI
-import FirebaseAuth
-
-//class UserAuthentication: ObservableObject{
-//
-//    let auth = Auth.auth()
-//
-//    @Published var signedIn = false
-//
-//    var isSignedIn: Bool{
-//        return auth.currentUser != nil
-//    }
-//
-//    func signIn(email: String, password: String){
-//        auth.signIn(withEmail: email, password: password) { [weak self] result, error in
-//            guard result != nil, error == nil else{
-//                print("Fehler beim einloggen")
-//                return
-//            }
-//            //Success
-//            DispatchQueue.main.async {
-//                self?.signedIn = true
-//                print("Nutzer eingeloggt")
-//                print(self?.signedIn ?? "Unbekannt")
-//            }
-//        }
-//    }
-//
-//    func signUp(email: String, password: String){
-//        auth.createUser(withEmail: email, password: password) { [weak self] result, error in
-//            guard result != nil, error == nil else{
-//                return
-//            }
-//            //Success
-//            DispatchQueue.main.async {
-//                self?.signedIn = true
-//            }
-//        }
-//    }
-//
-//    func signOut(){
-//        try? auth.signOut()
-//
-//        self.signedIn = false
-//    }
-//
-//}
 
 struct Login: View {
-
     @EnvironmentObject var session: SessionStore
-    @State var email: String = "speisekarte@imhoernken.de"
-    @State var password: String = "imhoernken"
-    @State var error: String = ""
+    @State private var email: String = "speisekarte@imhoernken.de"
+    @State private var password: String = "imhoernken"
+    @State private var showingRegistrationSheet = false
+    @State private var selectedIndex = 0
+    @State private var width: CGFloat? = nil
 
 
+        
+    var body: some View {
+        NavigationView{
+            
+            Form{
+                Picker("Favorite Color", selection: $selectedIndex, content: {
+                               Text("Kunde").tag(0)
+                               Text("Konto").tag(1)
+                           })
+                           .pickerStyle(SegmentedPickerStyle())
+                           .listRowBackground(Color.clear)
+                
+                if selectedIndex == 0{
+                 
+                    CustomerQRCode()
+                        .padding(.top, 90)
+
+                }else{
+                    Section(header: Text("Mit Benutzerkonto Einloggen")){
+                        HStack{
+                            Text("E-Mail")
+                                .frame(width: width, alignment: .leading)
+                                .lineLimit(1)
+                                .background(WidthPreferenceSettingView())
+                            TextField("E-Mail", text:$email)
+                        }
+                        HStack {
+                            Text("Passwort")
+                                .frame(width: width, alignment: .leading)
+                                .lineLimit(1)
+                                .background(WidthPreferenceSettingView())
+
+                            SecureField("Erforderlich", text: $password)
+                        }
+                            
+                        
+                            Button("Anmelden"){
+                                signIn()
+                            }
+                    }
+                    
+                    Button("Neues Konto erstellen"){
+                        showingRegistrationSheet = true
+                    }
+                    .sheet(isPresented: $showingRegistrationSheet) {
+                        RegistrationView(showingSheet: $showingRegistrationSheet)
+                    }
+                }
+                
+                
+                
+                
+                
+            }
+            .onPreferenceChange(WidthPreferenceKey.self) { preferences in
+                        for p in preferences {
+                            let oldWidth = self.width ?? CGFloat.zero
+                            if p.width > oldWidth {
+                                self.width = p.width
+                            }
+                        }
+                    }
+            .navigationTitle("Willkommen!")
+        }
+        
+    }
     func signIn(){
         session.signIn(email: email, password: password) { (result, error) in
             if let error = error {
-                self.error = error.localizedDescription
+                print(error.localizedDescription)
             } else{
-                self.email = ""
-                self.password = ""
+//                self.email = ""
+//                self.password = ""
             }
         }
     }
-    
-
-    
-    var body: some View {
-        NavigationView{
-            Form{
-                Section(header: Text("Mit Benutzerkonto Einloggen")){
-                    HStack{
-                        Text("Email-Adresse")
-                            .padding(.trailing)
-                        TextField("Email-Adresse", text:$email)
-                    }
-                    HStack {
-                        Text("Passwort")
-                            .padding(.trailing, 56)
-
-                        SecureField("Erforderlich", text: $password)
-                    }
-
-                    Button("Anmelden"){
-                        signIn()
-                        
-                    }
-                    NavigationLink("Registrieren", destination: SignUp())
-
-                    Button("Anonym anmelden"){
-                        session.signInAnonymous()
-                    }
-                }
-                CustomerQRCode()
-            }
-
-
-               
-
-        }
-        .navigationTitle("Willkommen!")
-    }
-
 }
 
 struct Login_Previews: PreviewProvider {
@@ -117,4 +99,8 @@ struct Login_Previews: PreviewProvider {
         Login()
     }
 }
+
+
+
+
 

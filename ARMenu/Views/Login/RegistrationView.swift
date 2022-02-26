@@ -1,55 +1,54 @@
 //
-//  changePassword.swift
+//  RegistrationView.swift
 //  ARMenu
 //
-//  Created by Jeff Nawroth on 23.12.21.
+//  Created by Jeff Nawroth on 17.02.22.
 //
 
 import SwiftUI
 
-struct changePassword: View {
-    @State var oldPassword = ""
-    @State var newPassword = ""
-    @State var newPassword2 = ""
+struct RegistrationView: View {
+    @EnvironmentObject var session: SessionStore
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @State private var password2: String = ""
     @Binding var showingSheet: Bool
     @State private var width: CGFloat? = nil
-    
-    
-    
     var disableForm: Bool {
-        oldPassword.isEmpty || newPassword.isEmpty || newPassword2.isEmpty || oldPassword != "imHoernken" || newPassword != newPassword2
+        password.isEmpty || password2.isEmpty || email.isEmpty || password != password2
     }
     
     var body: some View {
         NavigationView{
             Form{
                 HStack{
-                    Text("Altes")
+                    Text("E-Mail")
                         .frame(width: width, alignment: .leading)
                         .lineLimit(1)
                         .background(WidthPreferenceSettingView())
-                    SecureField("Passwort eingeben", text: $oldPassword)
+                    TextField("E-Mail", text:$email)
                     
                 }
-                HStack{
-                    Text("Neues")
+                HStack {
+                    Text("Passwort")
                         .frame(width: width, alignment: .leading)
                         .lineLimit(1)
                         .background(WidthPreferenceSettingView())
-                    
-                    SecureField("Passwort eingeben", text: $newPassword)
+                    SecureField("Passwort", text: $password)
                     
                 }
-                HStack{
+                HStack {
                     Text("Bestätigen")
                         .frame(width: width, alignment: .leading)
                         .lineLimit(1)
                         .background(WidthPreferenceSettingView())
+                    SecureField("Passwort wiederholen", text: $password2)
                     
-                    SecureField("Passwort wiederholen", text: $newPassword2)
                 }
+                
             }
-            .navigationBarTitle(Text("Passwort ändern"), displayMode: .inline)
+            .navigationTitle("Registrieren")
+            .navigationBarTitleDisplayMode(.inline)
             .onPreferenceChange(WidthPreferenceKey.self) { preferences in
                         for p in preferences {
                             let oldWidth = self.width ?? CGFloat.zero
@@ -58,31 +57,40 @@ struct changePassword: View {
                             }
                         }
                     }
-            .toolbar{
+            .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Abbrechen"){
+                    Button {
                         showingSheet = false
+                    } label: {
+                        Text("Abbrechen")
                     }
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Ändern"){
-                        showingSheet = false
-                    }
-                    .disabled(disableForm)
                     
                 }
-                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showingSheet = false
+                        signUp()
+                    } label: {
+                        Text("Fertig")
+                    }
+                    .disabled(disableForm)
+                }
             }
         }
-        
     }
-    
-    
+    func signUp(){
+        session.signUp(email: email, password: password) { (result, error) in
+            if let error = error{
+               print(error.localizedDescription)
+            } else{
+
+            }
+        }
+    }
 }
 
-struct changePassword_Previews: PreviewProvider {
+struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        changePassword(showingSheet: .constant(true))
+        RegistrationView(showingSheet: .constant(true))
     }
 }
-

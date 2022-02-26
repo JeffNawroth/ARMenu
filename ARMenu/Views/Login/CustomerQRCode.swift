@@ -7,27 +7,32 @@
 
 import SwiftUI
 import CodeScanner
-import FirebaseAuth
 
 struct CustomerQRCode: View {
     @EnvironmentObject var modelData: ModelData
     @EnvironmentObject var session: SessionStore
-//    @Binding var signInSuccess: Bool
     @State private var isShowingScanner = false
+
     var body: some View {
-        Section(header: Text("Oder für kunden")){
+        Section(){
+
             Button {
                 isShowingScanner = true
             } label: {
-                HStack{
+                VStack{
                     Image(systemName: "qrcode.viewfinder")
-                    Divider()
+                    .font(.system(size: 240))
                     Text("QR-Code scannen")
                 }
                 
-            }
 
+            }
+            .listRowBackground(Color.clear)
+            .buttonStyle(.borderless)
+            .foregroundColor(.primary)
+            
         }
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
         .sheet(isPresented: $isShowingScanner) {
             CodeScannerView(codeTypes: [.qr], completion:handleScan)
                 .overlay(ScanOverlayView())
@@ -40,19 +45,18 @@ struct CustomerQRCode: View {
         
         switch result{
         case .success(let result):
-            print ((result.string))
+            print (result.string)
+            
             modelData.qrCodeResult = result.string
             session.signInAnonymous()
             session.loggedInUser?.uid = result.string
             
-//            if(result.string == "imHoernken"){
-//                signInSuccess = true
-//            }
         case .failure(let error):
             print("Scanning failed: \(error.localizedDescription)")
         }
         
     }
+    
 }
 
 struct CustomerQRCode_Previews: PreviewProvider {

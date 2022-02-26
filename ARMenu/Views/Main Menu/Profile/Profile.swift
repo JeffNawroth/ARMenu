@@ -10,16 +10,15 @@ import FirebaseAuth
 
 struct Profile: View {
     @EnvironmentObject var session: SessionStore
-//    @EnvironmentObject var userInfo: UserInfo
-//    @EnvironmentObject var userModel: UserAuthentication
     @State var showingSheet = false
     @State var showingQRSheet = false
     @State var oldPassword = ""
+
     var body: some View {
         NavigationView{
             Form{
                 Section(header: Text("Benutzername")){
-                    Text(Auth.auth().currentUser?.email ?? "Kunde")
+                    Text((Auth.auth().currentUser?.email) ?? "Kunde")
                         .foregroundColor(.gray)
                 }
                 
@@ -57,24 +56,22 @@ struct Profile: View {
                 HStack{
                     Spacer()
                     Button("Abmelden"){
-//                        userModel.signOut()
-//                        self.userInfo.isUserAuthenticated = .signedOut
                         session.signOut()
                     }
                     .foregroundColor(.red)
 
                     Spacer()
                 }
+              
                 HStack{
                     Spacer()
-                    Button("Benutzer löschen"){
+                    Button("Konto löschen"){
                         session.deleteUser()
                     }
                     .foregroundColor(.red)
-                    
+
                     Spacer()
                 }
-              
 
                
                

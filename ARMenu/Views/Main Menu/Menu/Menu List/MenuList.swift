@@ -94,10 +94,6 @@ struct MenuList: View {
             .navigationTitle("Speisekarte")
             .searchable(text: $searchText)
             .toolbar{
-                ToolbarItem(placement: .navigationBarLeading){
-                    EditButton()
-                    
-                }
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button {
                         showsConfirmation = true

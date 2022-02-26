@@ -11,7 +11,7 @@ import SDWebImageSwiftUI
 
 struct AddProduct: View {
     
-   
+    
     @EnvironmentObject var modelData: ModelData
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -21,11 +21,25 @@ struct AddProduct: View {
     @State private var showingARPreview = false
     @State private var fileURL: URL?
     @State private var showingFileImporter = false
-    @State private var disableButton = false
+    @State private var disableButtons = false
+     private var disableButton:Bool{
+         var value: Bool = false
+        if let servingSizes = productDummy.servingSizes{
+            for servingSize in servingSizes {
+                if servingSize.unit == nil || servingSize.price == nil || servingSize.size == nil{
+                   
+                    value =  true
+                }
+                else{value =  false}
+            }
+        }else{
+            value =  false
+        }
+         return value
+    }
     @State var productDummy: Product
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
-    
     enum Mode{
         case new
         case edit
@@ -65,13 +79,18 @@ struct AddProduct: View {
                                     .scaledToFit()
                                     .foregroundColor(.gray)
                                     .onTapGesture {
-                                        showingImageConfirmation = true
+                                        showingImagePicker = true
                                     }
                             }
                             
                             Button {
-                                showingImageConfirmation = true
+                                if productDummy.image == nil && image == nil{
+                                    showingImagePicker = true
+                                }else{
+                                    showingImageConfirmation = true
 
+                                }
+                                
                             } label: {
                                 Text("Foto hinzufügen")
                                     .foregroundColor(Color.blue)
@@ -91,8 +110,8 @@ struct AddProduct: View {
                             if showingFileImporter{
                                 showingFileImporter = false
                                 DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
-                                        showingFileImporter = true
-                                    })
+                                    showingFileImporter = true
+                                })
                             }else{
                                 showingFileImporter = true
                             }
@@ -109,7 +128,7 @@ struct AddProduct: View {
                                     
                                 }label:{
                                     Image(systemName: "questionmark")
-
+                                    
                                 }
                                 .buttonStyle(.borderless)
                             }
@@ -183,33 +202,7 @@ struct AddProduct: View {
                             }
                         }
                         
-                        HStack{
-                            Button {
-                                showingUnitsSheet = true
-                            } label: {
-                                HStack{
-                                    if let unitName = productDummy.servingSize?.unit.name{
-                                        Text(unitName)
-                                            .foregroundColor(.blue)
-                                    }
-                                    Image(systemName: "chevron.right")
-                                        .imageScale(.small)
-                                        .foregroundColor(.gray)
-                                    Divider()
-                                }
-                            }.padding(.trailing)
-                                .buttonStyle(.plain)
-                            
-                            TextField("Menge", value: $productDummy.servingSize.toNonOptionalServingSize().size, format: .number)
-                                .keyboardType(.decimalPad)
-                                .focused($isFocused)
-                            
-                        }
-                        .sheet(isPresented: $showingUnitsSheet) {
-                            SelectUnit(selectedUnit: $productDummy.servingSize.toNonOptionalServingSize().unit, showingUnitsSheet: $showingUnitsSheet)
-                        }
-                        
-                        
+                      
                         HStack{
                             Text("Preis")
                             TextField("0", value: $productDummy.price, format: .number)
@@ -221,6 +214,53 @@ struct AddProduct: View {
                         
                     }
                     
+            
+                    if productDummy.servingSizes != nil{
+                        ForEach($productDummy.servingSizes.toNonOptionalServingSizes(), id: \.servingSizeId){ $servingSize in
+                            HStack{
+                                Button{
+                                    withAnimation(.spring()){
+                                        productDummy.servingSizes?.removeAll{
+                                            $0.servingSizeId == servingSize.servingSizeId
+                                        }
+                                        if productDummy.servingSizes?.count == 0{
+                                            productDummy.servingSizes = nil
+                                        }
+                                    }
+                                }label:{
+                                    Image(systemName: "minus.circle.fill")
+                                        .foregroundColor(.red)
+                                }
+                                .buttonStyle(.borderless)
+                                ServingSizeView(servingSize: $servingSize,isFocused: _isFocused)
+                            }
+                            
+                        }
+                        .onDelete { IndexSet in
+                            productDummy.servingSizes?.remove(atOffsets: IndexSet)
+                        }
+                        
+                    }
+                    
+                    HStack{
+                        Button {
+                            if productDummy.servingSizes != nil {
+                                productDummy.servingSizes?.append(ServingSize())
+                            }
+                            else{
+                                productDummy.servingSizes = []
+                                productDummy.servingSizes?.append(ServingSize())
+
+                            }
+                        } label: {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                        }
+                        Text("Serviergröße hinzufügen")
+                    }
+                    
+                    
+                    
                     
                     
                     Section(header: Text("Beschreibung")){
@@ -228,26 +268,7 @@ struct AddProduct: View {
                             .focused($isFocused)
                     }
                     
-                    //                Section(){
-                    //
-                    //                        ForEach(servingSizeViews, id: \.self){ view in
-                    //                            view
-                    //                        }
-                    //                        .onDelete { offsets in
-                    //                            servingSizeViews.remove(atOffsets: offsets)
-                    //                        }
-                    //                        HStack{
-                    //                            Button {
-                    //                                servingSizeViews.append(ServingSizeView())
-                    //                            } label: {
-                    //                                Image(systemName: "plus.circle.fill")
-                    //                                    .foregroundColor(.green)
-                    //                            }
-                    //                            Text("Serviergröße hinzufügen")
-                    //
-                    //                        }
-                    //
-                    //                }
+                    
                     
                     Section(header: Text("Zertifikate")){
                         Toggle("Vegan", isOn: $productDummy.isVegan.toNonOptionalBoolean())
@@ -256,7 +277,7 @@ struct AddProduct: View {
                     }
                     
                     Section(header: Text("Nährwerte")){
-
+                        
                         HStack{
                             Text("Kalorien")
                             
@@ -273,55 +294,55 @@ struct AddProduct: View {
                         
                     }
                     Group{
-                    Section(header: Text("Toppings")){
-        
-                        NavigationLink{
-                            SelectToppings(selections: $productDummy.toppings.toNonOptionalToppings())
-                        } label:{
-                            HStack{
-                                Image(systemName: "plus.circle.fill")
-                                    .foregroundColor(.green)
-                                
-                                Text("Toppings hinzufügen")
-                            }
-                        }
-                        
-                        
-                        if let toppings = productDummy.toppings{
-                            let sortedToppings = toppings.sorted{
-                                $0.name < $1.name
+                        Section(header: Text("Toppings")){
+                            
+                            NavigationLink{
+                                SelectToppings(selections: $productDummy.toppings.toNonOptionalToppings())
+                            } label:{
+                                HStack{
+                                    Image(systemName: "plus.circle.fill")
+                                        .foregroundColor(.green)
+                                    
+                                    Text("Toppings hinzufügen")
+                                }
                             }
                             
-                            ForEach(sortedToppings,id:\.self){ topping in
-                                HStack{
-                                    
-                                    Button(action: {
-                                        withAnimation(.spring()){
-                                            productDummy.toppings?.removeAll{
-                                                $0 == topping
-                                            }
-                                        }
-                                        
-                                    }, label: {
-                                        Image(systemName: "minus.circle.fill")
-                                            .foregroundColor(Color.red)
-                                    })
-                                        .buttonStyle(.plain)
-                                    HStack{
-                                        Text(topping.name)
-                                        Spacer()
-                                        Text("+ \(topping.price, specifier: "%.2f")")
-                                    }
+                            
+                            if let toppings = productDummy.toppings{
+                                let sortedToppings = toppings.sorted{
+                                    $0.name < $1.name
                                 }
                                 
+                                ForEach(sortedToppings,id:\.self){ topping in
+                                    HStack{
+                                        
+                                        Button(action: {
+                                            withAnimation(.spring()){
+                                                productDummy.toppings?.removeAll{
+                                                    $0 == topping
+                                                }
+                                            }
+                                            
+                                        }, label: {
+                                            Image(systemName: "minus.circle.fill")
+                                                .foregroundColor(Color.red)
+                                        })
+                                            .buttonStyle(.plain)
+                                        HStack{
+                                            Text(topping.name)
+                                            Spacer()
+                                            Text("+ \(topping.price, specifier: "%.2f")")
+                                        }
+                                    }
+                                    
+                                }
+                                .onDelete { IndexSet in
+                                    productDummy.toppings?.remove(atOffsets: IndexSet)
+                                }
                             }
-                            .onDelete { IndexSet in
-                                productDummy.toppings?.remove(atOffsets: IndexSet)
-                            }
+                            
                         }
                         
-                    }
-                    
                         
                         Section(header: Text("Allergene")){
                             
@@ -451,7 +472,7 @@ struct AddProduct: View {
                 if mode == .new{
                     ARPreview(url: fileURL!)
                         .ignoresSafeArea()
-                   
+                    
                 }
                 else{
                     ZStack{
@@ -459,7 +480,7 @@ struct AddProduct: View {
                             .ignoresSafeArea()
                     }
                 }
-               
+                
             }
             .onAppear{
                 modelData.fetchCategoriesData()
@@ -467,12 +488,17 @@ struct AddProduct: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-
-                        disableButton = true
-                       
+                        
+                        disableButtons = true
+                        
+                        
+                        
+               
+    
+                        
                         if mode == .new{
                             modelData.addProductController(productToAdd: productDummy, imageToAdd: inputImage, modelToAdd: fileURL)
-
+                            
                         }
                         else{
                             modelData.updateProductController(productToUpdate: productDummy, imageToUpdate: inputImage, modelToUpdate: fileURL)
@@ -484,6 +510,7 @@ struct AddProduct: View {
                         
                     }
                     .disabled(productDummy.name == nil)
+                    .disabled(disableButtons)
                     .disabled(disableButton)
                     
                 }
@@ -493,7 +520,7 @@ struct AddProduct: View {
                     } label: {
                         Text("Abbrechen")
                     }
-                    .disabled(disableButton)
+                    .disabled(disableButtons)
                     
                 }
                 
@@ -544,7 +571,7 @@ struct AddProduct_Previews: PreviewProvider {
 }
 
 struct NutritionTextField: View{
-   
+    
     var name: String
     @Binding var value: Double?
     @FocusState  var isFocused: Bool
