@@ -22,7 +22,7 @@ struct Profile: View {
                 }
                 
                 List{
-                    
+
                         Button {
                             showingQRSheet = true
                         } label: {

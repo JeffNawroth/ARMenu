@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct Login: View {
     @EnvironmentObject var session: SessionStore
@@ -14,6 +15,7 @@ struct Login: View {
     @State private var showingRegistrationSheet = false
     @State private var selectedIndex = 0
     @State private var width: CGFloat? = nil
+    var loggedInUser = Auth.auth().currentUser
 
 
         
@@ -61,7 +63,7 @@ struct Login: View {
                     
                     Section{
                         Button("Passwort vergessen"){
-                            
+                            session.resetPassword(email: "litze-eiweiss.0a@icloud.com")
                         }
                     }
                     
