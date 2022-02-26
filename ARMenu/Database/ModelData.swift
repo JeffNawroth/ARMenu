@@ -10,6 +10,8 @@ import Firebase
 import FirebaseStorage
 
 class ModelData: ObservableObject{
+//    @EnvironmentObject var session: SessionStore
+    
     @Published var offers = [Offer]()
     @Published var products = [Product]()
     @Published var allergens = [Allergen]()
@@ -18,14 +20,23 @@ class ModelData: ObservableObject{
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
     
+    var qrCodeResult: String = ""
+    var menuId: String{
+        if !loggedInUser!.isAnonymous{
+            return loggedInUser!.uid
+        } else{
+            return qrCodeResult
+        }
+    }
+    var loggedInUser = Auth.auth().currentUser
     var loading = false
-    
+
     var db = Firestore.firestore()
     
     //MARK: Product
-    
     func fetchProductsData() {
-        db.collection("ImHörnken").document("Menu").collection("Products").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+        if loggedInUser != nil{
+            db.collection(menuId).document("Menu").collection("Products").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Keine Produkte gefunden!")
                 return
@@ -35,16 +46,17 @@ class ModelData: ObservableObject{
                 return try? queryDocumentSnapshot.data(as: Product.self)
             }
             
-        }
+        }}
     }
     
     func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
-        
         let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSize: productToAdd.servingSize, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
-        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Products")
+        let collectionRef = db.collection(menuId).document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
             print("Produkt hinzugefügt mit folgender Referenz: \(newDocReference)")
+//            print(self.session.session!.restaurant)
+//            print(self.session.session!.uid)
             loading = false
         }
         catch {
@@ -55,22 +67,23 @@ class ModelData: ObservableObject{
     
     func addProductController(productToAdd: Product, imageToAdd: UIImage?, modelToAdd: URL?)    {
         loading = true
-        uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, model: modelToAdd)
+        uploadImageProduct(image: imageToAdd, productToAdd: productToAdd, modelURL: modelToAdd)
     }
     
-    func uploadImageProduct(image:UIImage?, productToAdd: Product, model: URL?) {
+    func uploadImageProduct(image:UIImage?, productToAdd: Product, modelURL: URL?) {
         if let image = image {
             if let imageData = image.jpegData(compressionQuality: 1){
                 let storage = Storage.storage()
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
-                storage.reference().child("ProductImages/" + productToAdd.name!).putData(imageData, metadata: metadata){
+                storage.reference().child("ProductImages/" + image.description + ".jpg").putData(imageData, metadata: metadata){
                     (_, err) in
                     if let err = err {
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
                     } else {
                         print("Bild wurde erfolgreich hochgeladen!")
-                        if let model = model {
+                        print(image)
+                        if let model = modelURL {
                             guard model.startAccessingSecurityScopedResource(),
                                   let data = try? Data(contentsOf: model) else { return }
                             model.stopAccessingSecurityScopedResource()
@@ -80,7 +93,7 @@ class ModelData: ObservableObject{
                             let metadata = StorageMetadata()
                             metadata.contentType = "model/vnd.usdz+zip"
                             
-                            let riversRef = storageRef.child("3DModels/" + productToAdd.name! + ".usdz")
+                            let riversRef = storageRef.child("3DModels/" + model.lastPathComponent)
                             
                             _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                                 if let error = error{
@@ -88,13 +101,13 @@ class ModelData: ObservableObject{
                                 }
                                 else {
                                     print("Modell wurde erfolgreich hochgeladen!")
-                                    self.getImageAndModelPathProduct(productToAdd: productToAdd)
+                                    self.getImageAndModelPathProduct(productToAdd: productToAdd, modelURL: model, image: image)
                                 }
                                 
                             }
                         }
                         else{
-                            self.getImagePathProduct(productToAdd: productToAdd)
+                            self.getImagePathProduct(productToAdd: productToAdd, image: image)
                         }
                     }
                 }
@@ -102,8 +115,8 @@ class ModelData: ObservableObject{
                 print("Error: Bild konnte nicht entpackt/in Daten umgewandelt werden")
             }
         }
-        else if let model = model{
-            self.uploadModel(localURL: model, productToAdd: productToAdd)
+        else if let model = modelURL{
+            self.uploadModel(modelURL: model, productToAdd: productToAdd)
         }
         else{
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
@@ -112,18 +125,18 @@ class ModelData: ObservableObject{
         }
     }
     
-    func uploadModel(localURL: URL?, productToAdd: Product){
+    func uploadModel(modelURL: URL?, productToAdd: Product){
         
-        guard localURL!.startAccessingSecurityScopedResource(),
-              let data = try? Data(contentsOf: localURL!) else { return }
-        localURL!.stopAccessingSecurityScopedResource()
+        guard modelURL!.startAccessingSecurityScopedResource(),
+              let data = try? Data(contentsOf: modelURL!) else { return }
+        modelURL!.stopAccessingSecurityScopedResource()
         
         let storageRef = Storage.storage().reference()
         
         let metadata = StorageMetadata()
         metadata.contentType = "model/vnd.usdz+zip"
         
-        let riversRef = storageRef.child("3DModels/" + productToAdd.name! + ".usdz")
+        let riversRef = storageRef.child("3DModels/" + modelURL!.lastPathComponent)
         
         _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
             if let error = error{
@@ -131,14 +144,14 @@ class ModelData: ObservableObject{
             }
             else {
                 print("Modell wurde erfolgreich hochgeladen!")
-                self.getModelPathProduct(productToAdd: productToAdd)
+                self.getModelPathProduct(productToAdd: productToAdd, localURL: modelURL!)
             }
             
         }
     }
     
-    func getModelPathProduct(productToAdd: Product){
-        let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToAdd.name! + ".usdz")
+    func getModelPathProduct(productToAdd: Product, localURL: URL){
+        let storageRef = Storage.storage().reference(withPath: "3DModels/" + localURL.lastPathComponent)
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Modellpfad konnte nicht ermittelt werden!")
@@ -151,9 +164,9 @@ class ModelData: ObservableObject{
         )
     }
     
-    func getImagePathProduct(productToAdd: Product){
+    func getImagePathProduct(productToAdd: Product, image: UIImage){
         //Bildpfad ermitteln
-        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToAdd.name!)
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + image.description + ".jpg")
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -165,9 +178,9 @@ class ModelData: ObservableObject{
         }
         )}
     
-    func getImageAndModelPathProduct(productToAdd: Product){
+    func getImageAndModelPathProduct(productToAdd: Product, modelURL: URL, image: UIImage){
         //Bildpfad ermitteln
-        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToAdd.name!)
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + image.description + ".jpg")
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -175,15 +188,15 @@ class ModelData: ObservableObject{
             }
             let imageURL = url.absoluteString
             print("Bildpfad wurde erfolgreich ermittelt!")
-            let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToAdd.name! + ".usdz")
+            let storageRef = Storage.storage().reference(withPath: "3DModels/" + modelURL.lastPathComponent)
             storageRef.downloadURL(completion: { [self] url, error in
                 guard let url = url, error == nil else {
                     print("Error: Modellpfad konnte nicht ermittelt werden!")
                     return
                 }
-                let modelURL = url.absoluteString
+                let modelString = url.absoluteString
                 print("Modellpfad wurde erfolgreich ermittelt!")
-                addProduct(productToAdd: productToAdd, imagePath: imageURL, modelPath: modelURL)
+                addProduct(productToAdd: productToAdd, imagePath: imageURL, modelPath: modelString)
             }
             )}
         )
@@ -192,7 +205,7 @@ class ModelData: ObservableObject{
     
     func deleteProduct(productToDelete: Product){
         //Specify the document to delete
-        db.collection("ImHörnken").document("Menu").collection("Products").document(productToDelete.id ?? "").delete { error in
+        db.collection(menuId).document("Menu").collection("Products").document(productToDelete.id ?? "").delete { error in
             //Check for Errors
             if error == nil{
                 //No errors
@@ -213,18 +226,25 @@ class ModelData: ObservableObject{
             }
         }
         let storage = Storage.storage()
-        storage.reference().child("ProductImages/" + productToDelete.name!).delete { error in
-            if error != nil {
-                print("Error: Bild konnte nicht gelöscht werden!")
-            } else {
-                print("Bild wurde erfolgreich gelöscht!")
+        
+        if productToDelete.model != nil{
+            storage.reference(forURL: productToDelete.image!).delete { error in
+                if error != nil {
+                    print("Error: Bild konnte nicht gelöscht werden!")
+                } else {
+                    print("Bild wurde erfolgreich gelöscht!")
+                }
             }
         }
-        storage.reference().child("3DModels/" + productToDelete.name! + ".usdz").delete { error in
-            if error != nil {
-                print("Error: Modell konnte nicht gelöscht werden!")
-            } else {
-                print("Modell wurde erfolgreich gelöscht!")
+        
+        if productToDelete.model != nil{
+            //        storage.reference().child("3DModels/" + productToDelete.name! + ".usdz").delete { error in
+            storage.reference(forURL: productToDelete.model!).delete { error in
+                if error != nil {
+                    print("Error: Modell konnte nicht gelöscht werden!")
+                } else {
+                    print("Modell wurde erfolgreich gelöscht!")
+                }
             }
         }
         
@@ -233,7 +253,7 @@ class ModelData: ObservableObject{
     func updateProduct(productToUpdate: Product){
         if let documentId = productToUpdate.id {
             do {
-                try db.collection("ImHörnken").document("Menu").collection("Products").document(documentId).setData(from: productToUpdate)
+                try db.collection(menuId).document("Menu").collection("Products").document(documentId).setData(from: productToUpdate)
                 print("Produkt wurde erfolgreich aktualisiert!")
                 loading = false
             }
@@ -266,7 +286,7 @@ class ModelData: ObservableObject{
                 let storage = Storage.storage()
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
-                storage.reference().child("ProductImages/" + productToUpdate.name!).putData(imageData, metadata: metadata){
+                storage.reference().child("ProductImages/" + imageToUpdate!.description + ".jpg").putData(imageData, metadata: metadata){
                     (_, err) in
                     if let err = err {
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
@@ -281,7 +301,7 @@ class ModelData: ObservableObject{
                         let metadata = StorageMetadata()
                         metadata.contentType = "model/vnd.usdz+zip"
                         
-                        let riversRef = storageRef.child("3DModels/" + productToUpdate.name! + ".usdz")
+                        let riversRef = storageRef.child("3DModels/" + modelToUpdate!.lastPathComponent)
                         
                         _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                             if let error = error{
@@ -289,7 +309,7 @@ class ModelData: ObservableObject{
                             }
                             else {
                                 print("Modell wurde erfolgreich hochgeladen!")
-                                self.getUpdatedImageAndModelPath(productToUpdate: productToUpdate)
+                                self.getUpdatedImageAndModelPath(productToUpdate: productToUpdate, image: imageToUpdate!, model: modelToUpdate!)
                             }
                         }
                         
@@ -309,7 +329,7 @@ class ModelData: ObservableObject{
             let metadata = StorageMetadata()
             metadata.contentType = "model/vnd.usdz+zip"
             
-            let riversRef = storageRef.child("3DModels/" + productToUpdate.name! + ".usdz")
+            let riversRef = storageRef.child("3DModels/" + modelToUpdate!.lastPathComponent)
             
             _ = riversRef.putData(data, metadata: metadata) { (metadata, error) in
                 if let error = error{
@@ -317,7 +337,7 @@ class ModelData: ObservableObject{
                 }
                 else {
                     print("Modell wurde erfolgreich hochgeladen!")
-                    self.getUpdatedModelPath(productToUpdate: productToUpdate)
+                    self.getUpdatedModelPath(productToUpdate: productToUpdate, model: modelToUpdate!)
                 }
             }
         }
@@ -326,13 +346,13 @@ class ModelData: ObservableObject{
                 let storage = Storage.storage()
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
-                storage.reference().child("ProductImages/" + productToUpdate.name!).putData(imageData, metadata: metadata){
+                storage.reference().child("ProductImages/" + imageToUpdate!.description + ".jpg").putData(imageData, metadata: metadata){
                     (_, err) in
                     if let err = err {
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
                     } else {
                         print("Bild wurde erfolgreich hochgeladen!")
-                        self.getUpdatedImagePath(productToUpdate: productToUpdate)
+                        self.getUpdatedImagePath(productToUpdate: productToUpdate, image: imageToUpdate!)
                     }
                 }
             } else {
@@ -342,8 +362,8 @@ class ModelData: ObservableObject{
         
     }
     
-    func getUpdatedImagePath(productToUpdate: Product){
-        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToUpdate.name!)
+    func getUpdatedImagePath(productToUpdate: Product, image: UIImage){
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + image.description + ".jpg")
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -360,8 +380,8 @@ class ModelData: ObservableObject{
         )
     }
     
-    func getUpdatedImageAndModelPath(productToUpdate: Product){
-        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + productToUpdate.name!)
+    func getUpdatedImageAndModelPath(productToUpdate: Product, image: UIImage, model: URL){
+        let storageRef = Storage.storage().reference(withPath: "ProductImages/" + image.description + ".jpg")
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -370,7 +390,8 @@ class ModelData: ObservableObject{
             //Modellpfad ermitteln
             let imageURL = url.absoluteString
             print("Bildpfad wurde erfolgreich ermittelt!")
-            let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToUpdate.name! + ".usdz")
+            
+            let storageRef = Storage.storage().reference(withPath: "3DModels/" + model.lastPathComponent)
             storageRef.downloadURL(completion: { [self] url, error in
                 guard let url = url, error == nil else {
                     print("Error: Modellpfad konnte nicht ermittelt werden!")
@@ -387,9 +408,9 @@ class ModelData: ObservableObject{
         )
     }
     
-    func getUpdatedModelPath(productToUpdate: Product){
+    func getUpdatedModelPath(productToUpdate: Product, model: URL){
         //Modellpfad ermitteln
-        let storageRef = Storage.storage().reference(withPath: "3DModels/" + productToUpdate.name! + ".usdz")
+        let storageRef = Storage.storage().reference(withPath: "3DModels/" + model.lastPathComponent)
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Modellpfad konnte nicht ermittelt werden!")
@@ -409,7 +430,8 @@ class ModelData: ObservableObject{
     //MARK: Additive
     
     func fetchAdditivesData() {
-        db.collection("ImHörnken").document("Menu").collection("Additives").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+        if loggedInUser != nil{
+            db.collection(menuId).document("Menu").collection("Additives").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Keine Zusatzstoffe gefunden!")
                 return
@@ -420,11 +442,11 @@ class ModelData: ObservableObject{
                 
             }
             
-        }
+        }}
     }
     
     func addAdditive(additiveToAdd: Additive) {
-        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Additives")
+        let collectionRef = db.collection(menuId).document("Menu").collection("Additives")
         do {
             let newDocReference = try collectionRef.addDocument(from: additiveToAdd)
             print("Zusatzstoff wurde erfolgreich mit folgender Referenz hinzugefügt: \(newDocReference)")
@@ -437,7 +459,7 @@ class ModelData: ObservableObject{
     
     func deleteAdditive(additiveToDelete: Additive){
         //Specify the document to delete
-        db.collection("ImHörnken").document("Menu").collection("Additives").document(additiveToDelete.id ?? "").delete { error in
+        db.collection(menuId).document("Menu").collection("Additives").document(additiveToDelete.id ?? "").delete { error in
             //Check for Errors
             if error == nil{
                 //No errors
@@ -463,7 +485,8 @@ class ModelData: ObservableObject{
     //MARK: Allergen
     
     func fetchAllergensData() {
-        db.collection("ImHörnken").document("Menu").collection("Allergens").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+        if loggedInUser != nil{
+        db.collection(menuId).document("Menu").collection("Allergens").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Keine Allergene gefunden!")
                 return
@@ -474,11 +497,11 @@ class ModelData: ObservableObject{
                 
             }
             
-        }
+        }}
     }
     
     func addAllergen(allergenToAdd: Allergen) {
-        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Allergens")
+        let collectionRef = db.collection(menuId).document("Menu").collection("Allergens")
         do {
             let newDocReference = try collectionRef.addDocument(from: allergenToAdd)
             print("Allergen wurde erfolgreich mit folgender Referenz hinzugefügt: \(newDocReference)")
@@ -491,7 +514,7 @@ class ModelData: ObservableObject{
     
     func deleteAllergen(allergenToDelete: Allergen){
         //Specify the document to delete
-        db.collection("ImHörnken").document("Menu").collection("Allergens").document(allergenToDelete.id ?? "").delete { error in
+        db.collection(menuId).document("Menu").collection("Allergens").document(allergenToDelete.id ?? "").delete { error in
             //Check for Errors
             if error == nil{
                 //No errors
@@ -518,7 +541,8 @@ class ModelData: ObservableObject{
     //MARK: Category
     
     func fetchCategoriesData() {
-        db.collection("ImHörnken").document("Menu").collection("Categories").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+        if loggedInUser != nil{
+        db.collection(menuId).document("Menu").collection("Categories").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Keine Kategorien gefunden!")
                 return
@@ -529,11 +553,11 @@ class ModelData: ObservableObject{
                 
             }
             
-        }
+        }}
     }
     
     func addCategory(categoryToAdd: Category) {
-        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Categories")
+        let collectionRef = db.collection(menuId).document("Menu").collection("Categories")
         do {
             let newDocReference = try collectionRef.addDocument(from: categoryToAdd)
             print("Kategorie wurde erfolgreich mit folgender Referenz hinzugefügt: \(newDocReference)")
@@ -546,7 +570,7 @@ class ModelData: ObservableObject{
     
     func deleteCategory(categoryToDelete: Category){
         //Specify the document to delete
-        db.collection("ImHörnken").document("Menu").collection("Categories").document(categoryToDelete.id ?? "").delete { error in
+        db.collection(menuId).document("Menu").collection("Categories").document(categoryToDelete.id ?? "").delete { error in
             //Check for Errors
             if error == nil{
                 //No errors
@@ -573,8 +597,8 @@ class ModelData: ObservableObject{
     //MARK: Offer
     
     func fetchOffersData() {
-        
-        db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
+        if loggedInUser != nil{
+        db.collection(menuId).document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Angebote nicht gefunden!")
                 return
@@ -582,57 +606,10 @@ class ModelData: ObservableObject{
             
             self.offers = documents.compactMap { queryDocumentSnapshot -> Offer? in
                 
-                //                let data = queryDocumentSnapshot.data()
-                //
-                //                let products = data["products"] as? [String] ?? []
-                //
-                //                for product in products {
-                //                    self.db.collection("ImHörnken").document("Menu").collection("Products").document(product).getDocument { document, error in
-                //                        if let error = error{
-                //                            print((error.localizedDescription))
-                //                        }
-                //                        else {
-                //                            if let document = document {
-                //                                do {
-                //                                    self.product = try document.data(as: Product.self) ?? Product(image: "", model: "", name: "", category: Category(name: ""), price: 0, description: "", servingSize: ServingSize(unit: Unit(name: "g"), size: 0), isVegan: false, isBio: false, isFairtrade: false, isVisible: false, nutritionFacts: NutritionFacts(calories: 0, fat: 0, carbs: 0, protein: 0), allergens: [], additives: [], toppings: [])
-                //                                    print(self.product.name + " 1")
-                //                                }
-                //                                catch {
-                //                                    print(error)
-                //                                }
-                //                            }
-                //
-                //                    }
-                //
-                //                        self.offerProducts.append(self.product)
-                //
-                //                        }
-                //                    }
                 return try? queryDocumentSnapshot.data(as: Offer.self)
             }
-        }
+        }}
     }
-    
-    func fetchOffer(offerProducts: [Product]){
-        db.collection("ImHörnken").document("Menu").collection("Offers").addSnapshotListener { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("No documents")
-                return
-            }
-            
-            self.offers = documents.map { queryDocumentSnapshot -> Offer in
-                let data = queryDocumentSnapshot.data()
-                let image = data["image"] as? String ?? ""
-                let title = data["title"] as? String ?? ""
-                let description = data["description"] as? String ?? ""
-                let products = offerProducts
-                let isVisible = data["isVisible"] as? Bool ?? false
-                
-                return Offer(image: image, title: title, description: description, products: products, isVisible: isVisible)
-            }
-        }
-    }
-    
     
     func addOfferController(offerToAdd: Offer, imageToAdd: UIImage?)    {
         loading = true
@@ -642,7 +619,7 @@ class ModelData: ObservableObject{
     func addOffer(offerToAdd: Offer, imagePath: String?){
         
         let offer = Offer(image: imagePath, title: offerToAdd.title, description: offerToAdd.description, products: offerToAdd.products, isVisible: offerToAdd.isVisible)
-        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Offers")
+        let collectionRef = db.collection(menuId).document("Menu").collection("Offers")
         do {
             let newDocReference = try collectionRef.addDocument(from: offer)
             print("Angebot hinzugefügt mit folgender Referenz: \(newDocReference)")
@@ -656,7 +633,7 @@ class ModelData: ObservableObject{
     
     func deleteOffer(offerToDelete: Offer){
         //Specify the document to delete
-        db.collection("ImHörnken").document("Menu").collection("Offers").document(offerToDelete.id ?? "").delete { error in
+        db.collection(menuId).document("Menu").collection("Offers").document(offerToDelete.id ?? "").delete { error in
             //Check for Errors
             if error == nil{
                 //No errors
@@ -677,12 +654,14 @@ class ModelData: ObservableObject{
                 print("Error: Angebot konnte nicht gelöscht werden!")
             }
         }
-        let storage = Storage.storage()
-        storage.reference().child("OfferImages/" + offerToDelete.title!).delete { error in
-            if error != nil {
-                print("Error: Bild konnte nicht gelöscht werden!")
-            } else {
-                print("Bild wurde erfolgreich gelöscht!")
+        if offerToDelete.image != nil{
+            let storage = Storage.storage()
+            storage.reference(forURL: offerToDelete.image!).delete { error in
+                if error != nil {
+                    print("Error: Bild konnte nicht gelöscht werden!")
+                } else {
+                    print("Bild wurde erfolgreich gelöscht!")
+                }
             }
         }
         
@@ -694,13 +673,13 @@ class ModelData: ObservableObject{
                 let storage = Storage.storage()
                 let metadata = StorageMetadata()
                 metadata.contentType = "image/jpeg"
-                storage.reference().child("OfferImages/" + offerToAdd.title! + ".jpg").putData(imageData, metadata: metadata){
+                storage.reference().child("OfferImages/" + image.description + ".jpg").putData(imageData, metadata: metadata){
                     (_, err) in
                     if let err = err {
                         print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
                     } else {
                         print("Bild wurde erfolgreich hochgeladen!")
-                        self.getImagePathOffer(offerToAdd: offerToAdd)
+                        self.getImagePathOffer(offerToAdd: offerToAdd, image: image)
                         
                         
                     }
@@ -716,8 +695,8 @@ class ModelData: ObservableObject{
         }
     }
     
-    func getImagePathOffer(offerToAdd: Offer){
-        let storageRef = Storage.storage().reference(withPath: "OfferImages/" + offerToAdd.title! + ".jpg")
+    func getImagePathOffer(offerToAdd: Offer, image: UIImage){
+        let storageRef = Storage.storage().reference(withPath: "OfferImages/" + image.description + ".jpg")
         storageRef.downloadURL(completion: { [self] url, error in
             guard let url = url, error == nil else {
                 print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -748,13 +727,13 @@ class ModelData: ObservableObject{
             let storage = Storage.storage()
             let metadata = StorageMetadata()
             metadata.contentType = "image/jpeg"
-            storage.reference().child("OfferImages/" + offerToUpdate.title!).putData(imageData, metadata: metadata){
+            storage.reference().child("OfferImages/" + imageToUpdate.description + ".jpg").putData(imageData, metadata: metadata){
                 (_, err) in
                 if let err = err {
                     print("Error: Bild konnte nicht hochgeladen werden! \(err.localizedDescription)")
                 } else {
                     print("Bild wurde erfolgreich hochgeladen!")
-                    let storageRef = Storage.storage().reference(withPath: "OfferImages/" + offerToUpdate.title!)
+                    let storageRef = Storage.storage().reference(withPath: "OfferImages/" + imageToUpdate.description + ".jpg")
                     storageRef.downloadURL(completion: { [self] url, error in
                         guard let url = url, error == nil else {
                             print("Error: Bildpfad konnte nicht ermittelt werden!")
@@ -778,7 +757,7 @@ class ModelData: ObservableObject{
     func updateOffer(offer: Offer) {
         if let documentId = offer.id {
             do {
-                try db.collection("ImHörnken").document("Menu").collection("Offers").document(documentId).setData(from: offer)
+                try db.collection(menuId).document("Menu").collection("Offers").document(documentId).setData(from: offer)
                 print("Angebot wurde erfolgreich aktualisiert!")
                 loading = false
             }
@@ -791,7 +770,8 @@ class ModelData: ObservableObject{
     //MARK: Topping
     
     func fetchToppingsData() {
-        db.collection("ImHörnken").document("Menu").collection("Toppings").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+        if loggedInUser != nil{
+        db.collection(menuId).document("Menu").collection("Toppings").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Toppings nicht gefunden!")
                 return
@@ -802,11 +782,11 @@ class ModelData: ObservableObject{
                 
             }
             
-        }
+        }}
     }
     
     func addTopping(toppingToAdd: Topping) {
-        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Toppings")
+        let collectionRef = db.collection(menuId).document("Menu").collection("Toppings")
         do {
             let newDocReference = try collectionRef.addDocument(from: toppingToAdd)
             print("Topping wurde erfolgreich mit folgender Referenz hinzugefügt: \(newDocReference)")
@@ -819,7 +799,7 @@ class ModelData: ObservableObject{
     
     func deleteTopping(toppingToDelete: Topping){
         //Specify the document to delete
-        db.collection("ImHörnken").document("Menu").collection("Toppings").document(toppingToDelete.id ?? "").delete { error in
+        db.collection(menuId).document("Menu").collection("Toppings").document(toppingToDelete.id ?? "").delete { error in
             //Check for Errors
             if error == nil{
                 //No errors
@@ -845,7 +825,8 @@ class ModelData: ObservableObject{
     //MARK: Unit
     
     func fetchUnitsData() {
-        db.collection("ImHörnken").document("Menu").collection("Units").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+        if loggedInUser != nil{
+        db.collection(menuId).document("Menu").collection("Units").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Units nicht gefunden!")
                 return
@@ -856,11 +837,11 @@ class ModelData: ObservableObject{
                 
             }
             
-        }
+        }}
     }
     
     func addUnit(unitToAdd: Unit) {
-        let collectionRef = db.collection("ImHörnken").document("Menu").collection("Units")
+        let collectionRef = db.collection(menuId).document("Menu").collection("Units")
         do {
             let newDocReference = try collectionRef.addDocument(from: unitToAdd)
             print("Unit wurde erfolgreich mit folgender Referenz hinzugefügt: \(newDocReference)")
@@ -873,7 +854,7 @@ class ModelData: ObservableObject{
     
     func deleteUnit(unitToDelete: Unit){
         //Specify the document to delete
-        db.collection("ImHörnken").document("Menu").collection("Units").document(unitToDelete.id ?? "").delete { error in
+        db.collection(menuId).document("Menu").collection("Units").document(unitToDelete.id ?? "").delete { error in
             //Check for Errors
             if error == nil{
                 //No errors

@@ -7,9 +7,12 @@
 
 import SwiftUI
 import CodeScanner
+import FirebaseAuth
 
 struct CustomerQRCode: View {
-    @Binding var signInSuccess: Bool
+    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var session: SessionStore
+//    @Binding var signInSuccess: Bool
     @State private var isShowingScanner = false
     var body: some View {
         Section(header: Text("Oder für kunden")){
@@ -37,10 +40,14 @@ struct CustomerQRCode: View {
         
         switch result{
         case .success(let result):
-            print (result.string)
-            if(result.string == "imHoernken"){
-                signInSuccess = true
-            }
+            print ((result.string))
+            modelData.qrCodeResult = result.string
+            session.signInAnonymous()
+            session.loggedInUser?.uid = result.string
+            
+//            if(result.string == "imHoernken"){
+//                signInSuccess = true
+//            }
         case .failure(let error):
             print("Scanning failed: \(error.localizedDescription)")
         }
@@ -50,6 +57,6 @@ struct CustomerQRCode: View {
 
 struct CustomerQRCode_Previews: PreviewProvider {
     static var previews: some View {
-        CustomerQRCode(signInSuccess: .constant(true))
+        CustomerQRCode()
     }
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AboutUs: View {
+@EnvironmentObject var session: SessionStore
     var body: some View {
         
         ScrollView {

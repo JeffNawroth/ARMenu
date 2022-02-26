@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MenuList: View {
     
+//    @EnvironmentObject var session: SessionStore
     @EnvironmentObject var modelData: ModelData
     @State private var showingProductSheet = false
     @State private var showingOfferSheet = false

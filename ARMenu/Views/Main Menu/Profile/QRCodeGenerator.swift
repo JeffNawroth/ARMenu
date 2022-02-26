@@ -8,14 +8,15 @@
 import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import FirebaseAuth
 
 struct QRCodeGenerator: View {
     
     
-    @State private var name = "imHoernken"
+    @State private var name = Auth.auth().currentUser?.uid
     @State private var showingShareSheet = false
     var qrCode: UIImage{
-        generateQRCode(from: name)
+        generateQRCode(from: name!)
     }
     
     let context = CIContext()
@@ -38,7 +39,6 @@ struct QRCodeGenerator: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingShareSheet = true
-                        // actionSheet(image: qrCode.resized(toWidth: 512) ?? UIImage())
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                         

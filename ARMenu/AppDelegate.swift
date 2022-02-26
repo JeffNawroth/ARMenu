@@ -19,8 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Create the SwiftUI view that provides the window contents.
         FirebaseApp.configure()
+//        let contentView = ContentView()
+//            .environmentObject(UserAuthentication())
         let contentView = ContentView()
-            .environmentObject(UserAuthentication())
+            .environmentObject(SessionStore())
+            .environmentObject(ModelData())
 //        let contentView = ContentView()
 //            .environmentObject(UserInfo())
 

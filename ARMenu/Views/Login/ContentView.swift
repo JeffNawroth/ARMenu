@@ -10,59 +10,24 @@ import RealityKit
 import FirebaseAuth
 
 struct ContentView : View {
-    @EnvironmentObject var userModel: UserAuthentication
-    @EnvironmentObject var userInfo: UserInfo
-    @State var signInSucces = false
-    
-    //UserInfo - Stewart Lynch
-//    var body: some View {
-//        Group{
-//        if userInfo.isUserAuthenticated == .undefined{
-//            Login()
-//        }
-//        else if userInfo.isUserAuthenticated == .signedOut{
-//            Login()
-//        }
-//        else if userInfo.isUserAuthenticated == .signedIn{
-//            MainView()
-//                .environmentObject(ModelData())
-//        }
-//        }.onAppear{
-//            self.userInfo.configureStateDidChange()
-//        }
-//
-//}
-//}
-//IOS ACADEMY - UserAuthentication
-    var body: some View {
-        NavigationView{
 
-        if userModel.signedIn{
+    @EnvironmentObject var session: SessionStore
+
+    
+    func getUser () {
+          session.listen()
+      }
+    var body: some View {
+        Group{
+            if session.loggedInUser != nil{
             MainView()
-                .environmentObject(ModelData())
+//                .environmentObject(ModelData())
         }
         else{
             Login()
-                .environmentObject(UserAuthentication())
+//                .environmentObject(SessionStore())
         }
-//        if userModel.isSignedIn{
-//            MainView()
-//                .environmentObject(ModelData())
-//        }
-//        else{
-//            Login()
-//        }
-//        if signInSucces{
-//            MainView()
-//                .environmentObject(ModelData())
-//
-//
-//        }else{
-//            Login(signInSucces: $signInSucces)
-//        }
-        }.onAppear{
-            userModel.signedIn = userModel.isSignedIn
-        }
+        }.onAppear(perform: getUser)
     }
 
 }
@@ -70,7 +35,7 @@ struct ContentView : View {
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(SessionStore())
     }
 }
 #endif
