@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct MenuList: View {
-    
+    @EnvironmentObject var session: SessionStore
     @EnvironmentObject var modelData: ModelData
     @State private var showingProductSheet = false
     @State private var showingOfferSheet = false
@@ -16,10 +17,31 @@ struct MenuList: View {
     @State private var showsConfirmation = false
     @State private var showsOfferConfirmation = false
     @State private var selectedCategory = Category(name: "Alles")
+    var loggedInUser = Auth.auth().currentUser
+
     
+    var filteredProducts: [Product]{
+            if !loggedInUser!.isAnonymous{
+                        return modelData.products
+                    }else{
+                        return modelData.products.filter{
+                            $0.isVisible!
+                        }
+                    }
+        }
+    
+    var filteredOffers: [Offer]{
+            if !loggedInUser!.isAnonymous{
+                        return modelData.offers
+                    }else{
+                        return modelData.offers.filter{
+                            $0.isVisible!
+                        }
+                    }
+        }
     
     var filteredMenuList: [Product] {
-        modelData.products.filter{ product in
+        filteredProducts.filter{ product in
             (selectedCategory.name == "Alles" || selectedCategory.name == product.category?.name)
         }
     }
@@ -51,7 +73,7 @@ struct MenuList: View {
                     Section(header: Text("Angebote")){
                         ScrollView(.horizontal, showsIndicators: false){
                             HStack{
-                                ForEach(modelData.offers){ offer in
+                                ForEach(filteredOffers){ offer in
                                     NavigationLink{
                                         OfferDetail(offer: offer)
                                             .opacity(offer.isVisible ?? false ? 1: 0.25)
@@ -95,9 +117,18 @@ struct MenuList: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button {
-                        showsConfirmation = true
+                        if !loggedInUser!.isAnonymous{
+                            showsConfirmation = true
+                        }
+                        else{
+                            session.signOut()
+                        }
                     } label: {
-                        Image(systemName: "plus")
+                        if !loggedInUser!.isAnonymous{
+                            Image(systemName: "plus")
+                        }else{
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                        }
                     }
                     .confirmationDialog("", isPresented: $showsConfirmation) {
                         Button("Angebot erstellen"){

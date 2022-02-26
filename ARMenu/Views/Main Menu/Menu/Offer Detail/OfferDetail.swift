@@ -7,12 +7,14 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import FirebaseAuth
 
 struct OfferDetail: View {
     @EnvironmentObject var modelData: ModelData
-    var offer: Offer
     @State private var showingSheet = false
     @State private var showingDeleteConfirmation = false
+    var offer: Offer
+    var loggedInUser = Auth.auth().currentUser
     
     
     
@@ -97,7 +99,9 @@ struct OfferDetail: View {
                 Button {
                     showingSheet = true
                 } label: {
-                    Image(systemName: "square.and.pencil")
+                    if !loggedInUser!.isAnonymous{
+                        Image(systemName: "square.and.pencil")
+                    }
                 }
                 .sheet(isPresented: $showingSheet) {
                     AddOffer(showingSheet: $showingSheet, offerDummy: offer, mode: .edit)
@@ -108,7 +112,9 @@ struct OfferDetail: View {
                 Button {
                     showingDeleteConfirmation = true
                 } label: {
-                    Image(systemName: "trash")
+                    if !loggedInUser!.isAnonymous{
+                        Image(systemName: "trash")
+                    }
                 }
                 .confirmationDialog("Dieses Angebot wirklich löschen?", isPresented: $showingDeleteConfirmation, titleVisibility: .visible) {
                     Button("Löschen", role: .destructive){
