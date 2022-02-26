@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import FirebaseAuth
 
 struct MenuDetail: View {
     @EnvironmentObject var modelData: ModelData
@@ -17,6 +18,7 @@ struct MenuDetail: View {
     @State private var servingSizesExpanded = false
     @State private var showingSheet = false
     @State private var showingDeleteConfirmation = false
+    var loggedInUser = Auth.auth().currentUser
     var product: Product
     var body: some View {
         ScrollView{
@@ -321,7 +323,9 @@ struct MenuDetail: View {
                 Button {
                     showingSheet = true
                 } label: {
-                    Image(systemName: "square.and.pencil")
+                    if !loggedInUser!.isAnonymous{
+                        Image(systemName: "square.and.pencil")
+                    }
                 }
                 .sheet(isPresented: $showingSheet) {
                     AddProduct(productDummy: product, showingSheet: $showingSheet, mode: .edit)
@@ -332,7 +336,9 @@ struct MenuDetail: View {
                 Button {
                     showingDeleteConfirmation = true
                 } label: {
-                    Image(systemName: "trash")
+                    if !loggedInUser!.isAnonymous{
+                        Image(systemName: "trash")
+                    }
                 }
                 .confirmationDialog("Dieses Produkt wirklich löschen?", isPresented: $showingDeleteConfirmation, titleVisibility: .visible) {
                     Button("Löschen", role: .destructive){
