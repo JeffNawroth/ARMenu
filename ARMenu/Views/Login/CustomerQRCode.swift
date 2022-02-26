@@ -26,6 +26,8 @@ struct CustomerQRCode: View {
 
             }
             .listRowBackground(Color.clear)
+            .buttonStyle(.borderless)
+            .foregroundColor(.primary)
             
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)

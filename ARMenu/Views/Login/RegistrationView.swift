@@ -10,9 +10,12 @@ import SwiftUI
 struct RegistrationView: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var password2: String = ""
     @Binding var showingSheet: Bool
     @State private var width: CGFloat? = nil
-    
+    var disableForm: Bool {
+        password.isEmpty || password2.isEmpty || email.isEmpty || password != password2
+    }
     
     var body: some View {
         NavigationView{
@@ -31,6 +34,14 @@ struct RegistrationView: View {
                         .lineLimit(1)
                         .background(WidthPreferenceSettingView())
                     SecureField("Passwort", text: $password)
+                    
+                }
+                HStack {
+                    Text("Bestätigen")
+                        .frame(width: width, alignment: .leading)
+                        .lineLimit(1)
+                        .background(WidthPreferenceSettingView())
+                    SecureField("Passwort wiederholen", text: $password2)
                     
                 }
                 
@@ -60,6 +71,7 @@ struct RegistrationView: View {
                     } label: {
                         Text("Fertig")
                     }
+                    .disabled(disableForm)
                 }
             }
         }
