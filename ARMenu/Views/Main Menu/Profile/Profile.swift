@@ -12,7 +12,6 @@ struct Profile: View {
     @EnvironmentObject var session: SessionStore
     @State var showingSheet = false
     @State var showingQRSheet = false
-    @State var oldPassword = ""
 
     var body: some View {
         NavigationView{
@@ -22,64 +21,82 @@ struct Profile: View {
                         .foregroundColor(.gray)
                 }
                 
-                Section{
-                    Button {
-                        showingQRSheet = true
-                    } label: {
-                        HStack{
-                            Image(systemName: "qrcode.viewfinder")
-                            Divider()
-                            Text("QR-Code verwalten")
+                List{
+
+                        Button {
+                            showingQRSheet = true
+                        } label: {
+                            HStack{
+                                Image(systemName: "qrcode.viewfinder")
+                                Divider()
+                                Text("QR-Code verwalten")
+                            }
+                        }
+
+                        .sheet(isPresented: $showingQRSheet) {
+                            QRCodeGenerator(showingSheet: $showingQRSheet )
+                        }
+                    
+                    
+                        Button {
+                            showingSheet = true
+                        } label: {
+                            Text("Passwort ändern")
+                        }
+
+                        .sheet(isPresented: $showingSheet) {
+                            changePassword(showingSheet: $showingSheet )
+                        }
+
+                    
+               
+                        Button {
+                            showingSheet = true
+                        } label: {
+                            Text("E-Mail ändern")
+                        }
+
+                        .sheet(isPresented: $showingSheet) {
+                            changeEmail(showingSheet: $showingSheet )
                         }
                     }
-
-                    .sheet(isPresented: $showingQRSheet) {
-                        QRCodeGenerator(showingSheet: $showingQRSheet )
-                    }
-                }
+                
                 
                 
                 Section{
-                    Button {
-                        showingSheet = true
-                    } label: {
-                        Text("Passwort ändern")
-                    }
+                    HStack{
+                        Spacer()
+                        Button("Konto löschen"){
+                            session.deleteUser()
+                        }
+                        .foregroundColor(.red)
 
-                    .sheet(isPresented: $showingSheet) {
-                        changePassword(showingSheet: $showingSheet )
+                        Spacer()
                     }
                 }
                 
              
-             
-                HStack{
-                    Spacer()
-                    Button("Abmelden"){
-                        session.signOut()
-                    }
-                    .foregroundColor(.red)
+                Section{
+                    HStack{
+                        Spacer()
+                        Button("Abmelden"){
+                            session.signOut()
+                        }
+                        .foregroundColor(.red)
 
-                    Spacer()
+                        Spacer()
+                    }
                 }
+                
               
-                HStack{
-                    Spacer()
-                    Button("Konto löschen"){
-                        session.deleteUser()
-                    }
-                    .foregroundColor(.red)
-
-                    Spacer()
-                }
-
-               
-               
 
             }
           .navigationBarTitle("Profil")
         }
     }
+    
+    // Prompt the user to re-provide their sign-in credentials
+    
 }
 
 struct Profile_Previews: PreviewProvider {

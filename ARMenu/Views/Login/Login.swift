@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct Login: View {
     @EnvironmentObject var session: SessionStore
@@ -14,6 +15,7 @@ struct Login: View {
     @State private var showingRegistrationSheet = false
     @State private var selectedIndex = 0
     @State private var width: CGFloat? = nil
+    var loggedInUser = Auth.auth().currentUser
 
 
         
@@ -55,14 +57,25 @@ struct Login: View {
                             Button("Anmelden"){
                                 signIn()
                             }
+                        
+                       
                     }
                     
-                    Button("Neues Konto erstellen"){
-                        showingRegistrationSheet = true
+                    Section{
+                        Button("Passwort vergessen"){
+                            session.resetPassword(email: "litze-eiweiss.0a@icloud.com")
+                        }
                     }
-                    .sheet(isPresented: $showingRegistrationSheet) {
-                        RegistrationView(showingSheet: $showingRegistrationSheet)
+                    
+                    Section{
+                        Button("Neues Konto erstellen"){
+                            showingRegistrationSheet = true
+                        }
+                        .sheet(isPresented: $showingRegistrationSheet) {
+                            RegistrationView(showingSheet: $showingRegistrationSheet)
+                        }
                     }
+                    
                 }
                 
                 
@@ -87,8 +100,6 @@ struct Login: View {
             if let error = error {
                 print(error.localizedDescription)
             } else{
-//                self.email = ""
-//                self.password = ""
             }
         }
     }

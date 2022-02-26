@@ -64,6 +64,7 @@
 		B2C553F727CA6A2B0032C2D9 /* FirebaseStorageSwift-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = B2C553F627CA6A2B0032C2D9 /* FirebaseStorageSwift-Beta */; };
 		B2C553F927CA6BA80032C2D9 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C553F827CA6BA80032C2D9 /* SessionStore.swift */; };
 		B2C553FB27CA6C190032C2D9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C553FA27CA6C190032C2D9 /* User.swift */; };
+		B2C553FD27CA8B850032C2D9 /* changeEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C553FC27CA8B850032C2D9 /* changeEmail.swift */; };
 		B2CD949127BED79F00E0B5B0 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD949027BED79F00E0B5B0 /* RegistrationView.swift */; };
 		B2CD949327C16AA400E0B5B0 /* WidthPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD949227C16AA400E0B5B0 /* WidthPreferenceKey.swift */; };
 		B2CD949527C16ADF00E0B5B0 /* WidthPreferenceSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CD949427C16ADF00E0B5B0 /* WidthPreferenceSettingView.swift */; };
@@ -128,6 +129,7 @@
 		B2BAC32427B53D18006B0381 /* BindingExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindingExtension.swift; sourceTree = "<group>"; };
 		B2C553F827CA6BA80032C2D9 /* SessionStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		B2C553FA27CA6C190032C2D9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B2C553FC27CA8B850032C2D9 /* changeEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = changeEmail.swift; sourceTree = "<group>"; };
 		B2CD949027BED79F00E0B5B0 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		B2CD949227C16AA400E0B5B0 /* WidthPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidthPreferenceKey.swift; sourceTree = "<group>"; };
 		B2CD949427C16ADF00E0B5B0 /* WidthPreferenceSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidthPreferenceSettingView.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 			children = (
 				B26FD17A2774D04600E75FFC /* Profile.swift */,
 				B26FD1642774CECC00E75FFC /* changePassword.swift */,
+				B2C553FC27CA8B850032C2D9 /* changeEmail.swift */,
 				B2BAC31C27B4321A006B0381 /* QRCodeGenerator.swift */,
 			);
 			path = Profile;
@@ -537,6 +540,7 @@
 				B2FC34AF277E2409004092F6 /* SelectAllergens.swift in Sources */,
 				B2CD949327C16AA400E0B5B0 /* WidthPreferenceKey.swift in Sources */,
 				B27ADA8C2798AECC0000A750 /* Category.swift in Sources */,
+				B2C553FD27CA8B850032C2D9 /* changeEmail.swift in Sources */,
 				B2BAC32527B53D19006B0381 /* BindingExtension.swift in Sources */,
 				B26FD1632774CE9F00E75FFC /* AddProduct.swift in Sources */,
 				B2BAC31B27B42B9C006B0381 /* CustomerQRCode.swift in Sources */,
@@ -689,7 +693,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jeffnawroth.AR-Menu";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeffnawroth.ARMenu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -722,7 +726,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.jeffnawroth.AR-Menu";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jeffnawroth.ARMenu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

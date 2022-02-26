@@ -15,6 +15,8 @@ class SessionStore: ObservableObject{
     var didChange = PassthroughSubject<SessionStore, Never>()
     @Published var loggedInUser: User? {didSet {self.didChange.send(self) }}
     var handle: AuthStateDidChangeListenerHandle?
+    let user = Auth.auth().currentUser
+       var credential: AuthCredential?
 
     
     
@@ -23,7 +25,7 @@ class SessionStore: ObservableObject{
             if let user = user{
                 if !user.isAnonymous{
 
-                    self.loggedInUser = User(uid: user.uid, email: user.email, userRole: .admin)
+                    self.loggedInUser = User(uid: user.uid, email: user.email)
                 }
 
             } else {
@@ -38,7 +40,7 @@ class SessionStore: ObservableObject{
             _ = user.isAnonymous  // true
             _ = user.uid
             print(user.uid)
-            self.loggedInUser = User(userRole: .customer)
+            self.loggedInUser = User()
         }
     }
     
@@ -84,6 +86,8 @@ class SessionStore: ObservableObject{
         }
     }}
     
+
+    
     func deleteUser(){
         let user = Auth.auth().currentUser
         user?.delete(completion: { error in
@@ -99,6 +103,27 @@ class SessionStore: ObservableObject{
                 }
             }
         })
+    }
+    
+    func resetPassword(email: String){
+    Auth.auth().sendPasswordReset(withEmail: email) { error in
+        if error != nil{
+            print("Error: Fehler beim Zurücksetzen des Passwortes!")
+        }
+        else{
+            print("Passwort wurde erfolgreich zurückgesetzt!")
+        }
+    }}
+    
+    func sendEmailVerification(){
+        Auth.auth().currentUser?.sendEmailVerification { error in
+            if error != nil{
+                print("Error: Fehler beim senden der Verifikation!")
+            }
+            else{
+                print("Email-Verifikation erfolgreich gesendet!")
+            }
+        }
     }
     
     deinit{
