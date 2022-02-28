@@ -13,6 +13,7 @@ struct Login: View {
     @State private var email: String = "speisekarte@imhoernken.de"
     @State private var password: String = "hoernken123"
     @State private var showingRegistrationSheet = false
+    @State private var showingSheet = false
     @State private var selectedIndex = 0
     @State private var width: CGFloat? = nil
     var loggedInUser = Auth.auth().currentUser
@@ -62,8 +63,13 @@ struct Login: View {
                     }
                     
                     Section{
-                        Button("Passwort vergessen"){
-                            session.resetPassword(email: "litze-eiweiss.0a@icloud.com")
+                        Button(action: {
+                            showingSheet = true
+                        }, label: {
+                            Text("Passwort vergessen")
+                        })
+                        .sheet(isPresented: $showingSheet) {
+                            ResetPasswordEmail(showingSheet: $showingSheet)
                         }
                     }
                     

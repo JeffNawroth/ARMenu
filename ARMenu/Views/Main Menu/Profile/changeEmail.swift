@@ -22,7 +22,7 @@ struct changeEmail: View {
         NavigationView{
             Form{
                 HStack{
-                    Text("Neues")
+                    Text("Neue")
                         .frame(width: width, alignment: .leading)
                         .lineLimit(1)
                         .background(WidthPreferenceSettingView())

@@ -21,7 +21,7 @@ struct CustomerQRCode: View {
             } label: {
                 VStack{
                     Image(systemName: "qrcode.viewfinder")
-                    .font(.system(size: 240))
+                    .font(.system(size: 250))
                     Text("QR-Code scannen")
                 }
                 

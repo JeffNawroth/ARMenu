@@ -10,9 +10,12 @@ import FirebaseAuth
 
 struct Profile: View {
     @EnvironmentObject var session: SessionStore
-    @State var showingSheet = false
-    @State var showingQRSheet = false
+    @State private var showingSheet = false
+    @State private var showingQRSheet = false
+    @State private var width: CGFloat? = nil
+    @State private var showingDeleteConfirmation = false
 
+    
     var body: some View {
         NavigationView{
             Form{
@@ -21,83 +24,133 @@ struct Profile: View {
                         .foregroundColor(.gray)
                 }
                 
-                List{
-
+                
+                Section {
+                    Button {
+                        showingSheet = true
+                    } label: {
+                        HStack{
+                            Image(systemName: "envelope")
+                                .frame(width: width, alignment: .leading)
+                                .lineLimit(1)
+                                .background(WidthPreferenceSettingView())
+                               
+                            Text("E-Mail ändern")
+                                
+                            
+                        }
+                    }
+                    
+                    .sheet(isPresented: $showingSheet) {
+                        changeEmail(showingSheet: $showingSheet )
+                    }
+                    
+                    Button {
+                        showingSheet = true
+                    } label: {
+                        HStack{
+                            Image(systemName: "key")
+                                .frame(width: width, alignment: .leading)
+                                .lineLimit(1)
+                                .background(WidthPreferenceSettingView())
+                            Text("Passwort ändern")
+                                
+                        }
+                    }
+                    
+                    .sheet(isPresented: $showingSheet) {
+                        changePassword(showingSheet: $showingSheet )
+                    }
+                    
+                } header: {
+                    Text("Kontoeinstellungen")
+                }
+                
+                
+               
+                
+            
+            
+            Section{
+                Button {
+                    showingQRSheet = true
+                } label: {
+                    HStack{
+                        Image(systemName: "qrcode")
+                            .frame(width: width, alignment: .leading)
+                            .lineLimit(1)
+                            .background(WidthPreferenceSettingView())
+                        Text("QR-Code verwalten")
+                    }
+                }
+                
+                .sheet(isPresented: $showingQRSheet) {
+                    QRCodeGenerator(showingSheet: $showingQRSheet )
+                }
+            }
+                
+                Section{
+                    HStack{
+                        Spacer()
                         Button {
-                            showingQRSheet = true
+                            session.signOut()
                         } label: {
                             HStack{
-                                Image(systemName: "qrcode.viewfinder")
-                                Divider()
-                                Text("QR-Code verwalten")
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
+                                Text("Abmelden")
                             }
                         }
-
-                        .sheet(isPresented: $showingQRSheet) {
-                            QRCodeGenerator(showingSheet: $showingQRSheet )
-                        }
-                    
-                    
-                        Button {
-                            showingSheet = true
-                        } label: {
-                            Text("Passwort ändern")
-                        }
-
-                        .sheet(isPresented: $showingSheet) {
-                            changePassword(showingSheet: $showingSheet )
-                        }
-
-                    
-               
-                        Button {
-                            showingSheet = true
-                        } label: {
-                            Text("E-Mail ändern")
-                        }
-
-                        .sheet(isPresented: $showingSheet) {
-                            changeEmail(showingSheet: $showingSheet )
-                        }
-                    }
-                
-                
-                
-                Section{
-                    HStack{
+                        
                         Spacer()
-                        Button("Konto löschen"){
+                    }
+                }
+            
+            
+            Section{
+                
+                HStack{
+                    Spacer()
+                    Button {
+                        showingDeleteConfirmation = true
+                    } label: {
+                        HStack{
+                            Image(systemName: "trash")
+                            Text("Konto löschen")
+                        }
+
+                    }
+                    .foregroundColor(.red)
+                    .confirmationDialog("Dieses Konto mit sämtlichen Daten unwiderruflich löschen?", isPresented: $showingDeleteConfirmation, titleVisibility: .visible) {
+                        Button("Löschen", role: .destructive){
                             session.deleteUser()
                         }
-                        .foregroundColor(.red)
-
-                        Spacer()
                     }
+                    Spacer()
+                    
                 }
                 
-             
-                Section{
-                    HStack{
-                        Spacer()
-                        Button("Abmelden"){
-                            session.signOut()
-                        }
-                        .foregroundColor(.red)
 
-                        Spacer()
-                    }
-                }
-                
-              
-
+                    
             }
-          .navigationBarTitle("Profil")
+            
+                
+            
+           
         }
+        .navigationBarTitle("Profil")
+        .onPreferenceChange(WidthPreferenceKey.self) { preferences in
+                    for p in preferences {
+                        let oldWidth = self.width ?? CGFloat.zero
+                        if p.width > oldWidth {
+                            self.width = p.width
+                        }
+                    }
+                }
     }
-    
-    // Prompt the user to re-provide their sign-in credentials
-    
 }
+
+}
+
 
 struct Profile_Previews: PreviewProvider {
     static var previews: some View {

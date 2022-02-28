@@ -21,6 +21,7 @@
 		B23448662793489A000AD206 /* SelectProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23448652793489A000AD206 /* SelectProducts.swift */; };
 		B249CD4727A1BDD800A025C1 /* SelectUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249CD4627A1BDD800A025C1 /* SelectUnit.swift */; };
 		B249CD4A27A1C0D200A025C1 /* UnitPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B249CD4927A1C0D200A025C1 /* UnitPicker.swift */; };
+		B25ADAB827CD4F5800D949EB /* ResetPasswordEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25ADAB727CD4F5800D949EB /* ResetPasswordEmail.swift */; };
 		B26FD14D2774CCD100E75FFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14C2774CCD100E75FFC /* AppDelegate.swift */; };
 		B26FD14F2774CCD100E75FFC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FD14E2774CCD100E75FFC /* ContentView.swift */; };
 		B26FD1512774CCD100E75FFC /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = B26FD1502774CCD100E75FFC /* Experience.rcproject */; };
@@ -91,6 +92,7 @@
 		B23448652793489A000AD206 /* SelectProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectProducts.swift; sourceTree = "<group>"; };
 		B249CD4627A1BDD800A025C1 /* SelectUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectUnit.swift; sourceTree = "<group>"; };
 		B249CD4927A1C0D200A025C1 /* UnitPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitPicker.swift; sourceTree = "<group>"; };
+		B25ADAB727CD4F5800D949EB /* ResetPasswordEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordEmail.swift; sourceTree = "<group>"; };
 		B26FD1492774CCD100E75FFC /* ARMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B26FD14C2774CCD100E75FFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B26FD14E2774CCD100E75FFC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -363,6 +365,7 @@
 				B2BAC31A27B42B9C006B0381 /* CustomerQRCode.swift */,
 				B2BAC31E27B43893006B0381 /* ScanOverlayView.swift */,
 				B2CD949027BED79F00E0B5B0 /* RegistrationView.swift */,
+				B25ADAB727CD4F5800D949EB /* ResetPasswordEmail.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 			files = (
 				B2D39D0E2784BB4A009B5D25 /* OfferColumn.swift in Sources */,
 				B23448642793464E000AD206 /* MultipleProductPicker.swift in Sources */,
+				B25ADAB827CD4F5800D949EB /* ResetPasswordEmail.swift in Sources */,
 				A5BA850F279884B90011C06A /* ModelData.swift in Sources */,
 				B26FD17B2774D04600E75FFC /* Profile.swift in Sources */,
 				B26FD17F2774D0D300E75FFC /* MainView.swift in Sources */,
