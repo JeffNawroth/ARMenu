@@ -16,6 +16,7 @@ struct ContentView : View {
         Group{
             if session.loggedInUser != nil{
                 MainView()
+                    .environmentObject(ModelData())
                     
             }else{
                 Login()

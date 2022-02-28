@@ -11,7 +11,7 @@ import FirebaseAuth
 struct Login: View {
     @EnvironmentObject var session: SessionStore
     @State private var email: String = "speisekarte@imhoernken.de"
-    @State private var password: String = "imhoernken"
+    @State private var password: String = "hoernken123"
     @State private var showingRegistrationSheet = false
     @State private var selectedIndex = 0
     @State private var width: CGFloat? = nil
