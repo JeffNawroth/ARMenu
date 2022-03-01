@@ -14,7 +14,6 @@ struct MainView: View {
 
     var body: some View {
         TabView {
-            
             AboutUs()
                 .tabItem {
                     Label("Über uns", systemImage: "house")
@@ -43,7 +42,7 @@ struct MainView: View {
 struct TabView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
-            .environmentObject(ModelData())
+            .environmentObject(ModelData(menuId: ""))
     }
 }
 

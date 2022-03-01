@@ -47,9 +47,7 @@ struct CustomerQRCode: View {
         case .success(let result):
             print (result.string)
             
-            modelData.qrCodeResult = result.string
-            session.signInAnonymous()
-            session.loggedInUser?.uid = result.string
+            session.signInAnonymous(result: result.string)
             
         case .failure(let error):
             print("Scanning failed: \(error.localizedDescription)")

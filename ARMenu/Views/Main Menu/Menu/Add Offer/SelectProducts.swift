@@ -46,6 +46,6 @@ struct SelectProducts: View {
 struct SelectProducts_Previews: PreviewProvider {
     static var previews: some View {
         SelectProducts(selections: .constant([""]))
-            .environmentObject(ModelData())
+            .environmentObject(ModelData(menuId: ""))
     }
 }

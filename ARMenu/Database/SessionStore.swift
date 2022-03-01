@@ -34,13 +34,13 @@ class SessionStore: ObservableObject{
         })
     }
     
-    func signInAnonymous(){
+    func signInAnonymous(result: String){
         Auth.auth().signInAnonymously { authResult, error in
             guard let user = authResult?.user else { return }
             _ = user.isAnonymous  // true
             _ = user.uid
             print(user.uid)
-            self.loggedInUser = User()
+            self.loggedInUser = User(uid: result)
         }
     }
     
