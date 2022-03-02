@@ -566,7 +566,7 @@ struct AddProduct: View {
 struct AddProduct_Previews: PreviewProvider {
     static var previews: some View {
         AddProduct(productDummy: Product.dummyProduct, showingSheet: .constant(true), mode: .new)
-            .environmentObject(ModelData())
+            .environmentObject(ModelData(menuId: ""))
     }
 }
 

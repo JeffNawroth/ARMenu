@@ -22,7 +22,7 @@ struct CustomerQRCode: View {
             } label: {
                 VStack{
                     Image(systemName: "qrcode.viewfinder")
-                    .font(.system(size: 240))
+                    .font(.system(size: 250))
                     Text("QR-Code scannen")
                 }
                 
@@ -64,6 +64,30 @@ struct CustomerQRCode: View {
                         print("Speisekarte existiert nicht!")
                     }
                 }
+            }
+            
+            let input = result.string
+            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+
+            
+            if matches.isEmpty{
+                let db = Firestore.firestore()
+                db.collection(result.string).getDocuments { (querysnapshot, error) in
+                    if error != nil {
+                        print("Error: QR-Code führt zu keiner Speisekarte", error!)
+                    } else {
+                        if let doc = querysnapshot?.documents, !doc.isEmpty {
+                            print("Speisekarte existiert!")
+                            
+                            session.signInAnonymous(result: result.string)
+                        }else{
+                            print("Speisekarte existiert nicht!")
+                        }
+                    }
+                }
+            }else{
+                print("Speisekarte existiert nicht!")
             }
             
             

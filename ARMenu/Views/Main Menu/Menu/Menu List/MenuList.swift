@@ -161,7 +161,7 @@ struct MenuList: View {
 struct MenuList_Previews: PreviewProvider {
     static var previews: some View {
         MenuList()
-            .environmentObject(ModelData())
+            .environmentObject(ModelData(menuId: ""))
     }
 }
 

@@ -11,12 +11,11 @@ import RealityKit
 struct ContentView : View {
     
     @EnvironmentObject var session: SessionStore
-    
     var body: some View {
         Group{
             if session.loggedInUser != nil{
                 MainView()
-                    .environmentObject(ModelData())
+                    .environmentObject(ModelData(menuId: (session.loggedInUser?.uid)!))
                     
             }else{
                 Login()

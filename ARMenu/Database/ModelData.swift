@@ -20,23 +20,20 @@ class ModelData: ObservableObject{
     @Published var toppings = [Topping]()
     @Published var units = [Unit]()
     
-    var qrCodeResult: String = ""
-    var menuId: String{
-        if !loggedInUser!.isAnonymous{
-            return loggedInUser!.uid
-        } else{
-            return qrCodeResult
-        }
-    }
+    var menuId: String = ""
     var loggedInUser = Auth.auth().currentUser
     var loading = false
 
     var db = Firestore.firestore()
     
+    init(menuId:String){
+        self.menuId = menuId
+    }
+    
     //MARK: Product
     func fetchProductsData() {
         if loggedInUser != nil{
-            db.collection(menuId).document("Menu").collection("Products").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
+            db.collection(menuId ).document("Menu").collection("Products").order(by: "name", descending: false).addSnapshotListener { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error: Keine Produkte gefunden!")
                 return
@@ -51,7 +48,7 @@ class ModelData: ObservableObject{
     
     func addProduct(productToAdd: Product, imagePath: String?, modelPath: String?){
         let product = Product(image: imagePath, model: modelPath, name: productToAdd.name, category: productToAdd.category, price: productToAdd.price,description: productToAdd.description, servingSizes: productToAdd.servingSizes, isVegan: productToAdd.isVegan, isBio: productToAdd.isBio, isFairtrade: productToAdd.isFairtrade, isVisible: productToAdd.isVisible, nutritionFacts: productToAdd.nutritionFacts, allergens: productToAdd.allergens, additives: productToAdd.additives, toppings: productToAdd.toppings)
-        let collectionRef = db.collection(menuId).document("Menu").collection("Products")
+        let collectionRef = db.collection(menuId ).document("Menu").collection("Products")
         do {
             let newDocReference = try collectionRef.addDocument(from: product)
             print("Produkt hinzugefügt mit folgender Referenz: \(newDocReference)")

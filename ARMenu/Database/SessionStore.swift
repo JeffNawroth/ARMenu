@@ -34,12 +34,13 @@ class SessionStore: ObservableObject{
         })
     }
     
-    func signInAnonymous(){
+    func signInAnonymous(result: String){
         Auth.auth().signInAnonymously { authResult, error in
             guard let user = authResult?.user else { return }
             _ = user.isAnonymous  // true
             _ = user.uid
-            self.loggedInUser = User()
+            print(user.uid)
+            self.loggedInUser = User(uid: result)
         }
     }
     
@@ -60,7 +61,7 @@ class SessionStore: ObservableObject{
         }else{
             try Auth.auth().signOut()
             self.loggedInUser = nil
-            deleteUser()
+            self.deleteUser()
         }
             
         } catch {

@@ -33,7 +33,7 @@ struct QRCodeGenerator: View {
                     .scaledToFit()
                     .padding()
             }
-            .navigationTitle("QR-Code")
+            .navigationTitle("QR-Code verwalten ")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
