@@ -47,25 +47,7 @@ struct CustomerQRCode: View {
         switch result{
         case .success(let result):
             print (result.string)
-            //Überprüfe ob Speisekarte existiert
-            let db = Firestore.firestore()
-            db.collection(result.string).getDocuments { (querysnapshot, error) in
-                if error != nil {
-                    print("Error: QR-Code führt zu keiner Speisekarte", error!)
-                } else {
-                    if let doc = querysnapshot?.documents, !doc.isEmpty {
-                        print("Speisekarte existiert!")
-                        
-                        modelData.qrCodeResult = result.string
-                        session.loggedInUser?.uid = result.string
-                        session.signInAnonymous()
-                    }
-                    else{
-                        print("Speisekarte existiert nicht!")
-                    }
-                }
-            }
-            
+        
             let input = result.string
             let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
             let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))

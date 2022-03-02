@@ -19,7 +19,6 @@ struct ContentView : View {
                     
             }else{
                 Login()
-                    .environmentObject(ModelData())
             }
         }
         .onAppear(perform: getUser)
