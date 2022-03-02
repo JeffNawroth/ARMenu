@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CodeScanner
+import FirebaseFirestore
 
 struct CustomerQRCode: View {
     @EnvironmentObject var modelData: ModelData
@@ -47,7 +48,30 @@ struct CustomerQRCode: View {
         case .success(let result):
             print (result.string)
             
-            session.signInAnonymous(result: result.string)
+            let input = result.string
+            let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+            let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
+
+            
+            if matches.isEmpty{
+                let db = Firestore.firestore()
+                db.collection(result.string).getDocuments { (querysnapshot, error) in
+                    if error != nil {
+                        print("Error: QR-Code führt zu keiner Speisekarte", error!)
+                    } else {
+                        if let doc = querysnapshot?.documents, !doc.isEmpty {
+                            print("Speisekarte existiert!")
+                            
+                            session.signInAnonymous(result: result.string)
+                        }else{
+                            print("Speisekarte existiert nicht!")
+                        }
+                    }
+                }
+            }else{
+                print("Speisekarte existiert nicht!")
+            }
+            
             
         case .failure(let error):
             print("Scanning failed: \(error.localizedDescription)")

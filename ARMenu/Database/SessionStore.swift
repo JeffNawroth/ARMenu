@@ -54,9 +54,16 @@ class SessionStore: ObservableObject{
     }
     
     func signOut(){
-        do{
+        do{ if !Auth.auth().currentUser!.isAnonymous{
             try Auth.auth().signOut()
             self.loggedInUser = nil
+            print("Benutzer wurde erfolgreich ausgeloggt!")
+        }else{
+            try Auth.auth().signOut()
+            self.loggedInUser = nil
+            self.deleteUser()
+        }
+            
         } catch {
             print("Error: Fehler beim Ausloggen!")
         }

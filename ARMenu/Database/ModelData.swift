@@ -223,7 +223,7 @@ class ModelData: ObservableObject{
         }
         let storage = Storage.storage()
         
-        if productToDelete.model != nil{
+        if productToDelete.image != nil{
             storage.reference(forURL: productToDelete.image!).delete { error in
                 if error != nil {
                     print("Error: Bild konnte nicht gelöscht werden!")

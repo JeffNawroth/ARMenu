@@ -27,10 +27,10 @@ struct ARPreview: UIViewRepresentable {
         arView.installGestures(for: model)
         
         
-//        let anchor = AnchorEntity(plane: .horizontal )
-//        anchor.addChild(model)
-//        arView.scene.addAnchor(anchor)
-//        
+        let anchor = AnchorEntity(plane: .horizontal )
+        anchor.addChild(model)
+        arView.scene.addAnchor(anchor)
+        
         return arView
         
     }
