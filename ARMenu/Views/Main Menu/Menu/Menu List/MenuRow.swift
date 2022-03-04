@@ -43,7 +43,6 @@ struct MenuRow: View {
                 
                 
                
-                    if (product.price != nil || product.servingSizes != nil){
                         HStack{
                             if let price = product.price{
                                 Text("\(price, specifier: "%.2f")")
@@ -52,7 +51,7 @@ struct MenuRow: View {
 
 
                             }
-                            if (product.price != nil && product.servingSizes != nil){
+                            if product.price != nil && product.servingSizes != nil && product.servingSizes?.count == 1{
                                 Text("•")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
@@ -61,7 +60,7 @@ struct MenuRow: View {
                             if let servingSizes = product.servingSizes{
                                 if servingSizes.count == 1{
                                     if let servingSize = servingSizes.first{
-                                        Text("\(servingSize.size!, specifier: "%.0f") \(servingSize.unit!.name)")
+                                        Text("\(servingSize.size!) \(servingSize.unit!.name)")
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
                                     }
@@ -72,7 +71,6 @@ struct MenuRow: View {
 
 
                         }
-                    }
                    
                 
                 
