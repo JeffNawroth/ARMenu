@@ -40,6 +40,7 @@ struct AddProduct: View {
     @State var productDummy: Product
     @FocusState private var isFocused: Bool
     @Binding var showingSheet: Bool
+    @State var loading = false
     enum Mode{
         case new
         case edit
@@ -476,8 +477,20 @@ struct AddProduct: View {
                 }
                 else{
                     ZStack{
-                        ARViewContainer(product: productDummy)
+                        ARViewContainer(product: productDummy, loading: $loading)
                             .ignoresSafeArea()
+                        
+                        if loading{
+                            ZStack{
+                                Color(.systemBackground)
+                                    .ignoresSafeArea()
+                                    .opacity(0.8)
+                                
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                                    .scaleEffect(3)
+                            }
+                        }
                     }
                 }
                 

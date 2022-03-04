@@ -11,6 +11,7 @@ import ARKit
 
 struct ARViewContainer: UIViewRepresentable {
     var product: Product
+    @Binding var loading: Bool
     
     func makeUIView(context: Context) -> ARView {
         
@@ -23,6 +24,7 @@ struct ARViewContainer: UIViewRepresentable {
         
         
         if let url = product.model{
+            loading = true
             let url = URL(string: url)
             let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let destination = documents.appendingPathComponent(url!.lastPathComponent)
@@ -47,6 +49,7 @@ struct ARViewContainer: UIViewRepresentable {
                 
                 DispatchQueue.main.async {
                     do {
+                        loading = false
                         let model = try ModelEntity.loadModel(contentsOf: destination)
                         model.generateCollisionShapes(recursive: true)
                         arView.installGestures(for: model)
@@ -100,6 +103,6 @@ extension ARView: ARCoachingOverlayViewDelegate{
 
 struct ARViewContainer_Previews: PreviewProvider {
     static var previews: some View {
-        ARViewContainer(product: Product.dummyProduct)
+        ARViewContainer(product: Product.dummyProduct, loading: .constant(false))
     }
 }

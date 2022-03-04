@@ -18,6 +18,7 @@ struct MenuDetail: View {
     @State private var servingSizesExpanded = false
     @State private var showingSheet = false
     @State private var showingDeleteConfirmation = false
+    @State var loading = false
     var loggedInUser = Auth.auth().currentUser
     var product: Product
     var body: some View {
@@ -149,7 +150,7 @@ struct MenuDetail: View {
             .sheet(isPresented: $showingARPreview) {
                 
                 ZStack{
-                    ARViewContainer(product: product)
+                    ARViewContainer(product: product, loading: $loading)
                         .ignoresSafeArea()
                     VStack{
                         HStack{
@@ -165,8 +166,18 @@ struct MenuDetail: View {
                         Spacer()
                     }
 
-
-
+                    if loading{
+                        ZStack{
+                            Color(.systemBackground)
+                                .ignoresSafeArea()
+                                .opacity(0.8)
+                            
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                                .scaleEffect(3)
+                        }
+                    }
+                    
                 }
             }
                 }
