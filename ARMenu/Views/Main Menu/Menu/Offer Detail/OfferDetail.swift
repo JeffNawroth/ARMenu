@@ -51,9 +51,14 @@ struct OfferDetail: View {
                 
                     Text(offer.title!)
                         .font(.title)
-                       
+                
+                    Divider()
+
+
+
                     
                 if let description = offer.description{
+                    
                     Text("Beschreibung")
                         .font(.title2)
                     
@@ -61,11 +66,15 @@ struct OfferDetail: View {
                     
                 }
              
-                Divider()
 
 
                 
                 if !products.isEmpty{
+                    if offer.description != nil{
+                        Divider()
+
+                    }
+
                         Text("Produkte")
                             .font(.headline)
                         

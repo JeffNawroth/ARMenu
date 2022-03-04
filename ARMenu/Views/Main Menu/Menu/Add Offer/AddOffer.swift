@@ -188,7 +188,7 @@ struct AddOffer: View {
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button("Fertig"){
                         disableButton = true
-                        
+                        reset()
                         if mode == .new{
                             modelData.addOfferController(offerToAdd: offerDummy, imageToAdd: inputImage)
                         }else{
@@ -239,6 +239,19 @@ struct AddOffer: View {
     func loadImage() {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
+    }
+    
+    func reset(){
+        if let products = offerDummy.products{
+            if products.isEmpty{
+                offerDummy.products = nil
+            }
+        }
+        if let description = offerDummy.description{
+            if description.isEmpty{
+                offerDummy.description = nil
+            }
+        }
     }
 }
 struct AddOffer_Previews: PreviewProvider {
