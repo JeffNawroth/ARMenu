@@ -43,7 +43,7 @@ struct AddUnit: View {
 
                 }
             }
-            .navigationTitle("neue Unit")
+            .navigationTitle("neue Einheit")
         .navigationBarTitleDisplayMode(.inline)
         }
     }
