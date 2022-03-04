@@ -492,7 +492,7 @@ struct AddProduct: View {
                         disableButtons = true
                         
                         
-                        
+                        reset()
                
     
                         
@@ -560,6 +560,58 @@ struct AddProduct: View {
         guard let inputImage = inputImage else { return }
         image = Image(uiImage: inputImage)
         
+    }
+    
+    func reset(){
+        if let allergens = productDummy.allergens{
+            if allergens.isEmpty{
+                productDummy.allergens = nil
+            }
+        }
+        if let additives = productDummy.additives{
+            if additives.isEmpty{
+                productDummy.additives = nil
+            }
+        }
+        
+        if let toppings = productDummy.toppings{
+            if toppings.isEmpty{
+                productDummy.toppings = nil
+            }
+        }
+        if let nutritionFacts = productDummy.nutritionFacts{
+            if (nutritionFacts.calories == nil && nutritionFacts.carbs == nil && nutritionFacts.protein == nil && nutritionFacts.fat == nil){
+                productDummy.nutritionFacts = nil
+            }
+        }
+        if let description = productDummy.description{
+            if description.isEmpty{
+                productDummy.description = nil
+            }
+        }
+        if let category = productDummy.category{
+            if category.name.isEmpty{
+                productDummy.category = nil
+            }
+        }
+        
+        if let bio = productDummy.isBio{
+            if !bio{
+                productDummy.isBio = nil
+            }
+        }
+        
+        if let fairtrade = productDummy.isFairtrade{
+            if !fairtrade{
+                productDummy.isFairtrade = nil
+            }
+        }
+        
+        if let vegan = productDummy.isVegan{
+            if !vegan{
+                productDummy.isVegan = nil
+            }
+        }
     }
 }
 

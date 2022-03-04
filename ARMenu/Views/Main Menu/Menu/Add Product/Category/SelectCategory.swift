@@ -16,10 +16,13 @@ struct SelectCategory: View {
     var body: some View {
         List{
             ForEach(modelData.categories){ category in
-                CategoryPicker(category: category, isSelected: selectedCategory == category) {
-                    if selectedCategory != category{
+                CategoryPicker(category: category, isSelected: selectedCategory.name == category.name) {
+                    if selectedCategory.name != category.name{
                         selectedCategory = category
+                    }else{
+                        selectedCategory.name = ""
                     }
+                    
                     presentationMode.wrappedValue.dismiss()
                 }
             }
