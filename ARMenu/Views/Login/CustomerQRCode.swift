@@ -26,8 +26,10 @@ struct CustomerQRCode: View {
                     Text("QR-Code scannen")
                 }
                 
+                
 
             }
+            
             .listRowBackground(Color.clear)
             .buttonStyle(.borderless)
             .foregroundColor(.primary)
@@ -39,6 +41,8 @@ struct CustomerQRCode: View {
                 .overlay(ScanOverlayView())
                 .ignoresSafeArea()
         }
+       
+        
     }
     
     func handleScan(result: Result<ScanResult, ScanError>){
@@ -70,6 +74,9 @@ struct CustomerQRCode: View {
                 }
             }else{
                 print("Speisekarte existiert nicht!")
+                
+
+                
             }
             
             
