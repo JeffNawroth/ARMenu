@@ -12,6 +12,7 @@ struct MultipleProductPicker: View {
     var isSelected: Bool
     var action: () -> Void
     
+    //Add a checkmark to selected products
     var body: some View {
         Button(action: self.action) {
             HStack {

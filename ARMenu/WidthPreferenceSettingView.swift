@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Create Textfield spacing
 struct WidthPreferenceSettingView: View {
     var body: some View {
         GeometryReader { geometry in

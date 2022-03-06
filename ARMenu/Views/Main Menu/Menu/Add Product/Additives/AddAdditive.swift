@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//add a new addtive
 struct AddAdditive: View {
     @EnvironmentObject var modelData: ModelData
     @State var additive:Additive = Additive(name: "")

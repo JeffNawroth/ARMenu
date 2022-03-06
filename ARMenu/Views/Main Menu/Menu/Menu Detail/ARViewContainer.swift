@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 import ARKit
 
+// AR view for 3D models loaded from database
 struct ARViewContainer: UIViewRepresentable {
     var product: Product
     @Binding var loading: Bool
@@ -22,7 +23,7 @@ struct ARViewContainer: UIViewRepresentable {
         config.planeDetection = .horizontal
         arView.session.run(config, options: [])
         
-        
+        //Load 3D model from the database using the URL
         if let url = product.model{
             loading = true
             let url = URL(string: url)
@@ -50,16 +51,16 @@ struct ARViewContainer: UIViewRepresentable {
                 DispatchQueue.main.async {
                     do {
                         loading = false
+                        //Install gestures and collision shape for model
                         let model = try ModelEntity.loadModel(contentsOf: destination)
                         model.generateCollisionShapes(recursive: true)
                         arView.installGestures(for: model)
                     
-                        
+                        //Add Model to horizontal plane
                         let anchor = AnchorEntity(plane: .horizontal )
                         anchor.addChild(model)
                         arView.scene.addAnchor(anchor)
                         
-                        //  model.playAnimation(model.availableAnimations.first!.repeat())
                     } catch {
                         print("Fail loading entity.")
                     }
@@ -84,6 +85,7 @@ struct ARViewContainer: UIViewRepresentable {
 
 
 extension ARView: ARCoachingOverlayViewDelegate{
+    //Pictorial guide for recognizing a horizontal surface
     func addCoaching(){
         let coachingOverlay = ARCoachingOverlayView()
         coachingOverlay.delegate = self
@@ -94,10 +96,6 @@ extension ARView: ARCoachingOverlayViewDelegate{
         self.addSubview(coachingOverlay)
         
     }
-    
-//    public func coachingOverlayViewDidDeactivate(_ coachingOverlayView: ARCoachingOverlayView) {
-//           print("found")
-//       }
 }
 
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Add a checkmark to selected allergens
 struct MultipleAllergenPicker: View {
     var allergen: Allergen
     var isSelected: Bool

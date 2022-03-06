@@ -16,6 +16,7 @@ struct AddUnit: View {
         unit.name.isEmpty
     }
     
+    // Add a new Unit
     var body: some View {
         NavigationView {
             Form{

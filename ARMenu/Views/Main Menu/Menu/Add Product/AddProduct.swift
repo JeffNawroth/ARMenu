@@ -22,7 +22,9 @@ struct AddProduct: View {
     @State private var fileURL: URL?
     @State private var showingFileImporter = false
     @State private var disableButtons = false
-     private var disableButton:Bool{
+    
+    //Disable button to save when an empty serving size is added
+    private var disableButton:Bool{
          var value: Bool = false
         if let servingSizes = productDummy.servingSizes{
             for servingSize in servingSizes {
@@ -54,6 +56,7 @@ struct AddProduct: View {
                 Form{
                     Section{
                         VStack{
+                            //Show Image
                             if let image = image{
                                 image
                                     .resizable()
@@ -108,6 +111,7 @@ struct AddProduct: View {
                     
                     Section{
                         Button {
+                           
                             if showingFileImporter{
                                 showingFileImporter = false
                                 DispatchQueue.main.asyncAfter(deadline: .now()+0.01, execute: {
@@ -136,6 +140,7 @@ struct AddProduct: View {
                         }
                         .disabled(fileURL != nil)
                         
+                        // Show added 3D model
                         if let url = fileURL {
                             HStack{
                                 Button{
@@ -216,6 +221,7 @@ struct AddProduct: View {
                     }
                     
             
+                    //Show line to add serving size
                     if productDummy.servingSizes != nil{
                         ForEach($productDummy.servingSizes.toNonOptionalServingSizes(), id: \.servingSizeId){ $servingSize in
                             HStack{
@@ -244,6 +250,7 @@ struct AddProduct: View {
                     }
                     
                     HStack{
+                        // Add serving size
                         Button {
                             if productDummy.servingSizes != nil {
                                 productDummy.servingSizes?.append(ServingSize())
@@ -297,6 +304,7 @@ struct AddProduct: View {
                     Group{
                         Section(header: Text("Toppings")){
                             
+                            //Add Toppings
                             NavigationLink{
                                 SelectToppings(selections: $productDummy.toppings.toNonOptionalToppings())
                             } label:{
@@ -314,6 +322,7 @@ struct AddProduct: View {
                                     $0.name < $1.name
                                 }
                                 
+                                // Show selected Toppings
                                 ForEach(sortedToppings,id:\.self){ topping in
                                     HStack{
                                         
@@ -346,7 +355,7 @@ struct AddProduct: View {
                         
                         
                         Section(header: Text("Allergene")){
-                            
+                            // Add allergens
                             NavigationLink{
                                 SelectAllergens(selections: $productDummy.allergens.toNonOptionalAllergens())
                             } label:{
@@ -365,6 +374,7 @@ struct AddProduct: View {
                                     $0.name < $1.name
                                 }
                                 
+                                //Show selected allergens
                                 ForEach(sortedAllergens, id:\.self){ allergen in
                                     HStack{
                                         Button(action: {
@@ -395,6 +405,7 @@ struct AddProduct: View {
                         
                         Section(header: Text("Zusatzstoffe")){
                             
+                            //Add additives
                             NavigationLink{
                                 SelectAdditives(selections: $productDummy.additives.toNonOptionalAdditives())
                             } label:{
@@ -410,7 +421,8 @@ struct AddProduct: View {
                                 let sortedAdditives = additives.sorted{
                                     $0.name < $1.name
                                 }
-                                
+                            
+                                //Show selected additives
                                 ForEach(sortedAdditives,id:\.self){ additive in
                                     HStack{
                                         
@@ -441,6 +453,7 @@ struct AddProduct: View {
                     }
                 }
                 
+                //Loading screen for adding or updating a new Product
                 if modelData.loading{
                     ZStack{
                         Color(.systemBackground)
@@ -453,6 +466,7 @@ struct AddProduct: View {
                     }
                 }
             }
+            //import usdz files
             .fileImporter(isPresented: $showingFileImporter, allowedContentTypes: [.usdz]) { res in
                 do{
                     fileURL = try res.get()
@@ -477,9 +491,11 @@ struct AddProduct: View {
                 }
                 else{
                     ZStack{
+                        // Ar view for previewing 3D models from the database
                         ARViewContainer(product: productDummy, loading: $loading)
                             .ignoresSafeArea()
                         
+                        //Loading screen for loading 3D models from the database
                         if loading{
                             ZStack{
                                 Color(.systemBackground)
@@ -499,6 +515,8 @@ struct AddProduct: View {
                 modelData.fetchCategoriesData()
             }
             .toolbar{
+                //Buttons to save the Product or to cancel
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         
@@ -537,7 +555,7 @@ struct AddProduct: View {
                     
                 }
                 
-                
+                //Button to close the keyboard manually after an input
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     
@@ -549,6 +567,7 @@ struct AddProduct: View {
                     }
                 }
             }
+            //Query whether to add a new image from the gallery or delete the existing image
             .confirmationDialog("", isPresented: $showingImageConfirmation) {
                 Button("Fotobibliothek öffnen"){
                     showingImagePicker = true

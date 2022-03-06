@@ -14,7 +14,7 @@ struct SelectAdditives: View {
     @State private var searchText = ""
     @State var showingSheet = false
 
-
+    //Filter search results
     var searchResults: [Additive] {
             if searchText.isEmpty {
                 return modelData.additives
@@ -23,6 +23,8 @@ struct SelectAdditives: View {
             }
         }
     var body: some View {
+        //Show selectable additives
+
         List{
             ForEach(searchResults, id:\.self){ additive in
                 MultipleAdditivePicker(additive: additive, isSelected: selections.contains{$0.name == additive.name}){
@@ -40,6 +42,7 @@ struct SelectAdditives: View {
             }
         }
         .toolbar{
+            //Button to add a new additive
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true
@@ -52,6 +55,7 @@ struct SelectAdditives: View {
                 }
 
             }
+            // Button to change on editmode
             ToolbarItem(placement: .navigationBarTrailing) {
                 EditButton()
             }

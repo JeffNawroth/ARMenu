@@ -12,6 +12,7 @@ struct SelectProducts: View {
     @Binding var selections: [String]
     @State private var searchText = ""
     
+    //Filter search results
     var searchResults: [Product] {
         if searchText.isEmpty {
             return modelData.products
@@ -21,6 +22,7 @@ struct SelectProducts: View {
     }
     
     var body: some View {
+        //Show selectable products
         List{
             ForEach(searchResults){ product in
                 MultipleProductPicker(product: product, isSelected: selections.contains{

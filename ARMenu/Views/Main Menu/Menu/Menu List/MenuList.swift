@@ -19,7 +19,7 @@ struct MenuList: View {
     @State private var selectedCategory = Category(name: "Alles")
     var loggedInUser = Auth.auth().currentUser
 
-    
+    //Filter the Products for the logged in user
     var filteredProducts: [Product]{
             if !loggedInUser!.isAnonymous{
                         return modelData.products
@@ -30,6 +30,7 @@ struct MenuList: View {
                     }
         }
     
+    //Filter the Offers for the logged in user
     var filteredOffers: [Offer]{
             if !loggedInUser!.isAnonymous{
                         return modelData.offers
@@ -40,12 +41,14 @@ struct MenuList: View {
                     }
         }
     
+    //Filter categories
     var filteredMenuList: [Product] {
         filteredProducts.filter{ product in
             (selectedCategory.name == "Alles" || selectedCategory.name == product.category?.name)
         }
     }
     
+    //Filter search results
     var searchResults: [Product] {
         if searchText.isEmpty {
             return filteredMenuList

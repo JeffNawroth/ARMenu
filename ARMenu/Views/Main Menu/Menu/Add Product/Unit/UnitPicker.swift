@@ -12,6 +12,7 @@ struct UnitPicker: View {
     var isSelected: Bool
     var action: () -> Void
     var body: some View {
+        //Add a checkmark to selected Unit
         Button(action: self.action) {
             HStack {
                 Text(unit.name)

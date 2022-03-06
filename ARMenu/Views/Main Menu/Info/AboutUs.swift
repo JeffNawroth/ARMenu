@@ -19,21 +19,6 @@ struct AboutUs: View {
                 .ignoresSafeArea()
             
             VStack{
-//                Text("Hömma - Herzlich Willkommen im Hörnken")
-//                    .multilineTextAlignment(.center)
-//                    .font(Font.custom("EuphoriaScript-Regular", size: 25))
-//                    .padding(.top)
-//
-//                Text("**DU** suchst einen Ort zum Wohlfühlen? Wir, das Team vom Hörnken, wollen einen Ort schaffen, wo **Du** gerne hinkommst. Egal, ob **Du** Dich **betüddeln** lassen möchtest, einfach mal mit Deinen Freunden in Ruhe **schnacken** oder **Spökes** machen magst. Ob Schmacht oder Brand, wir haben für Dich die Lösung. ")
-//                    .font(.title2)
-//                    .multilineTextAlignment(.center)
-//                    .padding([.leading, .bottom, .trailing])
-//
-//                Text("Das Hörnken soll ein Ort zum Entspannen sein, deshalb duzen wir uns. Und egal wen du ansprichst, wir sind stets mit einem Lächeln da und versüßen dir den Tag.")
-//                    .font(.title2)
-//                    .multilineTextAlignment(.center)
-//                    .padding([.top, .leading, .trailing])
-//
                 
                 Text("Öffnungszeiten")
                     .font(Font.custom("EuphoriaScript-Regular", size: 25))

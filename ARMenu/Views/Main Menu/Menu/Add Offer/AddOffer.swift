@@ -24,11 +24,13 @@ struct AddOffer: View {
         case edit
     }
     
+    //Filter products that are assigned to an offer based on the Id
     var products: [Product]{
             modelData.products.filter{
                 offerDummy.products != nil && offerDummy.products!.contains($0.id!)
             }
         }
+    
     var mode: Mode
     
     var body: some View {
@@ -37,6 +39,7 @@ struct AddOffer: View {
                 List{
                     Section{
                         VStack{
+                            //Show image
                             if let image = image {
                                 image
                                     .resizable()
@@ -125,12 +128,13 @@ struct AddOffer: View {
                         
                         
                         
-                        
+                        //Sort products by alphabet
                         if let products = products{
                             let sortedProducts = products.sorted{
                                 $0.name! < $1.name!
                             }
 
+                            //Show products and button to delete
                             ForEach(sortedProducts, id: \.self){ product in
                                 NavigationLink {
                                     MenuDetail(product: product)
@@ -163,6 +167,7 @@ struct AddOffer: View {
                     }
                     
                 }
+                //Loading screen for adding or updating a new Offer 
                 if modelData.loading{
                     ZStack{
                         Color(.systemBackground)
@@ -185,6 +190,7 @@ struct AddOffer: View {
                 ImagePicker(image: $inputImage)
             }
             .toolbar{
+                //Buttons to save the offer or to cancel
                 ToolbarItem(placement: .navigationBarTrailing){
                     Button("Fertig"){
                         disableButton = true
@@ -209,7 +215,7 @@ struct AddOffer: View {
                 }
                 
                 
-                
+                //Button to close the keyboard manually after an input
                 ToolbarItemGroup(placement: .keyboard) {
                     Spacer()
                     
@@ -221,6 +227,7 @@ struct AddOffer: View {
                     }
                 }
             }
+            //Query whether to add a new image from the gallery or delete the existing image
             .confirmationDialog("", isPresented: $showingImageConfirmation) {
                 Button("Fotobibliothek öffnen"){
                     showingImagePicker = true
@@ -241,6 +248,7 @@ struct AddOffer: View {
         image = Image(uiImage: inputImage)
     }
     
+    //Update values if they are empty
     func reset(){
         if let products = offerDummy.products{
             if products.isEmpty{

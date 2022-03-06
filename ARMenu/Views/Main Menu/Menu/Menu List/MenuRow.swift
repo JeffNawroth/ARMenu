@@ -72,13 +72,7 @@ struct MenuRow: View {
                     }
 
                 }
-                    
-                       
-                   
-                
-                
-               
-                
+
                 if (product.isVegan != nil || product.isBio != nil || product.isFairtrade != nil){
                     HStack{
                         if let isVegan = product.isVegan{

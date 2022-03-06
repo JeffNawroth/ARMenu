@@ -39,7 +39,6 @@ struct QRCodeGenerator: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingShareSheet = true
-                        // actionSheet(image: qrCode.resized(toWidth: 512) ?? UIImage())
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                         
@@ -69,12 +68,7 @@ struct QRCodeGenerator: View {
         
     }
     
-//    func actionSheet(image: UIImage) {
-//        let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-//        UIApplication.shared.keyWindow?.rootViewController?
-//            .present(activityVC, animated: true, completion: nil)
-//    }
-    
+    // Generate a new QR Code from User Id
     func generateQRCode(from string: String) -> UIImage{
         filter.message = Data(string.utf8)
         
@@ -87,23 +81,8 @@ struct QRCodeGenerator: View {
     }
 }
 
-extension UIApplication {
-    
-    var keyWindow: UIWindow? {
-        // Get connected scenes
-        return UIApplication.shared.connectedScenes
-        // Keep only active scenes, onscreen and visible to the user
-            .filter { $0.activationState == .foregroundActive }
-        // Keep only the first `UIWindowScene`
-            .first(where: { $0 is UIWindowScene })
-        // Get its associated windows
-            .flatMap({ $0 as? UIWindowScene })?.windows
-        // Finally, keep only the key window
-            .first(where: \.isKeyWindow)
-    }
-    
-}
 
+//Resize QR-Code
 extension UIImage {
     func resized(toWidth width: CGFloat) -> UIImage? {
         let canvasSize = CGSize(width: round(width), height: CGFloat(ceil(width/size.width * size.height)))

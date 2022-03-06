@@ -14,7 +14,6 @@ struct ServingSizeView: View, Identifiable {
     @EnvironmentObject var modelData: ModelData
     @FocusState  var isFocused: Bool
 
-
     var body: some View {
         HStack{
             Button {

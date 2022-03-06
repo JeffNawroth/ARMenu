@@ -42,6 +42,7 @@ struct changePassword: View {
                 }
             }
             .navigationBarTitle(Text("Passwort ändern"), displayMode: .inline)
+            //Create Texrfield spacing
             .onPreferenceChange(WidthPreferenceKey.self) { preferences in
                         for p in preferences {
                             let oldWidth = self.width ?? CGFloat.zero

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Scan Overlayfor the QR code scanner
 struct ScanOverlayView: View {
     var body: some View {
         GeometryReader { geometry in
