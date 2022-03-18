@@ -30,6 +30,8 @@ struct ARPreview: UIViewRepresentable {
         
         //Add Model to horizontal plane
         let anchor = AnchorEntity(plane: .horizontal )
+        anchor.scale = [1,1,1] * 0.4
+        anchor.position = [0,0,0]
         anchor.addChild(model)
         arView.scene.addAnchor(anchor)
         
