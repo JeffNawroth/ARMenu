@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Add a checkmark to selected additives
 struct MultipleAdditivePicker: View {
     var additive: Additive
     var isSelected: Bool

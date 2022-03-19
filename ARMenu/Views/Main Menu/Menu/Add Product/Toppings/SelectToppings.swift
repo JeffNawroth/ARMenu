@@ -13,6 +13,7 @@ struct SelectToppings: View {
     @State private var searchText = ""
     @State private var showingSheet = false
     
+    //Filter search results
     var searchResults: [Topping] {
         if searchText.isEmpty {
             return modelData.toppings
@@ -22,6 +23,7 @@ struct SelectToppings: View {
     }
 
     var body: some View {
+        //Show selectable toppings
         List{
             ForEach(searchResults, id: \.self){ topping in
                 MultipleToppingPicker(topping: topping, isSelected: selections.contains{
@@ -43,6 +45,7 @@ struct SelectToppings: View {
            
         }
         .toolbar{
+            //Button to add a new topping
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true
@@ -51,11 +54,11 @@ struct SelectToppings: View {
                     Image(systemName: "plus")
                 }
                 .sheet(isPresented: $showingSheet) {
-                    //AddProduct(showingSheet: $showingSheet)
                     AddTopping(showingSheet: $showingSheet)
                 }
 
             }
+            //Button to change in editmode
             ToolbarItem(placement: .navigationBarTrailing) {
                 EditButton()
             }

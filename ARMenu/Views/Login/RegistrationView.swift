@@ -49,6 +49,7 @@ struct RegistrationView: View {
             }
             .navigationTitle("Registrieren")
             .navigationBarTitleDisplayMode(.inline)
+            //Create Textfield spacing
             .onPreferenceChange(WidthPreferenceKey.self) { preferences in
                         for p in preferences {
                             let oldWidth = self.width ?? CGFloat.zero

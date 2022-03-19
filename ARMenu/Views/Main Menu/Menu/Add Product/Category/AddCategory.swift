@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Add a new Category
 struct AddCategory: View {
     
     @EnvironmentObject var modelData: ModelData

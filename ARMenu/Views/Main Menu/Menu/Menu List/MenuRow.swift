@@ -29,55 +29,50 @@ struct MenuRow: View {
             
             
             VStack(alignment: .leading, spacing: 3){
-                
-                
-                if let category = product.category{
-                    Text(category.name)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-                
-                Text(product.name!)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                
-                
+              
+                        if let category = product.category{
+                            Text(category.name)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+                        
+                        Text(product.name!)
+                            .font(.title2)
+                            .fontWeight(.semibold)
                
-                    if (product.price != nil || product.servingSizes != nil){
-                        HStack{
-                            if let price = product.price{
-                                Text("\(price, specifier: "%.2f")")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-
-
-                            }
-                            if (product.price != nil && product.servingSizes != nil){
-                                Text("•")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                            }
-
-                            if let servingSizes = product.servingSizes{
-                                if servingSizes.count == 1{
-                                    if let servingSize = servingSizes.first{
-                                        Text("\(servingSize.size!, specifier: "%.0f") \(servingSize.unit!.name)")
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                    }
-                                    
-                                }
-                               
-                            }
+                    
+                if product.price != nil{
+                    HStack{
+                        if let price = product.price{
+                            Text("\(price, specifier: "%.2f")")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
 
 
                         }
+                        if product.price != nil && product.servingSizes != nil && product.servingSizes?.count == 1{
+                            Text("•")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+
+                        if let servingSizes = product.servingSizes{
+                            if servingSizes.count == 1{
+                                if let servingSize = servingSizes.first{
+                                    Text("\(servingSize.size!, specifier: "%.2f") \(servingSize.unit!.name)")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
+
+                            }
+
+                        }
+
+
                     }
-                   
-                
-                
-               
-                
+
+                }
+
                 if (product.isVegan != nil || product.isBio != nil || product.isFairtrade != nil){
                     HStack{
                         if let isVegan = product.isVegan{

@@ -18,10 +18,12 @@ struct MenuDetail: View {
     @State private var servingSizesExpanded = false
     @State private var showingSheet = false
     @State private var showingDeleteConfirmation = false
+    @State var loading = false
     var loggedInUser = Auth.auth().currentUser
     var product: Product
     var body: some View {
         ScrollView{
+            //Show image
             if let image = product.image{
                 AnimatedImage(url: URL(string: image))
                     .resizable()
@@ -44,6 +46,7 @@ struct MenuDetail: View {
                 
                 HStack{
                     VStack(alignment: .leading){
+                        //show Category
                         if let category = product.category{
                             Text(category.name)
                                 .font(.footnote)
@@ -53,23 +56,27 @@ struct MenuDetail: View {
                         
                         
                         HStack{
+                            //Show Productname
                             Text(product.name!)
                                 .font(.title)
                             
                             Spacer()
                             
+                            //Show product price
                             if let price = product.price{
                                 Text("\(price, specifier: "%.2f")")
                                     .fontWeight(.semibold)
                                     .foregroundColor(.secondary)
                                 }
                             
+                            //Show circle when exactly one serving size and one price is available
                             if product.price != nil && product.servingSizes != nil && product.servingSizes?.count == 1{
                                 Text("•")
                                     .fontWeight(.semibold)
                                     .foregroundColor(.secondary)
                             }
                           
+                            //Show serving size when exactly one is available
                             if let servingSizes = product.servingSizes{
                                 if servingSizes.count == 1{
                                     Text("\(servingSizes.first!.size ?? 0)" + servingSizes.first!.unit!.name)
@@ -86,7 +93,7 @@ struct MenuDetail: View {
                 }
                 
                 Spacer()
-                
+                //Show certificates
                 if (product.isVegan != nil || product.isBio != nil || product.isFairtrade != nil){
                     HStack{
                         if let isVegan = product.isVegan{
@@ -124,7 +131,7 @@ struct MenuDetail: View {
                 
                 
                 Divider()
-                
+                //Show button for 3D models if one is available
                 if product.model != nil{
                     Button {
                         showingARPreview.toggle()
@@ -148,8 +155,9 @@ struct MenuDetail: View {
             }
             .sheet(isPresented: $showingARPreview) {
                 
+                //Show AR view
                 ZStack{
-                    ARViewContainer(product: product)
+                    ARViewContainer(product: product, loading: $loading)
                         .ignoresSafeArea()
                     VStack{
                         HStack{
@@ -165,12 +173,24 @@ struct MenuDetail: View {
                         Spacer()
                     }
 
-
-
+                    // Show the loading screen while the 3D model is being loaded from the database
+                    if loading{
+                        ZStack{
+                            Color(.systemBackground)
+                                .ignoresSafeArea()
+                                .opacity(0.8)
+                            
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .gray))
+                                .scaleEffect(3)
+                        }
+                    }
+                    
                 }
             }
                 }
              
+                //Show description
                 if let description = product.description{
                     Text("Beschreibung")
                         .font(.title2)
@@ -181,6 +201,7 @@ struct MenuDetail: View {
             
             VStack{
                 
+                //Show serving Sizes
                 if let servingSizes = product.servingSizes{
                     if servingSizes.count > 1{
                         DisclosureGroup(isExpanded: $servingSizesExpanded) {
@@ -197,7 +218,7 @@ struct MenuDetail: View {
                     }
                     }
                  
-                
+                //Show toppings
                 if let toppings = product.toppings{
                     DisclosureGroup(isExpanded: $toppingsExpanded) {
                         ForEach(toppings, id: \.self){topping in
@@ -214,7 +235,7 @@ struct MenuDetail: View {
                 }
                 
                 
-                
+                //Show nutritional information
                 if let nutritionFacts =  product.nutritionFacts{
                     DisclosureGroup(isExpanded: $nutritionsExpanded) {
                         HStack{
@@ -264,7 +285,7 @@ struct MenuDetail: View {
                 }
                
                 
-                
+                //Show allergens and additives
                 if product.allergens != nil || product.additives != nil{
                     DisclosureGroup(isExpanded: $allergensExpanded) {
                         
@@ -319,6 +340,8 @@ struct MenuDetail: View {
         .navigationTitle(product.name!)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
+            //Buttons to delete or edit an Product
+
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true

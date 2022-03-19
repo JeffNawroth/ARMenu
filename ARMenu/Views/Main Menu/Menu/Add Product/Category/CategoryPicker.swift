@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Add a checkmark to selected category
 struct CategoryPicker: View {
     var category: Category
     var isSelected: Bool

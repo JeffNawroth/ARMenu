@@ -740,6 +740,7 @@ class ModelData: ObservableObject{
                         
                         let updatedOffer = Offer(id: offerToUpdate.id, image: imageURL, title: offerToUpdate.title, description: offerToUpdate.description, products: offerToUpdate.products, isVisible: offerToUpdate.isVisible)
                         
+                        
                         updateOffer(offer: updatedOffer)
                     }
                     )
@@ -755,6 +756,7 @@ class ModelData: ObservableObject{
             do {
                 try db.collection(menuId).document("Menu").collection("Offers").document(documentId).setData(from: offer)
                 print("Angebot wurde erfolgreich aktualisiert!")
+                
                 loading = false
             }
             catch {

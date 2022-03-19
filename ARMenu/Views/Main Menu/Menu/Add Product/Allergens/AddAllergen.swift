@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Add a new allergen
 struct AddAllergen: View {
     @EnvironmentObject var modelData: ModelData
     @State var allergen:Allergen = Allergen(name: "")

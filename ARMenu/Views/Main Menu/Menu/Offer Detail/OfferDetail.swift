@@ -17,17 +17,18 @@ struct OfferDetail: View {
     var loggedInUser = Auth.auth().currentUser
     
     
-    
+    //Filter products that are assigned to an offer based on the Id
     var products: [Product]{
-            modelData.products.filter{
-                offer.products != nil && offer.products!.contains($0.id!)
-            }
+        modelData.products.filter{
+            offer.products != nil && offer.products!.contains($0.id!)
         }
-
+    }
+    
     var body: some View {
         
         
         ScrollView{
+            //Show image
             if let image = offer.image{
                 AnimatedImage(url: URL(string: image))
                     .resizable()
@@ -49,44 +50,54 @@ struct OfferDetail: View {
             
             VStack(alignment: .leading){
                 
-                    Text(offer.title!)
-                        .font(.title)
-                       
-                    
+                //Show title
+                Text(offer.title!)
+                    .font(.title)
+                
+                Divider()
+                
+                
+                
+                //Show description
                 if let description = offer.description{
+                    
                     Text("Beschreibung")
                         .font(.title2)
                     
                     Text(description)
                     
                 }
-             
-                Divider()
-
-
                 
+                
+                
+                //Show Products
                 if !products.isEmpty{
-                        Text("Produkte")
-                            .font(.headline)
+                    if offer.description != nil{
+                        Divider()
                         
-                        ForEach(products, id: \.self){ product in
-                            NavigationLink {
-                                MenuDetail(product: product)
-                            } label: {
-                                VStack{
-                                    MenuRow(product: product)
-                                        .foregroundColor(Color.primary)
-                                    
-                                    Divider()
-                                }
-                                Image(systemName: "chevron.right")
-                                    .imageScale(.small)
-                                    .foregroundColor(Color.gray)
+                    }
+                    
+                    Text("Produkte")
+                        .font(.headline)
+                    
+                    ForEach(products, id: \.self){ product in
+                        NavigationLink {
+                            MenuDetail(product: product)
+                        } label: {
+                            VStack{
+                                MenuRow(product: product)
+                                    .foregroundColor(Color.primary)
+                                
+                                Divider()
                             }
+                            Image(systemName: "chevron.right")
+                                .imageScale(.small)
+                                .foregroundColor(Color.gray)
                         }
+                    }
                 }
-               
- 
+                
+                
             }
             .padding(.horizontal)
             
@@ -95,6 +106,7 @@ struct OfferDetail: View {
         .navigationTitle(Text(offer.title!))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
+            //Buttons to delete or edit an offer
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true
@@ -121,7 +133,7 @@ struct OfferDetail: View {
                         modelData.deleteOffer(offerToDelete: offer)
                     }
                 }
-
+                
             }
         }
     }

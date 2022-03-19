@@ -15,6 +15,7 @@ struct SelectAllergens: View {
     @State private var searchText = ""
     @State var showingSheet = false
 
+    //Filter search results
     var searchResults: [Allergen] {
             if searchText.isEmpty {
                 return modelData.allergens
@@ -23,6 +24,8 @@ struct SelectAllergens: View {
             }
         }
     var body: some View{
+        //Show selectable allergens
+
         List{
             ForEach(searchResults, id:\.self){ allergen in
                 MultipleAllergenPicker(allergen: allergen, isSelected: selections.contains{$0.name == allergen.name}){
@@ -41,6 +44,7 @@ struct SelectAllergens: View {
             }
         }
         .toolbar{
+            //Button to add a new allergen
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true
@@ -53,6 +57,7 @@ struct SelectAllergens: View {
                 }
 
             }
+            //Button to change in editmode
             ToolbarItem(placement: .navigationBarTrailing) {
                 EditButton()
             }

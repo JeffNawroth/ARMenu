@@ -13,21 +13,23 @@ struct CustomerQRCode: View {
     @EnvironmentObject var modelData: ModelData
     @EnvironmentObject var session: SessionStore
     @State private var isShowingScanner = false
-
+    
     var body: some View {
         Section(){
-
+            
             Button {
                 isShowingScanner = true
             } label: {
                 VStack{
                     Image(systemName: "qrcode.viewfinder")
-                    .font(.system(size: 250))
+                        .font(.system(size: 250))
                     Text("QR-Code scannen")
                 }
                 
-
+                
+                
             }
+            
             .listRowBackground(Color.clear)
             .buttonStyle(.borderless)
             .foregroundColor(.primary)
@@ -39,20 +41,24 @@ struct CustomerQRCode: View {
                 .overlay(ScanOverlayView())
                 .ignoresSafeArea()
         }
+        
+        
     }
     
+    //Handle Scan of QR-Code
     func handleScan(result: Result<ScanResult, ScanError>){
         isShowingScanner = false
         
         switch result{
         case .success(let result):
             print (result.string)
-        
+            
+            //detect URLs inside the result
             let input = result.string
             let detector = try! NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
             let matches = detector.matches(in: input, options: [], range: NSRange(location: 0, length: input.utf16.count))
-
             
+            //Check if there is no url in the result, otherwise it will be recognized as a path
             if matches.isEmpty{
                 let db = Firestore.firestore()
                 db.collection(result.string).getDocuments { (querysnapshot, error) in
@@ -70,6 +76,9 @@ struct CustomerQRCode: View {
                 }
             }else{
                 print("Speisekarte existiert nicht!")
+                
+                
+                
             }
             
             

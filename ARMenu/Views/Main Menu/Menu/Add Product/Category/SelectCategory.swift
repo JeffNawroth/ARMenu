@@ -14,12 +14,16 @@ struct SelectCategory: View {
     @State var showingSheet = false
     
     var body: some View {
+        // Show selectable categories
         List{
             ForEach(modelData.categories){ category in
-                CategoryPicker(category: category, isSelected: selectedCategory == category) {
-                    if selectedCategory != category{
+                CategoryPicker(category: category, isSelected: selectedCategory.name == category.name) {
+                    if selectedCategory.name != category.name{
                         selectedCategory = category
+                    }else{
+                        selectedCategory.name = ""
                     }
+                    
                     presentationMode.wrappedValue.dismiss()
                 }
             }
@@ -33,6 +37,7 @@ struct SelectCategory: View {
         .navigationTitle("Kategorie")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar{
+            //Button to add a new Category
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showingSheet = true

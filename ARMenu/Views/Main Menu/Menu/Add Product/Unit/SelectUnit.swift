@@ -15,15 +15,14 @@ struct SelectUnit: View {
     @State var showingSheet = false
     var body: some View {
         NavigationView{
+            //Show selectable units
             List{
                 ForEach(modelData.units){ unit in
                     UnitPicker(unit: unit, isSelected: selectedUnit.name == unit.name) {
                         if selectedUnit != unit{
                             selectedUnit = unit
                         }
-                        else{
                         
-                        }
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
@@ -35,6 +34,7 @@ struct SelectUnit: View {
                 }
             }
             .toolbar{
+                //Add a new Unit
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         showingSheet = true

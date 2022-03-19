@@ -16,6 +16,7 @@ struct AddUnit: View {
         unit.name.isEmpty
     }
     
+    // Add a new Unit
     var body: some View {
         NavigationView {
             Form{
@@ -43,7 +44,7 @@ struct AddUnit: View {
 
                 }
             }
-            .navigationTitle("neue Unit")
+            .navigationTitle("neue Einheit")
         .navigationBarTitleDisplayMode(.inline)
         }
     }

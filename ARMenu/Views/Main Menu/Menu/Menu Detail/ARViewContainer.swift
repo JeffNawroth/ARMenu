@@ -9,8 +9,10 @@ import SwiftUI
 import RealityKit
 import ARKit
 
+// AR view for 3D models loaded from database
 struct ARViewContainer: UIViewRepresentable {
     var product: Product
+    @Binding var loading: Bool
     
     func makeUIView(context: Context) -> ARView {
         
@@ -21,8 +23,9 @@ struct ARViewContainer: UIViewRepresentable {
         config.planeDetection = .horizontal
         arView.session.run(config, options: [])
         
-        
+        //Load 3D model from the database using the URL
         if let url = product.model{
+            loading = true
             let url = URL(string: url)
             let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             let destination = documents.appendingPathComponent(url!.lastPathComponent)
@@ -47,16 +50,19 @@ struct ARViewContainer: UIViewRepresentable {
                 
                 DispatchQueue.main.async {
                     do {
+                        loading = false
+                        //Install gestures and collision shape for model
                         let model = try ModelEntity.loadModel(contentsOf: destination)
                         model.generateCollisionShapes(recursive: true)
                         arView.installGestures(for: model)
                     
-                        
+                        //Add Model to horizontal plane
                         let anchor = AnchorEntity(plane: .horizontal )
+                        anchor.scale = [1,1,1] * 0.4
+                        anchor.position = [0,0,0]
                         anchor.addChild(model)
                         arView.scene.addAnchor(anchor)
                         
-                        //  model.playAnimation(model.availableAnimations.first!.repeat())
                     } catch {
                         print("Fail loading entity.")
                     }
@@ -81,6 +87,7 @@ struct ARViewContainer: UIViewRepresentable {
 
 
 extension ARView: ARCoachingOverlayViewDelegate{
+    //Pictorial guide for recognizing a horizontal surface
     func addCoaching(){
         let coachingOverlay = ARCoachingOverlayView()
         coachingOverlay.delegate = self
@@ -91,15 +98,11 @@ extension ARView: ARCoachingOverlayViewDelegate{
         self.addSubview(coachingOverlay)
         
     }
-    
-//    public func coachingOverlayViewDidDeactivate(_ coachingOverlayView: ARCoachingOverlayView) {
-//           print("found")
-//       }
 }
 
 
 struct ARViewContainer_Previews: PreviewProvider {
     static var previews: some View {
-        ARViewContainer(product: Product.dummyProduct)
+        ARViewContainer(product: Product.dummyProduct, loading: .constant(false))
     }
 }

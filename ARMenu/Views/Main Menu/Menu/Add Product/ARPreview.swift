@@ -9,6 +9,7 @@ import SwiftUI
 import RealityKit
 import ARKit
 
+// AR view for previewing a selected 3D model from files
 struct ARPreview: UIViewRepresentable {
     var url: URL
     func makeUIView(context: Context) -> ARView {
@@ -20,14 +21,17 @@ struct ARPreview: UIViewRepresentable {
         config.planeDetection = .horizontal
         arView.session.run(config, options: [])
         
-       let _ = url.startAccessingSecurityScopedResource()
+        //load model from files, install Gestures and Collision shape
+        let _ = url.startAccessingSecurityScopedResource()
         let model = try! ModelEntity.loadModel(contentsOf: url)
         url.stopAccessingSecurityScopedResource()
         model.generateCollisionShapes(recursive: true)
         arView.installGestures(for: model)
         
-        
+        //Add Model to horizontal plane
         let anchor = AnchorEntity(plane: .horizontal )
+        anchor.scale = [1,1,1] * 0.4
+        anchor.position = [0,0,0]
         anchor.addChild(model)
         arView.scene.addAnchor(anchor)
         

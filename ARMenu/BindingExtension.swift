@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+//Create bindings for optional values
 extension Binding{
     func toNonOptionalValue <T>(fallback: T )-> Binding<T> where Value == T?{
         Binding<T> {

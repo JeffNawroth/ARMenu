@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//Add a checkmark to selected toppings
 struct MultipleToppingPicker: View {
     var topping: Topping
     var isSelected: Bool
