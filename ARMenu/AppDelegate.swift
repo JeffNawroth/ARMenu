@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        let contentView = ContentView()
             .environmentObject(SessionStore())
 
-       // let contentView = TestView()
+       
 
         // Use a UIHostingController as window root view controller.
         let window = UIWindow(frame: UIScreen.main.bounds)
