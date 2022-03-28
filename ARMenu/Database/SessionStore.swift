@@ -13,22 +13,28 @@ import FirebaseAuth
 class SessionStore: ObservableObject{
     
     var didChange = PassthroughSubject<SessionStore, Never>()
+
     @Published var loggedInUser: User? {didSet {self.didChange.send(self) }}
+    // Handler for listening to changes in the authentication state.
     var handle: AuthStateDidChangeListenerHandle?
+    // The current user who is logged in.
     let user = Auth.auth().currentUser
-       var credential: AuthCredential?
 
     
     
     func listen(){
+        // Monitor authentication changes using Firebase
         handle = Auth.auth().addStateDidChangeListener({ (auth, user) in
+            // Check if there is a user
             if let user = user{
+                // Check if user is not anonymous
                 if !user.isAnonymous{
-
+                    // Create user with the userID and user amil.
                     self.loggedInUser = User(uid: user.uid, email: user.email)
                 }
 
             } else {
+                // No user logged in. Set session to nil.
                 self.loggedInUser = nil
             }
         })
@@ -54,11 +60,15 @@ class SessionStore: ObservableObject{
     }
     
     func signOut(){
-        do{ if !Auth.auth().currentUser!.isAnonymous{
+        do{
+            // Check if the current user is not anonymous.
+            if !Auth.auth().currentUser!.isAnonymous{
+                // User is not anonymous. Sign out and set session to nil.
             try Auth.auth().signOut()
             self.loggedInUser = nil
             print("Benutzer wurde erfolgreich ausgeloggt!")
         }else{
+            // User is anonymous. Set session to nil and delete the user to avoid multiple anonymous accounts in the database.
             self.loggedInUser = nil
             self.deleteUser()
         }
@@ -101,12 +111,6 @@ class SessionStore: ObservableObject{
                 print("Error: Fehler beim Löschen des Benutzers!")
             }else{
                 print("Benutzer wurde erfolgreich gelöscht!")
-                let db = Firestore.firestore()
-                db.collection("User").document(user!.uid).delete { error in
-                    if error != nil{
-                        print("Error: Benutzer konnte nicht aus der Datenbank gelöscht werden!")
-                    }
-                }
             }
         })
     }
